@@ -1,10 +1,27 @@
+"use client"
 import Link from "next/link"
 
 import { siteConfig } from "@/config/site"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
+import { MainTable } from "@/components/main-table"
+import { ChakraProvider, VStack } from "@chakra-ui/react"
+import { Navbar } from "@/components/navbar"
+import { QueryClient, QueryClientProvider } from "react-query"
 
+const queryClient = new QueryClient()
 export default async function IndexPage() {
+  return (
+    <QueryClientProvider client={queryClient}>
+      <ChakraProvider>
+        <VStack h={"100vh"} align={"stretch"}>
+          <VStack flex={1} overflow={"auto"}>
+            <MainTable />
+          </VStack>
+        </VStack>
+      </ChakraProvider>
+    </QueryClientProvider>
+  )
   return (
     <>
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
