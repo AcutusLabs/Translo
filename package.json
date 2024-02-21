@@ -23,15 +23,6 @@
     "prisma:generate": "yarn prisma format && yarn prisma generate"
   },
   "dependencies": {
-    "@editorjs/code": "^2.8.0",
-    "@editorjs/editorjs": "^2.26.5",
-    "@editorjs/embed": "^2.5.3",
-    "@editorjs/header": "^2.7.0",
-    "@editorjs/inline-code": "^1.4.0",
-    "@editorjs/link": "^2.5.0",
-    "@editorjs/list": "^1.8.0",
-    "@editorjs/paragraph": "^2.9.0",
-    "@editorjs/table": "^2.2.1",
     "@hookform/resolvers": "^3.1.0",
     "@next-auth/prisma-adapter": "^1.0.6",
     "@prisma/client": "^4.13.0",
@@ -92,7 +83,15 @@
     "stripe": "^11.18.0",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
-    "zod": "^3.21.4"
+    "zod": "^3.21.4",
+    "@chakra-ui/react": "^2.8.2",
+    "@emotion/react": "^11.11.3",
+    "@emotion/styled": "^11.11.0",
+    "framer-motion": "^11.0.5",
+    "openai": "^4.28.0",
+    "react-icons": "^5.0.1",
+    "react-query": "^3.39.3",
+    "zustand": "^4.5.0"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.1",

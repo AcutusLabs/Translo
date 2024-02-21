@@ -4,7 +4,7 @@ import { Translation, User } from "@prisma/client"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
-import { Editor } from "@/components/editor"
+import { Editor } from "@/components/translation"
 
 async function getTranslationForUser(
   translationId: Translation["id"],
