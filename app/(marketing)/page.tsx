@@ -1,10 +1,17 @@
 import Link from "next/link"
+import { redirect } from "next/navigation"
 
-import { siteConfig } from "@/config/site"
+import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 
 export default async function IndexPage() {
+  const user = await getCurrentUser()
+
+  if (user) {
+    redirect("/dashboard")
+  }
+
   return (
     <>
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">

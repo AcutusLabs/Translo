@@ -16,7 +16,7 @@ export default function PricingPage() {
           Simple, transparent pricing
         </h2>
         <p className="max-w-[85%] leading-normal text-muted-foreground sm:text-lg sm:leading-7">
-          Unlock all features including unlimited posts for your blog.
+          Unlock all features including unlimited translation for your blog.
         </p>
       </div>
       <div className="grid w-full items-start gap-10 rounded-lg border p-10 md:grid-cols-[1fr_200px]">
@@ -26,7 +26,7 @@ export default function PricingPage() {
           </h3>
           <ul className="grid gap-3 text-sm text-muted-foreground sm:grid-cols-2">
             <li className="flex items-center">
-              <Icons.check className="mr-2 h-4 w-4" /> Unlimited Posts
+              <Icons.check className="mr-2 h-4 w-4" /> Unlimited translation
             </li>
             <li className="flex items-center">
               <Icons.check className="mr-2 h-4 w-4" /> Unlimited Users

@@ -29,6 +29,7 @@ export type SidebarNavItem = {
 
 export type SiteConfig = {
   name: string
+  blendName: string
   description: string
   url: string
   ogImage: string

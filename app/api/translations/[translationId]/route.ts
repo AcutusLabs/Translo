@@ -3,11 +3,11 @@ import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { postPatchSchema } from "@/lib/validations/post"
+import { translationPatchSchema } from "@/lib/validations/translation"
 
 const routeContextSchema = z.object({
   params: z.object({
-    postId: z.string(),
+    translationId: z.string(),
   }),
 })
 
@@ -19,15 +19,17 @@ export async function DELETE(
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
 
-    // Check if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
+    // Check if the user has access to this translation.
+    if (
+      !(await verifyCurrentUserHasAccessTotranslation(params.translationId))
+    ) {
       return new Response(null, { status: 403 })
     }
 
-    // Delete the post.
-    await db.post.delete({
+    // Delete the translation.
+    await db.translation.delete({
       where: {
-        id: params.postId as string,
+        id: params.translationId as string,
       },
     })
 
@@ -49,20 +51,22 @@ export async function PATCH(
     // Validate route params.
     const { params } = routeContextSchema.parse(context)
 
-    // Check if the user has access to this post.
-    if (!(await verifyCurrentUserHasAccessToPost(params.postId))) {
+    // Check if the user has access to this translation.
+    if (
+      !(await verifyCurrentUserHasAccessTotranslation(params.translationId))
+    ) {
       return new Response(null, { status: 403 })
     }
 
     // Get the request body and validate it.
     const json = await req.json()
-    const body = postPatchSchema.parse(json)
+    const body = translationPatchSchema.parse(json)
 
-    // Update the post.
+    // Update the translation.
     // TODO: Implement sanitization for content.
-    await db.post.update({
+    await db.translation.update({
       where: {
-        id: params.postId,
+        id: params.translationId,
       },
       data: {
         title: body.title,
@@ -80,12 +84,12 @@ export async function PATCH(
   }
 }
 
-async function verifyCurrentUserHasAccessToPost(postId: string) {
+async function verifyCurrentUserHasAccessTotranslation(translationId: string) {
   const session = await getServerSession(authOptions)
-  const count = await db.post.count({
+  const count = await db.translation.count({
     where: {
-      id: postId,
-      authorId: session?.user.id,
+      id: translationId,
+      userId: session?.user.id,
     },
   })
 

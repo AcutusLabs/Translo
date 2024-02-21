@@ -1,4 +1,4 @@
-version: '3.8'
+version: "3.8"
 volumes:
   db:
     driver: local
@@ -7,8 +7,8 @@ services:
   postgres:
     image: postgres:16.1
     ports:
-      - 5432:5432
+      - 5555:5432
     environment:
-      - POSTGRES_DB=db
+      - POSTGRES_DB=translo
       - POSTGRES_USER=usr
       - POSTGRES_PASSWORD=pwd

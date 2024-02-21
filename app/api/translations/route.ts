@@ -6,7 +6,7 @@ import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
-const postCreateSchema = z.object({
+const translationCreateSchema = z.object({
   title: z.string(),
   content: z.string().optional(),
 })
@@ -20,7 +20,7 @@ export async function GET() {
     }
 
     const { user } = session
-    const posts = await db.post.findMany({
+    const transactions = await db.translation.findMany({
       select: {
         id: true,
         title: true,
@@ -28,11 +28,11 @@ export async function GET() {
         createdAt: true,
       },
       where: {
-        authorId: user.id,
+        userId: user.id,
       },
     })
 
-    return new Response(JSON.stringify(posts))
+    return new Response(JSON.stringify(transactions))
   } catch (error) {
     return new Response(null, { status: 500 })
   }
@@ -50,11 +50,11 @@ export async function POST(req: Request) {
     const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
     // If user is on a free plan.
-    // Check if user has reached limit of 3 posts.
+    // Check if user has reached limit of 3 translations.
     if (!subscriptionPlan?.isPro) {
-      const count = await db.post.count({
+      const count = await db.translation.count({
         where: {
-          authorId: user.id,
+          userId: user.id,
         },
       })
 
@@ -64,20 +64,20 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = postCreateSchema.parse(json)
+    const body = translationCreateSchema.parse(json)
 
-    const post = await db.post.create({
+    const translation = await db.translation.create({
       data: {
         title: body.title,
         content: body.content,
-        authorId: session.user.id,
+        userId: session.user.id,
       },
       select: {
         id: true,
       },
     })
 
-    return new Response(JSON.stringify(post))
+    return new Response(JSON.stringify(translation))
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

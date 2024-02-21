@@ -35,7 +35,7 @@ export const Icons = {
   chevronLeft: ChevronLeft,
   chevronRight: ChevronRight,
   trash: Trash,
-  post: FileText,
+  translation: FileText,
   page: File,
   media: Image,
   settings: Settings,

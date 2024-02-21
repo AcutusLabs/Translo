@@ -14,14 +14,27 @@ pnpm install
 cp .env.example .env.local
 ```
 
-3. Start the development server:
+3. Run local db with docker
+
+```sh
+docker-compose up
+```
+
+4. Run migrations
+
+```sh
+pnpm prisma:migrate:dev
+```
+
+5. Start the development server:
 
 ```sh
 pnpm dev
 ```
 
-4. Commit:
+6. Commit:
 
 ```sh
+git add .
 pnpm run commit
 ```

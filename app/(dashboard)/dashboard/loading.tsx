@@ -1,20 +1,23 @@
 import { DashboardHeader } from "@/components/header"
-import { PostCreateButton } from "@/components/post-create-button"
-import { PostItem } from "@/components/post-item"
 import { DashboardShell } from "@/components/shell"
+import { TranslationCreateButton } from "@/components/translation-create-button"
+import { TranslationItem } from "@/components/translation-item"
 
 export default function DashboardLoading() {
   return (
     <DashboardShell>
-      <DashboardHeader heading="Posts" text="Create and manage posts.">
-        <PostCreateButton />
+      <DashboardHeader
+        heading="Translations"
+        text="Create and manage translations."
+      >
+        <TranslationCreateButton />
       </DashboardHeader>
       <div className="divide-border-200 divide-y rounded-md border">
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
-        <PostItem.Skeleton />
+        <TranslationItem.Skeleton />
+        <TranslationItem.Skeleton />
+        <TranslationItem.Skeleton />
+        <TranslationItem.Skeleton />
+        <TranslationItem.Skeleton />
       </div>
     </DashboardShell>
   )

@@ -66,7 +66,7 @@ export const docsConfig: DocsConfig = {
           disabled: true,
         },
         {
-          title: "Writing Posts",
+          title: "Writing translations",
           href: "/docs/in-progress",
           disabled: true,
         },

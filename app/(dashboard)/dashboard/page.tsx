@@ -5,9 +5,9 @@ import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
-import { PostCreateButton } from "@/components/post-create-button"
-import { PostItem } from "@/components/post-item"
 import { DashboardShell } from "@/components/shell"
+import { TranslationCreateButton } from "@/components/translation-create-button"
+import { TranslationItem } from "@/components/translation-item"
 
 export const metadata = {
   title: "Dashboard",
@@ -20,9 +20,9 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const posts = await db.post.findMany({
+  const translations = await db.translation.findMany({
     where: {
-      authorId: user.id,
+      userId: user.id,
     },
     select: {
       id: true,
@@ -37,24 +37,29 @@ export default async function DashboardPage() {
 
   return (
     <DashboardShell>
-      <DashboardHeader heading="Posts" text="Create and manage posts.">
-        <PostCreateButton />
+      <DashboardHeader
+        heading="Translations"
+        text="Create and manage translations."
+      >
+        <TranslationCreateButton />
       </DashboardHeader>
       <div>
-        {posts?.length ? (
+        {translations?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {posts.map((post) => (
-              <PostItem key={post.id} post={post} />
+            {translations.map((translation) => (
+              <TranslationItem key={translation.id} translation={translation} />
             ))}
           </div>
         ) : (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="post" />
-            <EmptyPlaceholder.Title>No posts created</EmptyPlaceholder.Title>
+            <EmptyPlaceholder.Icon name="translation" />
+            <EmptyPlaceholder.Title>
+              No translations created
+            </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any posts yet. Start creating content.
+              You don&apos;t have any translations yet. Start creating content.
             </EmptyPlaceholder.Description>
-            <PostCreateButton variant="outline" />
+            <TranslationCreateButton variant="outline" />
           </EmptyPlaceholder>
         )}
       </div>
