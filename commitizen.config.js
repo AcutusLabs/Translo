@@ -24,7 +24,7 @@ const types = [
   },
 ]
 
-const scopesValues = ["general"].sort((prev, next) => {
+const scopesValues = ["general", "translation"].sort((prev, next) => {
   if (prev > next) {
     return 1
   } else if (prev < next) {

@@ -3,7 +3,6 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import EditorJS from "@editorjs/editorjs"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { Translation } from "@prisma/client"
 import { useForm } from "react-hook-form"
@@ -11,11 +10,14 @@ import TextareaAutosize from "react-textarea-autosize"
 import * as z from "zod"
 
 import "@/styles/editor.css"
+import { VStack } from "@chakra-ui/react"
+
 import { cn } from "@/lib/utils"
 import { translationPatchSchema } from "@/lib/validations/translation"
 import { buttonVariants } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
+import { MainTable } from "@/components/translation/main-table"
 
 interface EditorProps {
   translation: Pick<Translation, "id" | "title" | "content" | "published">
@@ -27,66 +29,11 @@ export function Editor({ translation }: EditorProps) {
   const { register, handleSubmit } = useForm<FormData>({
     resolver: zodResolver(translationPatchSchema),
   })
-  const ref = React.useRef<EditorJS>()
   const router = useRouter()
   const [isSaving, setIsSaving] = React.useState<boolean>(false)
-  const [isMounted, setIsMounted] = React.useState<boolean>(false)
-
-  const initializeEditor = React.useCallback(async () => {
-    const EditorJS = (await import("@editorjs/editorjs")).default
-    const Header = (await import("@editorjs/header")).default
-    const Embed = (await import("@editorjs/embed")).default
-    const Table = (await import("@editorjs/table")).default
-    const List = (await import("@editorjs/list")).default
-    const Code = (await import("@editorjs/code")).default
-    const LinkTool = (await import("@editorjs/link")).default
-    const InlineCode = (await import("@editorjs/inline-code")).default
-
-    const body = translationPatchSchema.parse(translation)
-
-    if (!ref.current) {
-      const editor = new EditorJS({
-        holder: "editor",
-        onReady() {
-          ref.current = editor
-        },
-        placeholder: "Type here to write your translation...",
-        inlineToolbar: true,
-        data: body.content,
-        tools: {
-          header: Header,
-          linkTool: LinkTool,
-          list: List,
-          code: Code,
-          inlineCode: InlineCode,
-          table: Table,
-          embed: Embed,
-        },
-      })
-    }
-  }, [translation])
-
-  React.useEffect(() => {
-    if (typeof window !== "undefined") {
-      setIsMounted(true)
-    }
-  }, [])
-
-  React.useEffect(() => {
-    if (isMounted) {
-      initializeEditor()
-
-      return () => {
-        ref.current?.destroy()
-        ref.current = undefined
-      }
-    }
-  }, [isMounted, initializeEditor])
 
   async function onSubmit(data: FormData) {
     setIsSaving(true)
-
-    const blocks = await ref.current?.save()
 
     const response = await fetch(`/api/translations/${translation.id}`, {
       method: "PATCH",
@@ -95,7 +42,7 @@ export function Editor({ translation }: EditorProps) {
       },
       body: JSON.stringify({
         title: data.title,
-        content: blocks,
+        content: { i18n: "i18n" },
       }),
     })
 
@@ -114,10 +61,6 @@ export function Editor({ translation }: EditorProps) {
     return toast({
       description: "Your translation has been saved.",
     })
-  }
-
-  if (!isMounted) {
-    return null
   }
 
   return (
@@ -145,7 +88,7 @@ export function Editor({ translation }: EditorProps) {
             <span>Save</span>
           </button>
         </div>
-        <div className="prose prose-stone mx-auto w-[800px] dark:prose-invert">
+        <div className="prose prose-stone mx-auto max-w-[1200px] dark:prose-invert">
           <TextareaAutosize
             autoFocus
             id="title"
@@ -154,14 +97,11 @@ export function Editor({ translation }: EditorProps) {
             className="w-full resize-none appearance-none overflow-hidden bg-transparent text-5xl font-bold focus:outline-none"
             {...register("title")}
           />
-          <div id="editor" className="min-h-[500px]" />
-          <p className="text-sm text-gray-500">
-            Use{" "}
-            <kbd className="rounded-md border bg-muted px-1 text-xs uppercase">
-              Tab
-            </kbd>{" "}
-            to open the command menu.
-          </p>
+          <VStack h={"100vh"} align={"stretch"}>
+            <VStack flex={1} overflow={"auto"}>
+              <MainTable />
+            </VStack>
+          </VStack>
         </div>
       </div>
     </form>

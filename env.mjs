@@ -18,6 +18,7 @@ export const env = createEnv({
     MAIL_SMTP_USER: z.string().min(1),
     MAIL_SMTP_PASSWORD: z.string().min(1),
     MAIL_SMTP_FROM: z.string().min(1),
+    OPEN_AI_API_KEY: z.string().min(1),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -37,5 +38,6 @@ export const env = createEnv({
     STRIPE_WEBHOOK_SECRET: process.env.STRIPE_WEBHOOK_SECRET,
     STRIPE_PRO_MONTHLY_PLAN_ID: process.env.STRIPE_PRO_MONTHLY_PLAN_ID,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
+    OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
   },
 })
