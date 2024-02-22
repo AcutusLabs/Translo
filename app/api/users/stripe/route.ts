@@ -56,6 +56,6 @@ export async function GET(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return new Response(null, { status: 500 })
+    return new Response(error.message, { status: 500 })
   }
 }

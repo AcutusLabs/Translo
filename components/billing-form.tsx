@@ -31,15 +31,16 @@ export function BillingForm({
 
   async function onSubmit(event) {
     event.preventDefault()
-    setIsLoading(!isLoading)
+    setIsLoading(true)
 
     // Get a Stripe session URL.
     const response = await fetch("/api/users/stripe")
 
     if (!response?.ok) {
+      setIsLoading(false)
       return toast({
         title: "Something went wrong.",
-        description: "Please refresh the page and try again.",
+        description: "Please try again or contact support.",
         variant: "destructive",
       })
     }
