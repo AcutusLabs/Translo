@@ -40,7 +40,8 @@ export default async function EditorPage({ params }: EditorPageProps) {
       translation={{
         id: translation.id,
         title: translation.title,
-        content: translation.content,
+        languages: translation.languages,
+        info: translation.info,
         published: translation.published,
       }}
     />
