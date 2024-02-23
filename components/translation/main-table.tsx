@@ -30,8 +30,6 @@ export const MainTable = () => {
     }
   }, [newKey, addKey])
 
-  console.log(i18n)
-
   const setChatGPTPause = () => {
     setPauseAutocomplete(true)
     setTimeout(() => {
@@ -42,12 +40,10 @@ export const MainTable = () => {
   const { mutate, isLoading } = useMutation({
     mutationFn: async () => await autocompleteI18nObject(i18n),
     onSuccess: (data: I18n) => {
-      console.log("success", data)
       setI18n(data)
       setChatGPTPause()
     },
     onError: (error) => {
-      console.error(error)
       setChatGPTPause()
     },
   })
