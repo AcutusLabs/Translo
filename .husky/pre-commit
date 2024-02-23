@@ -1,8 +1,8 @@
 #!/usr/bin/env sh
 . "$(dirname "$0")/no-verify.sh"
-. "$(dirname -- "$0")/_/husky.sh"
+. "$(dirname "$0")/_/husky.sh"
 
-npx typecheck
-npx lint
-npx git-precommit-checks
-npx pretty-quick --staged
+pnpm typecheck
+pnpm lint
+pnpm git-precommit-checks
+pnpm pretty-quick --staged
