@@ -4,6 +4,7 @@ import type { Icon } from "lucide-react"
 import { Icons } from "@/components/icons"
 
 export type NavItem = {
+  id: string
   title: string
   href: string
   disabled?: boolean
@@ -12,6 +13,7 @@ export type NavItem = {
 export type MainNavItem = NavItem
 
 export type SidebarNavItem = {
+  id: string
   title: string
   disabled?: boolean
   external?: boolean

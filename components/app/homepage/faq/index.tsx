@@ -51,7 +51,7 @@ const Faq = () => {
         <div className="md:col-span-3">
           <div className="hs-accordion-group divide-y divide-gray-200 dark:divide-gray-700">
             {allFaqs.map((faq) => (
-              <Question {...faq} />
+              <Question key={faq.id} {...faq} />
             ))}
           </div>
         </div>

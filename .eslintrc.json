@@ -9,9 +9,14 @@
   "plugins": ["tailwindcss"],
   "rules": {
     "@next/next/no-html-link-for-pages": "off",
-    "react/jsx-key": "off",
     "tailwindcss/no-custom-classname": "off",
-    "tailwindcss/classnames-order": "off"
+    "tailwindcss/classnames-order": "off",
+    "import/no-anonymous-default-export": "off",
+    "react-hooks/exhaustive-deps": 2,
+    "react-hooks/rules-of-hooks": "error",
+    "no-console": "error",
+    "react/no-array-index-key": "error",
+    "react/jsx-key": "error"
   },
   "settings": {
     "tailwindcss": {
