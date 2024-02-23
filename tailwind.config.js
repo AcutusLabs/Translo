@@ -7,6 +7,7 @@ module.exports = {
     "./components/**/*.{ts,tsx}",
     "./ui/**/*.{ts,tsx}",
     "./content/**/*.{md,mdx}",
+    "node_modules/preline/dist/*.js",
   ],
   darkMode: ["class"],
   theme: {
@@ -78,5 +79,9 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
+  plugins: [
+    require("tailwindcss-animate"),
+    require("@tailwindcss/typography"),
+    require("preline/plugin"),
+  ],
 }
