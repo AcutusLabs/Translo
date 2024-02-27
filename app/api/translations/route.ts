@@ -51,7 +51,7 @@ export async function POST(req: Request) {
     const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
     // If user is on a free plan.
-    // Check if user has reached limit of 3 translations.
+    // Check if user has reached limit of 1 translation.
     if (!subscriptionPlan?.isPro) {
       const count = await db.translation.count({
         where: {
@@ -59,7 +59,7 @@ export async function POST(req: Request) {
         },
       })
 
-      if (count >= 3) {
+      if (count >= 1) {
         throw new RequiresProPlanError()
       }
     }

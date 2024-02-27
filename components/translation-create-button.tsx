@@ -36,7 +36,7 @@ export function TranslationCreateButton({
     if (!response?.ok) {
       if (response.status === 402) {
         return toast({
-          title: "Limit of 3 translations reached.",
+          title: "Limit of 1 translation reached.",
           description: "Please upgrade to the PRO plan.",
           variant: "destructive",
         })
