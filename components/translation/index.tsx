@@ -23,8 +23,17 @@ export interface EditorProps {
 }
 
 export function Editor(props: EditorProps) {
-  const { keywords, isSaving, save, addNewKey, deleteKey, editTranslation } =
-    useTranslation(props)
+  const {
+    keywords,
+    isSaving,
+    title,
+    save,
+    addNewKey,
+    deleteKey,
+    editTranslation,
+    setTitle,
+    editContext,
+  } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
     useState<boolean>(false)
@@ -62,15 +71,16 @@ export function Editor(props: EditorProps) {
         <input
           id="title"
           placeholder="Translation name"
-          className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10"
-          defaultValue={props.translation.title}
+          className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10 mt-5"
+          value={title || props.translation.title}
+          onChange={(e) => setTitle(e.target.value)}
         />
         <Table
           keywords={keywords}
           addKeyword={addNewKey}
           deleteKey={deleteKey}
           editTranslation={editTranslation}
-          save={save}
+          editContext={editContext}
           isSaving={isSaving}
         />
       </div>

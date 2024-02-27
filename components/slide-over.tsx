@@ -39,13 +39,13 @@ const SlideOver = (props: Props) => {
                     className="h-6 w-6"
                     fill="none"
                     viewBox="0 0 24 24"
-                    stroke-width="1.5"
+                    strokeWidth="1.5"
                     stroke="currentColor"
                     aria-hidden="true"
                   >
                     <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
                       d="M6 18L18 6M6 6l12 12"
                     />
                   </svg>
@@ -128,9 +128,9 @@ export const SlideOverButton = (props: SlideOverButtonProps) => (
       viewBox="0 0 24 24"
       fill="none"
       stroke="currentColor"
-      stroke-width="2"
-      stroke-linecap="round"
-      stroke-linejoin="round"
+      strokeWidth="2"
+      strokeLinecap="round"
+      strokeLinejoin="round"
     >
       <svg
         xmlns="http://www.w3.org/2000/svg"
@@ -139,9 +139,9 @@ export const SlideOverButton = (props: SlideOverButtonProps) => (
         viewBox="0 0 24 24"
         fill="none"
         stroke="currentColor"
-        stroke-width="2"
-        stroke-linecap="round"
-        stroke-linejoin="round"
+        strokeWidth="2"
+        strokeLinecap="round"
+        strokeLinejoin="round"
       >
         <path d="M5 12h14" />
         <path d="M12 5v14" />

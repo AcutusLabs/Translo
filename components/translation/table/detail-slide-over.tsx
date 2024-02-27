@@ -9,17 +9,24 @@ type Props = {
   isSaving: boolean
   onClose: () => void
   editTranslation: (language: string, key: string, value: string) => void
-  save: () => void
+  editContext: (key: string, context: string) => void
 }
 
 const DetailSlideOver = (props: Props) => {
-  const { keyword, isSaving, onClose, editTranslation, save } = props
+  const { keyword, isSaving, onClose, editTranslation, editContext } = props
 
   const handleChangeTranslation = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>, language: string) => {
       editTranslation(language, keyword.key, event.target.value)
     },
     [editTranslation, keyword.key]
+  )
+
+  const handleChangeContext = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      editContext(keyword.key, event.target.value)
+    },
+    [editContext, keyword.key]
   )
 
   return (
@@ -31,7 +38,8 @@ const DetailSlideOver = (props: Props) => {
               rows={3}
               className="t-textarea"
               placeholder="Leave the keyword description here..."
-              value={keyword.info?.description}
+              value={keyword.info?.context}
+              onChange={handleChangeContext}
             ></textarea>
           </div>
         </SlideOverRow>

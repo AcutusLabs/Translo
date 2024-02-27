@@ -1,3 +1,4 @@
+import { initialI18nState } from "@/store/useI18nState"
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
@@ -69,9 +70,8 @@ export async function POST(req: Request) {
 
     const translation = await db.translation.create({
       data: {
+        ...initialI18nState,
         title: body.title,
-        languages: body.languages,
-        info: body.info,
         userId: session.user.id,
       },
       select: {

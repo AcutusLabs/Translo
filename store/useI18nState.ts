@@ -5,7 +5,7 @@ import { NewKeyword } from "@/components/translation/dialogs/add-new-keyword"
 
 export type I18nInfo = {
   key: string
-  description: string
+  context: string
 }
 export type I18nLang = {
   lang: string
@@ -17,7 +17,9 @@ export type I18n = Pick<Translation, "title" | "languages" | "info"> & {
 }
 export type I18nState = {
   i18n: I18n
+  setTitle: (title: string) => void
   addLanguage: (language: string) => void
+  editContext: (key: string, context: string) => void
   editTranslation: (language: string, key: string, value: string) => void
   addKey: (keyword: NewKeyword) => void
   deleteKey: (key: string) => void
@@ -25,8 +27,8 @@ export type I18nState = {
   reset: () => void
 }
 
-const initialState: I18n = {
-  title: "Title",
+export const initialI18nState: I18n = {
+  title: "",
   info: [],
   languages: [
     {
@@ -37,7 +39,7 @@ const initialState: I18n = {
 }
 
 export const useI18nState = create<I18nState>()((set) => ({
-  i18n: initialState,
+  i18n: initialI18nState,
   setTitle: (title: string) => {
     set((state) => ({
       i18n: {
@@ -84,7 +86,7 @@ export const useI18nState = create<I18nState>()((set) => ({
 
       const newInfo: I18nInfo[] = [
         ...state.i18n.info,
-        { key: keyword.key, description: keyword.description },
+        { key: keyword.key, context: keyword.context },
       ]
 
       const newI18n = {
@@ -103,6 +105,22 @@ export const useI18nState = create<I18nState>()((set) => ({
         i18n: newI18n,
       }
     }),
+  editContext: (key: string, context: string) =>
+    set((state) => ({
+      i18n: {
+        ...state.i18n,
+        info: state.i18n.info.map((info) => {
+          if (info.key !== key) {
+            return info
+          }
+
+          return {
+            ...info,
+            context,
+          }
+        }),
+      },
+    })),
   editTranslation: (language: string, key: string, value: string) =>
     set((state) => ({
       i18n: {
@@ -123,5 +141,5 @@ export const useI18nState = create<I18nState>()((set) => ({
       },
     })),
   setI18n: (i18n: I18n) => set({ i18n }),
-  reset: () => set({ i18n: { ...initialState } }),
+  reset: () => set({ i18n: { ...initialI18nState } }),
 }))
