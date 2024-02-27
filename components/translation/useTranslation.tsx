@@ -1,13 +1,7 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
 import { autocompleteI18nObject } from "@/external_api/autocompleteI18nObject"
-import {
-  I18n,
-  I18nInfo,
-  I18nLang,
-  Language,
-  useI18nState,
-} from "@/store/useI18nState"
+import { I18n, I18nInfo, I18nLang, useI18nState } from "@/store/useI18nState"
 import { Spinner } from "@chakra-ui/react"
 import { useMutation } from "react-query"
 
@@ -16,13 +10,13 @@ import { toast } from "../ui/use-toast"
 import { NewKeyword } from "./dialogs/add-new-keyword"
 
 type LanguagesAvailable = {
-  language: Language
+  language: string
   available: boolean
 }
 
 type KeywordLanguage = {
   value: string
-  language: Language
+  language: string
 }
 
 export type Keyword = {
@@ -33,7 +27,13 @@ export type Keyword = {
 }
 
 const useTranslation = (props: EditorProps) => {
-  const { i18n, addTranslation, addKey, deleteKey, setI18n } = useI18nState()
+  const {
+    i18n,
+    editTranslation: editTranslationStore,
+    addKey,
+    deleteKey,
+    setI18n,
+  } = useI18nState()
 
   const keywords = useMemo((): Keyword[] => {
     if (!i18n.info || !i18n.info.length) {
@@ -58,12 +58,16 @@ const useTranslation = (props: EditorProps) => {
     }))
   }, [i18n.info, i18n.languages])
 
-  // useEffect(() => {
-  //   setI18n({
-  //     title: props.translation.title,
-  //     languages: props.translation.languages as I18nLang[],
-  //   })
-  // }, [props.translation, setI18n])
+  useEffect(() => {
+    const languages = props.translation.languages as I18nLang[]
+    if (languages) {
+      setI18n({
+        title: props.translation.title,
+        languages: props.translation.languages as I18nLang[],
+        info: props.translation.info as I18nInfo[],
+      })
+    }
+  }, [props.translation, setI18n])
 
   const router = useRouter()
 
@@ -124,9 +128,9 @@ const useTranslation = (props: EditorProps) => {
 
   const editTranslation = useCallback(
     (language: string, key: string, value: string) => {
-      addTranslation(language, key, value)
+      editTranslationStore(language, key, value)
     },
-    [addTranslation]
+    [editTranslationStore]
   )
 
   const save = useCallback(async () => {

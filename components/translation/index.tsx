@@ -23,7 +23,7 @@ export interface EditorProps {
 }
 
 export function Editor(props: EditorProps) {
-  const { keywords, isSaving, save, addNewKey, deleteKey } =
+  const { keywords, isSaving, save, addNewKey, deleteKey, editTranslation } =
     useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -69,6 +69,9 @@ export function Editor(props: EditorProps) {
           keywords={keywords}
           addKeyword={addNewKey}
           deleteKey={deleteKey}
+          editTranslation={editTranslation}
+          save={save}
+          isSaving={isSaving}
         />
       </div>
       {isProjectSettingsOpened && (

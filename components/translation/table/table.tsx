@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { useCallback, useMemo, useState } from "react"
 
 import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
 import { Keyword } from "../useTranslation"
@@ -9,24 +9,31 @@ import Row from "./row"
 
 type Props = {
   keywords: Keyword[]
+  isSaving: boolean
   addKeyword: (newKeyword: NewKeyword) => void
   deleteKey: (key: string) => void
+  editTranslation: (language: string, key: string, value: string) => void
+  save: () => void
 }
 
 const Table = (props: Props) => {
-  const { keywords, addKeyword, deleteKey } = props
+  const { keywords, isSaving, addKeyword, deleteKey, editTranslation, save } =
+    props
 
-  const [keywordSelected, selectKeyword] = useState<string | undefined>(
-    undefined
-  )
+  const [keySelected, selectKey] = useState<string | undefined>(undefined)
 
   const openDetailRow = useCallback((key: string) => {
-    selectKeyword(key)
+    selectKey(key)
   }, [])
 
   const closeDetailRow = useCallback(() => {
-    selectKeyword(undefined)
+    selectKey(undefined)
   }, [])
+
+  const keywordSelected = useMemo(
+    () => keywords.find((keyword) => keyword.key === keySelected),
+    [keySelected, keywords]
+  )
 
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 rounded-lg border-[1px]">
@@ -100,7 +107,15 @@ const Table = (props: Props) => {
           </tbody>
         </table>
       </div>
-      {keywordSelected && <DetailSlideOver onClose={closeDetailRow} />}
+      {keywordSelected && (
+        <DetailSlideOver
+          onClose={closeDetailRow}
+          keyword={keywordSelected}
+          editTranslation={editTranslation}
+          save={save}
+          isSaving={isSaving}
+        />
+      )}
     </div>
   )
 }
