@@ -71,7 +71,7 @@ const Table = (props: Props) => {
                 Keyword
               </th>
               <th scope="col" className="px-4 py-3">
-                translations
+                languages
               </th>
               <th scope="col" className="px-4 py-3">
                 Description
