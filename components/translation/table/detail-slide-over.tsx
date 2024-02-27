@@ -2,7 +2,7 @@ type Props = {
   onClose: () => void
 }
 
-const SlideOver = (props: Props) => {
+const DetailSlideOver = (props: Props) => {
   const { onClose } = props
   return (
     <div
@@ -67,4 +67,4 @@ const SlideOver = (props: Props) => {
   )
 }
 
-export default SlideOver
+export default DetailSlideOver

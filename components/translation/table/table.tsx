@@ -1,12 +1,11 @@
 "use client"
 
 import { useCallback, useState } from "react"
-import { I18n, I18nLang } from "@/store/useI18nState"
 
 import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
 import { Keyword } from "../useTranslation"
+import DetailSlideOver from "./detail-slide-over"
 import Row from "./row"
-import SlideOver from "./slide-overs"
 
 type Props = {
   keywords: Keyword[]
@@ -21,8 +20,8 @@ const Table = (props: Props) => {
     undefined
   )
 
-  const openDetailRow = useCallback(() => {
-    selectKeyword("key")
+  const openDetailRow = useCallback((key: string) => {
+    selectKeyword(key)
   }, [])
 
   const closeDetailRow = useCallback(() => {
@@ -30,7 +29,7 @@ const Table = (props: Props) => {
   }, [])
 
   return (
-    <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 sm:rounded-lg border-[1px]">
+    <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 rounded-lg border-[1px]">
       <div className="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
         <div className="w-full md:w-1/2">
           <label htmlFor="simple-search" className="sr-only">
@@ -90,7 +89,9 @@ const Table = (props: Props) => {
               <Row
                 key={keyword.key}
                 keyword={keyword}
-                openDetail={openDetailRow}
+                openDetail={() => {
+                  openDetailRow(keyword.key)
+                }}
                 deleteKeyword={() => {
                   deleteKey(keyword.key)
                 }}
@@ -99,7 +100,7 @@ const Table = (props: Props) => {
           </tbody>
         </table>
       </div>
-      {keywordSelected && <SlideOver onClose={closeDetailRow} />}
+      {keywordSelected && <DetailSlideOver onClose={closeDetailRow} />}
     </div>
   )
 }
