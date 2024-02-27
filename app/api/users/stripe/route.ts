@@ -9,7 +9,7 @@ import { absoluteUrl } from "@/lib/utils"
 
 const billingUrl = absoluteUrl("/dashboard/billing")
 
-export async function GET(req: Request) {
+export async function GET() {
   try {
     const session = await getServerSession(authOptions)
 

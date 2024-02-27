@@ -1,9 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { autocompleteI18nObject } from "@/external_api/autocompleteI18nObject"
-import { I18n, I18nInfo, I18nLang, useI18nState } from "@/store/useI18nState"
-import { Spinner } from "@chakra-ui/react"
-import { useMutation } from "react-query"
+import { I18nInfo, I18nLang, useI18nState } from "@/store/useI18nState"
 
 import { EditorProps } from "."
 import { toast } from "../ui/use-toast"
@@ -70,7 +67,7 @@ const useTranslation = (props: EditorProps) => {
 
   const router = useRouter()
 
-  const [pauseAutocomplete, setPauseAutocomplete] = useState(false)
+  // const [pauseAutocomplete, setPauseAutocomplete] = useState(false)
   const [isSaving, setIsSaving] = useState<boolean>(false)
 
   const addNewKey = useCallback(
@@ -80,50 +77,50 @@ const useTranslation = (props: EditorProps) => {
     [addKey]
   )
 
-  const setChatGPTPause = () => {
-    setPauseAutocomplete(true)
-    setTimeout(() => {
-      setPauseAutocomplete(false)
-    }, 10000)
-  }
+  // const setChatGPTPause = () => {
+  //   setPauseAutocomplete(true)
+  //   setTimeout(() => {
+  //     setPauseAutocomplete(false)
+  //   }, 10000)
+  // }
 
-  const { mutate, isLoading } = useMutation({
-    mutationFn: async () => await autocompleteI18nObject(i18n),
-    onSuccess: (data: I18n) => {
-      setI18n(data)
-      setChatGPTPause()
-    },
-    onError: (error) => {
-      setChatGPTPause()
-    },
-  })
+  // const { mutate, isLoading } = useMutation({
+  //   mutationFn: async () => await autocompleteI18nObject(i18n),
+  //   onSuccess: (data: I18n) => {
+  //     setI18n(data)
+  //     setChatGPTPause()
+  //   },
+  //   onError: () => {
+  //     setChatGPTPause()
+  //   },
+  // })
 
-  const autocomplete = useCallback(() => {
-    mutate()
-  }, [mutate])
+  // const autocomplete = useCallback(() => {
+  //   mutate()
+  // }, [mutate])
 
-  const autocompleteButtonText = useMemo(() => {
-    if (isLoading) {
-      return <Spinner />
-    }
-    return pauseAutocomplete ? "need to recharge ChatGPT..." : "Autogenerate"
-  }, [isLoading, pauseAutocomplete])
+  // const autocompleteButtonText = useMemo(() => {
+  //   if (isLoading) {
+  //     return <Spinner />
+  //   }
+  //   return pauseAutocomplete ? "need to recharge ChatGPT..." : "Autogenerate"
+  // }, [isLoading, pauseAutocomplete])
 
-  const downloadFile = useCallback(() => {
-    const fileName = "i18n"
-    const json = JSON.stringify(i18n, null, 2)
-    const blob = new Blob([json], { type: "application/json" })
-    const href = URL.createObjectURL(blob)
+  // const downloadFile = useCallback(() => {
+  //   const fileName = "i18n"
+  //   const json = JSON.stringify(i18n, null, 2)
+  //   const blob = new Blob([json], { type: "application/json" })
+  //   const href = URL.createObjectURL(blob)
 
-    const link = document.createElement("a")
-    link.href = href
-    link.download = fileName + ".json"
-    document.body.appendChild(link)
-    link.click()
+  //   const link = document.createElement("a")
+  //   link.href = href
+  //   link.download = fileName + ".json"
+  //   document.body.appendChild(link)
+  //   link.click()
 
-    document.body.removeChild(link)
-    URL.revokeObjectURL(href)
-  }, [i18n])
+  //   document.body.removeChild(link)
+  //   URL.revokeObjectURL(href)
+  // }, [i18n])
 
   const editTranslation = useCallback(
     (language: string, key: string, value: string) => {
