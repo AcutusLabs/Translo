@@ -38,3 +38,23 @@ pnpm dev
 git add .
 pnpm run commit
 ```
+
+## Test stripe
+
+1. Install stripe cli:
+
+```sh
+brew install stripe/stripe-cli/stripe
+```
+
+2. Login stripe:
+
+```sh
+stripe login
+```
+
+2. Webhook listener:
+
+```sh
+pnpm run stripe:webhook
+```

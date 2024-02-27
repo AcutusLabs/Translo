@@ -24,7 +24,7 @@ const types = [
   },
 ]
 
-const scopesValues = ["general", "translation", "landing"].sort(
+const scopesValues = ["general", "translation", "landing", "subscription"].sort(
   (prev, next) => {
     if (prev > next) {
       return 1
@@ -50,8 +50,8 @@ module.exports = {
   },
   types,
   scopes,
-  allowTicketNumber: true,
-  isTicketNumberRequired: false,
+  // allowTicketNumber: true,
+  // isTicketNumberRequired: false,
   ticketNumberPrefix: "#",
   ticketNumberRegExp: "\\d{1,5}",
   skipQuestions: ["breaking", "footer"],

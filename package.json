@@ -20,7 +20,8 @@
     "prisma:reset:alert": "yarn dotenv -e .env.local yarn prisma migrate reset",
     "prisma:migrate:dev": "yarn dotenv -e .env.local yarn prisma generate && yarn dotenv -e .env.local yarn prisma migrate dev --create-only",
     "prisma:studio": "BROWSER=none yarn dotenv -e .env.local yarn prisma studio",
-    "prisma:generate": "yarn prisma format && yarn prisma generate"
+    "prisma:generate": "yarn prisma format && yarn prisma generate",
+    "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
     "@chakra-ui/react": "^2.8.2",
