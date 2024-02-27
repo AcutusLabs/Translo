@@ -1,17 +1,44 @@
+import { EditLanguageType, Language } from "@/store/useI18nState"
+
 import SlideOver, { SlideOverButton, SlideOverRow } from "../slide-over"
+import EditLanguage from "./dialogs/add-edit-languages"
+import AddNewLanguage from "./dialogs/add-new-languages"
 
 type Props = {
+  languages: Language[]
+  addLanguage: (language: Language) => void
+  editLanguage: (language: EditLanguageType) => void
+  deleteLanguage: (language: Language) => void
   onClose: () => void
 }
 
 const ProjectSettingsSlideOver = (props: Props) => {
-  const { onClose } = props
+  const { languages, addLanguage, editLanguage, deleteLanguage, onClose } =
+    props
 
+  {
+    languages.map((language) => (
+      <button key={language.short} type="button" className="t-button">
+        [{language.short}] {language.lang}
+      </button>
+    ))
+  }
   return (
-    <SlideOver title="Settings" onClose={onClose} onSave={() => {}}>
+    <SlideOver title="Settings" onClose={onClose}>
       <div className="relative p-4 flex-1 sm:px-6">
         <SlideOverRow title="Available languages">
-          <SlideOverButton text="Add language" onClick={() => {}} />
+          <>
+            {languages.map((language) => (
+              <EditLanguage
+                key={language.short}
+                language={language}
+                editLanguage={editLanguage}
+                deleteLanguage={deleteLanguage}
+              />
+            ))}
+          </>
+
+          <AddNewLanguage addLanguage={addLanguage} />
         </SlideOverRow>
       </div>
       <div className="relative p-4 flex-1 sm:px-6">

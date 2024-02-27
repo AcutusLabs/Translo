@@ -115,11 +115,7 @@ export type SlideOverButtonProps = {
 }
 
 export const SlideOverButton = (props: SlideOverButtonProps) => (
-  <button
-    type="button"
-    onClick={props.onClick}
-    className="max-w-max py-2 px-3 inline-flex items-center gap-x-2 text-[13px] font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-  >
+  <button type="button" onClick={props.onClick} className="t-button">
     <svg
       className="shrink-0 size-4"
       xmlns="http://www.w3.org/2000/svg"

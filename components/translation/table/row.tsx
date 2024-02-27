@@ -31,7 +31,7 @@ const Row = (props: Props) => {
                   key={language.language}
                   className="text-green-600 dark:text-green-500 font-medium"
                 >
-                  {language.language.toUpperCase()}
+                  {language.short.toUpperCase()}
                 </span>
               )
             }
@@ -41,7 +41,7 @@ const Row = (props: Props) => {
                 key={language.language}
                 className="text-red-600 dark:text-red-500 font-medium"
               >
-                {language.language.toUpperCase()}
+                {language.short.toUpperCase()}
               </span>
             )
           })}

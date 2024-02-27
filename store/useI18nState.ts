@@ -3,22 +3,33 @@ import { create } from "zustand"
 
 import { NewKeyword } from "@/components/translation/dialogs/add-new-keyword"
 
+export type Language = {
+  lang: string
+  short: string
+}
+
+export type EditLanguageType = Language & { exShortName: string }
+
 export type I18nInfo = {
   key: string
   context: string
 }
-export type I18nLang = {
-  lang: string
+
+export type I18nLang = Language & {
   keywords: Record<string, string>
 }
+
 export type I18n = Pick<Translation, "title" | "languages" | "info"> & {
   languages: I18nLang[]
   info: I18nInfo[]
 }
+
 export type I18nState = {
   i18n: I18n
   setTitle: (title: string) => void
-  addLanguage: (language: string) => void
+  addLanguage: (language: Language) => void
+  editLanguage: (Language: EditLanguageType) => void
+  deleteLanguage: (language: Language) => void
   editContext: (key: string, context: string) => void
   editTranslation: (language: string, key: string, value: string) => void
   addKey: (keyword: NewKeyword) => void
@@ -32,7 +43,8 @@ export const initialI18nState: I18n = {
   info: [],
   languages: [
     {
-      lang: "en",
+      lang: "English",
+      short: "en",
       keywords: {},
     },
   ],
@@ -48,11 +60,40 @@ export const useI18nState = create<I18nState>()((set) => ({
       },
     }))
   },
-  addLanguage: (language: string) =>
+  addLanguage: (language: Language) =>
     set((state) => ({
       i18n: {
         ...state.i18n,
-        languages: [...state.i18n.languages, { lang: language, keywords: {} }],
+        languages: [
+          ...state.i18n.languages,
+          { lang: language.lang, short: language.short, keywords: {} },
+        ],
+      },
+    })),
+  editLanguage: (languageToEdit: EditLanguageType) =>
+    set((state) => ({
+      i18n: {
+        ...state.i18n,
+        languages: state.i18n.languages.map((language) => {
+          if (language.short !== languageToEdit.exShortName) {
+            return language
+          }
+
+          return {
+            ...language,
+            lang: languageToEdit.lang,
+            short: languageToEdit.short,
+          }
+        }),
+      },
+    })),
+  deleteLanguage: (languageToDelete: Language) =>
+    set((state) => ({
+      i18n: {
+        ...state.i18n,
+        languages: (state.i18n.languages as I18nLang[]).filter(
+          (language) => language.short !== languageToDelete.short
+        ),
       },
     })),
   deleteKey: (key: string) => {

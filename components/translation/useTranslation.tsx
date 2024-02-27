@@ -1,6 +1,11 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
 import { useRouter } from "next/navigation"
-import { I18nInfo, I18nLang, useI18nState } from "@/store/useI18nState"
+import {
+  I18nInfo,
+  I18nLang,
+  Language,
+  useI18nState,
+} from "@/store/useI18nState"
 
 import { EditorProps } from "."
 import { toast } from "../ui/use-toast"
@@ -9,11 +14,13 @@ import { NewKeyword } from "./dialogs/add-new-keyword"
 type LanguagesAvailable = {
   language: string
   available: boolean
+  short: string
 }
 
 type KeywordLanguage = {
   value: string
   language: string
+  short: string
 }
 
 export type Keyword = {
@@ -32,6 +39,9 @@ const useTranslation = (props: EditorProps) => {
     setI18n,
     setTitle,
     editContext,
+    addLanguage,
+    editLanguage,
+    deleteLanguage,
   } = useI18nState()
 
   const keywords = useMemo((): Keyword[] => {
@@ -48,10 +58,12 @@ const useTranslation = (props: EditorProps) => {
         return {
           value: language.keywords[keyword],
           language: language.lang,
+          short: language.short,
         }
       }),
       languagesAvailable: (i18n.languages as I18nLang[]).map((language) => ({
         language: language.lang,
+        short: language.short,
         available: !!language.keywords[keyword],
       })),
     }))
@@ -157,9 +169,19 @@ const useTranslation = (props: EditorProps) => {
     })
   }, [i18n, props.translation.id, router])
 
+  const languages: Language[] = useMemo(
+    () =>
+      i18n.languages.map((language) => ({
+        lang: language.lang,
+        short: language.short,
+      })),
+    [i18n.languages]
+  )
+
   return {
     title: i18n.title,
     keywords,
+    languages,
     editTranslation,
     addNewKey,
     deleteKey,
@@ -167,6 +189,9 @@ const useTranslation = (props: EditorProps) => {
     isSaving,
     setTitle,
     editContext,
+    addLanguage,
+    editLanguage,
+    deleteLanguage,
   }
 }
 

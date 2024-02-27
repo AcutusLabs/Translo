@@ -11,7 +11,10 @@ const routeContextSchema = z.object({
   }),
 })
 
-export async function DELETE(context: z.infer<typeof routeContextSchema>) {
+export async function DELETE(
+  _req: Request,
+  context: z.infer<typeof routeContextSchema>
+) {
   try {
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
