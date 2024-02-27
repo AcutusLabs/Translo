@@ -63,14 +63,14 @@ export async function PATCH(
     const body = translationPatchSchema.parse(json)
 
     // Update the translation.
-    // TODO: Implement sanitization for content.
     await db.translation.update({
       where: {
         id: params.translationId,
       },
       data: {
         title: body.title,
-        content: body.content,
+        languages: body.languages,
+        info: body.info,
       },
     })
 

@@ -8,7 +8,8 @@ import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 const translationCreateSchema = z.object({
   title: z.string(),
-  content: z.string().optional(),
+  languages: z.string().optional(),
+  info: z.string().optional(),
 })
 
 export async function GET() {
@@ -69,7 +70,8 @@ export async function POST(req: Request) {
     const translation = await db.translation.create({
       data: {
         title: body.title,
-        content: body.content,
+        languages: body.languages,
+        info: body.info,
         userId: session.user.id,
       },
       select: {
