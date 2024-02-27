@@ -3,18 +3,12 @@ import { create } from "zustand"
 
 import { NewKeyword } from "@/components/translation/dialogs/add-new-keyword"
 
-export enum Language {
-  IT = "it",
-  EN = "en",
-  ES = "es",
-}
-
 export type I18nInfo = {
   key: string
   description: string
 }
 export type I18nLang = {
-  lang: Language
+  lang: string
   keywords: Record<string, string>
 }
 export type I18n = Pick<Translation, "title" | "languages" | "info"> & {
@@ -24,7 +18,7 @@ export type I18n = Pick<Translation, "title" | "languages" | "info"> & {
 export type I18nState = {
   i18n: I18n
   addLanguage: (language: string) => void
-  addTranslation: (language: string, key: string, value: string) => void
+  editTranslation: (language: string, key: string, value: string) => void
   addKey: (keyword: NewKeyword) => void
   deleteKey: (key: string) => void
   setI18n: (i18n: I18n) => void
@@ -33,36 +27,11 @@ export type I18nState = {
 
 const initialState: I18n = {
   title: "Title",
-  info: [
-    {
-      key: "app.hello-world",
-      description: "Used in the registration email",
-    },
-    {
-      key: "app.goodbye-world",
-      description: "Used during logout",
-    },
-    {
-      key: "app.only-en",
-      description: "",
-    },
-  ],
+  info: [],
   languages: [
     {
-      lang: Language.EN,
-      keywords: {
-        "app.hello-world": "Hello, World!",
-        "app.goodbye-world": "Goodbye, World!",
-        "app.only-en": "hey!",
-      },
-    },
-    {
-      lang: Language.IT,
-      keywords: {
-        "app.hello-world": "Hello, World!",
-        "app.goodbye-world": "Goodbye, World!",
-        "app.only-en": "",
-      },
+      lang: "en",
+      keywords: {},
     },
   ],
 }
@@ -77,7 +46,7 @@ export const useI18nState = create<I18nState>()((set) => ({
       },
     }))
   },
-  addLanguage: (language: Language) =>
+  addLanguage: (language: string) =>
     set((state) => ({
       i18n: {
         ...state.i18n,
@@ -130,12 +99,11 @@ export const useI18nState = create<I18nState>()((set) => ({
         })),
       }
 
-      console.log("newI18n", newI18n)
       return {
         i18n: newI18n,
       }
     }),
-  addTranslation: (language: string, key: string, value: string) =>
+  editTranslation: (language: string, key: string, value: string) =>
     set((state) => ({
       i18n: {
         ...state.i18n,
@@ -146,7 +114,10 @@ export const useI18nState = create<I18nState>()((set) => ({
 
           return {
             ..._language,
-            [key]: value,
+            keywords: {
+              ..._language.keywords,
+              [key]: value,
+            },
           }
         }),
       },

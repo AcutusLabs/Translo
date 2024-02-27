@@ -1,17 +1,4 @@
-import Image from "next/image"
-import { Language } from "@/store/useI18nState"
-import {
-  Accordion,
-  AccordionButton,
-  AccordionIcon,
-  AccordionItem,
-  AccordionPanel,
-  Box,
-  Menu,
-  MenuButton,
-  MenuItem,
-  MenuList,
-} from "@chakra-ui/react"
+import { Menu, MenuButton, MenuItem, MenuList } from "@chakra-ui/react"
 
 import { Keyword } from "../useTranslation"
 

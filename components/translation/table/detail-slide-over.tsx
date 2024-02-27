@@ -1,69 +1,63 @@
+import { ChangeEvent, useCallback } from "react"
+
+import SlideOver, { SlideOverRow } from "@/components/slide-over"
+
+import { Keyword } from "../useTranslation"
+
 type Props = {
+  keyword: Keyword
+  isSaving: boolean
   onClose: () => void
+  editTranslation: (language: string, key: string, value: string) => void
+  save: () => void
 }
 
 const DetailSlideOver = (props: Props) => {
-  const { onClose } = props
+  const { keyword, isSaving, onClose, editTranslation, save } = props
+
+  const handleChangeTranslation = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>, language: string) => {
+      editTranslation(language, keyword.key, event.target.value)
+    },
+    [editTranslation, keyword.key]
+  )
+
   return (
-    <div
-      className="relative z-10"
-      aria-labelledby="slide-over-title"
-      role="dialog"
-      aria-modal="true"
-      onClick={onClose}
-    >
-      <div className="fixed inset-0 bg-gray-500 opacity-75 transition-opacity"></div>
-
-      <div className="fixed inset-0 overflow-hidden">
-        <div className="absolute inset-0 overflow-hidden">
-          <div className="pointer-events-none fixed inset-y-0 right-0 flex max-w-full pl-10">
-            <div className="pointer-events-auto relative w-screen max-w-md">
-              <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
-                <button
-                  type="button"
-                  className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 ring-transparent "
-                  onClick={onClose}
-                >
-                  <span className="absolute -inset-2.5"></span>
-                  <span className="sr-only">Close panel</span>
-                  <svg
-                    className="h-6 w-6"
-                    fill="none"
-                    viewBox="0 0 24 24"
-                    stroke-width="1.5"
-                    stroke="currentColor"
-                    aria-hidden="true"
-                  >
-                    <path
-                      stroke-linecap="round"
-                      stroke-linejoin="round"
-                      d="M6 18L18 6M6 6l12 12"
-                    />
-                  </svg>
-                </button>
-              </div>
-
-              <div
-                className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl"
-                onClick={(e) => e.stopPropagation()}
-              >
-                <div className="px-4 sm:px-6">
-                  <h2
-                    className="text-base font-semibold leading-6 text-gray-900"
-                    id="slide-over-title"
-                  >
-                    Keyword
-                  </h2>
-                </div>
-                <div className="relative mt-6 flex-1 px-4 sm:px-6">
-                  dettagli
-                </div>
-              </div>
+    <SlideOver title={keyword.key} onClose={onClose} isSaving={isSaving}>
+      <div className="relative p-4 flex-1 sm:px-6">
+        <SlideOverRow title="Description">
+          <div className="mt-1">
+            <textarea
+              rows={3}
+              className="t-textarea"
+              placeholder="Leave the keyword description here..."
+              value={keyword.info?.description}
+            ></textarea>
+          </div>
+        </SlideOverRow>
+        {keyword.languagesAvailable.map((lang) => (
+          <div key={lang.language} className="mt-2">
+            <label className="block mb-2 text-sm font-medium dark:text-white">
+              {lang.language}
+            </label>
+            <div className="mt-1">
+              <textarea
+                rows={3}
+                className="t-textarea"
+                placeholder={`Leave ${lang.language} translation here...`}
+                value={
+                  keyword.languages.find(
+                    (keywordLanguage) =>
+                      keywordLanguage.language === lang.language
+                  )?.value
+                }
+                onChange={(e) => handleChangeTranslation(e, lang.language)}
+              ></textarea>
             </div>
           </div>
-        </div>
+        ))}
       </div>
-    </div>
+    </SlideOver>
   )
 }
 
