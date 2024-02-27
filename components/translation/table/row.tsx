@@ -47,7 +47,7 @@ const Row = (props: Props) => {
           })}
         </div>
       </td>
-      <td className="align-middle px-4 py-3">{keyword.info?.description}</td>
+      <td className="align-middle px-4 py-3">{keyword.info?.context}</td>
       {/* <td className="align-middle">
         <Image
           className="rounded-lg m-0"
@@ -75,7 +75,7 @@ const Row = (props: Props) => {
               </svg>
             </MenuButton>
             <MenuList>
-              <MenuItem>Edit</MenuItem>
+              <MenuItem onClick={openDetail}>Edit</MenuItem>
               <MenuItem onClick={deleteKeyword}>Delete</MenuItem>
             </MenuList>
           </Menu>

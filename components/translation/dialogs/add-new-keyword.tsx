@@ -16,7 +16,7 @@ import { Label } from "@/components/ui/label"
 
 export type NewKeyword = {
   key: string
-  description: string
+  context: string
 }
 
 type Props = {
@@ -27,7 +27,7 @@ const AddNewKeyword = (props: Props) => {
   const { addKeyword } = props
 
   const [key, setKey] = useState("")
-  const [description, setDescription] = useState("")
+  const [context, setContext] = useState("")
 
   const handleChangeKey = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKey(e.target.value)
@@ -35,23 +35,23 @@ const AddNewKeyword = (props: Props) => {
 
   const handleChangeDescription = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setDescription(e.target.value)
+      setContext(e.target.value)
     },
     []
   )
 
   const reset = useCallback(() => {
     setKey("")
-    setDescription("")
+    setContext("")
   }, [])
 
   const onSubmit = useCallback(() => {
     addKeyword({
       key,
-      description,
+      context,
     })
     reset()
-  }, [addKeyword, description, key, reset])
+  }, [addKeyword, context, key, reset])
 
   return (
     <Dialog>
@@ -103,7 +103,7 @@ const AddNewKeyword = (props: Props) => {
               placeholder="used in the registration email"
               className="col-span-3"
               data-1p-ignore
-              value={description}
+              value={context}
               onChange={handleChangeDescription}
             />
           </div>

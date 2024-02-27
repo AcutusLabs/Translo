@@ -33,6 +33,8 @@ const useTranslation = (props: EditorProps) => {
     addKey,
     deleteKey,
     setI18n,
+    setTitle,
+    editContext,
   } = useI18nState()
 
   const keywords = useMemo((): Keyword[] => {
@@ -59,14 +61,11 @@ const useTranslation = (props: EditorProps) => {
   }, [i18n.info, i18n.languages])
 
   useEffect(() => {
-    const languages = props.translation.languages as I18nLang[]
-    if (languages) {
-      setI18n({
-        title: props.translation.title,
-        languages: props.translation.languages as I18nLang[],
-        info: props.translation.info as I18nInfo[],
-      })
-    }
+    setI18n({
+      title: props.translation.title,
+      languages: (props.translation.languages || []) as I18nLang[],
+      info: (props.translation.info || []) as I18nInfo[],
+    })
   }, [props.translation, setI18n])
 
   const router = useRouter()
@@ -161,7 +160,17 @@ const useTranslation = (props: EditorProps) => {
     })
   }, [i18n, props.translation.id, router])
 
-  return { keywords, editTranslation, addNewKey, deleteKey, save, isSaving }
+  return {
+    title: i18n.title,
+    keywords,
+    editTranslation,
+    addNewKey,
+    deleteKey,
+    save,
+    isSaving,
+    setTitle,
+    editContext,
+  }
 }
 
 export default useTranslation

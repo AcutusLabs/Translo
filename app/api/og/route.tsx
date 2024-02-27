@@ -62,7 +62,7 @@ export async function GET(req: Request) {
               height="48"
               rx="9"
               stroke={paint}
-              stroke-width="2"
+              strokeWidth="2"
             />
             <defs>
               <clipPath id="a">

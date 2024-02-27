@@ -13,12 +13,18 @@ type Props = {
   addKeyword: (newKeyword: NewKeyword) => void
   deleteKey: (key: string) => void
   editTranslation: (language: string, key: string, value: string) => void
-  save: () => void
+  editContext: (key: string, context: string) => void
 }
 
 const Table = (props: Props) => {
-  const { keywords, isSaving, addKeyword, deleteKey, editTranslation, save } =
-    props
+  const {
+    keywords,
+    isSaving,
+    addKeyword,
+    deleteKey,
+    editTranslation,
+    editContext,
+  } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
 
@@ -81,7 +87,7 @@ const Table = (props: Props) => {
                 languages
               </th>
               <th scope="col" className="px-4 py-3">
-                Description
+                Context
               </th>
               {/* <th scope="col" className="px-4 py-3">
                 Image
@@ -112,7 +118,7 @@ const Table = (props: Props) => {
           onClose={closeDetailRow}
           keyword={keywordSelected}
           editTranslation={editTranslation}
-          save={save}
+          editContext={editContext}
           isSaving={isSaving}
         />
       )}
