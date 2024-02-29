@@ -27,12 +27,16 @@ export function Editor(props: EditorProps) {
     keywords,
     isSaving,
     title,
+    languages,
     save,
     addNewKey,
     deleteKey,
     editTranslation,
     setTitle,
     editContext,
+    addLanguage,
+    editLanguage,
+    deleteLanguage,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -85,7 +89,13 @@ export function Editor(props: EditorProps) {
         />
       </div>
       {isProjectSettingsOpened && (
-        <ProjectSettingsSlideOver onClose={() => openProjectSettings(false)} />
+        <ProjectSettingsSlideOver
+          languages={languages}
+          addLanguage={addLanguage}
+          editLanguage={editLanguage}
+          deleteLanguage={deleteLanguage}
+          onClose={() => openProjectSettings(false)}
+        />
       )}
     </div>
   )
