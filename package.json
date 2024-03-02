@@ -7,7 +7,7 @@
     "url": "https://github.com/AcutusDeveloper"
   },
   "scripts": {
-    "dev": "concurrently \"contentlayer dev\" \"next dev\"",
+    "dev": "pnpm prisma:generate && concurrently \"contentlayer dev\" \"next dev\"",
     "build": "contentlayer build && next build",
     "turbo": "next dev --turbo",
     "start": "next start",
@@ -16,11 +16,11 @@
     "postinstall": "prisma generate",
     "commit": "git-cz",
     "commit:retry": "git-cz --retry",
-    "typecheck": "yarn tsc --noEmit -p .",
-    "prisma:reset:alert": "yarn dotenv -e .env.local yarn prisma migrate reset",
-    "prisma:migrate:dev": "yarn dotenv -e .env.local yarn prisma generate && yarn dotenv -e .env.local yarn prisma migrate dev --create-only",
-    "prisma:studio": "BROWSER=none yarn dotenv -e .env.local yarn prisma studio",
-    "prisma:generate": "yarn prisma format && yarn prisma generate",
+    "typecheck": "pnpm tsc --noEmit -p .",
+    "prisma:reset:alert": "pnpm dotenv -e .env.local pnpm prisma migrate reset",
+    "prisma:migrate:dev": "pnpm prisma format & pnpm dotenv -e .env.local pnpm prisma generate && pnpm dotenv -e .env.local pnpm prisma migrate dev --create-only && pnpm prisma:generate",
+    "prisma:studio": "pnpm prisma:generate && BROWSER=none pnpm dotenv -e .env.local pnpm prisma studio",
+    "prisma:generate": "pnpm dotenv -e .env.local pnpm prisma format && pnpm prisma generate",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
@@ -68,6 +68,7 @@
     "cmdk": "^0.1.22",
     "concurrently": "^8.0.1",
     "contentlayer": "^0.3.1",
+    "crypto-js": "^4.2.0",
     "date-fns": "^2.29.3",
     "dotenv-cli": "^7.3.0",
     "flowbite": "^2.3.0",
@@ -103,6 +104,7 @@
     "@ianvs/prettier-plugin-sort-imports": "^3.7.2",
     "@tailwindcss/line-clamp": "^0.4.4",
     "@tailwindcss/typography": "^0.5.9",
+    "@types/crypto-js": "^4.2.2",
     "@types/node": "^18.16.0",
     "@types/nodemailer": "^6.4.14",
     "@types/react": "18.0.15",

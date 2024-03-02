@@ -24,17 +24,21 @@ const types = [
   },
 ]
 
-const scopesValues = ["general", "translation", "landing", "subscription"].sort(
-  (prev, next) => {
-    if (prev > next) {
-      return 1
-    } else if (prev < next) {
-      return -1
-    } else {
-      return 0
-    }
+const scopesValues = [
+  "general",
+  "translation",
+  "landing",
+  "subscription",
+  "user",
+].sort((prev, next) => {
+  if (prev > next) {
+    return 1
+  } else if (prev < next) {
+    return -1
+  } else {
+    return 0
   }
-)
+})
 
 const scopes = scopesValues.map((name) => ({ name }))
 

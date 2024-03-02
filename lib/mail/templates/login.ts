@@ -1,20 +1,21 @@
+import { siteConfig } from "@/config/site"
+
 import { EmailTemplate } from "../types"
 
 type EmailLoginParams = {
   name: string
   url: string
-  appName: string
 }
 
 const emailLogin = (params: EmailLoginParams): EmailTemplate => {
-  const { name, url, appName } = params
+  const { name, url } = params
   return {
     subject: "Verify your login",
     text: `login url: ${url}`,
     html: html
       .replaceAll("[name]", name)
       .replaceAll("[url]", url)
-      .replaceAll("[appName]", appName),
+      .replaceAll("[appName]", siteConfig.name),
   }
 }
 

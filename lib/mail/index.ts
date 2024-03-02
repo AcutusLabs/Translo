@@ -1,6 +1,7 @@
 import nodemailer from "nodemailer"
 
 import { env } from "@/env.mjs"
+import { siteConfig } from "@/config/site"
 
 import { EmailTemplate } from "./types"
 
@@ -24,11 +25,16 @@ const transporter = nodemailer.createTransport(
   }
 )
 
-const sendEmail = async (from: string, to: string, detail: EmailTemplate) => {
+type SendEmailParams = {
+  to: string
+  email: EmailTemplate
+}
+
+const sendEmail = async (params: SendEmailParams) => {
   const mailOptions = {
-    from,
-    to,
-    ...detail,
+    from: `${siteConfig.name} <${env.MAIL_SMTP_FROM}>`,
+    to: params.to,
+    ...params.email,
   }
 
   await transporter.sendMail(mailOptions)
