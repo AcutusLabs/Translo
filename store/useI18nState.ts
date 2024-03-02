@@ -1,7 +1,7 @@
 import { Translation } from "@prisma/client"
 import { create } from "zustand"
 
-import { NewKeyword } from "@/components/translation/dialogs/add-new-keyword"
+import { NewKeyword } from "@/components/app/translation/dialogs/add-new-keyword"
 
 export type Language = {
   lang: string

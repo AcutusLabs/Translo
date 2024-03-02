@@ -8,7 +8,7 @@ import {
 } from "@/store/useI18nState"
 
 import { EditorProps } from "."
-import { toast } from "../ui/use-toast"
+import { toast } from "../../ui/use-toast"
 import { NewKeyword } from "./dialogs/add-new-keyword"
 
 type LanguagesAvailable = {

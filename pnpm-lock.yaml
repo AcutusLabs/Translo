@@ -137,6 +137,9 @@ dependencies:
   contentlayer:
     specifier: ^0.3.1
     version: 0.3.1(esbuild@0.17.18)
+  crypto-js:
+    specifier: ^4.2.0
+    version: 4.2.0
   date-fns:
     specifier: ^2.29.3
     version: 2.29.3
@@ -238,6 +241,9 @@ devDependencies:
   "@tailwindcss/typography":
     specifier: ^0.5.9
     version: 0.5.9(tailwindcss@3.3.1)
+  "@types/crypto-js":
+    specifier: ^4.2.2
+    version: 4.2.2
   "@types/node":
     specifier: ^18.16.0
     version: 18.16.0
@@ -5177,6 +5183,13 @@ packages:
       "@types/estree": 1.0.1
     dev: false
 
+  /@types/crypto-js@4.2.2:
+    resolution:
+      {
+        integrity: sha512-sDOLlVbHhXpAUAL0YHDUUwDZf3iN4Bwi4W6a0W0b+QcAezUbRtH4FVb+9J4h+XFPW7l/gQ9F8qC7P+Ec4k8QVQ==,
+      }
+    dev: true
+
   /@types/debug@4.1.7:
     resolution:
       {
@@ -6936,6 +6949,13 @@ packages:
     resolution:
       {
         integrity: sha512-mCxBlsHFYh9C+HVpiEacem8FEBnMXgU9gy4zmNC+SXAZNB/1idgp/aulFJ4FgCi7GPEVbfyng092GqL2k2rmow==,
+      }
+    dev: false
+
+  /crypto-js@4.2.0:
+    resolution:
+      {
+        integrity: sha512-KALDyEYgpY+Rlob/iriUtjV6d5Eq+Y191A5g4UqLAi8CyGP9N1+FdVbkc1SxKc2r4YAYqG8JzO2KGL+AizD70Q==,
       }
     dev: false
 

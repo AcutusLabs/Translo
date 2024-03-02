@@ -1,4 +1,5 @@
 import { ClassValue, clsx } from "clsx"
+import sha256 from "crypto-js/sha256"
 import { twMerge } from "tailwind-merge"
 
 import { env } from "@/env.mjs"
@@ -18,4 +19,8 @@ export function formatDate(input: string | number): string {
 
 export function absoluteUrl(path: string) {
   return `${env.NEXT_PUBLIC_APP_URL}${path}`
+}
+
+export const hashPassword = (password: string) => {
+  return sha256(password).toString()
 }

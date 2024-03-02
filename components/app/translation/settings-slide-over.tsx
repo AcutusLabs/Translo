@@ -1,6 +1,6 @@
 import { EditLanguageType, Language } from "@/store/useI18nState"
 
-import SlideOver, { SlideOverButton, SlideOverRow } from "../slide-over"
+import SlideOver, { SlideOverButton, SlideOverRow } from "../../slide-over"
 import EditLanguage from "./dialogs/add-edit-languages"
 import AddNewLanguage from "./dialogs/add-new-languages"
 

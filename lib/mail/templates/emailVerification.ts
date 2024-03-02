@@ -1,16 +1,19 @@
+import { siteConfig } from "@/config/site"
+
 import { EmailTemplate } from "../types"
 
 type EmailVerificationParams = {
   url: string
-  appName: string
 }
 
 const emailVerification = (params: EmailVerificationParams): EmailTemplate => {
-  const { url, appName } = params
+  const { url } = params
   return {
     subject: "Confirm your email",
     text: `email verification url: ${url}`,
-    html: html.replaceAll("[url]", url).replaceAll("[appName]", appName),
+    html: html
+      .replaceAll("[url]", url)
+      .replaceAll("[appName]", siteConfig.name),
   }
 }
 

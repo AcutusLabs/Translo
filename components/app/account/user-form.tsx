@@ -23,13 +23,15 @@ import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-interface UserNameFormProps extends React.HTMLAttributes<HTMLFormElement> {
+import ChangePasswordDialog from "./dialogs/change-password"
+
+interface UserFormProps extends React.HTMLAttributes<HTMLFormElement> {
   user: Pick<User, "id" | "name">
 }
 
 type FormData = z.infer<typeof userNameSchema>
 
-export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
+export function UserForm({ user, className, ...props }: UserFormProps) {
   const router = useRouter()
   const {
     handleSubmit,
@@ -103,6 +105,13 @@ export function UserNameForm({ user, className, ...props }: UserNameFormProps) {
             )}
           </div>
         </CardContent>
+
+        <CardHeader>
+          <CardTitle>Password</CardTitle>
+        </CardHeader>
+        <CardFooter>
+          <ChangePasswordDialog id={user.id} />
+        </CardFooter>
         <CardFooter>
           <button
             type="submit"

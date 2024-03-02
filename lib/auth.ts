@@ -1,15 +1,8 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
-import EmailProvider from "next-auth/providers/email"
-import GitHubProvider from "next-auth/providers/github"
+import CredentialsProvider from "next-auth/providers/credentials"
 
-import { env } from "@/env.mjs"
-import { siteConfig } from "@/config/site"
 import { db } from "@/lib/db"
-
-import sendEmail from "./mail"
-import emailVerification from "./mail/templates/emailVerification"
-import emailLogin from "./mail/templates/login"
 
 export const authOptions: NextAuthOptions = {
   // huh any! I know.
@@ -23,47 +16,32 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   providers: [
-    GitHubProvider({
-      clientId: env.GITHUB_CLIENT_ID,
-      clientSecret: env.GITHUB_CLIENT_SECRET,
-    }),
-    EmailProvider({
-      from: `${siteConfig.name} <${env.MAIL_SMTP_FROM}>`,
-      sendVerificationRequest: async ({ identifier, url, provider }) => {
+    CredentialsProvider({
+      name: "Credentials",
+      credentials: {
+        email: { label: "Email", type: "text" },
+        password: { label: "Password", type: "password" },
+      },
+      async authorize(credentials) {
+        if (!credentials?.email || !credentials?.password) {
+          throw new Error("Missing params")
+        }
+
         const user = await db.user.findUnique({
           where: {
-            email: identifier,
+            email: credentials.email,
           },
           select: {
-            name: true,
+            id: true,
             emailVerified: true,
           },
         })
 
-        if (!provider.from) {
-          throw new Error("Missing from")
+        if (!user?.emailVerified) {
+          throw new Error("Email not verified")
         }
 
-        if (user?.emailVerified) {
-          await sendEmail(
-            provider.from,
-            identifier,
-            emailLogin({
-              url,
-              name: user.name || siteConfig.blendName,
-              appName: siteConfig.name,
-            })
-          )
-        } else {
-          await sendEmail(
-            provider.from,
-            identifier,
-            emailVerification({
-              url,
-              appName: siteConfig.name,
-            })
-          )
-        }
+        return user
       },
     }),
   ],

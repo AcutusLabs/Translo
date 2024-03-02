@@ -34,6 +34,8 @@ CREATE TABLE "users" (
     "name" TEXT,
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
+    "emailVerificationToken" TEXT,
+    "password" TEXT NOT NULL,
     "image" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
@@ -56,7 +58,8 @@ CREATE TABLE "verification_tokens" (
 CREATE TABLE "translations" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
-    "content" JSONB,
+    "languages" JSONB,
+    "info" JSONB,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
