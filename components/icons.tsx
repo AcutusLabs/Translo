@@ -4,12 +4,12 @@ import {
   Check,
   ChevronLeft,
   ChevronRight,
-  Command,
   CreditCard,
   File,
   FileText,
   HelpCircle,
   Image,
+  Languages,
   Laptop,
   Loader2,
   LucideProps,
@@ -29,7 +29,7 @@ import {
 export type Icon = LucideIcon
 
 export const Icons = {
-  logo: Command,
+  logo: Languages,
   close: X,
   spinner: Loader2,
   chevronLeft: ChevronLeft,

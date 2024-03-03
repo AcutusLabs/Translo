@@ -3,6 +3,7 @@ import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
+import { SuccessResponse } from "@/lib/response"
 import { stripe } from "@/lib/stripe"
 
 export async function POST(req: Request) {
@@ -67,5 +68,5 @@ export async function POST(req: Request) {
     })
   }
 
-  return new Response(null, { status: 200 })
+  return SuccessResponse()
 }

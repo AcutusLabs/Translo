@@ -1,3 +1,4 @@
+import { randomBytes } from "crypto"
 import { ClassValue, clsx } from "clsx"
 import sha256 from "crypto-js/sha256"
 import { twMerge } from "tailwind-merge"
@@ -23,4 +24,11 @@ export function absoluteUrl(path: string) {
 
 export const hashPassword = (password: string) => {
   return sha256(password).toString()
+}
+
+export const generateEmailVerificationToken = () => {
+  // generates a buffer containing 32 random bytes.
+  // The 32 indicates the number of bytes to generate, and it is commonly used
+  // for creating secure tokens or identifiers.
+  return randomBytes(32).toString("hex")
 }
