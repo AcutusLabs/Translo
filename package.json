@@ -24,7 +24,6 @@
     "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.0",
@@ -88,7 +87,6 @@
     "react-editor-js": "^2.1.0",
     "react-hook-form": "^7.43.9",
     "react-icons": "^5.0.1",
-    "react-query": "^3.39.3",
     "react-textarea-autosize": "^8.4.1",
     "sharp": "^0.31.3",
     "shiki": "^0.11.1",
