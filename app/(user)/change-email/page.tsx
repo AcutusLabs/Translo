@@ -2,20 +2,23 @@
 
 import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
+import { useSession } from "next-auth/react"
 
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
 import { toast } from "@/components/ui/use-toast"
 
 export default function VerifyEmail() {
   const searchParams = useSearchParams()
-
   const [result, setResult] = useState<string | undefined>()
+
+  const { update } = useSession()
 
   useEffect(() => {
     const emailVerification = async () => {
-      const email = searchParams?.get("email")
       const token = searchParams?.get("token")
-      if (!email || !token) {
+      const oldEmail = searchParams?.get("oldEmail")
+      const newEmail = searchParams?.get("newEmail")
+      if (!token || !oldEmail || !newEmail) {
         setResult("Error verifying your email")
         return toast({
           title: "Something went wrong.",
@@ -25,18 +28,21 @@ export default function VerifyEmail() {
       }
 
       await HTTP_POST(
-        HTTP_POST_PATH.emailVerification,
+        HTTP_POST_PATH.changeEmail,
         JSON.stringify({
-          email,
+          oldEmail,
+          newEmail,
           token,
         })
       )
 
+      update({ email: newEmail })
+
       toast({
         title: "Good news",
-        description: "Email verified successfully. Please relogin.",
+        description: "Email verified successfully.",
       })
-      window.location.replace("/login")
+      window.location.replace("/dashboard")
     }
 
     emailVerification()

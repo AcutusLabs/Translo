@@ -1,23 +1,15 @@
-import { randomBytes } from "crypto"
 import { z } from "zod"
 
 import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
 import sendEmail from "@/lib/mail"
 import emailVerification from "@/lib/mail/templates/emailVerification"
-import { hashPassword } from "@/lib/utils"
+import { generateEmailVerificationToken, hashPassword } from "@/lib/utils"
 
 const userCreateSchema = z.object({
   email: z.string(),
   password: z.string(),
 })
-
-const generateEmailVerificationToken = () => {
-  // generates a buffer containing 32 random bytes.
-  // The 32 indicates the number of bytes to generate, and it is commonly used
-  // for creating secure tokens or identifiers.
-  return randomBytes(32).toString("hex")
-}
 
 export async function POST(req: Request) {
   try {
@@ -40,7 +32,9 @@ export async function POST(req: Request) {
     await sendEmail({
       to: body.email,
       email: emailVerification({
-        url: `${env.NEXT_PUBLIC_APP_URL}/email-verify?email=${body.email}&token=${token}`,
+        url: `${
+          env.NEXT_PUBLIC_APP_URL
+        }/email-verify?email=${encodeURIComponent(body.email)}&token=${token}`,
       }),
     })
 

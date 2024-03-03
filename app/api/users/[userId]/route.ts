@@ -3,6 +3,11 @@ import { z } from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import {
+  ErrorResponse,
+  GenericErrorResponse,
+  SuccessResponse,
+} from "@/lib/response"
 import { userNameSchema } from "@/lib/validations/user"
 
 const routeContextSchema = z.object({
@@ -22,7 +27,7 @@ export async function PATCH(
     // Ensure user is authentication and has access to this user.
     const session = await getServerSession(authOptions)
     if (!session?.user || params.userId !== session?.user.id) {
-      return new Response(null, { status: 403 })
+      return ErrorResponse("User wrong", 403)
     }
 
     // Get the request body and validate it.
@@ -39,12 +44,12 @@ export async function PATCH(
       },
     })
 
-    return new Response(null, { status: 200 })
+    return SuccessResponse()
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return new Response(null, { status: 500 })
+    return GenericErrorResponse()
   }
 }

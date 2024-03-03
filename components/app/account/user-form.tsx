@@ -4,6 +4,7 @@ import * as React from "react"
 import { useRouter } from "next/navigation"
 import { zodResolver } from "@hookform/resolvers/zod"
 import { User } from "@prisma/client"
+import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
@@ -23,16 +24,20 @@ import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
+import ChangeEmailDialog from "./dialogs/change-email"
 import ChangePasswordDialog from "./dialogs/change-password"
 
 interface UserFormProps extends React.HTMLAttributes<HTMLFormElement> {
-  user: Pick<User, "id" | "name">
+  user: Pick<User, "id" | "name" | "email">
 }
 
 type FormData = z.infer<typeof userNameSchema>
 
 export function UserForm({ user, className, ...props }: UserFormProps) {
   const router = useRouter()
+
+  const { update } = useSession()
+
   const {
     handleSubmit,
     register,
@@ -67,6 +72,8 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
         variant: "destructive",
       })
     }
+
+    await update({ name: data.name })
 
     toast({
       description: "Your name has been updated.",
@@ -107,11 +114,19 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
         </CardContent>
 
         <CardHeader>
+          <CardTitle>Email</CardTitle>
+        </CardHeader>
+        <CardFooter>
+          <ChangeEmailDialog oldEmail={user.email} />
+        </CardFooter>
+
+        <CardHeader>
           <CardTitle>Password</CardTitle>
         </CardHeader>
         <CardFooter>
-          <ChangePasswordDialog id={user.id} />
+          <ChangePasswordDialog />
         </CardFooter>
+
         <CardFooter>
           <button
             type="submit"

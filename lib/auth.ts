@@ -4,6 +4,8 @@ import CredentialsProvider from "next-auth/providers/credentials"
 
 import { db } from "@/lib/db"
 
+import { hashPassword } from "./utils"
+
 export const authOptions: NextAuthOptions = {
   // huh any! I know.
   // This is a temporary fix for prisma client.
@@ -27,15 +29,32 @@ export const authOptions: NextAuthOptions = {
           throw new Error("Missing params")
         }
 
-        const user = await db.user.findUnique({
+        const users = await db.user.findMany({
           where: {
-            email: credentials.email,
+            AND: [
+              {
+                email: {
+                  contains: credentials.email,
+                },
+              },
+              {
+                password: {
+                  contains: hashPassword(credentials.password),
+                },
+              },
+            ],
           },
           select: {
             id: true,
             emailVerified: true,
           },
         })
+
+        const user = users[0]
+
+        if (!user) {
+          throw new Error("Incorrect email or password")
+        }
 
         if (!user?.emailVerified) {
           throw new Error("Email not verified")

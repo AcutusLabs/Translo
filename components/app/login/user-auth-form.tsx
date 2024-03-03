@@ -15,6 +15,8 @@ import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
+import ForgotPasswordDialog from "./dialogs/forgot-password"
+
 interface UserAuthFormProps extends React.HTMLAttributes<HTMLDivElement> {
   type: "register" | "login"
 }
@@ -129,8 +131,9 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            Sign In
+            {type === "login" ? "Sign In" : "Sign up"}
           </button>
+          {type === "login" && <ForgotPasswordDialog />}
         </div>
       </form>
     </div>

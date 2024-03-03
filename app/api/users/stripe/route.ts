@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import { proPlan } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
+import { ErrorResponse } from "@/lib/response"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
@@ -14,7 +15,7 @@ export async function GET() {
     const session = await getServerSession(authOptions)
 
     if (!session?.user || !session?.user.email) {
-      return new Response(null, { status: 403 })
+      return ErrorResponse("User wrong", 403)
     }
 
     const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
