@@ -18,9 +18,11 @@
     "commit:retry": "git-cz --retry",
     "typecheck": "pnpm tsc --noEmit -p .",
     "prisma:reset:alert": "pnpm dotenv -e .env.local pnpm prisma migrate reset",
-    "prisma:migrate:dev": "pnpm prisma format & pnpm dotenv -e .env.local pnpm prisma generate && pnpm dotenv -e .env.local pnpm prisma migrate dev --create-only && pnpm prisma:generate",
+    "prisma:format": "pnpm prisma format & pnpm dotenv -e .env.local pnpm prisma generate",
+    "prisma:migrate:dev": "pnpm dotenv -e .env.local pnpm prisma migrate dev --create-only && pnpm prisma:generate",
     "prisma:studio": "pnpm prisma:generate && BROWSER=none pnpm dotenv -e .env.local pnpm prisma studio",
     "prisma:generate": "pnpm dotenv -e .env.local pnpm prisma format && pnpm prisma generate",
+    "prisma:migration": "pnpm dotenv -e .env.local pnpm prisma migrate deploy",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
   },
   "dependencies": {
