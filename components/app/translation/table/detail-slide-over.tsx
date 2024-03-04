@@ -1,5 +1,6 @@
-import { ChangeEvent, useCallback } from "react"
+import { ChangeEvent, useCallback, useState } from "react"
 
+import { Button } from "@/components/ui/button"
 import SlideOver, { SlideOverRow } from "@/components/slide-over"
 
 import { Keyword } from "../useTranslation"
@@ -10,10 +11,35 @@ type Props = {
   onClose: () => void
   editTranslation: (language: string, key: string, value: string) => void
   editContext: (key: string, context: string) => void
+  editKey: (key: string, newKey: string) => void
+  checkIfKeyAlreadyExists: (key: string) => boolean
 }
 
 const DetailSlideOver = (props: Props) => {
-  const { keyword, isSaving, onClose, editTranslation, editContext } = props
+  const {
+    keyword,
+    isSaving,
+    onClose,
+    editTranslation,
+    editContext,
+    editKey,
+    checkIfKeyAlreadyExists,
+  } = props
+
+  const [key, setKey] = useState(keyword.key)
+  const [isWarning, setIsWarning] = useState(false)
+
+  const handleChangeKey = useCallback(
+    (event: ChangeEvent<HTMLTextAreaElement>) => {
+      if (event.target.value === keyword.key) {
+        setIsWarning(false)
+      } else {
+        setIsWarning(checkIfKeyAlreadyExists(event.target.value))
+      }
+      setKey(event.target.value)
+    },
+    [checkIfKeyAlreadyExists, keyword.key]
+  )
 
   const handleChangeTranslation = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>, language: string) => {
@@ -29,9 +55,35 @@ const DetailSlideOver = (props: Props) => {
     [editContext, keyword.key]
   )
 
+  const saveKey = useCallback(() => {
+    editKey(keyword.key, key)
+  }, [editKey, key, keyword.key])
+
   return (
     <SlideOver title={keyword.key} onClose={onClose} isSaving={isSaving}>
       <div className="relative p-4 flex-1 sm:px-6">
+        <SlideOverRow title="Keyword">
+          <div className="mt-1">
+            <label className="inline-block text-xs font-light text-gray-700 mt-2.5 dark:text-gray-200">
+              Pay attention not to insert an existing keyword, or you will
+              overwrite that keyword
+            </label>
+            <textarea
+              rows={3}
+              className="t-textarea mt-2"
+              placeholder="app.welcome"
+              value={key}
+              onChange={handleChangeKey}
+            ></textarea>
+            <Button
+              className="mt-2"
+              onClick={saveKey}
+              variant={isWarning ? "warning" : "default"}
+            >
+              {isWarning ? "Overwrite the keyword" : "Change"}
+            </Button>
+          </div>
+        </SlideOverRow>
         <SlideOverRow title="Description">
           <div className="mt-1">
             <textarea
