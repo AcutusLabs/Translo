@@ -1,5 +1,6 @@
 import Link from "next/link"
 
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
@@ -54,7 +55,7 @@ export default function PricingPage() {
             </p>
           </div>
           <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
-            Get Started
+            {i18n.t("app.Get started")}
           </Link>
         </div>
       </div>

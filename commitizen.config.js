@@ -30,6 +30,7 @@ const scopesValues = [
   "landing",
   "subscription",
   "user",
+  "i18n",
 ].sort((prev, next) => {
   if (prev > next) {
     return 1

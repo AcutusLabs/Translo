@@ -58,3 +58,11 @@ stripe login
 ```sh
 pnpm run stripe:webhook
 ```
+
+## Update i18n
+
+Set the base URL of Translo in the `TRANSLO_I18N_BASE_URL` environment
+
+```sh
+pnpm run i18n
+```
