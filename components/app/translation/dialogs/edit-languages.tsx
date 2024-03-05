@@ -67,7 +67,7 @@ const EditLanguage = (props: Props) => {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+            <Label htmlFor="languageName" className="text-right">
               Name
             </Label>
             <Input
@@ -80,7 +80,7 @@ const EditLanguage = (props: Props) => {
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
+            <Label htmlFor="shortName" className="text-right">
               Short name (filename)
             </Label>
             <Input

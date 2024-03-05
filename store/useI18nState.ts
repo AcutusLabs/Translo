@@ -20,6 +20,7 @@ export type I18nLang = Language & {
 }
 
 export type ConstantTranslations = {
+  _id: string
   [lang: string]: string
 }
 
@@ -50,6 +51,7 @@ export type I18nState = {
   editContext: (key: string, context: string) => void
   editTranslation: (language: string, key: string, value: string) => void
   editSettings: (newSettings: Partial<TranslationSettings>) => void
+  addNewConstantTranslation: (newword: ConstantTranslations) => void
   addKey: (keyword: NewKeyword) => void
   deleteKey: (key: string) => void
   setI18n: (i18n: I18n) => void
@@ -217,6 +219,24 @@ export const useI18nState = create<I18nState>()((set) => ({
           settings: {
             ...settings,
             ...newSettings,
+          },
+        },
+      }
+    }),
+  addNewConstantTranslation: (newWord: ConstantTranslations) =>
+    set((state) => {
+      const settings: TranslationSettings =
+        (state.i18n.settings as TranslationSettings) ||
+        defaultTranslationSettings
+      return {
+        i18n: {
+          ...state.i18n,
+          settings: {
+            ...settings,
+            constantTranslations: [
+              ...state.i18n.settings.constantTranslations,
+              newWord,
+            ],
           },
         },
       }
