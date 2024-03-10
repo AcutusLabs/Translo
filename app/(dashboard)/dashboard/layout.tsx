@@ -2,10 +2,10 @@ import { notFound } from "next/navigation"
 
 import { dashboardConfig } from "@/config/dashboard"
 import { getCurrentUser } from "@/lib/session"
+import { UserAccountNav } from "@/components/app/dashboard/user-account-nav"
 import { MainNav } from "@/components/main-nav"
 import { DashboardNav } from "@/components/nav"
 import { SiteFooter } from "@/components/site-footer"
-import { UserAccountNav } from "@/components/user-account-nav"
 import { ThemeToggle } from "@/components/theme-toggle"
 
 interface DashboardLayoutProps {

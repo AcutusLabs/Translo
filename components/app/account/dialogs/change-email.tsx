@@ -1,7 +1,7 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, Fragment, useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
-import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
+import { isEmail } from "@/lib/regex"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,46 +15,55 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
+import { changeEmail } from "@/app/api/users/utils"
 
-const ChangePasswordDialog = () => {
-  const [oldPassword, setOldPassword] = useState("")
-  const [newPassword, setNewPassword] = useState("")
+type ChangeEmailDialogProps = {
+  oldEmail?: string
+}
 
-  const handleChangeOldPassword = useCallback(
+const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
+  const [newEmail, setNewEmail] = useState("")
+
+  const handleChangeNewEmail = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
-      setOldPassword(e.target.value)
-    },
-    []
-  )
-
-  const handleChangeNewPassword = useCallback(
-    (e: ChangeEvent<HTMLInputElement>) => {
-      setNewPassword(e.target.value)
+      setNewEmail(e.target.value)
     },
     []
   )
 
   const reset = useCallback(() => {
-    setOldPassword("")
-    setNewPassword("")
+    setNewEmail("")
   }, [])
 
   const onSubmit = useCallback(async () => {
-    reset()
-
-    await HTTP_POST(
-      HTTP_POST_PATH.changePassword,
-      JSON.stringify({
-        oldPassword,
-        newPassword,
+    if (!props.oldEmail) {
+      return toast({
+        title: "Something went wrong.",
+        variant: "destructive",
       })
-    )
+    }
+
+    reset()
+    try {
+      await changeEmail(props.oldEmail, newEmail)
+    } catch (e) {
+      return toast({
+        title: "Something went wrong.",
+        description: "Changing password failed. Please try again.",
+        variant: "destructive",
+      })
+    }
 
     return toast({
-      title: "Password changed",
-      description: "The password has been updated successfully.",
+      title: "Check your email",
+      description:
+        "We sent you a change email link. Be sure to check your spam too.",
     })
-  }, [newPassword, oldPassword, reset])
+  }, [newEmail, props.oldEmail, reset])
+
+  if (!props.oldEmail) {
+    return <Fragment />
+  }
 
   return (
     <Dialog>
@@ -78,49 +87,36 @@ const ChangePasswordDialog = () => {
             <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
             <path d="M7 11V7a5 5 0 0 1 10 0v4" />
           </svg>
-          Change password
+          Change email
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Change password</DialogTitle>
-          <DialogDescription>
-            Enter the old and the new password
-          </DialogDescription>
+          <DialogTitle>Change email</DialogTitle>
+          <DialogDescription>Enter the new email</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
-              Old
-            </Label>
-            <Input
-              id="old-password"
-              placeholder="old password"
-              className="col-span-3"
-              type="password"
-              data-1p-ignore
-              value={oldPassword}
-              onChange={handleChangeOldPassword}
-            />
-          </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
               New
             </Label>
             <Input
-              id="new-password"
-              placeholder="new password"
+              id="email"
+              placeholder="new email"
               className="col-span-3"
-              type="password"
+              type="email"
               data-1p-ignore
-              value={newPassword}
-              onChange={handleChangeNewPassword}
+              value={newEmail}
+              onChange={handleChangeNewEmail}
             />
           </div>
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={onSubmit} disabled={!oldPassword || !newPassword}>
+            <Button
+              onClick={onSubmit}
+              disabled={!newEmail || !isEmail(newEmail)}
+            >
               Save
             </Button>
           </DialogClose>
@@ -130,4 +126,4 @@ const ChangePasswordDialog = () => {
   )
 }
 
-export default ChangePasswordDialog
+export default ChangeEmailDialog

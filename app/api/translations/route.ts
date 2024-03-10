@@ -5,6 +5,7 @@ import * as z from "zod"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { RequiresProPlanError } from "@/lib/exceptions"
+import { ErrorResponse, GenericErrorResponse } from "@/lib/response"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 const translationCreateSchema = z.object({
@@ -36,7 +37,7 @@ export async function GET() {
 
     return new Response(JSON.stringify(transactions))
   } catch (error) {
-    return new Response(null, { status: 500 })
+    return GenericErrorResponse()
   }
 }
 
@@ -86,9 +87,9 @@ export async function POST(req: Request) {
     }
 
     if (error instanceof RequiresProPlanError) {
-      return new Response("Requires Pro Plan", { status: 402 })
+      return ErrorResponse("Requires Pro Plan", 402)
     }
 
-    return new Response(null, { status: 500 })
+    return GenericErrorResponse()
   }
 }
