@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import i18n from "@/lib/i18n"
 import { getCurrentUser } from "@/lib/session"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
@@ -38,8 +39,8 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading="Translations"
-        text="Create and manage translations."
+        heading={i18n.t("app.dashboard.Projects")}
+        text={i18n.t("app.dashboard.Create manage projects")}
       >
         <TranslationCreateButton />
       </DashboardHeader>
@@ -54,10 +55,10 @@ export default async function DashboardPage() {
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="translation" />
             <EmptyPlaceholder.Title>
-              No translations created
+              {i18n.t("app.dashboard.No project added")}
             </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              You don&apos;t have any translations yet. Start creating content.
+              {i18n.t("app.dashboard.No project added.description")}
             </EmptyPlaceholder.Description>
             <TranslationCreateButton variant="outline" />
           </EmptyPlaceholder>
