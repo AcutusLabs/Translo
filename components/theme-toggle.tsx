@@ -7,8 +7,7 @@ import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
 export function ThemeToggle() {
-  const { theme } = useTheme()
-  const { setTheme } = useTheme()
+  const { theme, setTheme } = useTheme()
 
   const handleToggle = React.useCallback(() => {
     setTheme(theme === "light" ? "dark" : "light")
