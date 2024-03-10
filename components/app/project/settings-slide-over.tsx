@@ -2,9 +2,13 @@ import { ChangeEvent, useCallback } from "react"
 import {
   ConstantTranslations,
   EditLanguageType,
+  Formality,
   Language,
   ProjectSettings,
+  Sex,
 } from "@/store/useI18nState"
+
+import i18n from "@/lib/i18n"
 
 import SlideOver, { SlideOverRow } from "../../slide-over"
 import AddNewConstantTranslation from "./dialogs/add-new-constant-translation"
@@ -76,8 +80,9 @@ const ProjectSettingsSlideOver = (props: Props) => {
       </div>
       <div className="relative p-4 flex-1 sm:px-6">
         <h4 className="text-sm leading-6 text-gray-700" id="slide-over-title">
-          To achieve a well-done translation, we need to provide context to the
-          AI
+          {i18n.t(
+            "app.project.settings.To achieve a well-done translation, we need to provide context to the AI"
+          )}
         </h4>
         <SlideOverRow title="Brief project description">
           <textarea
@@ -97,15 +102,15 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="radio"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.formality === "formal"}
+                  checked={settings.formality === Formality.Formal}
                   onChange={() => {
                     editSettings({
-                      formality: "formal",
+                      formality: Formality.Formal,
                     })
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  Formal
+                  {i18n.t("app.project.settings.Formal")}
                 </span>
               </label>
 
@@ -113,15 +118,15 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="radio"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.formality === "informal"}
+                  checked={settings.formality === Formality.Informal}
                   onChange={() => {
                     editSettings({
-                      formality: "informal",
+                      formality: Formality.Informal,
                     })
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  Informal
+                  {i18n.t("app.project.settings.Informal")}
                 </span>
               </label>
 
@@ -129,15 +134,15 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="radio"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.formality === "neutral"}
+                  checked={settings.formality === Formality.Neutral}
                   onChange={() => {
                     editSettings({
-                      formality: "neutral",
+                      formality: Formality.Neutral,
                     })
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  Neutral
+                  {i18n.t("app.project.settings.Neutral")}
                 </span>
               </label>
             </div>
@@ -151,23 +156,23 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="checkbox"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.audience.includes("male")}
+                  checked={settings.audience.includes(Sex.Male)}
                   onChange={(event) => {
                     if (event.target.checked) {
                       editSettings({
-                        audience: [...settings.audience, "male"],
+                        audience: [...settings.audience, Sex.Male],
                       })
                     } else {
                       editSettings({
                         audience: settings.audience.filter(
-                          (gender) => gender !== "male"
+                          (gender) => gender !== Sex.Male
                         ),
                       })
                     }
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  Male
+                  {i18n.t("app.project.settings.Male")}
                 </span>
               </label>
 
@@ -175,23 +180,23 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="checkbox"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.audience.includes("female")}
+                  checked={settings.audience.includes(Sex.Female)}
                   onChange={(event) => {
                     if (event.target.checked) {
                       editSettings({
-                        audience: [...settings.audience, "female"],
+                        audience: [...settings.audience, Sex.Female],
                       })
                     } else {
                       editSettings({
                         audience: settings.audience.filter(
-                          (gender) => gender !== "female"
+                          (gender) => gender !== Sex.Female
                         ),
                       })
                     }
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  Female
+                  {i18n.t("app.project.settings.Female")}
                 </span>
               </label>
 
@@ -199,23 +204,23 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="checkbox"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.audience.includes("other")}
+                  checked={settings.audience.includes(Sex.Other)}
                   onChange={(event) => {
                     if (event.target.checked) {
                       editSettings({
-                        audience: [...settings.audience, "other"],
+                        audience: [...settings.audience, Sex.Other],
                       })
                     } else {
                       editSettings({
                         audience: settings.audience.filter(
-                          (gender) => gender !== "other"
+                          (gender) => gender !== Sex.Other
                         ),
                       })
                     }
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  Other
+                  {i18n.t("app.project.settings.Other")}
                 </span>
               </label>
             </div>
