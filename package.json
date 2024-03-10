@@ -22,7 +22,8 @@
     "prisma:migrate:dev": "pnpm prisma format & pnpm dotenv -e .env.local pnpm prisma generate && pnpm dotenv -e .env.local pnpm prisma migrate dev --create-only && pnpm prisma:generate",
     "prisma:studio": "pnpm prisma:generate && BROWSER=none pnpm dotenv -e .env.local pnpm prisma studio",
     "prisma:generate": "pnpm dotenv -e .env.local pnpm prisma format && pnpm prisma generate",
-    "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe"
+    "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
+    "i18n": "pnpm dotenv -e .env.local npx ts-node lib/i18n/import.ts"
   },
   "dependencies": {
     "@emotion/react": "^11.11.3",
@@ -73,6 +74,8 @@
     "dotenv-cli": "^7.3.0",
     "flowbite": "^2.3.0",
     "framer-motion": "^11.0.5",
+    "i18next": "^23.10.0",
+    "i18next-resources-to-backend": "^1.2.0",
     "lucide-react": "^0.92.0",
     "next": "13.3.2-canary.13",
     "next-auth": "4.22.1",
@@ -87,6 +90,7 @@
     "react-dom": "^18.2.0",
     "react-editor-js": "^2.1.0",
     "react-hook-form": "^7.43.9",
+    "react-i18next": "^14.0.5",
     "react-icons": "^5.0.1",
     "react-textarea-autosize": "^8.4.1",
     "sharp": "^0.31.3",
@@ -117,6 +121,7 @@
     "eslint-config-prettier": "^8.8.0",
     "eslint-plugin-react": "^7.32.2",
     "eslint-plugin-tailwindcss": "^3.11.0",
+    "fs": "0.0.1-security",
     "git-precommit-checks": "^3.1.0",
     "husky": "^8.0.3",
     "mdast-util-toc": "^6.1.1",
@@ -132,6 +137,7 @@
     "remark": "^14.0.2",
     "remark-gfm": "^3.0.1",
     "tailwindcss": "^3.3.1",
+    "ts-node": "^10.9.2",
     "typescript": "4.7.4",
     "unist-util-visit": "^4.1.2"
   },

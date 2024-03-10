@@ -1,3 +1,5 @@
+import i18n from "@/lib/i18n"
+
 const GetStarterd = () => {
   return (
     <div className="text-center">
@@ -5,7 +7,7 @@ const GetStarterd = () => {
         className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         href="/register"
       >
-        Get started
+        {i18n.t("app.Get started")}
         <svg
           className="shrink-0 size-4"
           xmlns="http://www.w3.org/2000/svg"
