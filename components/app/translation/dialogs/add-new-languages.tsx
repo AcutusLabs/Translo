@@ -21,8 +21,10 @@ type Props = {
 const AddNewLanguage = (props: Props) => {
   const { addLanguage } = props
 
-  const [languageName, setLanguageName] = useState("")
-  const [shortName, setShortName] = useState("")
+  const [languageName, setLanguageName] = useState<string | undefined>(
+    undefined
+  )
+  const [shortName, setShortName] = useState<string | undefined>(undefined)
 
   const handleChangeLanguageName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -39,11 +41,16 @@ const AddNewLanguage = (props: Props) => {
   )
 
   const reset = useCallback(() => {
-    setLanguageName("")
-    setShortName("")
+    setLanguageName(undefined)
+    setShortName(undefined)
   }, [])
 
   const onSubmit = useCallback(() => {
+    if (!languageName || !shortName || shortName === "_id") {
+      // The keyword '_id' is a reserved keyword for identifying constant translations
+      return
+    }
+
     addLanguage({
       lang: languageName,
       short: shortName,
@@ -77,7 +84,7 @@ const AddNewLanguage = (props: Props) => {
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="name" className="text-right">
+            <Label htmlFor="languageName" className="text-right">
               Name
             </Label>
             <Input
@@ -90,7 +97,7 @@ const AddNewLanguage = (props: Props) => {
             />
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="username" className="text-right">
+            <Label htmlFor="shortName" className="text-right">
               Short name (filename)
             </Label>
             <Input
@@ -105,7 +112,12 @@ const AddNewLanguage = (props: Props) => {
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={onSubmit}>Add language</Button>
+            <Button
+              onClick={onSubmit}
+              disabled={!languageName || !shortName || shortName === "_id"}
+            >
+              Add language
+            </Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

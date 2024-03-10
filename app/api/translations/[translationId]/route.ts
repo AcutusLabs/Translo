@@ -76,6 +76,7 @@ export async function PATCH(
         title: body.title,
         languages: body.languages,
         info: body.info,
+        settings: body.settings,
       },
     })
 

@@ -19,9 +19,27 @@ export type I18nLang = Language & {
   keywords: Record<string, string>
 }
 
-export type I18n = Pick<Translation, "title" | "languages" | "info"> & {
+export type ConstantTranslations = {
+  _id: string
+  [lang: string]: string
+}
+
+export type TranslationSettings = {
+  description?: string
+  formality: "formal" | "informal" | "neutral"
+  audience: ("male" | "female" | "other")[]
+  ageStart?: string
+  ageEnd?: string
+  constantTranslations: ConstantTranslations[]
+}
+
+export type I18n = Pick<
+  Translation,
+  "title" | "languages" | "info" | "settings"
+> & {
   languages: I18nLang[]
   info: I18nInfo[]
+  settings: TranslationSettings
 }
 
 export type I18nState = {
@@ -33,10 +51,18 @@ export type I18nState = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   editTranslation: (language: string, key: string, value: string) => void
+  editSettings: (newSettings: Partial<TranslationSettings>) => void
+  addNewConstantTranslation: (newword: ConstantTranslations) => void
   addKey: (keyword: NewKeyword) => void
   deleteKey: (key: string) => void
   setI18n: (i18n: I18n) => void
   reset: () => void
+}
+
+const defaultTranslationSettings: TranslationSettings = {
+  formality: "neutral",
+  audience: ["female", "male", "other"],
+  constantTranslations: [],
 }
 
 export const initialI18nState: I18n = {
@@ -49,6 +75,7 @@ export const initialI18nState: I18n = {
       keywords: {},
     },
   ],
+  settings: defaultTranslationSettings,
 }
 
 export const useI18nState = create<I18nState>()((set) => ({
@@ -219,6 +246,39 @@ export const useI18nState = create<I18nState>()((set) => ({
         }),
       },
     })),
+  editSettings: (newSettings: Partial<TranslationSettings>) =>
+    set((state) => {
+      const settings: TranslationSettings =
+        (state.i18n.settings as TranslationSettings) ||
+        defaultTranslationSettings
+      return {
+        i18n: {
+          ...state.i18n,
+          settings: {
+            ...settings,
+            ...newSettings,
+          },
+        },
+      }
+    }),
+  addNewConstantTranslation: (newWord: ConstantTranslations) =>
+    set((state) => {
+      const settings: TranslationSettings =
+        (state.i18n.settings as TranslationSettings) ||
+        defaultTranslationSettings
+      return {
+        i18n: {
+          ...state.i18n,
+          settings: {
+            ...settings,
+            constantTranslations: [
+              ...state.i18n.settings.constantTranslations,
+              newWord,
+            ],
+          },
+        },
+      }
+    }),
   setI18n: (i18n: I18n) => set({ i18n }),
   reset: () => set({ i18n: { ...initialI18nState } }),
 }))

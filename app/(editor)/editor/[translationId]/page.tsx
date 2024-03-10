@@ -42,6 +42,7 @@ export default async function EditorPage({ params }: EditorPageProps) {
         title: translation.title,
         languages: translation.languages,
         info: translation.info,
+        settings: translation.settings,
         published: translation.published,
       }}
     />

@@ -4,6 +4,7 @@ import {
   I18nInfo,
   I18nLang,
   Language,
+  TranslationSettings,
   useI18nState,
 } from "@/store/useI18nState"
 
@@ -39,10 +40,12 @@ const useTranslation = (props: EditorProps) => {
     setI18n,
     setTitle,
     editContext,
+    editSettings,
     editKey,
     addLanguage,
     editLanguage,
     deleteLanguage,
+    addNewConstantTranslation,
   } = useI18nState()
 
   const keywords = useMemo((): Keyword[] => {
@@ -75,6 +78,7 @@ const useTranslation = (props: EditorProps) => {
       title: props.translation.title,
       languages: (props.translation.languages || []) as I18nLang[],
       info: (props.translation.info || []) as I18nInfo[],
+      settings: props.translation.settings as TranslationSettings,
     })
   }, [props.translation, setI18n])
 
@@ -197,6 +201,7 @@ const useTranslation = (props: EditorProps) => {
     title: i18n.title,
     keywords,
     languages,
+    settings: i18n.settings,
     editTranslation,
     addNewKey,
     deleteKey,
@@ -208,6 +213,8 @@ const useTranslation = (props: EditorProps) => {
     addLanguage,
     editLanguage,
     deleteLanguage,
+    editSettings,
+    addNewConstantTranslation,
     checkIfKeyAlreadyExists,
   }
 }

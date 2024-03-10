@@ -79,6 +79,7 @@ model Translation {
   title     String
   languages Json?
   info      Json?
+  settings  Json?
   published Boolean  @default(false)
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")
