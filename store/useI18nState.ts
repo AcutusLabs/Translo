@@ -1,7 +1,7 @@
-import { Translation } from "@prisma/client"
+import { Project } from "@prisma/client"
 import { create } from "zustand"
 
-import { NewKeyword } from "@/components/app/translation/dialogs/add-new-keyword"
+import { NewKeyword } from "@/components/app/project/dialogs/add-new-keyword"
 
 export type Language = {
   lang: string
@@ -24,7 +24,7 @@ export type ConstantTranslations = {
   [lang: string]: string
 }
 
-export type TranslationSettings = {
+export type ProjectSettings = {
   description?: string
   formality: "formal" | "informal" | "neutral"
   audience: ("male" | "female" | "other")[]
@@ -34,12 +34,12 @@ export type TranslationSettings = {
 }
 
 export type I18n = Pick<
-  Translation,
+  Project,
   "title" | "languages" | "info" | "settings"
 > & {
   languages: I18nLang[]
   info: I18nInfo[]
-  settings: TranslationSettings
+  settings: ProjectSettings
 }
 
 export type I18nState = {
@@ -51,7 +51,7 @@ export type I18nState = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   editTranslation: (language: string, key: string, value: string) => void
-  editSettings: (newSettings: Partial<TranslationSettings>) => void
+  editSettings: (newSettings: Partial<ProjectSettings>) => void
   addNewConstantTranslation: (newword: ConstantTranslations) => void
   addKey: (keyword: NewKeyword) => void
   deleteKey: (key: string) => void
@@ -59,7 +59,7 @@ export type I18nState = {
   reset: () => void
 }
 
-const defaultTranslationSettings: TranslationSettings = {
+const defaultProjectSettings: ProjectSettings = {
   formality: "neutral",
   audience: ["female", "male", "other"],
   constantTranslations: [],
@@ -75,7 +75,7 @@ export const initialI18nState: I18n = {
       keywords: {},
     },
   ],
-  settings: defaultTranslationSettings,
+  settings: defaultProjectSettings,
 }
 
 export const useI18nState = create<I18nState>()((set) => ({
@@ -246,11 +246,10 @@ export const useI18nState = create<I18nState>()((set) => ({
         }),
       },
     })),
-  editSettings: (newSettings: Partial<TranslationSettings>) =>
+  editSettings: (newSettings: Partial<ProjectSettings>) =>
     set((state) => {
-      const settings: TranslationSettings =
-        (state.i18n.settings as TranslationSettings) ||
-        defaultTranslationSettings
+      const settings: ProjectSettings =
+        (state.i18n.settings as ProjectSettings) || defaultProjectSettings
       return {
         i18n: {
           ...state.i18n,
@@ -263,9 +262,8 @@ export const useI18nState = create<I18nState>()((set) => ({
     }),
   addNewConstantTranslation: (newWord: ConstantTranslations) =>
     set((state) => {
-      const settings: TranslationSettings =
-        (state.i18n.settings as TranslationSettings) ||
-        defaultTranslationSettings
+      const settings: ProjectSettings =
+        (state.i18n.settings as ProjectSettings) || defaultProjectSettings
       return {
         i18n: {
           ...state.i18n,

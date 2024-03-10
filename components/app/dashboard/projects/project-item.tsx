@@ -1,38 +1,36 @@
 import Link from "next/link"
-import { Translation } from "@prisma/client"
+import { Project } from "@prisma/client"
 
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
-import { TranslationOperations } from "@/components/translation-operations"
+import { ProjectOperations } from "@/components/app/dashboard/projects/project-operations"
 
-interface TranslationItemProps {
-  translation: Pick<Translation, "id" | "title" | "published" | "createdAt">
+interface ProjectItemProps {
+  project: Pick<Project, "id" | "title" | "published" | "createdAt">
 }
 
-export function TranslationItem({ translation }: TranslationItemProps) {
+export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <div className="flex items-center justify-between p-4">
       <div className="grid gap-1">
         <Link
-          href={`/editor/${translation.id}`}
+          href={`/editor/${project.id}`}
           className="font-semibold hover:underline"
         >
-          {translation.title}
+          {project.title}
         </Link>
         <div>
           <p className="text-sm text-muted-foreground">
-            {formatDate(translation.createdAt?.toDateString())}
+            {formatDate(project.createdAt?.toDateString())}
           </p>
         </div>
       </div>
-      <TranslationOperations
-        translation={{ id: translation.id, title: translation.title }}
-      />
+      <ProjectOperations project={{ id: project.id, title: project.title }} />
     </div>
   )
 }
 
-TranslationItem.Skeleton = function TranslationItemSkeleton() {
+ProjectItem.Skeleton = function TranslationItemSkeleton() {
   return (
     <div className="p-4">
       <div className="space-y-3">

@@ -8,11 +8,11 @@ import {
   GenericErrorResponse,
   SuccessResponse,
 } from "@/lib/response"
-import { translationPatchSchema } from "@/lib/validations/translation"
+import { projectPatchSchema } from "@/lib/validations/translation"
 
 const routeContextSchema = z.object({
   params: z.object({
-    translationId: z.string(),
+    projectId: z.string(),
   }),
 })
 
@@ -25,16 +25,14 @@ export async function DELETE(
     const { params } = routeContextSchema.parse(context)
 
     // Check if the user has access to this translation.
-    if (
-      !(await verifyCurrentUserHasAccessTotranslation(params.translationId))
-    ) {
+    if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
       return ErrorResponse("User wrong", 403)
     }
 
     // Delete the translation.
-    await db.translation.delete({
+    await db.project.delete({
       where: {
-        id: params.translationId as string,
+        id: params.projectId as string,
       },
     })
 
@@ -57,20 +55,17 @@ export async function PATCH(
     const { params } = routeContextSchema.parse(context)
 
     // Check if the user has access to this translation.
-    if (
-      !(await verifyCurrentUserHasAccessTotranslation(params.translationId))
-    ) {
+    if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
       return ErrorResponse("User wrong", 403)
     }
 
     // Get the request body and validate it.
     const json = await req.json()
-    const body = translationPatchSchema.parse(json)
+    const body = projectPatchSchema.parse(json)
 
-    // Update the translation.
-    await db.translation.update({
+    await db.project.update({
       where: {
-        id: params.translationId,
+        id: params.projectId,
       },
       data: {
         title: body.title,
@@ -92,7 +87,7 @@ export async function PATCH(
 
 async function verifyCurrentUserHasAccessTotranslation(translationId: string) {
   const session = await getServerSession(authOptions)
-  const count = await db.translation.count({
+  const count = await db.project.count({
     where: {
       id: translationId,
       userId: session?.user.id,

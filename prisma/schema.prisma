@@ -53,9 +53,9 @@ model User {
   createdAt              DateTime  @default(now()) @map(name: "created_at")
   updatedAt              DateTime  @default(now()) @map(name: "updated_at")
 
-  accounts     Account[]
-  sessions     Session[]
-  translations Translation[]
+  accounts Account[]
+  sessions Session[]
+  projects Project[]
 
   stripeCustomerId       String?   @unique @map(name: "stripe_customer_id")
   stripeSubscriptionId   String?   @unique @map(name: "stripe_subscription_id")
@@ -74,7 +74,7 @@ model VerificationToken {
   @@map(name: "verification_tokens")
 }
 
-model Translation {
+model Project {
   id        String   @id @default(cuid())
   title     String
   languages Json?
@@ -86,5 +86,5 @@ model Translation {
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
 
-  @@map(name: "translations")
+  @@map(name: "projects")
 }

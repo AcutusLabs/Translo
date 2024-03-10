@@ -8,7 +8,7 @@ import { RequiresProPlanError } from "@/lib/exceptions"
 import { ErrorResponse, GenericErrorResponse } from "@/lib/response"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
-const translationCreateSchema = z.object({
+const projectCreateSchema = z.object({
   title: z.string(),
   languages: z.string().optional(),
   info: z.string().optional(),
@@ -23,7 +23,7 @@ export async function GET() {
     }
 
     const { user } = session
-    const transactions = await db.translation.findMany({
+    const projects = await db.project.findMany({
       select: {
         id: true,
         title: true,
@@ -35,7 +35,7 @@ export async function GET() {
       },
     })
 
-    return new Response(JSON.stringify(transactions))
+    return new Response(JSON.stringify(projects))
   } catch (error) {
     return GenericErrorResponse()
   }
@@ -53,9 +53,9 @@ export async function POST(req: Request) {
     const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
     // If user is on a free plan.
-    // Check if user has reached limit of 1 translation.
+    // Check if user has reached limit of 1 project.
     if (!subscriptionPlan?.isPro) {
-      const count = await db.translation.count({
+      const count = await db.project.count({
         where: {
           userId: user.id,
         },
@@ -67,9 +67,9 @@ export async function POST(req: Request) {
     }
 
     const json = await req.json()
-    const body = translationCreateSchema.parse(json)
+    const body = projectCreateSchema.parse(json)
 
-    const translation = await db.translation.create({
+    const project = await db.project.create({
       data: {
         ...initialI18nState,
         title: body.title,
@@ -80,7 +80,7 @@ export async function POST(req: Request) {
       },
     })
 
-    return new Response(JSON.stringify(translation))
+    return new Response(JSON.stringify(project))
   } catch (error) {
     if (error instanceof z.ZodError) {
       return new Response(JSON.stringify(error.issues), { status: 422 })

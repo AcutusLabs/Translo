@@ -4,7 +4,7 @@ import {
   I18nInfo,
   I18nLang,
   Language,
-  TranslationSettings,
+  ProjectSettings,
   useI18nState,
 } from "@/store/useI18nState"
 
@@ -75,12 +75,12 @@ const useTranslation = (props: EditorProps) => {
 
   useEffect(() => {
     setI18n({
-      title: props.translation.title,
-      languages: (props.translation.languages || []) as I18nLang[],
-      info: (props.translation.info || []) as I18nInfo[],
-      settings: props.translation.settings as TranslationSettings,
+      title: props.project.title,
+      languages: (props.project.languages || []) as I18nLang[],
+      info: (props.project.info || []) as I18nInfo[],
+      settings: props.project.settings as ProjectSettings,
     })
-  }, [props.translation, setI18n])
+  }, [props.project, setI18n])
 
   const router = useRouter()
 
@@ -149,7 +149,7 @@ const useTranslation = (props: EditorProps) => {
   const save = useCallback(async () => {
     setIsSaving(true)
 
-    const response = await fetch(`/api/translations/${props.translation.id}`, {
+    const response = await fetch(`/api/projects/${props.project.id}`, {
       method: "PATCH",
       headers: {
         "languages-Type": "application/json",
@@ -162,7 +162,7 @@ const useTranslation = (props: EditorProps) => {
     if (!response?.ok) {
       return toast({
         title: "Something went wrong.",
-        description: "Your translation was not saved. Please try again.",
+        description: "Your project was not saved. Please try again.",
         variant: "destructive",
       })
     }
@@ -170,9 +170,9 @@ const useTranslation = (props: EditorProps) => {
     router.refresh()
 
     return toast({
-      description: "Your translation has been saved.",
+      description: "Your project has been saved.",
     })
-  }, [i18n, props.translation.id, router])
+  }, [i18n, props.project.id, router])
 
   const languages: Language[] = useMemo(
     () =>

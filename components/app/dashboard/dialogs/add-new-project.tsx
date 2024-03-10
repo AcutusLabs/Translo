@@ -28,7 +28,7 @@ const AddNewProject = () => {
   const addProject = useCallback(async () => {
     setIsLoading(true)
 
-    const response = await fetch("/api/translations", {
+    const response = await fetch("/api/projects", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -43,7 +43,7 @@ const AddNewProject = () => {
     if (!response?.ok) {
       if (response.status === 402) {
         return toast({
-          title: "Limit of 1 translation reached.",
+          title: "Limit of 1 project reached.",
           description: "Please upgrade to the PRO plan.",
           variant: "destructive",
         })
@@ -51,7 +51,7 @@ const AddNewProject = () => {
 
       return toast({
         title: "Something went wrong.",
-        description: "Your translation was not created. Please try again.",
+        description: "Your project was not created. Please try again.",
         variant: "destructive",
       })
     }

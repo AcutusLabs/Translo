@@ -5,10 +5,10 @@ import { db } from "@/lib/db"
 import i18n from "@/lib/i18n"
 import { getCurrentUser } from "@/lib/session"
 import AddNewProject from "@/components/app/dashboard/dialogs/add-new-project"
+import { ProjectItem } from "@/components/app/dashboard/projects/project-item"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-import { TranslationItem } from "@/components/translation-item"
 
 export const metadata = {
   title: "Dashboard",
@@ -21,7 +21,7 @@ export default async function DashboardPage() {
     redirect(authOptions?.pages?.signIn || "/login")
   }
 
-  const translations = await db.translation.findMany({
+  const projects = await db.project.findMany({
     where: {
       userId: user.id,
     },
@@ -45,15 +45,15 @@ export default async function DashboardPage() {
         <AddNewProject />
       </DashboardHeader>
       <div>
-        {translations?.length ? (
+        {projects?.length ? (
           <div className="divide-y divide-border rounded-md border">
-            {translations.map((translation) => (
-              <TranslationItem key={translation.id} translation={translation} />
+            {projects.map((project) => (
+              <ProjectItem key={project.id} project={project} />
             ))}
           </div>
         ) : (
           <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="translation" />
+            <EmptyPlaceholder.Icon name="project" />
             <EmptyPlaceholder.Title>
               {i18n.t("app.dashboard.No project added")}
             </EmptyPlaceholder.Title>

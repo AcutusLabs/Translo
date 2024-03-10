@@ -5,10 +5,10 @@ export const dashboardConfig: DashboardConfig = {
   mainNav: [],
   sidebarNav: [
     {
-      id: "translations",
+      id: "projects",
       title: i18n.t("app.dashboard.Projects"),
       href: "/dashboard",
-      icon: "translation",
+      icon: "project",
     },
     {
       id: "billing",

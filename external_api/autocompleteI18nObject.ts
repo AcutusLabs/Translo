@@ -11,9 +11,7 @@ export const autocompleteI18nObject = async (i18n: I18n): Promise<I18n> => {
     const response = await openaiHelper.askChatGPT({
       prompt,
     })
-    console.log("response", response)
     const jsonString = openaiHelper.getResponseJSONString(response)
-    console.log("response", jsonString)
     const result = openaiHelper.parseChatGPTJSONString<I18n>(jsonString)
     if (result) {
       return result
