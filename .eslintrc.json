@@ -16,7 +16,15 @@
     "react-hooks/rules-of-hooks": "error",
     "no-console": "error",
     "react/no-array-index-key": "error",
-    "react/jsx-key": "error"
+    "react/jsx-key": "error",
+    "react/jsx-no-literals": [
+      "warn",
+      {
+        "noStrings": true,
+        "ignoreProps": true,
+        "noAttributeStrings": false
+      }
+    ]
   },
   "settings": {
     "tailwindcss": {
