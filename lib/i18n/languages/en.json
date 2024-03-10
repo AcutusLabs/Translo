@@ -1,3 +1,8 @@
 {
-  "app.Get started": "Get started"
+  "app.Get started": "Get started",
+  "app.New project": "New project",
+  "app.dashboard.Projects": "Projects",
+  "app.dashboard.Create manage projects": "Create and manage translation projects.",
+  "app.dashboard.No project added": "No project added",
+  "app.dashboard.No project added.description": "You don't have any project yet. Start creating content."
 }

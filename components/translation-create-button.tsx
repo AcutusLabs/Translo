@@ -3,6 +3,7 @@
 import * as React from "react"
 import { useRouter } from "next/navigation"
 
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { ButtonProps, buttonVariants } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
@@ -75,7 +76,7 @@ export function TranslationCreateButton({
       ) : (
         <Icons.add className="mr-2 h-4 w-4" />
       )}
-      New translation
+      {i18n.t("app.New project")}
     </button>
   )
 }
