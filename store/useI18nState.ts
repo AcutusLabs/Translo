@@ -24,10 +24,22 @@ export type ConstantTranslations = {
   [lang: string]: string
 }
 
+export enum Sex {
+  Male = "male",
+  Female = "female",
+  Other = "other",
+}
+
+export enum Formality {
+  Formal = "formal",
+  Informal = "informal",
+  Neutral = "neutral",
+}
+
 export type ProjectSettings = {
   description?: string
-  formality: "formal" | "informal" | "neutral"
-  audience: ("male" | "female" | "other")[]
+  formality: Formality
+  audience: Sex[]
   ageStart?: string
   ageEnd?: string
   constantTranslations: ConstantTranslations[]
@@ -60,8 +72,8 @@ export type I18nState = {
 }
 
 const defaultProjectSettings: ProjectSettings = {
-  formality: "neutral",
-  audience: ["female", "male", "other"],
+  formality: Formality.Neutral,
+  audience: [Sex.Female, Sex.Male, Sex.Other],
   constantTranslations: [],
 }
 

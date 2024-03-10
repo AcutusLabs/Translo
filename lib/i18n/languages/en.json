@@ -1,11 +1,18 @@
 {
-  "app.Get started": "Get started",
-  "app.New project": "New project",
-  "app.Name": "Name",
   "app.Create": "Create",
-  "app.dashboard.Projects": "Projects",
-  "app.dashboard.Project name": "Project name",
   "app.dashboard.Create manage projects": "Create and manage translation projects.",
   "app.dashboard.No project added": "No project added",
-  "app.dashboard.No project added.description": "You don't have any project yet. Start creating content."
+  "app.dashboard.No project added.description": "You don't have any project yet. Start creating content.",
+  "app.dashboard.Project name": "Project name",
+  "app.dashboard.Projects": "Projects",
+  "app.Get started": "Get started",
+  "app.Name": "Name",
+  "app.New project": "New project",
+  "app.project.settings.Female": "Female",
+  "app.project.settings.Formal": "Formal",
+  "app.project.settings.Informal": "Informal",
+  "app.project.settings.Male": "Male",
+  "app.project.settings.Neutral": "Neutral",
+  "app.project.settings.Other": "Other",
+  "app.project.settings.To achieve a well-done translation, we need to provide context to the AI": "To achieve a well-done translation, we need to provide context to the AI"
 }
