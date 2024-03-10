@@ -3,7 +3,7 @@
 import * as React from "react"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
-import { Translation } from "@prisma/client"
+import { Project } from "@prisma/client"
 
 import {
   AlertDialog,
@@ -25,15 +25,15 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
-async function deleteTranslation(translationId: string) {
-  const response = await fetch(`/api/translations/${translationId}`, {
+async function deleteProject(projectId: string) {
+  const response = await fetch(`/api/projects/${projectId}`, {
     method: "DELETE",
   })
 
   if (!response?.ok) {
     toast({
       title: "Something went wrong.",
-      description: "Your translation was not deleted. Please try again.",
+      description: "Your project was not deleted. Please try again.",
       variant: "destructive",
     })
   }
@@ -41,13 +41,11 @@ async function deleteTranslation(translationId: string) {
   return true
 }
 
-interface TranslationOperationsProps {
-  translation: Pick<Translation, "id" | "title">
+interface ProjectOperationsProps {
+  project: Pick<Project, "id" | "title">
 }
 
-export function TranslationOperations({
-  translation,
-}: TranslationOperationsProps) {
+export function ProjectOperations({ project }: ProjectOperationsProps) {
   const router = useRouter()
   const [showDeleteAlert, setShowDeleteAlert] = React.useState<boolean>(false)
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
@@ -61,7 +59,7 @@ export function TranslationOperations({
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
-            <Link href={`/editor/${translation.id}`} className="flex w-full">
+            <Link href={`/editor/${project.id}`} className="flex w-full">
               Edit
             </Link>
           </DropdownMenuItem>
@@ -78,7 +76,7 @@ export function TranslationOperations({
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this translation?
+              Are you sure you want to delete this project?
             </AlertDialogTitle>
             <AlertDialogDescription>
               This action cannot be undone.
@@ -91,7 +89,7 @@ export function TranslationOperations({
                 event.preventDefault()
                 setIsDeleteLoading(true)
 
-                const deleted = await deleteTranslation(translation.id)
+                const deleted = await deleteProject(project.id)
 
                 if (deleted) {
                   setIsDeleteLoading(false)

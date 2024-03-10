@@ -3,7 +3,7 @@ import {
   ConstantTranslations,
   EditLanguageType,
   Language,
-  TranslationSettings,
+  ProjectSettings,
 } from "@/store/useI18nState"
 
 import SlideOver, { SlideOverRow } from "../../slide-over"
@@ -14,12 +14,12 @@ import EditLanguage from "./dialogs/edit-languages"
 
 type Props = {
   languages: Language[]
-  settings: TranslationSettings
+  settings: ProjectSettings
   addLanguage: (language: Language) => void
   editLanguage: (language: EditLanguageType) => void
   deleteLanguage: (language: Language) => void
   onClose: () => void
-  editSettings: (newSettings: Partial<TranslationSettings>) => void
+  editSettings: (newSettings: Partial<ProjectSettings>) => void
   addNewConstantTranslation: (newword: ConstantTranslations) => void
 }
 

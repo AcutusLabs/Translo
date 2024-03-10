@@ -2,7 +2,7 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Translation } from "@prisma/client"
+import { Project } from "@prisma/client"
 
 import "@/styles/editor.css"
 import { useState } from "react"
@@ -16,8 +16,8 @@ import Table from "./table/table"
 import useTranslation from "./useTranslation"
 
 export interface EditorProps {
-  translation: Pick<
-    Translation,
+  project: Pick<
+    Project,
     "id" | "title" | "languages" | "published" | "info" | "settings"
   >
 }
@@ -79,9 +79,9 @@ export function Editor(props: EditorProps) {
       <div className="prose prose-stone mx-auto w-full max-w-[1000px] dark:prose-invert">
         <input
           id="title"
-          placeholder="Translation name"
+          placeholder="Project name"
           className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10 mt-5"
-          value={title || props.translation.title}
+          value={title || props.project.title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Table

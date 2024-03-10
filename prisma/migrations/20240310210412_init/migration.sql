@@ -55,17 +55,18 @@ CREATE TABLE "verification_tokens" (
 );
 
 -- CreateTable
-CREATE TABLE "translations" (
+CREATE TABLE "projects" (
     "id" TEXT NOT NULL,
     "title" TEXT NOT NULL,
     "languages" JSONB,
     "info" JSONB,
+    "settings" JSONB,
     "published" BOOLEAN NOT NULL DEFAULT false,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "userId" TEXT,
 
-    CONSTRAINT "translations_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "projects_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -96,4 +97,4 @@ ALTER TABLE "accounts" ADD CONSTRAINT "accounts_userId_fkey" FOREIGN KEY ("userI
 ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "translations" ADD CONSTRAINT "translations_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+ALTER TABLE "projects" ADD CONSTRAINT "projects_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;

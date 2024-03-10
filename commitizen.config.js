@@ -26,7 +26,7 @@ const types = [
 
 const scopesValues = [
   "general",
-  "translation",
+  "project",
   "landing",
   "subscription",
   "user",
