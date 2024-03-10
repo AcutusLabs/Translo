@@ -16,6 +16,7 @@
     "postinstall": "prisma generate",
     "commit": "git-cz",
     "commit:retry": "git-cz --retry",
+    "clean": "rm -rf node_modules .next",
     "typecheck": "pnpm tsc --noEmit -p .",
     "prisma:reset:alert": "pnpm dotenv -e .env.local pnpm prisma migrate reset",
     "prisma:migrate:dev": "pnpm prisma format & pnpm dotenv -e .env.local pnpm prisma generate && pnpm dotenv -e .env.local pnpm prisma migrate dev --create-only && pnpm prisma:generate",
@@ -25,7 +26,6 @@
     "i18n": "pnpm dotenv -e .env.local npx ts-node lib/i18n/import.ts"
   },
   "dependencies": {
-    "@chakra-ui/react": "^2.8.2",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.0",
@@ -92,7 +92,6 @@
     "react-hook-form": "^7.43.9",
     "react-i18next": "^14.0.5",
     "react-icons": "^5.0.1",
-    "react-query": "^3.39.3",
     "react-textarea-autosize": "^8.4.1",
     "sharp": "^0.31.3",
     "shiki": "^0.11.1",
