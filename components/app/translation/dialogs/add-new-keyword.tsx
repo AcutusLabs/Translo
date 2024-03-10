@@ -96,7 +96,7 @@ const AddNewKeyword = (props: Props) => {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-              Description
+              Context
             </Label>
             <Input
               id="username"

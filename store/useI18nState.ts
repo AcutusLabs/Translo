@@ -31,6 +31,7 @@ export type I18nState = {
   editLanguage: (Language: EditLanguageType) => void
   deleteLanguage: (language: Language) => void
   editContext: (key: string, context: string) => void
+  editKey: (key: string, newKey: string) => void
   editTranslation: (language: string, key: string, value: string) => void
   addKey: (keyword: NewKeyword) => void
   deleteKey: (key: string) => void
@@ -162,6 +163,43 @@ export const useI18nState = create<I18nState>()((set) => ({
         }),
       },
     })),
+  editKey: (key: string, newKey: string) =>
+    set((state) => {
+      if (key === newKey) {
+        return state
+      }
+
+      return {
+        i18n: {
+          ...state.i18n,
+          languages: state.i18n.languages.map((_language) => {
+            const keywords = {
+              ..._language.keywords,
+              [newKey]: _language.keywords[key],
+            }
+
+            delete keywords[key]
+
+            return {
+              ..._language,
+              keywords,
+            }
+          }),
+          info: (state.i18n.info as I18nInfo[])
+            .filter((info) => info.key !== newKey)
+            .map((info) => {
+              if (info.key !== key) {
+                return info
+              }
+
+              return {
+                ...info,
+                key: newKey,
+              }
+            }),
+        },
+      }
+    }),
   editTranslation: (language: string, key: string, value: string) =>
     set((state) => ({
       i18n: {
