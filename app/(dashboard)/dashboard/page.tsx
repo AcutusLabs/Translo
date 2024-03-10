@@ -4,10 +4,10 @@ import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import i18n from "@/lib/i18n"
 import { getCurrentUser } from "@/lib/session"
+import AddNewProject from "@/components/app/dashboard/dialogs/add-new-project"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
 import { DashboardShell } from "@/components/shell"
-import { TranslationCreateButton } from "@/components/translation-create-button"
 import { TranslationItem } from "@/components/translation-item"
 
 export const metadata = {
@@ -42,7 +42,7 @@ export default async function DashboardPage() {
         heading={i18n.t("app.dashboard.Projects")}
         text={i18n.t("app.dashboard.Create manage projects")}
       >
-        <TranslationCreateButton />
+        <AddNewProject />
       </DashboardHeader>
       <div>
         {translations?.length ? (
@@ -60,7 +60,7 @@ export default async function DashboardPage() {
             <EmptyPlaceholder.Description>
               {i18n.t("app.dashboard.No project added.description")}
             </EmptyPlaceholder.Description>
-            <TranslationCreateButton variant="outline" />
+            <AddNewProject />
           </EmptyPlaceholder>
         )}
       </div>
