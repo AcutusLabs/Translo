@@ -16,6 +16,7 @@
     "postinstall": "prisma generate",
     "commit": "git-cz",
     "commit:retry": "git-cz --retry",
+    "clean": "rm -rf node_modules .next",
     "typecheck": "pnpm tsc --noEmit -p .",
     "prisma:reset:alert": "pnpm dotenv -e .env.local pnpm prisma migrate reset",
     "prisma:migrate:dev": "pnpm prisma format & pnpm dotenv -e .env.local pnpm prisma generate && pnpm dotenv -e .env.local pnpm prisma migrate dev --create-only && pnpm prisma:generate",
