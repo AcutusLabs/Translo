@@ -39,6 +39,7 @@ export function Editor(props: EditorProps) {
     editLanguage,
     deleteLanguage,
     editSettings,
+    addNewConstantTranslation,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -99,6 +100,7 @@ export function Editor(props: EditorProps) {
           deleteLanguage={deleteLanguage}
           onClose={() => openProjectSettings(false)}
           editSettings={editSettings}
+          addNewConstantTranslation={addNewConstantTranslation}
         />
       )}
     </div>

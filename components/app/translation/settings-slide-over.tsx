@@ -1,13 +1,16 @@
 import { ChangeEvent, useCallback } from "react"
 import {
+  ConstantTranslations,
   EditLanguageType,
   Language,
   TranslationSettings,
 } from "@/store/useI18nState"
 
-import SlideOver, { SlideOverButton, SlideOverRow } from "../../slide-over"
-import EditLanguage from "./dialogs/add-edit-languages"
+import SlideOver, { SlideOverRow } from "../../slide-over"
+import AddNewConstantTranslation from "./dialogs/add-new-constant-translation"
 import AddNewLanguage from "./dialogs/add-new-languages"
+import EditConstantTranslation from "./dialogs/edit-contant-translation"
+import EditLanguage from "./dialogs/edit-languages"
 
 type Props = {
   languages: Language[]
@@ -17,6 +20,7 @@ type Props = {
   deleteLanguage: (language: Language) => void
   onClose: () => void
   editSettings: (newSettings: Partial<TranslationSettings>) => void
+  addNewConstantTranslation: (newword: ConstantTranslations) => void
 }
 
 const ProjectSettingsSlideOver = (props: Props) => {
@@ -28,6 +32,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
     deleteLanguage,
     onClose,
     editSettings,
+    addNewConstantTranslation,
   } = props
 
   const handleChangeDescription = useCallback(
@@ -50,12 +55,6 @@ const ProjectSettingsSlideOver = (props: Props) => {
     },
     [editSettings]
   )
-
-  languages.map((language) => (
-    <button key={language.short} type="button" className="t-button">
-      [{language.short}] {language.lang}
-    </button>
-  ))
 
   return (
     <SlideOver title="Settings" onClose={onClose}>
@@ -254,7 +253,23 @@ const ProjectSettingsSlideOver = (props: Props) => {
                       manually specify the original phrase and its corresponding
                       translation"
         >
-          <SlideOverButton text="Add word" onClick={() => {}} />
+          <>
+            {settings.constantTranslations.map((word) => (
+              <EditConstantTranslation
+                languages={languages.map((language) => language.short)}
+                key={word._id}
+                word={word}
+                editWord={() => {}}
+                deleteWord={() => {}}
+              />
+            ))}
+          </>
+          <AddNewConstantTranslation
+            languages={languages.map((language) => language.short)}
+            addContantTranslation={(newWord) =>
+              addNewConstantTranslation(newWord)
+            }
+          />
         </SlideOverRow>
       </div>
     </SlideOver>

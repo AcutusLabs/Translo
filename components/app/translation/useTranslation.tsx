@@ -44,6 +44,7 @@ const useTranslation = (props: EditorProps) => {
     addLanguage,
     editLanguage,
     deleteLanguage,
+    addNewConstantTranslation,
   } = useI18nState()
 
   const keywords = useMemo((): Keyword[] => {
@@ -197,6 +198,7 @@ const useTranslation = (props: EditorProps) => {
     editLanguage,
     deleteLanguage,
     editSettings,
+    addNewConstantTranslation,
   }
 }
 
