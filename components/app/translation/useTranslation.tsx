@@ -41,6 +41,7 @@ const useTranslation = (props: EditorProps) => {
     setTitle,
     editContext,
     editSettings,
+    editKey,
     addLanguage,
     editLanguage,
     deleteLanguage,
@@ -182,6 +183,20 @@ const useTranslation = (props: EditorProps) => {
     [i18n.languages]
   )
 
+  const checkIfKeyAlreadyExists = useCallback(
+    (key: string): boolean => {
+      if (key) {
+        return (
+          (i18n.info as I18nInfo[]).find((info) => info.key === key) !==
+          undefined
+        )
+      }
+
+      return false
+    },
+    [i18n.info]
+  )
+
   return {
     title: i18n.title,
     keywords,
@@ -194,11 +209,13 @@ const useTranslation = (props: EditorProps) => {
     isSaving,
     setTitle,
     editContext,
+    editKey,
     addLanguage,
     editLanguage,
     deleteLanguage,
     editSettings,
     addNewConstantTranslation,
+    checkIfKeyAlreadyExists,
   }
 }
 

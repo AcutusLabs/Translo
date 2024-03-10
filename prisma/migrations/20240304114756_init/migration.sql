@@ -35,7 +35,7 @@ CREATE TABLE "users" (
     "email" TEXT NOT NULL,
     "emailVerified" TIMESTAMP(3),
     "emailVerificationToken" TEXT,
-    "password" TEXT NOT NULL,
+    "password" TEXT,
     "image" TEXT,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

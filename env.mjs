@@ -19,6 +19,7 @@ export const env = createEnv({
     MAIL_SMTP_PASSWORD: z.string().min(1),
     MAIL_SMTP_FROM: z.string().min(1),
     OPEN_AI_API_KEY: z.string().min(1),
+    TRANSLO_I18N_BASE_URL: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -39,5 +40,6 @@ export const env = createEnv({
     STRIPE_PRO_MONTHLY_PLAN_ID: process.env.STRIPE_PRO_MONTHLY_PLAN_ID,
     NEXT_PUBLIC_APP_URL: process.env.NEXT_PUBLIC_APP_URL,
     OPEN_AI_API_KEY: process.env.OPEN_AI_API_KEY,
+    TRANSLO_I18N_BASE_URL: process.env.TRANSLO_I18N_BASE_URL,
   },
 })

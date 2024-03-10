@@ -35,11 +35,13 @@ export function Editor(props: EditorProps) {
     editTranslation,
     setTitle,
     editContext,
+    editKey,
     addLanguage,
     editLanguage,
     deleteLanguage,
     editSettings,
     addNewConstantTranslation,
+    checkIfKeyAlreadyExists,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -88,6 +90,8 @@ export function Editor(props: EditorProps) {
           deleteKey={deleteKey}
           editTranslation={editTranslation}
           editContext={editContext}
+          editKey={editKey}
+          checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
           isSaving={isSaving}
         />
       </div>

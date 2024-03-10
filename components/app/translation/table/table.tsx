@@ -14,6 +14,8 @@ type Props = {
   deleteKey: (key: string) => void
   editTranslation: (language: string, key: string, value: string) => void
   editContext: (key: string, context: string) => void
+  editKey: (key: string, newKey: string) => void
+  checkIfKeyAlreadyExists: (key: string) => boolean
 }
 
 const Table = (props: Props) => {
@@ -24,6 +26,8 @@ const Table = (props: Props) => {
     deleteKey,
     editTranslation,
     editContext,
+    editKey,
+    checkIfKeyAlreadyExists,
   } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
@@ -119,6 +123,8 @@ const Table = (props: Props) => {
           keyword={keywordSelected}
           editTranslation={editTranslation}
           editContext={editContext}
+          editKey={editKey}
+          checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
           isSaving={isSaving}
         />
       )}

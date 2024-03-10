@@ -48,7 +48,7 @@ model User {
   email                  String    @unique
   emailVerified          DateTime?
   emailVerificationToken String?
-  password               String    @map(name: "password")
+  password               String?   @map(name: "password")
   image                  String?
   createdAt              DateTime  @default(now()) @map(name: "created_at")
   updatedAt              DateTime  @default(now()) @map(name: "updated_at")
