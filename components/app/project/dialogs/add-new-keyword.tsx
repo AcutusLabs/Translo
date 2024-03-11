@@ -28,7 +28,7 @@ const AddNewKeyword = (props: Props) => {
   const { addKeyword } = props
 
   const [key, setKey] = useState<string | undefined>(undefined)
-  const [context, setContext] = useState<string | undefined>(undefined)
+  const [context, setContext] = useState<string>("")
 
   const handleChangeKey = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKey(e.target.value)
@@ -43,11 +43,11 @@ const AddNewKeyword = (props: Props) => {
 
   const reset = useCallback(() => {
     setKey(undefined)
-    setContext(undefined)
+    setContext("")
   }, [])
 
   const onSubmit = useCallback(() => {
-    if (!key || !context) {
+    if (!key) {
       return
     }
 
@@ -80,7 +80,7 @@ const AddNewKeyword = (props: Props) => {
             </Label>
             <Input
               id="keyword"
-              placeholder="app.welcome"
+              placeholder="Welcome"
               className="col-span-3"
               data-1p-ignore
               value={key}

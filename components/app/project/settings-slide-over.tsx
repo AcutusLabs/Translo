@@ -81,7 +81,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
       <div className="relative p-4 flex-1 sm:px-6">
         <h4 className="text-sm leading-6 text-gray-700" id="slide-over-title">
           {i18n.t(
-            "app.project.settings.To achieve a well-done translation, we need to provide context to the AI"
+            "To achieve a well-done translation, we need to provide context to the AI"
           )}
         </h4>
         <SlideOverRow title="Brief project description">
@@ -110,7 +110,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  {i18n.t("app.project.settings.Formal")}
+                  {i18n.t("Formal")}
                 </span>
               </label>
 
@@ -126,7 +126,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  {i18n.t("app.project.settings.Informal")}
+                  {i18n.t("Informal")}
                 </span>
               </label>
 
@@ -142,7 +142,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  {i18n.t("app.project.settings.Neutral")}
+                  {i18n.t("Neutral")}
                 </span>
               </label>
             </div>
@@ -172,7 +172,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  {i18n.t("app.project.settings.Male")}
+                  {i18n.t("Male")}
                 </span>
               </label>
 
@@ -196,7 +196,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  {i18n.t("app.project.settings.Female")}
+                  {i18n.t("Female")}
                 </span>
               </label>
 
@@ -220,7 +220,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
-                  {i18n.t("app.project.settings.Other")}
+                  {i18n.t("Other")}
                 </span>
               </label>
             </div>

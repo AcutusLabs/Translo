@@ -7,10 +7,12 @@ import { Project } from "@prisma/client"
 import "@/styles/editor.css"
 import { useState } from "react"
 
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
+import ImportKeywordsModal from "./dialogs/import-keywords"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
 import useTranslation from "./useTranslation"
@@ -42,6 +44,7 @@ export function Editor(props: EditorProps) {
     editSettings,
     addNewConstantTranslation,
     checkIfKeyAlreadyExists,
+    importKeys,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -57,22 +60,23 @@ export function Editor(props: EditorProps) {
           >
             <>
               <Icons.chevronLeft className="mr-2 h-4 w-4" />
-              Back
+              {i18n.t("Back")}
             </>
           </Link>
         </div>
         <div>
+          <ImportKeywordsModal languages={languages} importKeys={importKeys} />
           <button
             onClick={() => openProjectSettings(true)}
             className={cn(buttonVariants({ variant: "secondary" }), "mr-4")}
           >
-            <span>Settings</span>
+            <span>{i18n.t("Settings")}</span>
           </button>
           <button onClick={save} className={cn(buttonVariants())}>
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            <span>Save</span>
+            <span>{i18n.t("Save")}</span>
           </button>
         </div>
       </div>

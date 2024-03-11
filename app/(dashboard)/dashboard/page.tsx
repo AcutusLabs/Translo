@@ -39,8 +39,8 @@ export default async function DashboardPage() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading={i18n.t("app.dashboard.Projects")}
-        text={i18n.t("app.dashboard.Create manage projects")}
+        heading={i18n.t("Projects")}
+        text={i18n.t("Create manage projects")}
       >
         <AddNewProject />
       </DashboardHeader>
@@ -55,10 +55,10 @@ export default async function DashboardPage() {
           <EmptyPlaceholder>
             <EmptyPlaceholder.Icon name="project" />
             <EmptyPlaceholder.Title>
-              {i18n.t("app.dashboard.No project added")}
+              {i18n.t("No project added")}
             </EmptyPlaceholder.Title>
             <EmptyPlaceholder.Description>
-              {i18n.t("app.dashboard.No project added.description")}
+              {i18n.t("dashboard.No project added.description")}
             </EmptyPlaceholder.Description>
             <AddNewProject />
           </EmptyPlaceholder>
