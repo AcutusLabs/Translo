@@ -1,10 +1,13 @@
 {
   "Back": "Back",
+  "Base url:": "Base url:",
   "Choose file": "Choose file",
   "Continue": "Continue",
   "Create": "Create",
   "Create manage projects": "Create and manage translation projects.",
   "dashboard.No project added.description": "You don't have any project yet. Start creating content.",
+  "Download": "Download",
+  "Download .json files": "Download .json files",
   "Error parsing JSON": "Error parsing JSON",
   "Female": "Female",
   "Formal": "Formal",
@@ -21,6 +24,7 @@
   "or paste the JSON": "or paste the JSON",
   "Other": "Other",
   "Project name": "Project name",
+  "project.baseurl": "https://translo.app/t/{{id}}",
   "project.Import keywords.description": "Upload a .json file or paste the JSON into the designated field to add new keywords or to modify existing ones massively. We will guide you through the process. If there are keywords that already exist in the project, we will prompt you to select which ones you truly want to replace",
   "Projects": "Projects",
   "Save": "Save",
@@ -29,5 +33,6 @@
   "Something went wrong": "Something went wrong",
   "The content is not available": "The content is not available",
   "To achieve a well-done translation, we need to provide context to the AI": "To achieve a well-done translation, we need to provide context to the AI",
+  "TS code": "TS code",
   "Upload .json file": "Upload .json file"
 }
