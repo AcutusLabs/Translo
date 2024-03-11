@@ -92,18 +92,18 @@ const AddNewProject = () => {
           ) : (
             <Icons.add className="mr-2 h-4 w-4" />
           )}
-          {i18n.t("app.New project")}
+          {i18n.t("New project")}
         </button>
       </DialogTrigger>
       <DialogContent className="relative sm:max-w-[425px] max-h-[80vh]">
         <DialogHeader>
           <DialogTitle>
-            <div className="capitalize">{i18n.t("app.New project")}</div>
+            <div className="capitalize">{i18n.t("New project")}</div>
           </DialogTitle>
         </DialogHeader>
         <div className="py-2">
           <Input
-            placeholder={i18n.t("app.dashboard.Project name")}
+            placeholder={i18n.t("Project name")}
             className="col-span-3"
             data-1p-ignore
             value={projectName}
@@ -113,7 +113,7 @@ const AddNewProject = () => {
         <DialogFooter>
           <DialogClose asChild>
             <Button onClick={createProject} disabled={!projectName}>
-              {i18n.t("app.Create")}
+              {i18n.t("Create")}
             </Button>
           </DialogClose>
         </DialogFooter>

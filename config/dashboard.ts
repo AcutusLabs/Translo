@@ -6,7 +6,7 @@ export const dashboardConfig: DashboardConfig = {
   sidebarNav: [
     {
       id: "projects",
-      title: i18n.t("app.dashboard.Projects"),
+      title: i18n.t("Projects"),
       href: "/dashboard",
       icon: "project",
     },

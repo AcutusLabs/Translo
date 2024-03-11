@@ -11,6 +11,7 @@ import {
 import { EditorProps } from "."
 import { toast } from "../../ui/use-toast"
 import { NewKeyword } from "./dialogs/add-new-keyword"
+import { ImportKeywords } from "./dialogs/import-keywords"
 
 type LanguagesAvailable = {
   language: string
@@ -46,6 +47,7 @@ const useTranslation = (props: EditorProps) => {
     editLanguage,
     deleteLanguage,
     addNewConstantTranslation,
+    importKeys: _importKeys,
   } = useI18nState()
 
   const keywords = useMemo((): Keyword[] => {
@@ -92,6 +94,13 @@ const useTranslation = (props: EditorProps) => {
       addKey(keyword)
     },
     [addKey]
+  )
+
+  const importKeys = useCallback(
+    (keywords: ImportKeywords, languageRef: string) => {
+      _importKeys(keywords, languageRef)
+    },
+    [_importKeys]
   )
 
   // const setChatGPTPause = () => {
@@ -216,6 +225,7 @@ const useTranslation = (props: EditorProps) => {
     editSettings,
     addNewConstantTranslation,
     checkIfKeyAlreadyExists,
+    importKeys,
   }
 }
 

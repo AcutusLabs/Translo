@@ -2,6 +2,7 @@ import { Project } from "@prisma/client"
 import { create } from "zustand"
 
 import { NewKeyword } from "@/components/app/project/dialogs/add-new-keyword"
+import { ImportKeywords } from "@/components/app/project/dialogs/import-keywords"
 
 export type Language = {
   lang: string
@@ -66,6 +67,7 @@ export type I18nState = {
   editSettings: (newSettings: Partial<ProjectSettings>) => void
   addNewConstantTranslation: (newword: ConstantTranslations) => void
   addKey: (keyword: NewKeyword) => void
+  importKeys: (keywords: ImportKeywords, language: string) => void
   deleteKey: (key: string) => void
   setI18n: (i18n: I18n) => void
   reset: () => void
@@ -180,6 +182,35 @@ export const useI18nState = create<I18nState>()((set) => ({
             [keyword.key]: "",
           },
         })),
+      }
+
+      return {
+        i18n: newI18n,
+      }
+    }),
+  importKeys: (keywords: ImportKeywords, languageRef: string) =>
+    set((state) => {
+      const newInfo: I18nInfo[] = [...state.i18n.info]
+
+      Object.keys(keywords).forEach((key) => {
+        newInfo.push({ key: key, context: "" })
+      })
+
+      const newI18n = {
+        ...state.i18n,
+        info: newInfo,
+        languages: state.i18n.languages.map((_language) => {
+          if (_language.short !== languageRef) {
+            return _language
+          }
+
+          const newKeywords = { ..._language.keywords, ...keywords }
+
+          return {
+            ..._language,
+            keywords: newKeywords,
+          }
+        }),
       }
 
       return {

@@ -71,7 +71,7 @@ const DetailSlideOver = (props: Props) => {
             <textarea
               rows={3}
               className="t-textarea mt-2"
-              placeholder="app.welcome"
+              placeholder="Welcome"
               value={key}
               onChange={handleChangeKey}
             ></textarea>

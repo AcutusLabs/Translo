@@ -55,7 +55,7 @@ export default function PricingPage() {
             </p>
           </div>
           <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
-            {i18n.t("app.Get started")}
+            {i18n.t("Get started")}
           </Link>
         </div>
       </div>

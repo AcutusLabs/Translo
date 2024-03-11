@@ -8,8 +8,8 @@ export default function DashboardLoading() {
   return (
     <DashboardShell>
       <DashboardHeader
-        heading={i18n.t("app.dashboard.Projects")}
-        text={i18n.t("app.dashboard.Create manage projects")}
+        heading={i18n.t("Projects")}
+        text={i18n.t("Create manage projects")}
       >
         <AddNewProject />
       </DashboardHeader>
