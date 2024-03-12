@@ -87,6 +87,7 @@ const useTranslation = (props: EditorProps) => {
       languages: (props.project.languages || []) as I18nLang[],
       info: (props.project.info || []) as I18nInfo[],
       settings: props.project.settings as ProjectSettings,
+      published: props.project.published,
     })
   }, [props.project, setI18n])
 
@@ -202,6 +203,29 @@ const useTranslation = (props: EditorProps) => {
     })
   }, [i18n, props.project.id, router])
 
+  const publishProject = useCallback(
+    async (isPublished: boolean) => {
+      const response = await fetch(`/api/projects/${props.project.id}`, {
+        method: "PATCH",
+        headers: {
+          "languages-Type": "application/json",
+        },
+        body: JSON.stringify({
+          published: isPublished,
+        }),
+      })
+
+      if (!response?.ok) {
+        return toast({
+          title: "Something went wrong.",
+          description: "Your project was not saved. Please try again.",
+          variant: "destructive",
+        })
+      }
+    },
+    [props.project.id]
+  )
+
   const languages: Language[] = useMemo(
     () =>
       i18n.languages.map((language) => ({
@@ -235,6 +259,7 @@ const useTranslation = (props: EditorProps) => {
     deleteKey,
     save,
     isSaving,
+    isPublished: props.project.published,
     setTitle,
     editContext,
     editKey,
@@ -246,6 +271,7 @@ const useTranslation = (props: EditorProps) => {
     checkIfKeyAlreadyExists,
     importKeys,
     download,
+    publishProject,
   }
 }
 
