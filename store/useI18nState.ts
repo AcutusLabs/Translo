@@ -48,7 +48,7 @@ export type ProjectSettings = {
 
 export type I18n = Pick<
   Project,
-  "title" | "languages" | "info" | "settings"
+  "title" | "languages" | "info" | "settings" | "published"
 > & {
   languages: I18nLang[]
   info: I18nInfo[]
@@ -90,6 +90,7 @@ export const initialI18nState: I18n = {
     },
   ],
   settings: defaultProjectSettings,
+  published: false,
 }
 
 export const useI18nState = create<I18nState>()((set) => ({

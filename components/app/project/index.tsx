@@ -49,6 +49,8 @@ export function Editor(props: EditorProps) {
     checkIfKeyAlreadyExists,
     importKeys,
     download,
+    publishProject,
+    isPublished,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -69,7 +71,13 @@ export function Editor(props: EditorProps) {
           </Link>
         </div>
         <div>
-          <DownloadKeywordsDropdownMenu id={project.id} download={download} />
+          <DownloadKeywordsDropdownMenu
+            id={project.id}
+            languages={languages.map((language) => language.short)}
+            isPublished={isPublished}
+            publishProject={publishProject}
+            download={download}
+          />
           <ImportKeywordsModal languages={languages} importKeys={importKeys} />
           <button
             onClick={() => openProjectSettings(true)}

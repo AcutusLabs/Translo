@@ -5,4 +5,5 @@ export const projectPatchSchema = z.object({
   languages: z.any().optional(),
   info: z.any().optional(),
   settings: z.any().optional(),
+  published: z.any().optional(),
 })
