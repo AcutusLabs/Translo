@@ -39,5 +39,12 @@
   "The content is not available": "The content is not available",
   "To achieve a well-done translation, we need to provide context to the AI": "To achieve a well-done translation, we need to provide context to the AI",
   "TS code": "TS code",
-  "Upload .json file": "Upload .json file"
+  "Upload .json file": "Upload .json file",
+  "Login": "Login",
+  "Create an account": "Create an account",
+  "Enter your email below to create your account": "Enter your email below to create your account",
+  "By clicking continue, you agree to our": "By clicking continue, you agree to our",
+  "Terms of Service": "Terms of Service",
+  "and": "and",
+  "Privacy Policy": "Privacy Policy"
 }
