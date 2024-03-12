@@ -7,6 +7,8 @@ import {
   ProjectSettings,
   useI18nState,
 } from "@/store/useI18nState"
+import FileSaver from "file-saver"
+import JSZip from "jszip"
 
 import { EditorProps } from "."
 import { toast } from "../../ui/use-toast"
@@ -30,6 +32,10 @@ export type Keyword = {
   info?: I18nInfo
   languages: KeywordLanguage[]
   languagesAvailable: LanguagesAvailable[]
+}
+
+export enum DownloadFormat {
+  json_files = "json_files",
 }
 
 const useTranslation = (props: EditorProps) => {
@@ -132,21 +138,34 @@ const useTranslation = (props: EditorProps) => {
   //   return pauseAutocomplete ? "need to recharge ChatGPT..." : "Autogenerate"
   // }, [isLoading, pauseAutocomplete])
 
-  // const downloadFile = useCallback(() => {
-  //   const fileName = "i18n"
-  //   const json = JSON.stringify(i18n, null, 2)
-  //   const blob = new Blob([json], { type: "application/json" })
-  //   const href = URL.createObjectURL(blob)
+  const downloadFiles = useCallback(() => {
+    const zip = new JSZip()
 
-  //   const link = document.createElement("a")
-  //   link.href = href
-  //   link.download = fileName + ".json"
-  //   document.body.appendChild(link)
-  //   link.click()
+    i18n.languages.forEach((language: I18nLang) => {
+      zip.file(
+        `${language.short}.json`,
+        JSON.stringify(language.keywords, null, 4)
+      )
+    })
 
-  //   document.body.removeChild(link)
-  //   URL.revokeObjectURL(href)
-  // }, [i18n])
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      FileSaver.saveAs(
+        content,
+        `${props.project.title.replaceAll(" ", "-")}-translations.zip`
+      )
+    })
+  }, [i18n.languages, props.project.title])
+
+  const download = useCallback(
+    (format: DownloadFormat) => {
+      switch (format) {
+        case DownloadFormat.json_files:
+          downloadFiles()
+          break
+      }
+    },
+    [downloadFiles]
+  )
 
   const editTranslation = useCallback(
     (language: string, key: string, value: string) => {
@@ -226,6 +245,7 @@ const useTranslation = (props: EditorProps) => {
     addNewConstantTranslation,
     checkIfKeyAlreadyExists,
     importKeys,
+    download,
   }
 }
 

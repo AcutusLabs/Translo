@@ -40,5 +40,5 @@ export default {
 
     i18next.changeLanguage(lang)
   },
-  t: (key: I18nKey) => i18next.t(key),
+  t: (key: I18nKey, vars: any = undefined) => i18next.t(key, vars).toString(),
 }

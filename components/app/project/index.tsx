@@ -12,6 +12,7 @@ import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 
+import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
@@ -25,6 +26,8 @@ export interface EditorProps {
 }
 
 export function Editor(props: EditorProps) {
+  const { project } = props
+
   const {
     keywords,
     isSaving,
@@ -45,6 +48,7 @@ export function Editor(props: EditorProps) {
     addNewConstantTranslation,
     checkIfKeyAlreadyExists,
     importKeys,
+    download,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -65,6 +69,7 @@ export function Editor(props: EditorProps) {
           </Link>
         </div>
         <div>
+          <DownloadKeywordsDropdownMenu id={project.id} download={download} />
           <ImportKeywordsModal languages={languages} importKeys={importKeys} />
           <button
             onClick={() => openProjectSettings(true)}
@@ -85,7 +90,7 @@ export function Editor(props: EditorProps) {
           id="title"
           placeholder="Project name"
           className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10 mt-5"
-          value={title || props.project.title}
+          value={title || project.title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Table
