@@ -46,5 +46,13 @@
   "By clicking continue, you agree to our": "By clicking continue, you agree to our",
   "Terms of Service": "Terms of Service",
   "and": "and",
-  "Privacy Policy": "Privacy Policy"
+  "Privacy Policy": "Privacy Policy",
+  "Keyword": "Keyword",
+  "Keyword to translate": "Keyword to translate",
+  "Context": "Context",
+  "Context for the keyword": "Context for the keyword",
+  "Add keyword": "Add keyword",
+  "New keyword": "New keyword",
+  "Translate the sentence into the languages you need": "Translate the sentence into the languages you need",
+  "Context tooltip description": "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process."
 }
