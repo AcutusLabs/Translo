@@ -6,7 +6,6 @@ import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
 
 import i18n from "@/lib/i18n"
 
-// Create a client
 const queryClient = new QueryClient()
 
 export default function ClientProvider(props: { children: React.ReactNode }) {
