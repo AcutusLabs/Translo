@@ -17,7 +17,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
-import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
 const AddNewProject = () => {
@@ -26,21 +25,6 @@ const AddNewProject = () => {
 
   const { isPending, mutate } = useAddProject({
     projectName,
-    onError: (error) => {
-      if (error.response.status === 402) {
-        return toast({
-          title: "Limit of 1 project reached.",
-          description: "Please upgrade to the PRO plan.",
-          variant: "destructive",
-        })
-      }
-
-      return toast({
-        title: "Something went wrong.",
-        description: "Your project was not created. Please try again.",
-        variant: "destructive",
-      })
-    },
     onSuccess: (project) => {
       router.refresh()
       router.push(`/editor/${project.id}`)

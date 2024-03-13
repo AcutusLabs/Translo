@@ -35,7 +35,7 @@ export function DownloadKeywordsDropdownMenu(
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <button
           className={cn(
             buttonVariants({ variant: "secondary" }),
