@@ -34,7 +34,6 @@ export function Editor(props: EditorProps) {
     title,
     languages,
     settings,
-    save,
     addNewKey,
     deleteKey,
     editTranslation,
@@ -85,16 +84,6 @@ export function Editor(props: EditorProps) {
           >
             <span>{i18n.t("Settings")}</span>
           </button>
-          <button
-            onClick={save}
-            className={cn(buttonVariants())}
-            disabled={!title.length}
-          >
-            {isSaving && (
-              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-            )}
-            <span>{i18n.t("Save")}</span>
-          </button>
         </div>
       </div>
       <div className="prose prose-stone mx-auto w-full max-w-[1000px] dark:prose-invert">
@@ -115,6 +104,20 @@ export function Editor(props: EditorProps) {
           checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
           isSaving={isSaving}
         />
+        {/** icon plus label to say if the object is saved */}
+        <div className="flex items-center justify-center mt-10">
+          {isSaving ? (
+            <div className="flex items-center space-x-2">
+              <Icons.spinner className="animate-spin h-4 w-4" />
+              <span>{i18n.t("Loading...")}</span>
+            </div>
+          ) : (
+            <div className="flex items-center space-x-2 text-green-500">
+              <Icons.check className="h-4 w-4" />
+              <span>{i18n.t("Saved")}</span>
+            </div>
+          )}
+        </div>
       </div>
       {isProjectSettingsOpened && (
         <ProjectSettingsSlideOver
