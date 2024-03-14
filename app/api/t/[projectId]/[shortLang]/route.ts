@@ -7,7 +7,7 @@ import { ErrorResponse, GenericErrorResponse } from "@/lib/response"
 const routeContextSchema = z.object({
   params: z.object({
     projectId: z.string(),
-    fileName: z.string(),
+    shortLang: z.string(),
   }),
 })
 
@@ -25,16 +25,15 @@ export async function GET(
       },
     })
 
-    const languageToExport = params.fileName.replaceAll(".json", "")
-
     const language = ((project?.languages as I18nLang[]) || []).find(
-      (language) => language.short === languageToExport
+      (language) => language.short === params.shortLang
     )
 
     if (!language) {
-      return ErrorResponse(
-        "The project does not exist or is not published, or the short name has not been entered correctly; it should be [short-name].json, for example, en.json"
-      )
+      return ErrorResponse({
+        error:
+          "The project does not exist or is not published, or the short name has not been entered correctly; it should be the short-name, for example, /en",
+      })
     }
 
     return new Response(JSON.stringify(language?.keywords || {}, null, 4))
@@ -43,6 +42,6 @@ export async function GET(
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }

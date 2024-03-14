@@ -3,6 +3,7 @@ import { z } from "zod"
 
 import { proPlan } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
+import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
@@ -15,7 +16,7 @@ export async function GET() {
     const session = await getServerSession(authOptions)
 
     if (!session?.user || !session?.user.email) {
-      return ErrorResponse("User wrong", 403)
+      return ErrorResponse({ error: i18n.t("User wrong"), status: 403 })
     }
 
     const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)

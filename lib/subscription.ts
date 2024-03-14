@@ -1,7 +1,8 @@
-// @ts-nocheck
-// TODO: Fix this when we turn strict mode on.
+import { getServerSession } from "next-auth/next"
+
 import { UserSubscriptionPlan } from "types"
 import { freePlan, proPlan } from "@/config/subscriptions"
+import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 
 export async function getUserSubscriptionPlan(
@@ -26,6 +27,7 @@ export async function getUserSubscriptionPlan(
   // Check if user is on a pro plan.
   const isPro =
     user.stripePriceId &&
+    // @ts-ignore
     user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
 
   const plan = isPro ? proPlan : freePlan
@@ -33,7 +35,22 @@ export async function getUserSubscriptionPlan(
   return {
     ...plan,
     ...user,
+    // @ts-ignore
     stripeCurrentPeriodEnd: user.stripeCurrentPeriodEnd?.getTime(),
+    // @ts-ignore
     isPro,
   }
+}
+
+export async function isUserPro() {
+  const session = await getServerSession(authOptions)
+
+  if (!session) {
+    return new Response("Unauthorized", { status: 403 })
+  }
+
+  const { user } = session
+  const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
+  return subscriptionPlan?.isPro ?? false
 }

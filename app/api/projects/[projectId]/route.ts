@@ -2,12 +2,15 @@ import { getServerSession } from "next-auth"
 import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
+import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
+import i18n from "@/lib/i18n"
 import {
   ErrorResponse,
   GenericErrorResponse,
   SuccessResponse,
 } from "@/lib/response"
+import { isUserPro } from "@/lib/subscription"
 import { projectPatchSchema } from "@/lib/validations/translation"
 
 const routeContextSchema = z.object({
@@ -26,7 +29,7 @@ export async function DELETE(
 
     // Check if the user has access to this translation.
     if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
-      return ErrorResponse("User wrong", 403)
+      return ErrorResponse({ error: i18n.t("User wrong"), status: 403 })
     }
 
     // Delete the translation.
@@ -42,7 +45,7 @@ export async function DELETE(
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }
 
@@ -56,12 +59,32 @@ export async function PATCH(
 
     // Check if the user has access to this translation.
     if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
-      return ErrorResponse("User wrong", 403)
+      return ErrorResponse({
+        error: i18n.t("User wrong"),
+        status: 403,
+      })
     }
 
     // Get the request body and validate it.
     const json = await req.json()
     const body = projectPatchSchema.parse(json)
+
+    const isPro = await isUserPro()
+
+    if (!isPro && body.languages) {
+      if (
+        Object.keys(body.languages[0].keywords).length >
+        MAX_KEYWORDS_STARTER_URSER
+      ) {
+        return ErrorResponse({
+          error: i18n.t("Limit of {number} keywords reached.", {
+            number: MAX_KEYWORDS_STARTER_URSER,
+          }),
+          description: i18n.t("Please upgrade to the PRO plan."),
+          status: 403,
+        })
+      }
+    }
 
     await db.project.update({
       where: {
@@ -82,7 +105,7 @@ export async function PATCH(
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }
 

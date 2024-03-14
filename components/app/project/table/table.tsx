@@ -2,6 +2,8 @@
 
 import { useCallback, useMemo, useState } from "react"
 
+import i18n from "@/lib/i18n"
+
 import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
 import { Keyword } from "../useTranslation"
 import DetailSlideOver from "./detail-slide-over"
@@ -50,7 +52,7 @@ const Table = (props: Props) => {
       <div className="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
         <div className="w-full md:w-1/2">
           <label htmlFor="simple-search" className="sr-only">
-            Search
+            {i18n.t("Search")}
           </label>
           <div className="relative w-full">
             <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
@@ -80,24 +82,29 @@ const Table = (props: Props) => {
           <AddNewKeyword addKeyword={addKeyword} />
         </div>
       </div>
+      <div className="px-4 md:space-x-4">
+        <p className="m-0">
+          {i18n.t("Number of keywords:", { number: keywords.length })}
+        </p>
+      </div>
       <div className="overflow-x-auto">
         <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
               <th scope="col" className="px-4 py-3">
-                Keyword
+                {i18n.t("Keyword")}
               </th>
               <th scope="col" className="px-4 py-3">
-                languages
+                {i18n.t("Languages")}
               </th>
               <th scope="col" className="px-4 py-3">
-                Context
+                {i18n.t("Context")}
               </th>
               {/* <th scope="col" className="px-4 py-3">
                 Image
               </th> */}
               <th scope="col" className="px-4 py-3">
-                <span className="sr-only">Actions</span>
+                <span className="sr-only">{i18n.t("Actions")}</span>
               </th>
             </tr>
           </thead>
