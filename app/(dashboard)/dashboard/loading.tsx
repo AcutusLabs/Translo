@@ -9,7 +9,7 @@ export default function DashboardLoading() {
     <DashboardShell>
       <DashboardHeader
         heading={i18n.t("Projects")}
-        text={i18n.t("Create manage projects")}
+        text={i18n.t("Create and manage translation projects.")}
       >
         <AddNewProject />
       </DashboardHeader>
