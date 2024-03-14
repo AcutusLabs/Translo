@@ -94,18 +94,8 @@ export function Editor(props: EditorProps) {
           value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
-        <Table
-          keywords={keywords}
-          addKeyword={addNewKey}
-          deleteKey={deleteKey}
-          editTranslation={editTranslation}
-          editContext={editContext}
-          editKey={editKey}
-          checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
-          isSaving={isSaving}
-        />
         {/** icon plus label to say if the object is saved */}
-        <div className="flex items-center justify-center mt-10">
+        <div className="flex items-center justify-left my-1">
           {isSaving ? (
             <div className="flex items-center space-x-2">
               <Icons.spinner className="animate-spin h-4 w-4" />
@@ -118,6 +108,16 @@ export function Editor(props: EditorProps) {
             </div>
           )}
         </div>
+        <Table
+          keywords={keywords}
+          addKeyword={addNewKey}
+          deleteKey={deleteKey}
+          editTranslation={editTranslation}
+          editContext={editContext}
+          editKey={editKey}
+          checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
+          isSaving={isSaving}
+        />
       </div>
       {isProjectSettingsOpened && (
         <ProjectSettingsSlideOver
