@@ -43,7 +43,9 @@ export async function POST(req: Request) {
     })
 
     if (!result.count) {
-      return ErrorResponse("The password does not match. Please try again.")
+      return ErrorResponse({
+        error: "The password does not match. Please try again.",
+      })
     }
 
     return SuccessResponse()
@@ -52,6 +54,6 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }

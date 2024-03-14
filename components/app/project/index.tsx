@@ -85,7 +85,11 @@ export function Editor(props: EditorProps) {
           >
             <span>{i18n.t("Settings")}</span>
           </button>
-          <button onClick={save} className={cn(buttonVariants())}>
+          <button
+            onClick={save}
+            className={cn(buttonVariants())}
+            disabled={!title.length}
+          >
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
@@ -96,9 +100,9 @@ export function Editor(props: EditorProps) {
       <div className="prose prose-stone mx-auto w-full max-w-[1000px] dark:prose-invert">
         <input
           id="title"
-          placeholder="Project name"
+          placeholder={i18n.t("Project name")}
           className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10 mt-5"
-          value={title || project.title}
+          value={title}
           onChange={(e) => setTitle(e.target.value)}
         />
         <Table

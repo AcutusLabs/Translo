@@ -10,6 +10,9 @@ import {
 import FileSaver from "file-saver"
 import JSZip from "jszip"
 
+import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
+import i18nLib from "@/lib/i18n"
+
 import { EditorProps } from "."
 import { toast } from "../../ui/use-toast"
 import { NewKeyword } from "./dialogs/add-new-keyword"
@@ -98,9 +101,19 @@ const useTranslation = (props: EditorProps) => {
 
   const addNewKey = useCallback(
     (keyword: NewKeyword) => {
+      if (keywords.length + 1 > MAX_KEYWORDS_STARTER_URSER) {
+        toast({
+          title: i18nLib.t("Limit of {number} keywords reached.", {
+            number: MAX_KEYWORDS_STARTER_URSER,
+          }),
+          description: i18nLib.t("Please upgrade to the PRO plan."),
+          variant: "destructive",
+        })
+        return
+      }
       addKey(keyword)
     },
-    [addKey]
+    [addKey, keywords.length]
   )
 
   const importKeys = useCallback(

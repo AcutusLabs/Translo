@@ -1,6 +1,7 @@
 import { z } from "zod"
 
 import { db } from "@/lib/db"
+import i18n from "@/lib/i18n"
 import {
   ErrorResponse,
   GenericErrorResponse,
@@ -40,7 +41,9 @@ export async function POST(req: Request) {
     })
 
     if (!result.count) {
-      return ErrorResponse("The token does not match. Please try again.")
+      return ErrorResponse({
+        error: i18n.t("The token does not match. Please try again."),
+      })
     }
 
     return SuccessResponse()
@@ -49,6 +52,6 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }

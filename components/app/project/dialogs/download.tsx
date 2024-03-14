@@ -31,9 +31,11 @@ export function DownloadKeywordsDropdownMenu(
 
   const [isShared, setShared] = useState(isPublished)
 
+  const origin = typeof document !== "undefined" ? document.location.origin : ""
+
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>
         <button
           className={cn(
             buttonVariants({ variant: "secondary" }),
@@ -65,7 +67,7 @@ export function DownloadKeywordsDropdownMenu(
             <p className="truncate text-sm pt-3">{i18n.t("Base url:")}</p>
             <p className="truncate text-sm text-muted-foreground">
               {i18n.t("project.baseurl", {
-                base: document.location.origin,
+                base: origin,
                 id,
               })}
             </p>
@@ -76,7 +78,7 @@ export function DownloadKeywordsDropdownMenu(
                 className="truncate text-sm text-muted-foreground"
               >
                 {i18n.t("project.completeUrl", {
-                  base: document.location.origin,
+                  base: origin,
                   id,
                   language,
                 })}

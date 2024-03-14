@@ -3,8 +3,9 @@ import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
 import { authOptions } from "@/lib/auth"
+import { MAX_PROJECTS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
-import { RequiresProPlanError } from "@/lib/exceptions"
+import i18n from "@/lib/i18n"
 import { ErrorResponse, GenericErrorResponse } from "@/lib/response"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
@@ -37,7 +38,7 @@ export async function GET() {
 
     return new Response(JSON.stringify(projects))
   } catch (error) {
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }
 
@@ -62,7 +63,12 @@ export async function POST(req: Request) {
       })
 
       if (count >= 1) {
-        throw new RequiresProPlanError()
+        return ErrorResponse({
+          error: i18n.t("Limit of {number} projects reached.", {
+            number: MAX_PROJECTS_STARTER_URSER,
+          }),
+          description: i18n.t("Please upgrade to the PRO plan."),
+        })
       }
     }
 
@@ -86,10 +92,6 @@ export async function POST(req: Request) {
       return new Response(JSON.stringify(error.issues), { status: 422 })
     }
 
-    if (error instanceof RequiresProPlanError) {
-      return ErrorResponse("Requires Pro Plan", 402)
-    }
-
-    return GenericErrorResponse()
+    return GenericErrorResponse(error)
   }
 }

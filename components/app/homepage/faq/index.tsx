@@ -1,3 +1,5 @@
+import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
+
 import Question, { FaqQuestion } from "./question"
 
 const allFaqs: FaqQuestion[] = [
@@ -9,8 +11,7 @@ const allFaqs: FaqQuestion[] = [
   {
     id: "free-trial",
     title: "How does the free trial work?",
-    description:
-      "The free trial begins upon sign-up, enabling you to explore the app. During the trial, 1 project is available with a limit of 20 keywords. Upon subscribing to a premium plan, you will have unrestricted access.",
+    description: `The free trial begins upon sign-up, enabling you to explore the app. During the trial, 1 project is available with a limit of ${MAX_KEYWORDS_STARTER_URSER} keywords. Upon subscribing to a premium plan, you will have unrestricted access.`,
   },
   {
     id: "cancel-subscription",
