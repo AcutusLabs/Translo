@@ -59,5 +59,11 @@
   "To achieve a well-done translation, we need to provide context to the AI": "To achieve a well-done translation, we need to provide context to the AI",
   "TS code": "TS code",
   "Upload .json file": "Upload .json file",
+  "Keyword to translate": "Keyword to translate",
+  "Context for the keyword": "Context for the keyword",
+  "Add keyword": "Add keyword",
+  "New keyword": "New keyword",
+  "Translate the sentence into the languages you need": "Translate the sentence into the languages you need",
+  "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process.": "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process.",
   "User wrong": "User wrong"
 }

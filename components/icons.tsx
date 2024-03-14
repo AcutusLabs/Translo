@@ -9,6 +9,7 @@ import {
   FileText,
   HelpCircle,
   Image,
+  Info,
   Languages,
   Laptop,
   Loader2,
@@ -52,6 +53,7 @@ export const Icons = {
   sun: SunMedium,
   moon: Moon,
   laptop: Laptop,
+  info: Info,
   gitHub: ({ ...props }: LucideProps) => (
     <svg
       className="shrink-0 size-3.5 mr-2"
