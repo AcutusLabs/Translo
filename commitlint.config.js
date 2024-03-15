@@ -27,8 +27,6 @@ module.exports = {
     "subject-empty": [2, "never"],
     "subject-min-length": [2, "always", 5],
     "subject-full-stop": [0, "never"],
-    "subject-case": [2, "always", "sentence-case"],
-    "references-empty": [2, "never"],
   },
   parserPreset: {
     parserOpts: {

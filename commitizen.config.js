@@ -66,4 +66,5 @@ module.exports = {
   subjectLimit: 100,
   askForBreakingChangeFirst: false,
   upperCaseSubject: false,
+  skipQuestions: ["body"],
 }
