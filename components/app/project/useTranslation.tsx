@@ -1,6 +1,6 @@
 import { useCallback, useEffect, useMemo, useState } from "react"
-import { useRouter } from "next/navigation"
 import {
+  I18n,
   I18nInfo,
   I18nLang,
   Language,
@@ -9,6 +9,8 @@ import {
 } from "@/store/useI18nState"
 import FileSaver from "file-saver"
 import JSZip from "jszip"
+import _ from "lodash"
+import debounce from "lodash/debounce"
 
 import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
 import i18nLib from "@/lib/i18n"
@@ -84,6 +86,45 @@ const useTranslation = (props: EditorProps) => {
     }))
   }, [i18n.info, i18n.languages])
 
+  const save = useCallback(
+    async (newI18n?: I18n) => {
+      setIsSaving(true)
+
+      const response = await fetch(`/api/projects/${props.project.id}`, {
+        method: "PATCH",
+        headers: {
+          "languages-Type": "application/json",
+        },
+        body: JSON.stringify(newI18n ?? i18n),
+      })
+
+      setIsSaving(false)
+
+      if (!response?.ok) {
+        return toast({
+          title: "Something went wrong.",
+          description: "Your project was not saved. Please try again.",
+          variant: "destructive",
+        })
+      }
+    },
+    [i18n, props.project.id]
+  )
+
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSave = useCallback(
+    debounce(
+      (newI18n) => {
+        save(newI18n)
+      },
+      100,
+      { leading: true }
+    ),
+    []
+  )
+
+  useI18nState.subscribe((state) => state.i18n, debouncedSave)
+
   useEffect(() => {
     setI18n({
       title: props.project.title,
@@ -93,8 +134,6 @@ const useTranslation = (props: EditorProps) => {
       published: props.project.published,
     })
   }, [props.project, setI18n])
-
-  const router = useRouter()
 
   // const [pauseAutocomplete, setPauseAutocomplete] = useState(false)
   const [isSaving, setIsSaving] = useState<boolean>(false)
@@ -187,34 +226,6 @@ const useTranslation = (props: EditorProps) => {
     },
     [editTranslationStore]
   )
-
-  const save = useCallback(async () => {
-    setIsSaving(true)
-
-    const response = await fetch(`/api/projects/${props.project.id}`, {
-      method: "PATCH",
-      headers: {
-        "languages-Type": "application/json",
-      },
-      body: JSON.stringify(i18n),
-    })
-
-    setIsSaving(false)
-
-    if (!response?.ok) {
-      return toast({
-        title: "Something went wrong.",
-        description: "Your project was not saved. Please try again.",
-        variant: "destructive",
-      })
-    }
-
-    router.refresh()
-
-    return toast({
-      description: "Your project has been saved.",
-    })
-  }, [i18n, props.project.id, router])
 
   const publishProject = useCallback(
     async (isPublished: boolean) => {

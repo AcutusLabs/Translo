@@ -82,6 +82,7 @@
     "i18next": "^23.10.0",
     "i18next-resources-to-backend": "^1.2.0",
     "jszip": "^3.10.1",
+    "lodash": "^4.17.21",
     "lucide-react": "^0.92.0",
     "next": "13.3.2-canary.13",
     "next-auth": "4.22.1",

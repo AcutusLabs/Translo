@@ -111,7 +111,9 @@ const AddNewKeyword = (props: Props) => {
                     <TooltipContent sideOffset={3} className="w-60">
                       <div
                         dangerouslySetInnerHTML={{
-                          __html: i18n.t("Context tooltip description"),
+                          __html: i18n.t(
+                            "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process."
+                          ),
                         }}
                       ></div>
                     </TooltipContent>
