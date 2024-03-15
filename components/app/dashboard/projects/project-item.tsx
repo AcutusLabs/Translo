@@ -11,22 +11,22 @@ interface ProjectItemProps {
 
 export function ProjectItem({ project }: ProjectItemProps) {
   return (
-    <div className="flex items-center justify-between p-4">
-      <div className="grid gap-1">
-        <Link
-          href={`/editor/${project.id}`}
-          className="font-semibold hover:underline"
-        >
+    <Link
+      href={`/editor/${project.id}`}
+      className="font-semibold hover:underline"
+    >
+      <div className="flex items-center justify-between p-4">
+        <div className="grid gap-1">
           {project.title}
-        </Link>
-        <div>
-          <p className="text-sm text-muted-foreground">
-            {formatDate(project.createdAt?.toDateString())}
-          </p>
+          <div>
+            <p className="text-sm text-muted-foreground">
+              {formatDate(project.createdAt?.toDateString())}
+            </p>
+          </div>
         </div>
+        <ProjectOperations project={{ id: project.id, title: project.title }} />
       </div>
-      <ProjectOperations project={{ id: project.id, title: project.title }} />
-    </div>
+    </Link>
   )
 }
 

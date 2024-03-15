@@ -1,6 +1,6 @@
 {
   "app.Create": "Create",
-  "app.dashboard.Create manage projects": "Create and manage translation projects.",
+  "app.dashboard.Create and manage translation projects.": "Create and manage translation projects.",
   "app.dashboard.No project added": "No project added",
   "app.dashboard.No project added.description": "You don't have any project yet. Start creating content.",
   "app.dashboard.Project name": "Project name",
