@@ -59,12 +59,11 @@ module.exports = {
   // isTicketNumberRequired: false,
   ticketNumberPrefix: "#",
   ticketNumberRegExp: "\\d{1,5}",
-  skipQuestions: ["breaking", "footer"],
+  skipQuestions: ["breaking", "footer", "body"],
   allowCustomScopes: true,
   allowBreakingChanges: ["feat", "perf", "refactor"],
   footerPrefix: "",
   subjectLimit: 100,
   askForBreakingChangeFirst: false,
   upperCaseSubject: false,
-  skipQuestions: ["body"],
 }

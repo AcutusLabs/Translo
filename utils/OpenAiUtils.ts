@@ -92,6 +92,7 @@ export class OpenAIHelper {
         const parsed = JSON.parse(content)
         return parsed
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("Failing parsing Chat GPT response:", e)
       }
     }

@@ -5,6 +5,8 @@ import { freePlan, proPlan } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 
+import { Unauthorized } from "./exceptions"
+
 export async function getUserSubscriptionPlan(
   userId: string
 ): Promise<UserSubscriptionPlan> {
@@ -21,7 +23,7 @@ export async function getUserSubscriptionPlan(
   })
 
   if (!user) {
-    throw new Error("User not found")
+    throw new Unauthorized()
   }
 
   // Check if user is on a pro plan.

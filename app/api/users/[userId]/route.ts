@@ -3,12 +3,9 @@ import { z } from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
-import {
-  ErrorResponse,
-  GenericErrorResponse,
-  SuccessResponse,
-} from "@/lib/response"
+import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import { userNameSchema } from "@/lib/validations/user"
 
 const routeContextSchema = z.object({
@@ -47,10 +44,6 @@ export async function PATCH(
 
     return SuccessResponse()
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }

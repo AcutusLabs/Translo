@@ -4,12 +4,9 @@ import * as z from "zod"
 import { authOptions } from "@/lib/auth"
 import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
+import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
-import {
-  ErrorResponse,
-  GenericErrorResponse,
-  SuccessResponse,
-} from "@/lib/response"
+import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import { isUserPro } from "@/lib/subscription"
 import { projectPatchSchema } from "@/lib/validations/translation"
 
@@ -41,11 +38,7 @@ export async function DELETE(
 
     return SuccessResponse(204)
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }
 
@@ -101,11 +94,7 @@ export async function PATCH(
 
     return SuccessResponse()
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }
 
