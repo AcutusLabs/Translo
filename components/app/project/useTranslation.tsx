@@ -111,19 +111,24 @@ const useTranslation = (props: EditorProps) => {
     [i18n, props.project.id]
   )
 
-  // eslint-disable-next-line react-hooks/exhaustive-deps
-  const debouncedSave = useCallback(
-    debounce(
-      (newI18n) => {
-        save(newI18n)
-      },
-      100,
-      { leading: true }
-    ),
-    []
+  const debouncedSave = debounce(
+    (newI18n) => {
+      save(newI18n)
+    },
+    100,
+    { leading: true }
   )
 
-  useI18nState.subscribe((state) => state.i18n, debouncedSave)
+  useEffect(() => {
+    const unsbuscribe = useI18nState.subscribe(
+      (state) => state.i18n,
+      debouncedSave
+    )
+
+    return () => {
+      unsbuscribe()
+    }
+  })
 
   useEffect(() => {
     setI18n({

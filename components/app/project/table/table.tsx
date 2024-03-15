@@ -84,7 +84,7 @@ const Table = (props: Props) => {
       </div>
       <div className="px-4 md:space-x-4">
         <p className="m-0">
-          {i18n.t("Number of keywords:", { number: keywords.length })}
+          {i18n.t("Number of keywords: {number}", { number: keywords.length })}
         </p>
       </div>
       <div className="overflow-x-auto">

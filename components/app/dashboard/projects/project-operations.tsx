@@ -5,6 +5,7 @@ import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { Project } from "@prisma/client"
 
+import i18n from "@/lib/i18n"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -51,16 +52,16 @@ export function ProjectOperations({ project }: ProjectOperationsProps) {
   const [isDeleteLoading, setIsDeleteLoading] = React.useState<boolean>(false)
 
   return (
-    <>
+    <div onClick={(e) => e.stopPropagation()}>
       <DropdownMenu>
         <DropdownMenuTrigger className="flex h-8 w-8 items-center justify-center rounded-md border transition-colors hover:bg-muted">
           <Icons.ellipsis className="h-4 w-4" />
-          <span className="sr-only">Open</span>
+          <span className="sr-only">{i18n.t("Open")}</span>
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
             <Link href={`/editor/${project.id}`} className="flex w-full">
-              Edit
+              {i18n.t("Edit")}
             </Link>
           </DropdownMenuItem>
           <DropdownMenuSeparator />
@@ -68,7 +69,7 @@ export function ProjectOperations({ project }: ProjectOperationsProps) {
             className="flex cursor-pointer items-center text-destructive focus:text-destructive"
             onSelect={() => setShowDeleteAlert(true)}
           >
-            Delete
+            {i18n.t("Delete")}
           </DropdownMenuItem>
         </DropdownMenuContent>
       </DropdownMenu>
@@ -76,14 +77,14 @@ export function ProjectOperations({ project }: ProjectOperationsProps) {
         <AlertDialogContent>
           <AlertDialogHeader>
             <AlertDialogTitle>
-              Are you sure you want to delete this project?
+              {i18n.t("Are you sure you want to delete this project?")}
             </AlertDialogTitle>
             <AlertDialogDescription>
-              This action cannot be undone.
+              {i18n.t("This action cannot be undone")}
             </AlertDialogDescription>
           </AlertDialogHeader>
           <AlertDialogFooter>
-            <AlertDialogCancel>Cancel</AlertDialogCancel>
+            <AlertDialogCancel>{i18n.t("Cancel")}</AlertDialogCancel>
             <AlertDialogAction
               onClick={async (event) => {
                 event.preventDefault()
@@ -104,11 +105,11 @@ export function ProjectOperations({ project }: ProjectOperationsProps) {
               ) : (
                 <Icons.trash className="mr-2 h-4 w-4" />
               )}
-              <span>Delete</span>
+              <span>{i18n.t("Delete")}</span>
             </AlertDialogAction>
           </AlertDialogFooter>
         </AlertDialogContent>
       </AlertDialog>
-    </>
+    </div>
   )
 }
