@@ -1,6 +1,7 @@
 import { useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -48,21 +49,22 @@ const AddNewConstantTranslation = (props: Props) => {
       <DialogTrigger asChild>
         <button className="t-button">
           <Icons.add className="h-3.5 w-3.5" />
-          Add word
+          {i18n.t("Add term")}
         </button>
       </DialogTrigger>
       <DialogContent className="relative sm:max-w-[425px] max-h-[80vh]">
         <DialogHeader>
-          <DialogTitle>New constant word</DialogTitle>
+          <DialogTitle>{i18n.t("New term")}</DialogTitle>
           <DialogDescription>
-            Write the word you want to be preferred over other similar words in
-            the languages you prefer
+            {i18n.t(
+              "Write the word you want to be preferred over other similar words in the languages you prefer"
+            )}
           </DialogDescription>
         </DialogHeader>
         <div className="max-h-[52vh] grid gap-4 py-4 overflow-y-scroll pr-2">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="identifier" className="text-right">
-              Identifier
+              {i18n.t("Identifier")}
             </Label>
             <Input
               id="identifier"
@@ -110,7 +112,7 @@ const AddNewConstantTranslation = (props: Props) => {
                 ).length === 0
               }
             >
-              Add word
+              {i18n.t("Add term")}
             </Button>
           </DialogClose>
         </DialogFooter>
