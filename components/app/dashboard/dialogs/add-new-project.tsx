@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useState } from "react"
 import { useRouter } from "next/navigation"
 import { DialogClose } from "@radix-ui/react-dialog"
 
@@ -23,6 +23,8 @@ const AddNewProject = () => {
   const [projectName, setProjectName] = useState<string>("")
   const router = useRouter()
 
+  const [open, setOpen] = useState(false)
+
   const { isPending, mutate } = useAddProject({
     projectName,
     onSuccess: (project) => {
@@ -32,21 +34,25 @@ const AddNewProject = () => {
     },
   })
 
-  const createProject = useCallback(() => mutate(), [mutate])
+  const createProject = useCallback(() => {
+    setOpen(false)
+    mutate()
+  }, [mutate])
 
   const handleProjectName = useCallback(
-    (e) => setProjectName(e.target.value),
+    (e: ChangeEvent<HTMLInputElement>) => setProjectName(e.target.value),
     []
   )
 
-  const onOpenChange = useCallback((open: boolean) => {
-    if (open) {
+  const onOpenChange = useCallback((_open: boolean) => {
+    setOpen(_open)
+    if (_open) {
       setProjectName("")
     }
   }, [])
 
   return (
-    <Dialog onOpenChange={onOpenChange}>
+    <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <button
           className={cn(buttonVariants(), {
@@ -63,27 +69,29 @@ const AddNewProject = () => {
         </button>
       </DialogTrigger>
       <DialogContent className="relative sm:max-w-[425px] max-h-[80vh]">
-        <DialogHeader>
-          <DialogTitle>
-            <div className="capitalize">{i18n.t("New project")}</div>
-          </DialogTitle>
-        </DialogHeader>
-        <div className="py-2">
-          <Input
-            placeholder={i18n.t("Project name")}
-            className="col-span-3"
-            data-1p-ignore
-            value={projectName}
-            onChange={handleProjectName}
-          />
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button onClick={createProject} disabled={!projectName}>
-              {i18n.t("Create")}
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+        <form onSubmit={createProject}>
+          <DialogHeader>
+            <DialogTitle>
+              <div className="capitalize">{i18n.t("New project")}</div>
+            </DialogTitle>
+          </DialogHeader>
+          <div className="py-2">
+            <Input
+              placeholder={i18n.t("Project name")}
+              className="col-span-3"
+              data-1p-ignore
+              value={projectName}
+              onChange={handleProjectName}
+            />
+          </div>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button onClick={createProject} disabled={!projectName}>
+                {i18n.t("Create")}
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   )

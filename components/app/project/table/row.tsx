@@ -1,3 +1,4 @@
+import i18n from "@/lib/i18n"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -80,9 +81,11 @@ const Row = (props: Props) => {
               </svg>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={openDetail}>Edit</DropdownMenuItem>
+              <DropdownMenuItem onClick={openDetail}>
+                {i18n.t("Edit")}
+              </DropdownMenuItem>
               <DropdownMenuItem onClick={deleteKeyword}>
-                Delete
+                {i18n.t("Delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>
           </DropdownMenu>

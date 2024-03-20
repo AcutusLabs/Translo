@@ -36,7 +36,7 @@ export async function DELETE(
       },
     })
 
-    return SuccessResponse(204)
+    return SuccessResponse()
   } catch (error) {
     return handleCatchApi(error)
   }
@@ -53,8 +53,7 @@ export async function PATCH(
     // Check if the user has access to this translation.
     if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
       return ErrorResponse({
-        error: i18n.t("User wrong"),
-        status: 403,
+        error: i18n.t("The project does not exist"),
       })
     }
 

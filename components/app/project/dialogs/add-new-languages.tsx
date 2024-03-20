@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { Language } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -64,17 +65,17 @@ const AddNewLanguage = (props: Props) => {
       <DialogTrigger asChild>
         <button className="t-button">
           <Icons.add className="h-3.5 w-3.5" />
-          Add language
+          {i18n.t("Add language")}
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>New language</DialogTitle>
+          <DialogTitle>{i18n.t("New language")}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="languageName" className="text-right">
-              Name
+              {i18n.t("Name")}
             </Label>
             <Input
               id="languageName"
@@ -87,7 +88,7 @@ const AddNewLanguage = (props: Props) => {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="shortName" className="text-right">
-              Short name (filename)
+              {i18n.t("Short name (filename)")}
             </Label>
             <Input
               id="shortName"
@@ -105,7 +106,7 @@ const AddNewLanguage = (props: Props) => {
               onClick={onSubmit}
               disabled={!languageName || !shortName || shortName === "_id"}
             >
-              Add language
+              {i18n.t("Add language")}
             </Button>
           </DialogClose>
         </DialogFooter>

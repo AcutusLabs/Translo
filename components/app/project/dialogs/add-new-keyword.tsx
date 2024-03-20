@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, FormEvent, useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { TooltipPortal } from "@radix-ui/react-tooltip"
 
@@ -18,7 +18,6 @@ import { Label } from "@/components/ui/label"
 import {
   Tooltip,
   TooltipContent,
-  TooltipProvider,
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Icons } from "@/components/icons"
@@ -34,6 +33,7 @@ type Props = {
 
 const AddNewKeyword = (props: Props) => {
   const { addKeyword } = props
+  const [open, setOpen] = useState(false)
 
   const [key, setKey] = useState<string | undefined>(undefined)
   const [context, setContext] = useState<string>("")
@@ -54,20 +54,25 @@ const AddNewKeyword = (props: Props) => {
     setContext("")
   }, [])
 
-  const onSubmit = useCallback(() => {
-    if (!key) {
-      return
-    }
+  const onSubmit = useCallback(
+    (e: FormEvent) => {
+      e.preventDefault()
+      if (!key) {
+        return
+      }
 
-    addKeyword({
-      key,
-      context,
-    })
-    reset()
-  }, [addKeyword, context, key, reset])
+      addKeyword({
+        key,
+        context,
+      })
+      setOpen(false)
+      reset()
+    },
+    [addKeyword, context, key, reset]
+  )
 
   return (
-    <Dialog>
+    <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
         <Button>
           <Icons.add className="mr-2 h-3.5 w-3.5" />
@@ -75,32 +80,32 @@ const AddNewKeyword = (props: Props) => {
         </Button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
-        <DialogHeader>
-          <DialogTitle>{i18n.t("New keyword")}</DialogTitle>
-          <DialogDescription>
-            {i18n.t("Translate the sentence into the languages you need")}
-          </DialogDescription>
-        </DialogHeader>
-        <div className="grid gap-4 py-4">
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label htmlFor="keyword" className="text-right">
-              {i18n.t("Keyword")}
-            </Label>
-            <Input
-              id="keyword"
-              placeholder={i18n.t("Keyword to translate")}
-              className="col-span-3"
-              data-1p-ignore
-              value={key}
-              onChange={handleChangeKey}
-            />
-          </div>
-          <div className="grid grid-cols-4 items-center gap-4">
-            <Label
-              htmlFor="username"
-              className="text-right flex items-center gap-2"
-            >
-              <TooltipProvider>
+        <form onSubmit={onSubmit}>
+          <DialogHeader>
+            <DialogTitle>{i18n.t("New keyword")}</DialogTitle>
+            <DialogDescription>
+              {i18n.t("Translate the sentence into the languages you need")}
+            </DialogDescription>
+          </DialogHeader>
+          <div className="grid gap-4 py-4">
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label htmlFor="keyword" className="text-right">
+                {i18n.t("Keyword")}
+              </Label>
+              <Input
+                id="keyword"
+                placeholder={i18n.t("Keyword to translate")}
+                className="col-span-3"
+                data-1p-ignore
+                value={key}
+                onChange={handleChangeKey}
+              />
+            </div>
+            <div className="grid grid-cols-4 items-center gap-4">
+              <Label
+                htmlFor="username"
+                className="text-right flex items-center gap-2"
+              >
                 <Tooltip>
                   <TooltipTrigger asChild>
                     <button className="IconButton">
@@ -112,33 +117,33 @@ const AddNewKeyword = (props: Props) => {
                       <div
                         dangerouslySetInnerHTML={{
                           __html: i18n.t(
-                            "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process."
+                            "This context is optional and can be provided alongside the keyword, aiding the AI in its translation process."
                           ),
                         }}
                       ></div>
                     </TooltipContent>
                   </TooltipPortal>
                 </Tooltip>
-              </TooltipProvider>
-              {i18n.t("Context")}
-            </Label>
-            <Input
-              id="description"
-              placeholder={i18n.t("Context for the keyword")}
-              className="col-span-3"
-              data-1p-ignore
-              value={context}
-              onChange={handleChangeDescription}
-            />
+                {i18n.t("Context")}
+              </Label>
+              <Input
+                id="description"
+                placeholder={i18n.t("Context for the keyword")}
+                className="col-span-3"
+                data-1p-ignore
+                value={context}
+                onChange={handleChangeDescription}
+              />
+            </div>
           </div>
-        </div>
-        <DialogFooter>
-          <DialogClose asChild>
-            <Button onClick={onSubmit} disabled={!key}>
-              {i18n.t("Add keyword")}
-            </Button>
-          </DialogClose>
-        </DialogFooter>
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button onClick={onSubmit} disabled={!key}>
+                {i18n.t("Add keyword")}
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+        </form>
       </DialogContent>
     </Dialog>
   )
