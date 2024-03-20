@@ -2,7 +2,8 @@ import { I18nLang } from "@/store/useI18nState"
 import { z } from "zod"
 
 import { db } from "@/lib/db"
-import { ErrorResponse, GenericErrorResponse } from "@/lib/response"
+import { handleCatchApi } from "@/lib/exceptions"
+import { ErrorResponse } from "@/lib/response"
 
 const routeContextSchema = z.object({
   params: z.object({
@@ -38,10 +39,6 @@ export async function GET(
 
     return new Response(JSON.stringify(language?.keywords || {}, null, 4))
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }

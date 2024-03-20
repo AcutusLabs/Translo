@@ -3,11 +3,8 @@ import { z } from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import {
-  ErrorResponse,
-  GenericErrorResponse,
-  SuccessResponse,
-} from "@/lib/response"
+import { handleCatchApi } from "@/lib/exceptions"
+import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import { hashPassword } from "@/lib/utils"
 
 const changePasswordSchema = z.object({
@@ -50,10 +47,6 @@ export async function POST(req: Request) {
 
     return SuccessResponse()
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }

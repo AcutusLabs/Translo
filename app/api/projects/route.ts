@@ -5,8 +5,9 @@ import * as z from "zod"
 import { authOptions } from "@/lib/auth"
 import { MAX_PROJECTS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
+import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
-import { ErrorResponse, GenericErrorResponse } from "@/lib/response"
+import { ErrorResponse } from "@/lib/response"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
 const projectCreateSchema = z.object({
@@ -38,7 +39,7 @@ export async function GET() {
 
     return new Response(JSON.stringify(projects))
   } catch (error) {
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }
 
@@ -88,10 +89,6 @@ export async function POST(req: Request) {
 
     return new Response(JSON.stringify(project))
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse(error)
+    return handleCatchApi(error)
   }
 }

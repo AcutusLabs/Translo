@@ -67,5 +67,6 @@
   "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process.": "This context is <b>optional</b> and can be provided alongside the keyword, aiding the AI in its translation process.",
   "User wrong": "User wrong",
   "Loading...": "Loading...",
-  "Saved": "Saved"
+  "Saved": "Saved",
+  "The session has expired": "The session has expired"
 }
