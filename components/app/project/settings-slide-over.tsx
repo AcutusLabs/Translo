@@ -250,13 +250,10 @@ const ProjectSettingsSlideOver = (props: Props) => {
         </SlideOverRow>
 
         <SlideOverRow
-          title="Words designated as constant translations"
-          subtitle="Terminology that must consistently be translated the same
-                      way. Some words, when translated into a language, may have
-                      multiple translations. To ensure that a particular
-                      translation is preferred across all instances, we need to
-                      manually specify the original phrase and its corresponding
-                      translation"
+          title={i18n.t("Glossary")}
+          subtitle={i18n.t(
+            "Use a glossary to keep project translations consistent"
+          )}
         >
           <>
             {settings.constantTranslations.map((word) => (
