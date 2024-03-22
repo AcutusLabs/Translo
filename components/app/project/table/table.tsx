@@ -1,11 +1,11 @@
 "use client"
 
 import { useCallback, useMemo, useState } from "react"
-import { Project } from "@prisma/client"
 
 import i18n from "@/lib/i18n"
 
 import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
+import { ProjectData } from "../types"
 import { Keyword } from "../useTranslation"
 import DetailSlideOver from "./detail-slide-over"
 import Row from "./row"
@@ -19,7 +19,7 @@ type Props = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   checkIfKeyAlreadyExists: (key: string) => boolean
-  project: Project
+  project: ProjectData
 }
 
 const Table = (props: Props) => {

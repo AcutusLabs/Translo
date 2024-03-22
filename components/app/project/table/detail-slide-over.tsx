@@ -1,10 +1,10 @@
 import { ChangeEvent, useCallback, useState } from "react"
-import { Project } from "@prisma/client"
 
 import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import SlideOver, { SlideOverRow } from "@/components/slide-over"
 
+import { ProjectData } from "../types"
 import { Keyword } from "../useTranslation"
 
 type Props = {
@@ -15,7 +15,7 @@ type Props = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   checkIfKeyAlreadyExists: (key: string) => boolean
-  project: Project
+  project: ProjectData
 }
 
 const DetailSlideOver = (props: Props) => {

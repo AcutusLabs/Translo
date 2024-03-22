@@ -16,13 +16,11 @@ import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
+import { ProjectData } from "./types"
 import useTranslation from "./useTranslation"
 
 export interface EditorProps {
-  project: Pick<
-    Project,
-    "id" | "title" | "languages" | "published" | "info" | "settings"
-  >
+  project: ProjectData
 }
 
 export function Editor(props: EditorProps) {
