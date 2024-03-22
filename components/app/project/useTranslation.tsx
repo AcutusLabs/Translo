@@ -43,6 +43,12 @@ export enum DownloadFormat {
   json_files = "json_files",
 }
 
+export enum Status {
+  Saved = "saved",
+  ToSave = "to-save",
+  Saving = "saving",
+}
+
 const useTranslation = (props: EditorProps) => {
   const {
     i18n,
@@ -57,9 +63,11 @@ const useTranslation = (props: EditorProps) => {
     addLanguage,
     editLanguage,
     deleteLanguage,
-    addNewConstantTranslation,
+    addNewTerm,
     importKeys: _importKeys,
   } = useI18nState()
+
+  const [status, setStatus] = useState<Status>(Status.Saved)
 
   const keywords = useMemo((): Keyword[] => {
     if (!i18n.info || !i18n.info.length) {
@@ -88,7 +96,7 @@ const useTranslation = (props: EditorProps) => {
 
   const save = useCallback(
     async (newI18n?: I18n) => {
-      setIsSaving(true)
+      setStatus(Status.Saving)
 
       const response = await fetch(`/api/projects/${props.project.id}`, {
         method: "PATCH",
@@ -98,7 +106,7 @@ const useTranslation = (props: EditorProps) => {
         body: JSON.stringify(newI18n ?? i18n),
       })
 
-      setIsSaving(false)
+      setStatus(Status.Saved)
 
       if (!response?.ok) {
         return toast({
@@ -111,24 +119,13 @@ const useTranslation = (props: EditorProps) => {
     [i18n, props.project.id]
   )
 
-  const debouncedSave = debounce(
-    (newI18n) => {
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  const debouncedSave = useCallback(
+    debounce((newI18n) => {
       save(newI18n)
-    },
-    100,
-    { leading: true }
+    }, 2000),
+    []
   )
-
-  useEffect(() => {
-    const unsbuscribe = useI18nState.subscribe(
-      (state) => state.i18n,
-      debouncedSave
-    )
-
-    return () => {
-      unsbuscribe()
-    }
-  })
 
   useEffect(() => {
     setI18n({
@@ -138,10 +135,21 @@ const useTranslation = (props: EditorProps) => {
       settings: props.project.settings as ProjectSettings,
       published: props.project.published,
     })
-  }, [props.project, setI18n])
+
+    const unsbuscribe = useI18nState.subscribe(
+      (state) => state.i18n,
+      (i18n) => {
+        setStatus(Status.ToSave)
+        debouncedSave(i18n)
+      }
+    )
+
+    return () => {
+      unsbuscribe()
+    }
+  }, [debouncedSave, props.project, setI18n])
 
   // const [pauseAutocomplete, setPauseAutocomplete] = useState(false)
-  const [isSaving, setIsSaving] = useState<boolean>(false)
 
   const addNewKey = useCallback(
     (keyword: NewKeyword) => {
@@ -288,7 +296,7 @@ const useTranslation = (props: EditorProps) => {
     addNewKey,
     deleteKey,
     save,
-    isSaving,
+    status,
     isPublished: props.project.published,
     setTitle,
     editContext,
@@ -297,7 +305,7 @@ const useTranslation = (props: EditorProps) => {
     editLanguage,
     deleteLanguage,
     editSettings,
-    addNewConstantTranslation,
+    addNewTerm,
     checkIfKeyAlreadyExists,
     importKeys,
     download,

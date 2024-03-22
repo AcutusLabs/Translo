@@ -14,7 +14,6 @@ import Row from "./row"
 
 type Props = {
   keywords: Keyword[]
-  isSaving: boolean
   addKeyword: (newKeyword: NewKeyword) => void
   deleteKey: (key: string) => void
   editTranslation: (language: string, key: string, value: string) => void
@@ -29,7 +28,6 @@ type Props = {
 const Table = (props: Props) => {
   const {
     keywords,
-    isSaving,
     addKeyword,
     deleteKey,
     editTranslation,
@@ -137,7 +135,6 @@ const Table = (props: Props) => {
           editContext={editContext}
           editKey={editKey}
           checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
-          isSaving={isSaving}
         />
       )}
     </div>

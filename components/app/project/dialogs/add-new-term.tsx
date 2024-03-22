@@ -16,20 +16,20 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { Icons } from "@/components/icons"
 
-export type NewConstantTranslation = {
+export type NewTerm = {
   _id: string
   [language: string]: string
 }
 
 type Props = {
   languages: string[]
-  addContantTranslation: (newWord: NewConstantTranslation) => void
+  addTerm: (newWord: NewTerm) => void
 }
 
-const AddNewConstantTranslation = (props: Props) => {
-  const { languages, addContantTranslation } = props
+const AddNewTerm = (props: Props) => {
+  const { languages, addTerm } = props
 
-  const [translations, setTranslation] = useState<NewConstantTranslation>({
+  const [translations, setTranslation] = useState<NewTerm>({
     _id: "",
   })
 
@@ -40,9 +40,9 @@ const AddNewConstantTranslation = (props: Props) => {
   }, [])
 
   const onSubmit = useCallback(() => {
-    addContantTranslation(translations)
+    addTerm(translations)
     reset()
-  }, [addContantTranslation, reset, translations])
+  }, [addTerm, reset, translations])
 
   return (
     <Dialog>
@@ -121,4 +121,4 @@ const AddNewConstantTranslation = (props: Props) => {
   )
 }
 
-export default AddNewConstantTranslation
+export default AddNewTerm

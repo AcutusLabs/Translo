@@ -4,7 +4,7 @@ import * as React from "react"
 import Link from "next/link"
 
 import "@/styles/editor.css"
-import { useState } from "react"
+import { useMemo, useState } from "react"
 
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
@@ -16,7 +16,7 @@ import ImportKeywordsModal from "./dialogs/import-keywords"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
 import { ProjectData } from "./types"
-import useTranslation from "./useTranslation"
+import useTranslation, { Status } from "./useTranslation"
 
 export interface EditorProps {
   project: ProjectData
@@ -27,7 +27,7 @@ export function Editor(props: EditorProps) {
 
   const {
     keywords,
-    isSaving,
+    status,
     title,
     languages,
     settings,
@@ -41,7 +41,7 @@ export function Editor(props: EditorProps) {
     editLanguage,
     deleteLanguage,
     editSettings,
-    addNewConstantTranslation,
+    addNewTerm,
     checkIfKeyAlreadyExists,
     importKeys,
     download,
@@ -52,6 +52,31 @@ export function Editor(props: EditorProps) {
 
   const [isProjectSettingsOpened, openProjectSettings] =
     useState<boolean>(false)
+
+  const renderStatus = useMemo(() => {
+    switch (status) {
+      case Status.ToSave:
+        return (
+          <div className="flex items-center space-x-2">
+            <span>{i18n.t("Waiting...")}</span>
+          </div>
+        )
+      case Status.Saving:
+        return (
+          <div className="flex items-center space-x-2">
+            <Icons.spinner className="animate-spin h-4 w-4" />
+            <span>{i18n.t("Saving...")}</span>
+          </div>
+        )
+      case Status.Saved:
+        return (
+          <div className="flex items-center space-x-2 text-green-500">
+            <Icons.check className="h-4 w-4" />
+            <span>{i18n.t("Saved")}</span>
+          </div>
+        )
+    }
+  }, [status])
 
   return (
     <div className="w-full gap-10">
@@ -98,17 +123,7 @@ export function Editor(props: EditorProps) {
         />
         {/** icon plus label to say if the object is saved */}
         <div className="flex items-center justify-left my-1">
-          {isSaving ? (
-            <div className="flex items-center space-x-2">
-              <Icons.spinner className="animate-spin h-4 w-4" />
-              <span>{i18n.t("Loading...")}</span>
-            </div>
-          ) : (
-            <div className="flex items-center space-x-2 text-green-500">
-              <Icons.check className="h-4 w-4" />
-              <span>{i18n.t("Saved")}</span>
-            </div>
-          )}
+          {renderStatus}
         </div>
         <Table
           keywords={keywords}
@@ -118,7 +133,6 @@ export function Editor(props: EditorProps) {
           editContext={editContext}
           editKey={editKey}
           checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
-          isSaving={isSaving}
           project={project}
           languages={languages}
           addLanguage={addLanguage}
@@ -133,7 +147,7 @@ export function Editor(props: EditorProps) {
           deleteLanguage={deleteLanguage}
           onClose={() => openProjectSettings(false)}
           editSettings={editSettings}
-          addNewConstantTranslation={addNewConstantTranslation}
+          addNewTerm={addNewTerm}
         />
       )}
     </div>

@@ -21,7 +21,7 @@ export type I18nLang = Language & {
   keywords: Record<string, string>
 }
 
-export type ConstantTranslations = {
+export type Term = {
   _id: string
   [lang: string]: string
 }
@@ -44,7 +44,7 @@ export type ProjectSettings = {
   audience: Sex[]
   ageStart?: string
   ageEnd?: string
-  constantTranslations: ConstantTranslations[]
+  glossary: Term[]
 }
 
 export type I18n = Pick<
@@ -66,7 +66,7 @@ export type I18nState = {
   editKey: (key: string, newKey: string) => void
   editTranslation: (language: string, key: string, value: string) => void
   editSettings: (newSettings: Partial<ProjectSettings>) => void
-  addNewConstantTranslation: (newword: ConstantTranslations) => void
+  addNewTerm: (newTerm: Term) => void
   addKey: (keyword: NewKeyword) => void
   importKeys: (keywords: ImportKeywords, language: string) => void
   deleteKey: (key: string) => void
@@ -77,7 +77,7 @@ export type I18nState = {
 const defaultProjectSettings: ProjectSettings = {
   formality: Formality.Neutral,
   audience: [Sex.Female, Sex.Male, Sex.Other],
-  constantTranslations: [],
+  glossary: [],
 }
 
 export const initialI18nState: I18n = {
@@ -318,7 +318,7 @@ export const useI18nState = create<I18nState>()(
           },
         }
       }),
-    addNewConstantTranslation: (newWord: ConstantTranslations) =>
+    addNewTerm: (newTerm: Term) =>
       set((state) => {
         const settings: ProjectSettings =
           (state.i18n.settings as ProjectSettings) || defaultProjectSettings
@@ -327,10 +327,7 @@ export const useI18nState = create<I18nState>()(
             ...state.i18n,
             settings: {
               ...settings,
-              constantTranslations: [
-                ...state.i18n.settings.constantTranslations,
-                newWord,
-              ],
+              glossary: [...state.i18n.settings.glossary, newTerm],
             },
           },
         }
