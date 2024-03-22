@@ -30,7 +30,7 @@ export class OpenAIHelper {
     maxTokens?: number
   }) =>
     this.openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-vision-preview",
       max_tokens: maxTokens,
       messages: [
         {
@@ -59,7 +59,7 @@ export class OpenAIHelper {
     maxTokens?: number
   }) =>
     this.openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-3.5-turbo",
       max_tokens: maxTokens,
       messages: [
         {

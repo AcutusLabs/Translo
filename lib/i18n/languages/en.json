@@ -85,5 +85,9 @@
   "Upload .json file": "Upload .json file",
   "Use a glossary to keep project translations consistent": "Use a glossary to keep project translations consistent",
   "User wrong": "User wrong",
-  "Write the word you want to be preferred over other similar words in the languages you prefer": "Write the word you want to be preferred over other similar words in the languages you prefer"
+  "Write the word you want to be preferred over other similar words in the languages you prefer": "Write the word you want to be preferred over other similar words in the languages you prefer",
+  "Pay attention not to insert an existing keyword, or you will overwrite that keyword": "Pay attention not to insert an existing keyword, or you will overwrite that keyword",
+  "Generate": "Generate",
+  "The project does not exist or is not published": "The project does not exist or is not published",
+  "The project does not have any languages": "The project does not have any languages"
 }

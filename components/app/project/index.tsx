@@ -117,6 +117,7 @@ export function Editor(props: EditorProps) {
           editKey={editKey}
           checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
           isSaving={isSaving}
+          project={project}
         />
       </div>
       {isProjectSettingsOpened && (

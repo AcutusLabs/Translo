@@ -1,5 +1,7 @@
 import { ChangeEvent, useCallback, useState } from "react"
+import { Project } from "@prisma/client"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import SlideOver, { SlideOverRow } from "@/components/slide-over"
 
@@ -13,6 +15,7 @@ type Props = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   checkIfKeyAlreadyExists: (key: string) => boolean
+  project: Project
 }
 
 const DetailSlideOver = (props: Props) => {
@@ -24,6 +27,7 @@ const DetailSlideOver = (props: Props) => {
     editContext,
     editKey,
     checkIfKeyAlreadyExists,
+    project,
   } = props
 
   const [key, setKey] = useState(keyword.key)
@@ -59,37 +63,52 @@ const DetailSlideOver = (props: Props) => {
     editKey(keyword.key, key)
   }, [editKey, key, keyword.key])
 
+  const askAI = useCallback(async () => {
+    const response = await fetch(
+      `/api/chatGpt?projectId=${project?.id}&keyword=${keyword.key}`
+    ).then((res) => res.json())
+    Object.keys(response).forEach((language) => {
+      editTranslation(language, keyword.key, response[language])
+    })
+  }, [editTranslation, keyword.key, project?.id])
+
   return (
     <SlideOver title={keyword.key} onClose={onClose} isSaving={isSaving}>
       <div className="relative p-4 flex-1 sm:px-6">
         <SlideOverRow title="Keyword">
           <div className="mt-1">
             <label className="inline-block text-xs font-light text-gray-700 mt-2.5 dark:text-gray-200">
-              Pay attention not to insert an existing keyword, or you will
-              overwrite that keyword
+              {i18n.t(
+                "Pay attention not to insert an existing keyword, or you will overwrite that keyword"
+              )}
             </label>
             <textarea
               rows={3}
               className="t-textarea mt-2"
-              placeholder="Welcome"
+              placeholder={i18n.t("Context")}
               value={key}
               onChange={handleChangeKey}
             ></textarea>
-            <Button
-              className="mt-2"
-              onClick={saveKey}
-              variant={isWarning ? "warning" : "default"}
-            >
-              {isWarning ? "Overwrite the keyword" : "Change"}
-            </Button>
+            <div className="flex gap-2">
+              <Button
+                className="mt-2"
+                onClick={saveKey}
+                variant={isWarning ? "warning" : "default"}
+              >
+                {isWarning ? "Overwrite the keyword" : "Change"}
+              </Button>
+              <Button className="mt-2" onClick={askAI} variant={"default"}>
+                {i18n.t("Generate")}
+              </Button>
+            </div>
           </div>
         </SlideOverRow>
-        <SlideOverRow title="Description">
+        <SlideOverRow title="Context">
           <div className="mt-1">
             <textarea
               rows={3}
               className="t-textarea"
-              placeholder="Leave the keyword description here..."
+              placeholder="Leave the keyword context here..."
               value={keyword.info?.context}
               onChange={handleChangeContext}
             ></textarea>

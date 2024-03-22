@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useMemo, useState } from "react"
+import { Project } from "@prisma/client"
 
 import i18n from "@/lib/i18n"
 
@@ -18,6 +19,7 @@ type Props = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   checkIfKeyAlreadyExists: (key: string) => boolean
+  project: Project
 }
 
 const Table = (props: Props) => {
@@ -30,6 +32,7 @@ const Table = (props: Props) => {
     editContext,
     editKey,
     checkIfKeyAlreadyExists,
+    project,
   } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
@@ -126,6 +129,7 @@ const Table = (props: Props) => {
       </div>
       {keywordSelected && (
         <DetailSlideOver
+          project={project}
           onClose={closeDetailRow}
           keyword={keywordSelected}
           editTranslation={editTranslation}
