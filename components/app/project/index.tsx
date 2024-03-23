@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Project } from "@prisma/client"
 
 import "@/styles/editor.css"
 import { useState } from "react"
