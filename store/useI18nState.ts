@@ -278,7 +278,7 @@ export const useI18nState = create<I18nState>()(
         i18n: {
           ...state.i18n,
           languages: state.i18n.languages.map((_language) => {
-            if (_language.lang !== language) {
+            if (_language.lang !== language && _language.short !== language) {
               return _language
             }
 

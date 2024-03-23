@@ -2,7 +2,6 @@
 
 import * as React from "react"
 import Link from "next/link"
-import { Project } from "@prisma/client"
 
 import "@/styles/editor.css"
 import { useState } from "react"
@@ -16,13 +15,11 @@ import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
+import { ProjectData } from "./types"
 import useTranslation from "./useTranslation"
 
 export interface EditorProps {
-  project: Pick<
-    Project,
-    "id" | "title" | "languages" | "published" | "info" | "settings"
-  >
+  project: ProjectData
 }
 
 export function Editor(props: EditorProps) {
@@ -117,6 +114,7 @@ export function Editor(props: EditorProps) {
           editKey={editKey}
           checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
           isSaving={isSaving}
+          project={project}
         />
       </div>
       {isProjectSettingsOpened && (

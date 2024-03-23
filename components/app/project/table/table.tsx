@@ -5,6 +5,7 @@ import { useCallback, useMemo, useState } from "react"
 import i18n from "@/lib/i18n"
 
 import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
+import { ProjectData } from "../types"
 import { Keyword } from "../useTranslation"
 import DetailSlideOver from "./detail-slide-over"
 import Row from "./row"
@@ -18,6 +19,7 @@ type Props = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   checkIfKeyAlreadyExists: (key: string) => boolean
+  project: ProjectData
 }
 
 const Table = (props: Props) => {
@@ -30,6 +32,7 @@ const Table = (props: Props) => {
     editContext,
     editKey,
     checkIfKeyAlreadyExists,
+    project,
   } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
@@ -126,6 +129,7 @@ const Table = (props: Props) => {
       </div>
       {keywordSelected && (
         <DetailSlideOver
+          project={project}
           onClose={closeDetailRow}
           keyword={keywordSelected}
           editTranslation={editTranslation}
