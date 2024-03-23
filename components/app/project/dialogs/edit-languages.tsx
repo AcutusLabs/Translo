@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { EditLanguageType, Language } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,13 +16,14 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 
 type Props = {
+  disabled: boolean
   language: Language
   editLanguage: (language: EditLanguageType) => void
   deleteLanguage: (language: Language) => void
 }
 
 const EditLanguage = (props: Props) => {
-  const { language, editLanguage, deleteLanguage } = props
+  const { language, disabled, editLanguage, deleteLanguage } = props
 
   const [languageName, setLanguageName] = useState(language.lang)
   const [shortName, setShortName] = useState(language.short)
@@ -57,18 +59,25 @@ const EditLanguage = (props: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="t-button">
-          [{language.short}] {language.lang}
+        <button className="t-button" disabled={disabled}>
+          {i18n.t("[{short}] {language}", {
+            short: language.short,
+            language: language.lang,
+          })}
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit language: {language.lang}</DialogTitle>
+          <DialogTitle>
+            {i18n.t("Edit language: {language}", {
+              language: language.lang,
+            })}
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="languageName" className="text-right">
-              Name
+              {i18n.t("Name")}
             </Label>
             <Input
               id="languageName"
@@ -81,7 +90,7 @@ const EditLanguage = (props: Props) => {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="shortName" className="text-right">
-              Short name (filename)
+              {i18n.t("Short name (filename)")}
             </Label>
             <Input
               id="shortName"
@@ -103,11 +112,11 @@ const EditLanguage = (props: Props) => {
                 deleteLanguage(language)
               }}
             >
-              Delete
+              {i18n.t("Delete")}
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button onClick={onSubmit}>Edit language</Button>
+            <Button onClick={onSubmit}>{i18n.t("Edit language")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>

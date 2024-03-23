@@ -71,20 +71,24 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 language={language}
                 editLanguage={editLanguage}
                 deleteLanguage={deleteLanguage}
+                disabled={language.short === "en"}
               />
             ))}
           </>
 
-          <AddNewLanguage addLanguage={addLanguage} />
+          <AddNewLanguage languages={languages} addLanguage={addLanguage} />
         </SlideOverRow>
       </div>
       <div className="relative p-4 flex-1 sm:px-6">
         <h4 className="text-sm leading-6 text-gray-700" id="slide-over-title">
           {i18n.t(
-            "To achieve a well-done translation, we need to provide context to the AI"
+            "To achieve a well-done translation, we need to provide context to the AI."
           )}
         </h4>
         <SlideOverRow title="Brief project description">
+          <label className="inline-block text-xs font-light text-gray-700 mt-2.5 dark:text-gray-200">
+            {i18n.t("Must be in English")}
+          </label>
           <textarea
             id="af-submit-app-description"
             className="t-textarea"

@@ -1,10 +1,11 @@
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "./icons"
 import { buttonVariants } from "./ui/button"
 
 type Props = {
-  title: string
+  title?: string
   isSaving?: boolean
   onClose: () => void
   onSave?: () => void
@@ -34,7 +35,7 @@ const SlideOver = (props: Props) => {
                   onClick={onClose}
                 >
                   <span className="absolute -inset-2.5"></span>
-                  <span className="sr-only">Close panel</span>
+                  <span className="sr-only">{i18n.t("Close panel")}</span>
                   <svg
                     className="h-6 w-6"
                     fill="none"
@@ -69,7 +70,7 @@ const SlideOver = (props: Props) => {
                       {isSaving && (
                         <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                       )}
-                      <span>Save</span>
+                      <span>{i18n.t("Save")}</span>
                     </button>
                   )}
                 </div>

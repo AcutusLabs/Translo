@@ -1,4 +1,4 @@
-import { ChangeEvent, FormEvent, useCallback, useState } from "react"
+import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { TooltipPortal } from "@radix-ui/react-tooltip"
 
@@ -22,17 +22,20 @@ import {
 } from "@/components/ui/tooltip"
 import { Icons } from "@/components/icons"
 
+import { Keyword } from "../useTranslation"
+
 export type NewKeyword = {
   key: string
   context: string
 }
 
 type Props = {
+  keywords: Keyword[]
   addKeyword: (newKey: NewKeyword) => void
 }
 
 const AddNewKeyword = (props: Props) => {
-  const { addKeyword } = props
+  const { keywords, addKeyword } = props
   const [open, setOpen] = useState(false)
 
   const [key, setKey] = useState<string | undefined>(undefined)
@@ -71,6 +74,11 @@ const AddNewKeyword = (props: Props) => {
     [addKeyword, context, key, reset]
   )
 
+  const isKeywordAlreadyExists = useMemo(
+    () => keywords.find((keyword) => keyword.key === key) !== undefined,
+    [key, keywords]
+  )
+
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
@@ -101,6 +109,11 @@ const AddNewKeyword = (props: Props) => {
                 onChange={handleChangeKey}
               />
             </div>
+            {isKeywordAlreadyExists && (
+              <h6 className="w-full text-red-500 text-xs">
+                {i18n.t("Keyword already exists")}
+              </h6>
+            )}
             <div className="grid grid-cols-4 items-center gap-4">
               <Label
                 htmlFor="username"
@@ -138,7 +151,10 @@ const AddNewKeyword = (props: Props) => {
           </div>
           <DialogFooter>
             <DialogClose asChild>
-              <Button onClick={onSubmit} disabled={!key}>
+              <Button
+                onClick={onSubmit}
+                disabled={!key || isKeywordAlreadyExists}
+              >
                 {i18n.t("Add keyword")}
               </Button>
             </DialogClose>
