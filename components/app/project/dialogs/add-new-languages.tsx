@@ -1,4 +1,4 @@
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useMemo, useState } from "react"
 import { Language } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
@@ -17,11 +17,12 @@ import { Label } from "@/components/ui/label"
 import { Icons } from "@/components/icons"
 
 type Props = {
+  languages: Language[]
   addLanguage: (language: Language) => void
 }
 
 const AddNewLanguage = (props: Props) => {
-  const { addLanguage } = props
+  const { languages, addLanguage } = props
 
   const [languageName, setLanguageName] = useState<string | undefined>(
     undefined
@@ -59,6 +60,11 @@ const AddNewLanguage = (props: Props) => {
     })
     reset()
   }, [addLanguage, languageName, reset, shortName])
+
+  const isLanguageAlreadyExists = useMemo(
+    () => languages.find((lang) => lang.short === shortName) !== undefined,
+    [languages, shortName]
+  )
 
   return (
     <Dialog>
@@ -99,12 +105,22 @@ const AddNewLanguage = (props: Props) => {
               onChange={handleChangeShortName}
             />
           </div>
+          {isLanguageAlreadyExists && (
+            <h6 className="w-full text-red-500 text-xs">
+              {i18n.t("Short name already exists")}
+            </h6>
+          )}
         </div>
         <DialogFooter>
           <DialogClose asChild>
             <Button
               onClick={onSubmit}
-              disabled={!languageName || !shortName || shortName === "_id"}
+              disabled={
+                !languageName ||
+                !shortName ||
+                shortName === "_id" ||
+                isLanguageAlreadyExists
+              }
             >
               {i18n.t("Add language")}
             </Button>

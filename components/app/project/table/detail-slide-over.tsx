@@ -73,7 +73,7 @@ const DetailSlideOver = (props: Props) => {
   }, [editTranslation, keyword.key, project?.id])
 
   return (
-    <SlideOver title={keyword.key} onClose={onClose} isSaving={isSaving}>
+    <SlideOver title={i18n.t("Detail")} onClose={onClose} isSaving={isSaving}>
       <div className="relative p-4 flex-1 sm:px-6">
         <SlideOverRow title="Keyword">
           <div className="mt-1">
@@ -90,20 +90,27 @@ const DetailSlideOver = (props: Props) => {
               onChange={handleChangeKey}
             ></textarea>
             <div className="flex gap-2">
-              <Button
-                className="mt-2"
-                onClick={saveKey}
-                variant={isWarning ? "warning" : "default"}
-              >
-                {isWarning ? "Overwrite the keyword" : "Change"}
-              </Button>
-              <Button className="mt-2" onClick={askAI} variant={"default"}>
-                {i18n.t("Generate")}
-              </Button>
+              {keyword.key !== key && (
+                <Button
+                  className="mt-2"
+                  onClick={saveKey}
+                  variant={isWarning ? "warning" : "default"}
+                >
+                  {isWarning ? "Overwrite the keyword" : "Change"}
+                </Button>
+              )}
             </div>
           </div>
         </SlideOverRow>
         <SlideOverRow title="Context">
+          <label className="inline-block text-xs font-light text-gray-700 mt-2.5 dark:text-gray-200">
+            {i18n.t(
+              "It's necessary if you need to specify a context to the AI in order to make a more accurate translation"
+            )}
+          </label>
+          <label className="inline-block text-xs font-light text-gray-700 mt-2.5 dark:text-gray-200">
+            {i18n.t("Must be in English")}
+          </label>
           <div className="mt-1">
             <textarea
               rows={3}
@@ -114,6 +121,8 @@ const DetailSlideOver = (props: Props) => {
             ></textarea>
           </div>
         </SlideOverRow>
+      </div>
+      <div className="relative p-4 flex-1 sm:px-6">
         {keyword.languagesAvailable.map((lang) => (
           <div key={lang.language} className="mt-2">
             <label className="block mb-2 text-sm font-medium dark:text-white">
@@ -133,6 +142,11 @@ const DetailSlideOver = (props: Props) => {
                 onChange={(e) => handleChangeTranslation(e, lang.language)}
               ></textarea>
             </div>
+            {lang.short === "en" && keyword.languagesAvailable.length > 1 && (
+              <Button className="mt-2" onClick={askAI} variant={"default"}>
+                {i18n.t("From English generate all translations")}
+              </Button>
+            )}
           </div>
         ))}
       </div>

@@ -82,7 +82,7 @@ const Table = (props: Props) => {
           </div>
         </div>
         <div className="flex w-full shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
-          <AddNewKeyword addKeyword={addKeyword} />
+          <AddNewKeyword keywords={keywords} addKeyword={addKeyword} />
         </div>
       </div>
       <div className="px-4 md:space-x-4">

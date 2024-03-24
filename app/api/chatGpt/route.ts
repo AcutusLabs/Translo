@@ -61,32 +61,56 @@ export async function GET(req: NextRequest) {
       context: "",
     }
 
+    const enLanguage = languages.find((lang) => lang.short === "en")
+
+    if (!enLanguage) {
+      return ErrorResponse({
+        error: i18n.t("The project does not have en language"),
+      })
+    }
+
+    const translationEn = enLanguage.keywords[keyword]
+
     const settings = project.settings as ProjectSettings
+
+    let agePrompt = ""
+
+    if (settings.ageStart && settings.ageEnd) {
+      agePrompt = `with an age range between ${settings.ageStart} and ${settings.ageEnd} years old.`
+    } else if (settings.ageStart) {
+      agePrompt = `with an age from ${settings.ageStart}.`
+    } else if (settings.ageEnd) {
+      agePrompt = `with an age up to ${settings.ageEnd}.`
+    }
 
     try {
       const prompt = `
-I'm working on internationalizing my application. I'd like to translate the text "${keyword}" ${
+I'm working on internationalizing my application. I'd like to translate the text "${translationEn}"${
         context ? `, used in this context: "${context}"` : ""
       }. Could you write the translations in [${languagesPropt}]?
-[[Translations should be informal]] <-- ${settings.formality}
-[[in the tone of a tech website]] <-- ${settings.description}
-[[The target audience is both male and female]] <-- ${settings.audience}
-with an age range between ${settings.ageStart} and ${settings.ageEnd} years old.
+      Translations should be ${settings.formality}
+      ${
+        settings.description
+          ? `The project description is: ${settings.description}. `
+          : ""
+      }
+      ${
+        settings.audience.length
+          ? `The target audience is: ${settings.audience.join(", ")}.`
+          : ""
+      }
+      ${agePrompt ? agePrompt : ""}
+
+      Be aware that in some languages there are articles where English does not have them.
 
 respond using an unique JSON object without any comments or any other descriptions, like so:
 {
-    "en": "",
-    "it": "",
-    "es": ""
+  ${languages.map((lang) => `"${lang.short}": ""`).join(", ")}
 }
 
 where:
-language-id for english = en
-language-id for italian = it
-language-id for spanish = es
-
+${languages.map((lang) => `language-id for ${lang.lang} = ${lang.short}`)}
 `
-
       const openaiHelper = new OpenAIHelper()
       const response = await openaiHelper.askChatGPT({
         prompt,
