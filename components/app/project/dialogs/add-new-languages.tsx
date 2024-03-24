@@ -1,4 +1,5 @@
 import { ChangeEvent, useCallback, useMemo, useState } from "react"
+import { languages as allLanguages } from "@/constants/languages"
 import { Language } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { LanguageSelector } from "@/components/app/project/language-selector"
 import { Icons } from "@/components/icons"
 
 type Props = {
@@ -23,6 +25,7 @@ type Props = {
 
 const AddNewLanguage = (props: Props) => {
   const { languages, addLanguage } = props
+  const [selectedLanguage, setSelectedLanguage] = useState<string>()
 
   const [languageName, setLanguageName] = useState<string | undefined>(
     undefined
@@ -46,9 +49,27 @@ const AddNewLanguage = (props: Props) => {
   const reset = useCallback(() => {
     setLanguageName(undefined)
     setShortName(undefined)
+    setSelectedLanguage(undefined)
   }, [])
 
-  const onSubmit = useCallback(() => {
+  const onAddLanguage = useCallback(() => {
+    if (!selectedLanguage) {
+      // The keyword '_id' is a reserved keyword for identifying constant translations
+      return
+    }
+
+    const language = allLanguages.find((lang) => lang.code === selectedLanguage)
+
+    if (!language) return
+
+    addLanguage({
+      lang: language.englishName,
+      short: language.code,
+    })
+    reset()
+  }, [addLanguage, reset, selectedLanguage])
+
+  const onAddCustomLanguage = useCallback(() => {
     if (!languageName || !shortName || shortName === "_id") {
       // The keyword '_id' is a reserved keyword for identifying constant translations
       return
@@ -58,6 +79,7 @@ const AddNewLanguage = (props: Props) => {
       lang: languageName,
       short: shortName,
     })
+    setSelectedLanguage(undefined)
     reset()
   }, [addLanguage, languageName, reset, shortName])
 
@@ -79,6 +101,19 @@ const AddNewLanguage = (props: Props) => {
           <DialogTitle>{i18n.t("New language")}</DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
+          <LanguageSelector
+            currentLanguages={languages}
+            selectedLanguage={selectedLanguage}
+            setSelectedLanguage={setSelectedLanguage}
+          />
+          <DialogFooter>
+            <DialogClose asChild>
+              <Button onClick={onAddLanguage} disabled={!selectedLanguage}>
+                {i18n.t("Add language")}
+              </Button>
+            </DialogClose>
+          </DialogFooter>
+          <div>{i18n.t("You can't find a language? create it!")}</div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="languageName" className="text-right">
               {i18n.t("Name")}
@@ -114,7 +149,7 @@ const AddNewLanguage = (props: Props) => {
         <DialogFooter>
           <DialogClose asChild>
             <Button
-              onClick={onSubmit}
+              onClick={onAddCustomLanguage}
               disabled={
                 !languageName ||
                 !shortName ||
@@ -122,7 +157,7 @@ const AddNewLanguage = (props: Props) => {
                 isLanguageAlreadyExists
               }
             >
-              {i18n.t("Add language")}
+              {i18n.t("Add custom language")}
             </Button>
           </DialogClose>
         </DialogFooter>

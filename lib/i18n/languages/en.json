@@ -3,6 +3,7 @@
   "Actions": "Actions",
   "Add keyword": "Add keyword",
   "Add language": "Add language",
+  "Add custom language": "Add custom language",
   "Add term": "Add term",
   "and": "and",
   "Are you sure you want to delete this project?": "Are you sure you want to delete this project?",
@@ -99,5 +100,6 @@
   "Upload .json file": "Upload .json file",
   "Use a glossary to keep project translations consistent": "Use a glossary to keep project translations consistent",
   "User wrong": "User wrong",
+  "You can't find a language? create it!": "You can't find a language? create it!",
   "Write the word you want to be preferred over other similar words in the languages you prefer": "Write the word you want to be preferred over other similar words in the languages you prefer"
 }
