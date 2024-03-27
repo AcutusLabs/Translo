@@ -31,13 +31,13 @@ const doWork = async () => {
   await Promise.all(
     languagesSupported.map((lang) => {
       const root = path.join(__dirname, "..")
-      const filePath = path.join(root, "i18n", "languages", `${lang}.json`)
+      const filePath = path.join(root, "i18n", "languages", `${lang}`)
 
       // eslint-disable-next-line no-console
       console.log(`prepare ${lang}...`)
 
       return saveFileToFileSystem(
-        `${process.env.TRANSLO_I18N_BASE_URL}/${lang}.json`,
+        `${process.env.TRANSLO_I18N_BASE_URL}/${lang}`,
         filePath
       )
     })

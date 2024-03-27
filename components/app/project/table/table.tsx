@@ -98,21 +98,15 @@ const Table = (props: Props) => {
         </p>
       </div>
       <div className="overflow-x-auto">
-        <table className="w-full text-left text-sm text-gray-500 dark:text-gray-400">
+        <table className="table-fixed w-full text-left text-sm text-gray-500 dark:text-gray-400">
           <thead className="bg-gray-50 text-xs uppercase text-gray-700 dark:bg-gray-700 dark:text-gray-400">
             <tr>
-              <th scope="col" className="px-4 py-3">
+              <th scope="col" className="px-4 py-3 w-[70%]">
                 {i18n.t("Keyword")}
               </th>
-              <th scope="col" className="px-4 py-3">
+              <th scope="col" className="px-4 py-3 w-[25%]">
                 {i18n.t("Languages")}
               </th>
-              <th scope="col" className="px-4 py-3">
-                {i18n.t("Context")}
-              </th>
-              {/* <th scope="col" className="px-4 py-3">
-                Image
-              </th> */}
               <th scope="col" className="px-4 py-3">
                 <span className="sr-only">{i18n.t("Actions")}</span>
               </th>

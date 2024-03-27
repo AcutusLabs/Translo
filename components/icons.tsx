@@ -16,6 +16,7 @@ import {
   Lock,
   LucideProps,
   Mail,
+  Minus,
   Moon,
   MoreVertical,
   Pizza,
@@ -71,4 +72,5 @@ export const Icons = {
   check: Check,
   email: Mail,
   password: Lock,
+  minus: Minus,
 }

@@ -22,14 +22,14 @@ const Row = (props: Props) => {
       className="cursor-pointer border-b dark:border-gray-700"
       onClick={openDetail}
     >
-      <th
+      <td
         scope="row"
-        className="whitespace-nowrap px-4 py-3 align-middle font-medium text-gray-900 dark:text-white"
+        className="whitespace-nowrap px-4 py-3 align-middle font-medium text-gray-900 dark:text-white text-ellipsis overflow-hidden w-[70%]"
       >
         {keyword.key}
-      </th>
+      </td>
       <td className="px-4 py-3 align-middle">
-        <div className="flex max-w-[100px] flex-wrap gap-2">
+        <div className="flex flex-wrap gap-2">
           {keyword.languagesAvailable.map((language) => {
             if (language.available) {
               return (
@@ -53,16 +53,6 @@ const Row = (props: Props) => {
           })}
         </div>
       </td>
-      <td className="px-4 py-3 align-middle">{keyword.info?.context}</td>
-      {/* <td className="align-middle">
-        <Image
-          className="rounded-lg m-0"
-          src="https://placekitten.com/200/200"
-          alt="image description"
-          width={80}
-          height={80}
-        />
-      </td> */}
       <td
         className="px-4 py-3 align-middle"
         onClick={(e) => e.stopPropagation()}
