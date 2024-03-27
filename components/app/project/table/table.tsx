@@ -1,10 +1,12 @@
 "use client"
 
 import { useCallback, useMemo, useState } from "react"
+import { Language } from "@/store/useI18nState"
 
 import i18n from "@/lib/i18n"
 
 import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
+import AddNewLanguage from "../dialogs/add-new-languages"
 import { ProjectData } from "../types"
 import { Keyword } from "../useTranslation"
 import DetailSlideOver from "./detail-slide-over"
@@ -19,6 +21,8 @@ type Props = {
   editContext: (key: string, context: string) => void
   editKey: (key: string, newKey: string) => void
   checkIfKeyAlreadyExists: (key: string) => boolean
+  languages: Language[]
+  addLanguage: (language: Language) => void
   project: ProjectData
 }
 
@@ -33,6 +37,8 @@ const Table = (props: Props) => {
     editKey,
     checkIfKeyAlreadyExists,
     project,
+    languages,
+    addLanguage,
   } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
@@ -83,6 +89,7 @@ const Table = (props: Props) => {
         </div>
         <div className="flex w-full shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
           <AddNewKeyword keywords={keywords} addKeyword={addKeyword} />
+          <AddNewLanguage languages={languages} addLanguage={addLanguage} />
         </div>
       </div>
       <div className="px-4 md:space-x-4">

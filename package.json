@@ -28,6 +28,7 @@
     "i18n": "pnpm dotenv -e .env.local npx ts-node lib/i18n/import.ts"
   },
   "dependencies": {
+    "@ariakit/react": "^0.4.4",
     "@emotion/react": "^11.11.3",
     "@emotion/styled": "^11.11.0",
     "@hookform/resolvers": "^3.1.0",
@@ -84,6 +85,7 @@
     "jszip": "^3.10.1",
     "lodash": "^4.17.21",
     "lucide-react": "^0.92.0",
+    "match-sorter": "^6.3.4",
     "next": "13.3.2-canary.13",
     "next-auth": "4.22.1",
     "next-contentlayer": "^0.3.1",
