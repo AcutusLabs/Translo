@@ -1,3 +1,5 @@
+import i18n from "@/lib/i18n"
+
 /* eslint-disable @next/next/no-img-element */
 const Features = () => {
   return (
@@ -6,7 +8,7 @@ const Features = () => {
         <div className="relative z-10 lg:grid lg:grid-cols-12 lg:gap-16 lg:items-center">
           <div className="mb-10 lg:mb-0 lg:col-span-6 lg:col-start-8 lg:order-2">
             <h2 className="text-2xl text-gray-800 font-bold sm:text-3xl dark:text-gray-200">
-              Say goodbye to translation headaches
+              {i18n.t("Say goodbye to translation headaches")}
             </h2>
 
             <nav
@@ -50,10 +52,12 @@ const Features = () => {
                   </svg>
                   <span className="grow ms-6">
                     <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">
-                      Centralize your translations
+                      {i18n.t("Centralize your translations")}
                     </span>
                     <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">
-                      Simplify your translations with our online platform.
+                      {i18n.t(
+                        "Simplify your translations with our online platform."
+                      )}
                     </span>
                   </span>
                 </span>
@@ -85,11 +89,12 @@ const Features = () => {
                   </svg>
                   <span className="grow ms-6">
                     <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">
-                      AI translations
+                      {i18n.t("AI translations")}
                     </span>
                     <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">
-                      Unlock the potential of AI translation: Reach new markets,
-                      faster.
+                      {i18n.t(
+                        "Unlock the potential of AI translation: Reach new markets, faster."
+                      )}
                     </span>
                   </span>
                 </span>
@@ -137,11 +142,12 @@ const Features = () => {
 
                   <span className="grow ms-6">
                     <span className="block text-lg font-semibold hs-tab-active:text-blue-600 text-gray-800 dark:hs-tab-active:text-blue-500 dark:text-gray-200">
-                      Export Translations
+                      {i18n.t("Export Translations")}
                     </span>
                     <span className="block mt-1 text-gray-800 dark:hs-tab-active:text-gray-200 dark:text-gray-200">
-                      Get your translations in JSON and start using them right
-                      away.
+                      {i18n.t(
+                        "Get your translations in JSON and start using them right away."
+                      )}
                     </span>
                   </span>
                 </span>
@@ -159,8 +165,8 @@ const Features = () => {
                 >
                   <img
                     className="shadow-xl shadow-gray-200 rounded-xl dark:shadow-gray-900/[.2]"
-                    src="https://images.unsplash.com/photo-1605629921711-2f6b00c6bbf4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&h=1220&q=80"
-                    alt="Image Description"
+                    src="/images/translations.png"
+                    alt="Translations"
                   />
                 </div>
 
@@ -172,8 +178,8 @@ const Features = () => {
                 >
                   <img
                     className="shadow-xl shadow-gray-200 rounded-xl dark:shadow-gray-900/[.2]"
-                    src="https://images.unsplash.com/photo-1665686306574-1ace09918530?ixlib=rb-4.0.3&ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&h=1220&q=80"
-                    alt="Image Description"
+                    src="/images/ai.png"
+                    alt="AI"
                   />
                 </div>
 
@@ -185,8 +191,8 @@ const Features = () => {
                 >
                   <img
                     className="shadow-xl shadow-gray-200 rounded-xl dark:shadow-gray-900/[.2]"
-                    src="https://images.unsplash.com/photo-1598929213452-52d72f63e307?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=987&h=1220&q=80"
-                    alt="Image Description"
+                    src="/images/export.png"
+                    alt="Export"
                   />
                 </div>
               </div>

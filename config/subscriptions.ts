@@ -1,13 +1,19 @@
 import { SubscriptionPlan } from "types"
 import { env } from "@/env.mjs"
-import { MAX_PROJECTS_STARTER_URSER } from "@/lib/constants"
+import {
+  MAX_KEYWORDS_STARTER_URSER,
+  MAX_PROJECTS_STARTER_URSER,
+} from "@/lib/constants"
 import i18n from "@/lib/i18n"
 
 export const freePlan: SubscriptionPlan = {
   name: "Free",
   description: i18n.t(
-    "The free plan is limited to {number} project. Upgrade to the PRO plan for unlimited projects.",
-    { number: MAX_PROJECTS_STARTER_URSER }
+    "The free plan is limited to {projects} project and {keywords} keywords. Upgrade to the PRO plan for unlimited projects.",
+    {
+      projects: MAX_PROJECTS_STARTER_URSER,
+      keywords: MAX_KEYWORDS_STARTER_URSER,
+    }
   ),
   stripePriceId: "",
 }
