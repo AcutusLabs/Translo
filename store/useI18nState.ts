@@ -196,7 +196,19 @@ export const useI18nState = create<I18nState>()(
         const newInfo: I18nInfo[] = [...state.i18n.info]
 
         Object.keys(keywords).forEach((key) => {
-          newInfo.push({ key: key, context: "" })
+          const keywordAlreadyExists = newInfo.find((info) => info.key === key)
+
+          if (keywordAlreadyExists) {
+            newInfo.map((info) => {
+              if (info.key !== key) {
+                return info
+              }
+
+              return { key: key, context: "" }
+            })
+          } else {
+            newInfo.push({ key: key, context: "" })
+          }
         })
 
         const newI18n = {

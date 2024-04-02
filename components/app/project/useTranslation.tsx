@@ -282,6 +282,7 @@ const useTranslation = (props: EditorProps) => {
     title: i18n.title,
     keywords,
     languages,
+    i18nLanguages: i18n.languages,
     settings: i18n.settings,
     editTranslation,
     addNewKey,

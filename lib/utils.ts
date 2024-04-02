@@ -32,3 +32,12 @@ export const generateEmailVerificationToken = () => {
   // for creating secure tokens or identifiers.
   return randomBytes(32).toString("hex")
 }
+
+export const isJson = (value: string) => {
+  try {
+    JSON.parse(value)
+  } catch (e) {
+    return false
+  }
+  return true
+}
