@@ -1,6 +1,8 @@
 import { env } from "@/env.mjs"
 import { toast } from "@/components/ui/use-toast"
 
+import i18n from "./i18n"
+
 export enum HTTP_POST_PATH {
   changePassword = "/users/change-password",
   resetPassword = "/users/reset-password",
@@ -33,7 +35,7 @@ export const HTTP_POST = async (path: HTTP_POST_PATH, body: string) => {
 const checkResposne = (status: number, json: any) => {
   if (status === 400 && json["error"]) {
     toast({
-      title: "Something went wrong.",
+      title: i18n.t("Something went wrong"),
       description: json["error"],
       variant: "destructive",
     })

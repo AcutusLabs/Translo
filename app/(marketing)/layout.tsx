@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { marketingConfig } from "@/config/marketing"
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { MainNav } from "@/components/main-nav"
@@ -29,7 +30,7 @@ export default async function MarketingLayout({
                   "px-4"
                 )}
               >
-                Login
+                {i18n.t("Login")}
               </Link>
             </nav>
           </div>

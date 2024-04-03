@@ -1,12 +1,13 @@
 import { signOut } from "next-auth/react"
 import { z } from "zod"
 
+import { ShowAlertType } from "@/types/api"
 import { toast } from "@/components/ui/use-toast"
 
 import i18n from "./i18n"
 import { ErrorResponseParams, GenericErrorResponse } from "./response"
 
-export const handleApiError = (error: any) => {
+export const handleApiError = (error: any, showAlertType?: ShowAlertType) => {
   if (error.response.status === 403) {
     toast({
       title: i18n.t("Something went wrong"),
@@ -22,7 +23,9 @@ export const handleApiError = (error: any) => {
   const errorResponse: ErrorResponseParams = error.response
     .data as ErrorResponseParams
 
-  if (errorResponse.description) {
+  if (errorResponse.alertType && showAlertType) {
+    showAlertType(errorResponse.alertType)
+  } else if (errorResponse.description) {
     toast({
       title: errorResponse.error,
       description: errorResponse.description,

@@ -1,7 +1,9 @@
+import { NextRequest } from "next/server"
 import { getServerSession } from "next-auth/next"
 import { z } from "zod"
 
-import { proPlan } from "@/config/subscriptions"
+import { SubscriptionPlanType } from "@/types/subscription"
+import { proPlanMonthly, proPlanYearly } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
@@ -9,15 +11,31 @@ import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
 
+const stripeParams = z.object({
+  plan: z
+    .enum([
+      SubscriptionPlanType.Monthly,
+      SubscriptionPlanType.Yearly,
+      SubscriptionPlanType.Manage,
+    ])
+    .optional(),
+})
+
 const billingUrl = absoluteUrl("/dashboard/billing")
 
-export async function GET() {
+export async function GET(req: NextRequest) {
   try {
     const session = await getServerSession(authOptions)
 
     if (!session?.user || !session?.user.email) {
       return ErrorResponse({ error: i18n.t("User wrong"), status: 403 })
     }
+
+    const searchParams = req.nextUrl.searchParams
+
+    const { plan } = stripeParams.parse({
+      plan: searchParams.get("plan"),
+    })
 
     const subscriptionPlan = await getUserSubscriptionPlan(session.user.id)
 
@@ -43,7 +61,10 @@ export async function GET() {
       customer_email: session.user.email,
       line_items: [
         {
-          price: proPlan.stripePriceId,
+          price:
+            plan === SubscriptionPlanType.Monthly
+              ? proPlanMonthly.stripePriceId
+              : proPlanYearly.stripePriceId,
           quantity: 1,
         },
       ],

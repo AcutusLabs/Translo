@@ -8,6 +8,7 @@ import { useSession } from "next-auth/react"
 import { useForm } from "react-hook-form"
 import * as z from "zod"
 
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { userNameSchema } from "@/lib/validations/user"
 import { buttonVariants } from "@/components/ui/button"
@@ -67,8 +68,8 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
 
     if (!response?.ok) {
       return toast({
-        title: "Something went wrong.",
-        description: "Your name was not updated. Please try again.",
+        title: i18n.t("Something went wrong"),
+        description: i18n.t("Your name was not updated. Please try again"),
         variant: "destructive",
       })
     }
@@ -76,7 +77,7 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
     await update({ name: data.name })
 
     toast({
-      description: "Your name has been updated.",
+      description: i18n.t("Your name has been updated"),
     })
 
     router.refresh()

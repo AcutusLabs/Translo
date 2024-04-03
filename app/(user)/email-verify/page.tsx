@@ -4,6 +4,7 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
+import i18n from "@/lib/i18n"
 import { toast } from "@/components/ui/use-toast"
 
 export default function VerifyEmail() {
@@ -18,8 +19,10 @@ export default function VerifyEmail() {
       if (!email || !token) {
         setResult("Error verifying your email")
         return toast({
-          title: "Something went wrong.",
-          description: "Your email verification failed. Please try again.",
+          title: i18n.t("Something went wrong"),
+          description: i18n.t(
+            "Your email verification failed. Please try again"
+          ),
           variant: "destructive",
         })
       }
@@ -33,8 +36,8 @@ export default function VerifyEmail() {
       )
 
       toast({
-        title: "Good news",
-        description: "Email verified successfully. Please relogin.",
+        title: i18n.t("Good news"),
+        description: i18n.t("Email verified successfully. Please relogin"),
       })
       window.location.replace("/login")
     }

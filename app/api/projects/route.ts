@@ -2,6 +2,7 @@ import { initialI18nState } from "@/store/useI18nState"
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
+import { AlertType } from "@/types/api"
 import { authOptions } from "@/lib/auth"
 import { MAX_PROJECTS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
@@ -63,12 +64,13 @@ export async function POST(req: Request) {
         },
       })
 
-      if (count >= 1) {
+      if (count >= MAX_PROJECTS_STARTER_URSER) {
         return ErrorResponse({
           error: i18n.t("Limit of {number} projects reached.", {
             number: MAX_PROJECTS_STARTER_URSER,
           }),
           description: i18n.t("Please upgrade to the PRO plan."),
+          alertType: AlertType.projectSubscriptionNeeded,
         })
       }
     }
