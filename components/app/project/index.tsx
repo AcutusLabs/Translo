@@ -47,6 +47,7 @@ export function Editor(props: EditorProps) {
     download,
     publishProject,
     isPublished,
+    i18nLanguages,
   } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
@@ -74,7 +75,11 @@ export function Editor(props: EditorProps) {
             publishProject={publishProject}
             download={download}
           />
-          <ImportKeywordsModal languages={languages} importKeys={importKeys} />
+          <ImportKeywordsModal
+            keywords={keywords}
+            languages={i18nLanguages}
+            importKeys={importKeys}
+          />
           <button
             onClick={() => openProjectSettings(true)}
             className={cn(buttonVariants({ variant: "secondary" }), "mr-4")}
