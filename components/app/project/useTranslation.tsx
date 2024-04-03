@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useState } from "react"
+import { useCallback, useContext, useEffect, useMemo, useState } from "react"
 import {
   I18n,
   I18nInfo,
@@ -12,8 +12,10 @@ import JSZip from "jszip"
 import _ from "lodash"
 import debounce from "lodash/debounce"
 
+import { AlertType } from "@/types/api"
 import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
 import i18nLib from "@/lib/i18n"
+import { AlertContext } from "@/app/client-providers"
 
 import { EditorProps } from "."
 import { toast } from "../../ui/use-toast"
@@ -68,6 +70,7 @@ const useTranslation = (props: EditorProps) => {
   } = useI18nState()
 
   const [status, setStatus] = useState<Status>(Status.Saved)
+  const alertContext = useContext(AlertContext)
 
   const keywords = useMemo((): Keyword[] => {
     if (!i18n.info || !i18n.info.length) {
@@ -110,8 +113,10 @@ const useTranslation = (props: EditorProps) => {
 
       if (!response?.ok) {
         return toast({
-          title: "Something went wrong.",
-          description: "Your project was not saved. Please try again.",
+          title: i18nLib.t("Something went wrong"),
+          description: i18nLib.t(
+            "Your project was not saved. Please try again"
+          ),
           variant: "destructive",
         })
       }
@@ -154,18 +159,12 @@ const useTranslation = (props: EditorProps) => {
   const addNewKey = useCallback(
     (keyword: NewKeyword) => {
       if (keywords.length + 1 > MAX_KEYWORDS_STARTER_URSER) {
-        toast({
-          title: i18nLib.t("Limit of {number} keywords reached.", {
-            number: MAX_KEYWORDS_STARTER_URSER,
-          }),
-          description: i18nLib.t("Please upgrade to the PRO plan."),
-          variant: "destructive",
-        })
+        alertContext.showAlert(AlertType.keywordsSubscriptionNeeded)
         return
       }
       addKey(keyword)
     },
-    [addKey, keywords.length]
+    [addKey, alertContext, keywords.length]
   )
 
   const importKeys = useCallback(
@@ -254,8 +253,10 @@ const useTranslation = (props: EditorProps) => {
 
       if (!response?.ok) {
         return toast({
-          title: "Something went wrong.",
-          description: "Your project was not saved. Please try again.",
+          title: i18nLib.t("Something went wrong"),
+          description: i18nLib.t(
+            "Your project was not saved. Please try again"
+          ),
           variant: "destructive",
         })
       }

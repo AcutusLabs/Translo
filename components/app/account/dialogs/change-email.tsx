@@ -1,6 +1,7 @@
 import { ChangeEvent, Fragment, useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { isEmail } from "@/lib/regex"
 import { Button } from "@/components/ui/button"
 import {
@@ -39,7 +40,7 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
   const onSubmit = useCallback(async () => {
     if (!props.oldEmail) {
       return toast({
-        title: "Something went wrong.",
+        title: i18n.t("Something went wrong"),
         variant: "destructive",
       })
     }
@@ -49,16 +50,17 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
       await changeEmail(props.oldEmail, newEmail)
     } catch (e) {
       return toast({
-        title: "Something went wrong.",
-        description: "Changing password failed. Please try again.",
+        title: i18n.t("Something went wrong"),
+        description: i18n.t("Changing password failed. Please try again"),
         variant: "destructive",
       })
     }
 
     return toast({
-      title: "Check your email",
-      description:
-        "We sent you a change email link. Be sure to check your spam too.",
+      title: i18n.t("Check your email"),
+      description: i18n.t(
+        "We sent you a change email link. Be sure to check your spam too"
+      ),
     })
   }, [newEmail, props.oldEmail, reset])
 

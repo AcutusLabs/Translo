@@ -18,8 +18,14 @@ export const freePlan: SubscriptionPlan = {
   stripePriceId: "",
 }
 
-export const proPlan: SubscriptionPlan = {
-  name: "PRO",
+export const proPlanMonthly: SubscriptionPlan = {
+  name: "Pro",
   description: i18n.t("The PRO plan has unlimited projects."),
   stripePriceId: env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
+}
+
+export const proPlanYearly: SubscriptionPlan = {
+  name: "Pro",
+  description: i18n.t("The PRO plan has unlimited projects."),
+  stripePriceId: env.STRIPE_PRO_YEARLY_PLAN_ID || "",
 }

@@ -1,6 +1,6 @@
 "use client"
 
-import { ChangeEvent, useCallback, useState } from "react"
+import { ChangeEvent, useCallback, useContext, useState } from "react"
 import { useRouter } from "next/navigation"
 import { DialogClose } from "@radix-ui/react-dialog"
 
@@ -18,12 +18,14 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
+import { AlertContext } from "@/app/client-providers"
 
 const AddNewProject = () => {
   const [projectName, setProjectName] = useState<string>("")
   const router = useRouter()
 
   const [open, setOpen] = useState(false)
+  const alertContext = useContext(AlertContext)
 
   const { isPending, mutate } = useAddProject({
     projectName,
@@ -32,6 +34,7 @@ const AddNewProject = () => {
       router.push(`/editor/${project.id}`)
       setProjectName("")
     },
+    showAlertType: alertContext.showAlert,
   })
 
   const createProject = useCallback(() => {
@@ -75,7 +78,7 @@ const AddNewProject = () => {
               <div className="capitalize">{i18n.t("New project")}</div>
             </DialogTitle>
           </DialogHeader>
-          <div className="py-2">
+          <div className="py-2 mt-5">
             <Input
               placeholder={i18n.t("Project name")}
               className="col-span-3"

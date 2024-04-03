@@ -26,7 +26,7 @@ export default function PricingPage() {
           {i18n.t("Unlock all features and grow your business.")}
         </p>
       </div>
-      <div className="grid w-full items-start gap-10 rounded-lg border p-10 md:grid-cols-[1fr_150px_150px]">
+      <div className="grid w-full items-start rounded-lg border p-10 gap-10 md:grid-cols-[1fr_150px_150px]">
         <div className="grid gap-6">
           <h3 className="text-xl font-bold sm:text-2xl">
             {i18n.t("What's included in the PRO plan")}
@@ -38,7 +38,7 @@ export default function PricingPage() {
             </li>
             <li className="flex items-center">
               <Icons.check className="mr-2 h-4 w-4" />
-              {i18n.t("Unlimited translation")}
+              {i18n.t("Unlimited keywords")}
             </li>
           </ul>
         </div>

@@ -33,8 +33,8 @@ async function deleteProject(projectId: string) {
 
   if (!response?.ok) {
     toast({
-      title: "Something went wrong.",
-      description: "Your project was not deleted. Please try again.",
+      title: i18n.t("Something went wrong"),
+      description: i18n.t("Your project was not deleted. Please try again"),
       variant: "destructive",
     })
   }

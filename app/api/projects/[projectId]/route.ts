@@ -1,6 +1,7 @@
 import { getServerSession } from "next-auth"
 import * as z from "zod"
 
+import { AlertType } from "@/types/api"
 import { authOptions } from "@/lib/auth"
 import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
@@ -74,6 +75,7 @@ export async function PATCH(
           }),
           description: i18n.t("Please upgrade to the PRO plan."),
           status: 403,
+          alertType: AlertType.keywordsSubscriptionNeeded,
         })
       }
     }

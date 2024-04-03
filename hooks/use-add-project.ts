@@ -1,6 +1,7 @@
 import { useMutation } from "@tanstack/react-query"
 import axios from "axios"
 
+import { ApiResponseType } from "@/types/api"
 import { handleApiError } from "@/lib/exceptions"
 
 const addProject = async (projectName) => {
@@ -17,11 +18,19 @@ const addProject = async (projectName) => {
   return result.data
 }
 
-export const useAddProject = ({ projectName, onSuccess }) => {
+type AddProjectApi = ApiResponseType & {
+  projectName: string
+}
+
+export const useAddProject = ({
+  projectName,
+  onSuccess,
+  showAlertType,
+}: AddProjectApi) => {
   return useMutation({
     mutationKey: ["addProject", projectName],
     mutationFn: async () => await addProject(projectName),
-    onError: handleApiError,
+    onError: (error) => handleApiError(error, showAlertType),
     onSuccess,
   })
 }

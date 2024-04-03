@@ -81,10 +81,10 @@ export const authOptions: NextAuthOptions = {
 
       return session
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       const dbUser = await db.user.findFirst({
         where: {
-          id: token.id || undefined,
+          id: trigger === "signIn" ? token.sub : token.id,
         },
       })
 
