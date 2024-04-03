@@ -78,17 +78,22 @@ export async function PATCH(
       }
     }
 
+    const newData: typeof body = {
+      title: body.title,
+      languages: body.languages,
+      info: body.info,
+      settings: body.settings,
+    }
+
+    if (body.published !== undefined) {
+      newData.published = body.published
+    }
+
     await db.project.update({
       where: {
         id: params.projectId,
       },
-      data: {
-        title: body.title,
-        languages: body.languages,
-        info: body.info,
-        settings: body.settings,
-        published: body.published,
-      },
+      data: newData,
     })
 
     return SuccessResponse()

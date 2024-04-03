@@ -1,6 +1,7 @@
-import { ConstantTranslations } from "@/store/useI18nState"
+import { Term } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,34 +16,36 @@ import { Label } from "@/components/ui/label"
 
 type Props = {
   languages: string[]
-  word: ConstantTranslations
-  editWord: (word: ConstantTranslations) => void
+  term: Term
+  editWord: (term: Term) => void
   deleteWord: (id: string) => void
 }
 
-const EditConstantTranslation = (props: Props) => {
-  const { word, languages } = props
+const EditTerm = (props: Props) => {
+  const { term, languages } = props
 
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="t-button">{word._id}</button>
+        <button className="t-button">{term._id}</button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Edit word: {word._id}</DialogTitle>
+          <DialogTitle>
+            {i18n.t("Edit word: {keyword}", { keyword: term._id })}
+          </DialogTitle>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="languageName" className="text-right">
-              Identifier
+              {i18n.t("Identifier")}
             </Label>
             <Input
               id="languageName"
               placeholder="English"
               className="col-span-3"
               data-1p-ignore
-              value={word._id}
+              value={term._id}
               onChange={() => {}}
             />
           </div>
@@ -56,7 +59,7 @@ const EditConstantTranslation = (props: Props) => {
                 placeholder={`translation in ${language} if you needed`}
                 className="col-span-3"
                 data-1p-ignore
-                value={word[language]}
+                value={term[language]}
                 onChange={() => {}}
               />
             </div>
@@ -70,11 +73,11 @@ const EditConstantTranslation = (props: Props) => {
               className="mt-4 sm:mt-0"
               onClick={() => {}}
             >
-              Delete
+              {i18n.t("Delete")}
             </Button>
           </DialogClose>
           <DialogClose asChild>
-            <Button onClick={() => {}}>Edit word</Button>
+            <Button onClick={() => {}}>{i18n.t("Edit term")}</Button>
           </DialogClose>
         </DialogFooter>
       </DialogContent>
@@ -82,4 +85,4 @@ const EditConstantTranslation = (props: Props) => {
   )
 }
 
-export default EditConstantTranslation
+export default EditTerm

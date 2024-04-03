@@ -1,20 +1,20 @@
 import { ChangeEvent, useCallback } from "react"
 import {
-  ConstantTranslations,
   EditLanguageType,
   Formality,
   Language,
   ProjectSettings,
   Sex,
+  Term,
 } from "@/store/useI18nState"
 
 import i18n from "@/lib/i18n"
 
 import SlideOver, { SlideOverRow } from "../../slide-over"
-import AddNewConstantTranslation from "./dialogs/add-new-constant-translation"
 import AddNewLanguage from "./dialogs/add-new-languages"
-import EditConstantTranslation from "./dialogs/edit-contant-translation"
+import AddNewTerm from "./dialogs/add-new-term"
 import EditLanguage from "./dialogs/edit-languages"
+import EditTerm from "./dialogs/edit-term"
 
 type Props = {
   languages: Language[]
@@ -24,7 +24,7 @@ type Props = {
   deleteLanguage: (language: Language) => void
   onClose: () => void
   editSettings: (newSettings: Partial<ProjectSettings>) => void
-  addNewConstantTranslation: (newword: ConstantTranslations) => void
+  addNewTerm: (newTerm: Term) => void
 }
 
 const ProjectSettingsSlideOver = (props: Props) => {
@@ -36,7 +36,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
     deleteLanguage,
     onClose,
     editSettings,
-    addNewConstantTranslation,
+    addNewTerm,
   } = props
 
   const handleChangeDescription = useCallback(
@@ -260,21 +260,19 @@ const ProjectSettingsSlideOver = (props: Props) => {
           )}
         >
           <>
-            {settings.constantTranslations.map((word) => (
-              <EditConstantTranslation
+            {settings.glossary.map((term) => (
+              <EditTerm
                 languages={languages.map((language) => language.short)}
-                key={word._id}
-                word={word}
+                key={term._id}
+                term={term}
                 editWord={() => {}}
                 deleteWord={() => {}}
               />
             ))}
           </>
-          <AddNewConstantTranslation
+          <AddNewTerm
             languages={languages.map((language) => language.short)}
-            addContantTranslation={(newWord) =>
-              addNewConstantTranslation(newWord)
-            }
+            addTerm={(newWord) => addNewTerm(newWord)}
           />
         </SlideOverRow>
       </div>

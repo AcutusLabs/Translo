@@ -71,7 +71,7 @@ const AddNewLanguage = (props: Props) => {
 
   const onAddCustomLanguage = useCallback(() => {
     if (!languageName || !shortName || shortName === "_id") {
-      // The keyword '_id' is a reserved keyword for identifying constant translations
+      // The keyword '_id' is a reserved keyword for identifying terms
       return
     }
 

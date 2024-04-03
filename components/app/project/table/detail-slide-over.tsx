@@ -9,7 +9,6 @@ import { Keyword } from "../useTranslation"
 
 type Props = {
   keyword: Keyword
-  isSaving: boolean
   onClose: () => void
   editTranslation: (language: string, key: string, value: string) => void
   editContext: (key: string, context: string) => void
@@ -21,7 +20,6 @@ type Props = {
 const DetailSlideOver = (props: Props) => {
   const {
     keyword,
-    isSaving,
     onClose,
     editTranslation,
     editContext,
@@ -73,7 +71,7 @@ const DetailSlideOver = (props: Props) => {
   }, [editTranslation, keyword.key, project?.id])
 
   return (
-    <SlideOver title={i18n.t("Detail")} onClose={onClose} isSaving={isSaving}>
+    <SlideOver title={i18n.t("Detail")} onClose={onClose}>
       <div className="relative p-4 flex-1 sm:px-6">
         <SlideOverRow title="Keyword">
           <div className="mt-1">
