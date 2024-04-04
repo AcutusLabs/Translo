@@ -82,12 +82,14 @@ const defaultProjectSettings: ProjectSettings = {
 
 export const initialI18nState: I18n = {
   title: "",
-  info: [],
+  info: [{ key: "This is a test key", context: "" }],
   languages: [
     {
       lang: "English",
       short: "en",
-      keywords: {},
+      keywords: {
+        "This is a test key": "This is a test key value",
+      },
     },
   ],
   settings: defaultProjectSettings,
