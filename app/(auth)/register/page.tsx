@@ -46,15 +46,17 @@ export default function RegisterPage() {
           <p className="px-8 text-center text-sm text-muted-foreground">
             {i18n.t("By clicking continue, you agree to our")}{" "}
             <Link
-              href="https://www.iubenda.com/terms-and-conditions/34401829"
+              href="/terms-and-conditions.pdf"
               className="hover:text-brand underline underline-offset-4"
+              target="_blank"
             >
               {i18n.t("Terms of Service")}
             </Link>{" "}
             {i18n.t("and")}{" "}
             <Link
-              href="https://www.iubenda.com/privacy-policy/34401829"
+              href="/privacy-policy.pdf"
               className="hover:text-brand underline underline-offset-4"
+              target="_blank"
             >
               {i18n.t("Privacy Policy")}
             </Link>
