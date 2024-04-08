@@ -93,8 +93,6 @@ model Project {
 
 model AiTranslationsLog {
   id        String   @id @default(cuid())
-  request   String
-  response  String
   cost      Int
   createdAt DateTime @default(now()) @map(name: "created_at")
   updatedAt DateTime @default(now()) @map(name: "updated_at")

@@ -6,7 +6,7 @@ import { DialogClose } from "@radix-ui/react-dialog"
 
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
-import { useAddProject } from "@/hooks/use-add-project"
+import { useAddProject } from "@/hooks/api/use-add-project"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Dialog,

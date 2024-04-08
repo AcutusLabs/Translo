@@ -73,8 +73,6 @@ CREATE TABLE "projects" (
 -- CreateTable
 CREATE TABLE "ai_translations_log" (
     "id" TEXT NOT NULL,
-    "request" TEXT NOT NULL,
-    "response" TEXT NOT NULL,
     "cost" INTEGER NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,

@@ -15,7 +15,7 @@ export const metadata = {
   description: "Manage billing and your subscription plan.",
 }
 
-async function getTokensByUserId(id: User["id"]) {
+export async function getTokensByUserId(id: User["id"]) {
   const user = await db.user.findFirst({
     where: {
       id: id,
