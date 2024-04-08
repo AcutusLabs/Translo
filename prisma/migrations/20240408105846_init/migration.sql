@@ -37,6 +37,7 @@ CREATE TABLE "users" (
     "emailVerificationToken" TEXT,
     "password" TEXT,
     "image" TEXT,
+    "tokens" BIGINT NOT NULL,
     "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
     "stripe_customer_id" TEXT,
@@ -69,6 +70,19 @@ CREATE TABLE "projects" (
     CONSTRAINT "projects_pkey" PRIMARY KEY ("id")
 );
 
+-- CreateTable
+CREATE TABLE "ai_translations_log" (
+    "id" TEXT NOT NULL,
+    "request" TEXT NOT NULL,
+    "response" TEXT NOT NULL,
+    "cost" INTEGER NOT NULL,
+    "created_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "updated_at" TIMESTAMP(3) NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "userId" TEXT NOT NULL,
+
+    CONSTRAINT "ai_translations_log_pkey" PRIMARY KEY ("id")
+);
+
 -- CreateIndex
 CREATE UNIQUE INDEX "accounts_provider_providerAccountId_key" ON "accounts"("provider", "providerAccountId");
 
@@ -98,3 +112,6 @@ ALTER TABLE "sessions" ADD CONSTRAINT "sessions_userId_fkey" FOREIGN KEY ("userI
 
 -- AddForeignKey
 ALTER TABLE "projects" ADD CONSTRAINT "projects_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE SET NULL ON UPDATE CASCADE;
+
+-- AddForeignKey
+ALTER TABLE "ai_translations_log" ADD CONSTRAINT "ai_translations_log_userId_fkey" FOREIGN KEY ("userId") REFERENCES "users"("id") ON DELETE RESTRICT ON UPDATE CASCADE;

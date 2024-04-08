@@ -1,3 +1,4 @@
+import { freePlanTokens } from "@/constants/subscriptions"
 import { z } from "zod"
 
 import { env } from "@/env.mjs"
@@ -23,6 +24,7 @@ export async function POST(req: Request) {
         email: body.email,
         password: hashPassword(body.password),
         emailVerificationToken: token,
+        tokens: freePlanTokens,
       },
       select: {
         id: true,

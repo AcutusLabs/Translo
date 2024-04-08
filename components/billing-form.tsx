@@ -1,6 +1,7 @@
 "use client"
 
 import * as React from "react"
+import { proPlanTokens } from "@/constants/subscriptions"
 
 import { UserSubscriptionPlan } from "types"
 import { SubscriptionPlanType } from "@/types/subscription"
@@ -22,6 +23,8 @@ import {
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
 
+import BuyAITokens from "./buy-ai-tokens"
+import PricingCalculator from "./pricing-calculator"
 import { Separator } from "./ui/separator"
 
 enum LoadingType {
@@ -34,9 +37,10 @@ interface BillingFormProps extends React.HTMLAttributes<HTMLFormElement> {
   subscriptionPlan: UserSubscriptionPlan & {
     isCanceled: boolean
   }
+  tokens: number
 }
 
-export function BillingForm({ subscriptionPlan }: BillingFormProps) {
+export function BillingForm({ subscriptionPlan, tokens }: BillingFormProps) {
   const [isLoading, setIsLoading] = React.useState<LoadingType | undefined>(
     undefined
   )
@@ -55,7 +59,7 @@ export function BillingForm({ subscriptionPlan }: BillingFormProps) {
     }
 
     // Get a Stripe session URL.
-    const response = await fetch(`/api/users/stripe?plan=${plan}`)
+    const response = await fetch(`/api/users/stripe/plan?plan=${plan}`)
 
     if (!response?.ok) {
       setIsLoading(undefined)
@@ -92,28 +96,65 @@ export function BillingForm({ subscriptionPlan }: BillingFormProps) {
         </CardDescription>
       </CardHeader>
       <CardContent>{subscriptionPlan.description}</CardContent>
+      <CardContent>
+        <span
+          dangerouslySetInnerHTML={{
+            __html: i18n
+              .t("You have {number} AI tokens", { number: tokens || 0 })
+              .replace(/(< *script)/gi, "illegalscript"),
+          }}
+        />
+      </CardContent>
       <CardFooter className="flex flex-col items-start space-y-2 md:flex-row md:justify-between md:space-x-0">
         {subscriptionPlan.isPro ? (
-          <div className="flex flex-col">
-            <button
-              onClick={() => onSubmit(SubscriptionPlanType.Manage)}
-              className={cn(buttonVariants())}
-              disabled={isLoading === LoadingType.Manage}
-            >
-              {isLoading && (
-                <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+          <div>
+            <div className="flex flex-col">
+              <button
+                onClick={() => onSubmit(SubscriptionPlanType.Manage)}
+                className={cn(buttonVariants(), "w-max")}
+                disabled={isLoading === LoadingType.Manage}
+              >
+                {isLoading && (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                )}
+                {i18n.t("Manage Subscription")}
+              </button>
+              <p className="rounded-full text-xs font-medium mt-3">
+                {subscriptionPlan.isCanceled
+                  ? i18n.t("Your plan will be canceled on {date}", {
+                      date: formatDate(subscriptionPlan.stripeCurrentPeriodEnd),
+                    })
+                  : i18n.t("Your plan renews on {date}", {
+                      date: formatDate(subscriptionPlan.stripeCurrentPeriodEnd),
+                    })}
+              </p>
+            </div>
+
+            <Separator className="my-8 w-full" />
+            <h3 className="text-xl font-bold sm:text-2xl">
+              {i18n.t("Do you need more AI translations?")}
+            </h3>
+            <p className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-3">
+              {i18n.t(
+                "The costs associated with each AI translation impact our expenses, so to simplify management and provide the best pricing service, a recharge will be required"
               )}
-              {i18n.t("Manage Subscription")}
-            </button>
-            <p className="rounded-full text-xs font-medium mt-3">
-              {subscriptionPlan.isCanceled
-                ? i18n.t("Your plan will be canceled on {date}", {
-                    date: formatDate(subscriptionPlan.stripeCurrentPeriodEnd),
-                  })
-                : i18n.t("Your plan renews on {date}", {
-                    date: formatDate(subscriptionPlan.stripeCurrentPeriodEnd),
-                  })}
             </p>
+            <p className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-3">
+              {i18n.t(
+                "Each token represents a character of the text prompt we send to the AI and each character of the response, so the cost in tokens of each translation may vary depending on the length of the text and the number of languages in which to translate the phrase"
+              )}
+            </p>
+            <p
+              className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-5"
+              dangerouslySetInnerHTML={{
+                __html: i18n
+                  .t(
+                    "You can buy as many as you need, by recharging your account; the price is €4/1M tokens (Million)."
+                  )
+                  .replace(/(< *script)/gi, "illegalscript"),
+              }}
+            ></p>
+            <BuyAITokens />
           </div>
         ) : (
           <div className="flex flex-col w-full">
@@ -131,6 +172,12 @@ export function BillingForm({ subscriptionPlan }: BillingFormProps) {
                   <li className="flex items-center">
                     <Icons.check className="mr-2 h-4 w-4" />
                     {i18n.t("Unlimited keywords")}
+                  </li>
+                  <li className="flex items-center">
+                    <Icons.minus className="mr-2 h-4 w-4" />
+                    {i18n.t("{number} tokens AI translations one-time", {
+                      number: `${proPlanTokens / 1000}k`,
+                    })}
                   </li>
                 </ul>
               </div>
@@ -175,6 +222,34 @@ export function BillingForm({ subscriptionPlan }: BillingFormProps) {
                 </div>
               </div>
             </div>
+            <Separator className="my-8 w-full" />
+            <h3 className="text-xl font-bold sm:text-2xl">
+              {i18n.t("Do you need more AI translations?")}
+            </h3>
+            <p className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-3">
+              {i18n.t("To buy more AI tokens, a subscription is required")}
+            </p>
+            <p className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-3">
+              {i18n.t(
+                "The costs associated with each AI translation impact our expenses, so to simplify management and provide the best pricing service, a recharge will be required"
+              )}
+            </p>
+            <p className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-3">
+              {i18n.t(
+                "Each token represents a character of the text prompt we send to the AI and each character of the response, so the cost in tokens of each translation may vary depending on the length of the text and the number of languages in which to translate the phrase"
+              )}
+            </p>
+            <p
+              className="max-w-[85%] leading-normal text-muted-foreground text-sm mt-5"
+              dangerouslySetInnerHTML={{
+                __html: i18n
+                  .t(
+                    "You can buy as many as you need, by recharging your account; the price is €4/1M tokens (Million)."
+                  )
+                  .replace(/(< *script)/gi, "illegalscript"),
+              }}
+            ></p>
+            <PricingCalculator />
           </div>
         )}
       </CardFooter>

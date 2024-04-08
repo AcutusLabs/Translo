@@ -21,11 +21,17 @@ export const freePlan: SubscriptionPlan = {
 export const proPlanMonthly: SubscriptionPlan = {
   name: "Pro",
   description: i18n.t("The PRO plan has unlimited projects."),
-  stripePriceId: env.STRIPE_PRO_MONTHLY_PLAN_ID || "",
+  stripePriceId: env.STRIPE_PRO_MONTHLY_PRICE_ID || "",
 }
 
 export const proPlanYearly: SubscriptionPlan = {
   name: "Pro",
   description: i18n.t("The PRO plan has unlimited projects."),
-  stripePriceId: env.STRIPE_PRO_YEARLY_PLAN_ID || "",
+  stripePriceId: env.STRIPE_PRO_YEARLY_PRICE_ID || "",
+}
+
+export const aiTokensRecharge: SubscriptionPlan = {
+  name: "Amount",
+  description: "",
+  stripePriceId: env.STRIPE_AI_TRANSLATION_PLAN_ID || "",
 }
