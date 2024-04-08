@@ -25,7 +25,7 @@ export async function PATCH(
     // Ensure user is authentication and has access to this user.
     const session = await getServerSession(authOptions)
     if (!session?.user || params.userId !== session?.user.id) {
-      return ErrorResponse({ error: i18n.t("User wrong"), status: 403 })
+      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
     }
 
     // Get the request body and validate it.

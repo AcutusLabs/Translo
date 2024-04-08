@@ -28,7 +28,7 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions)
 
     if (!session?.user || !session?.user.email) {
-      return ErrorResponse({ error: i18n.t("User wrong"), status: 403 })
+      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
     }
 
     const searchParams = req.nextUrl.searchParams

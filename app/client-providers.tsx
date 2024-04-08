@@ -10,6 +10,7 @@ import i18n from "@/lib/i18n"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import KeywordsSubscriptionNeededAlert from "@/components/app/globalAlert/keywordsSubscriptionNeededAlert"
 import ProjectSubscriptionNeededAlert from "@/components/app/globalAlert/projectSubscriptionNeededAlert"
+import TokensRechargeNeeded from "@/components/app/globalAlert/tokensRechargeNeededAlert"
 
 const queryClient = new QueryClient()
 
@@ -32,6 +33,7 @@ export default function ClientProvider(props: { children: React.ReactNode }) {
           <AlertContext.Provider value={{ alert, showAlert }}>
             <ProjectSubscriptionNeededAlert />
             <KeywordsSubscriptionNeededAlert />
+            <TokensRechargeNeeded />
             {props.children}
           </AlertContext.Provider>
           <ProgressBar

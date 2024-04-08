@@ -6,5 +6,5 @@ export const siteConfig: SiteConfig = {
   description:
     "Translo provides open-source localization management that you can self-host.",
   url: "https://translo.app",
-  ogImage: "https://tx.shadcn.com/og.jpg",
+  ogImage: "https://translo.app/og.jpg",
 }

@@ -3,6 +3,7 @@ import { Dispatch, SetStateAction } from "react"
 export enum AlertType {
   projectSubscriptionNeeded = "projectSubscriptionNeeded",
   keywordsSubscriptionNeeded = "keywordsSubscriptionNeeded",
+  tokensRechargeNeeded = "tokensRechargeNeeded",
 }
 
 export type ShowAlertType = Dispatch<SetStateAction<AlertType | undefined>>

@@ -20,10 +20,11 @@ import useTranslation, { Status } from "./useTranslation"
 
 export interface EditorProps {
   project: ProjectData
+  tokens: number
 }
 
 export function Editor(props: EditorProps) {
-  const { project } = props
+  const { project, tokens } = props
 
   const {
     keywords,
@@ -126,6 +127,7 @@ export function Editor(props: EditorProps) {
           {renderStatus}
         </div>
         <Table
+          tokens={tokens}
           keywords={keywords}
           addKeyword={addNewKey}
           deleteKey={deleteKey}
