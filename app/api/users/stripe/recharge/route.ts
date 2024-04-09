@@ -1,4 +1,5 @@
 import { NextRequest } from "next/server"
+import { PaymentType } from "@/constants/subscriptions"
 import { getServerSession } from "next-auth/next"
 import { z } from "zod"
 
@@ -57,6 +58,7 @@ export async function GET(req: NextRequest) {
         ],
         metadata: {
           userId: session.user.id,
+          type: PaymentType.RechargeTokens,
         },
       })
 
