@@ -1,0 +1,4 @@
+export const MAX_PROJECTS_STARTER_URSER = 1
+export const MAX_KEYWORDS_STARTER_URSER = 20
+export const PRO_PLAN_PRICING_MONTHLY = "2,99€"
+export const PRO_PLAN_PRICING_YEARLY = "24,99€"

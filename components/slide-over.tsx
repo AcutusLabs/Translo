@@ -1,18 +1,11 @@
-import { cn } from "@/lib/utils"
-
-import { Icons } from "./icons"
-import { buttonVariants } from "./ui/button"
-
 type Props = {
-  title: string
-  isSaving?: boolean
+  title?: string
   onClose: () => void
-  onSave?: () => void
   children: React.ReactElement | React.ReactElement[]
 }
 
 const SlideOver = (props: Props) => {
-  const { children, title, isSaving, onClose, onSave } = props
+  const { children, title, onClose } = props
   return (
     <div
       className="relative z-10"
@@ -34,7 +27,6 @@ const SlideOver = (props: Props) => {
                   onClick={onClose}
                 >
                   <span className="absolute -inset-2.5"></span>
-                  <span className="sr-only">Close panel</span>
                   <svg
                     className="h-6 w-6"
                     fill="none"
@@ -63,15 +55,6 @@ const SlideOver = (props: Props) => {
                   >
                     {title}
                   </h2>
-
-                  {onSave && (
-                    <button className={cn(buttonVariants())} onClick={onSave}>
-                      {isSaving && (
-                        <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                      )}
-                      <span>Save</span>
-                    </button>
-                  )}
                 </div>
                 <div className="divide-y divide-gray-100 ">{children}</div>
               </div>

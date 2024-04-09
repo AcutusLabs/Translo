@@ -26,10 +26,12 @@ const types = [
 
 const scopesValues = [
   "general",
-  "translation",
+  "project",
   "landing",
   "subscription",
   "user",
+  "i18n",
+  "ai-translations",
 ].sort((prev, next) => {
   if (prev > next) {
     return 1
@@ -58,7 +60,7 @@ module.exports = {
   // isTicketNumberRequired: false,
   ticketNumberPrefix: "#",
   ticketNumberRegExp: "\\d{1,5}",
-  skipQuestions: ["breaking", "footer"],
+  skipQuestions: ["breaking", "footer", "body"],
   allowCustomScopes: true,
   allowBreakingChanges: ["feat", "perf", "refactor"],
   footerPrefix: "",

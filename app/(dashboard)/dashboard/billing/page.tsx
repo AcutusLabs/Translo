@@ -1,6 +1,8 @@
 import { redirect } from "next/navigation"
+import { User } from "@prisma/client"
 
 import { authOptions } from "@/lib/auth"
+import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
@@ -13,12 +15,28 @@ export const metadata = {
   description: "Manage billing and your subscription plan.",
 }
 
+export async function getTokensByUserId(id: User["id"]) {
+  const user = await db.user.findFirst({
+    where: {
+      id: id,
+    },
+  })
+
+  if (!user) {
+    redirect(authOptions?.pages?.signIn || "/login")
+  }
+
+  return Number(user.tokens)
+}
+
 export default async function BillingPage() {
   const user = await getCurrentUser()
 
   if (!user) {
     redirect(authOptions?.pages?.signIn || "/login")
   }
+
+  const tokens = await getTokensByUserId(user.id)
 
   const subscriptionPlan = await getUserSubscriptionPlan(user.id)
 
@@ -43,6 +61,7 @@ export default async function BillingPage() {
             ...subscriptionPlan,
             isCanceled,
           }}
+          tokens={tokens}
         />
       </div>
     </DashboardShell>

@@ -1,13 +1,14 @@
 import { DashboardConfig } from "types"
+import i18n from "@/lib/i18n"
 
 export const dashboardConfig: DashboardConfig = {
   mainNav: [],
   sidebarNav: [
     {
-      id: "translations",
-      title: "Translations",
+      id: "projects",
+      title: i18n.t("Projects"),
       href: "/dashboard",
-      icon: "translation",
+      icon: "project",
     },
     {
       id: "billing",

@@ -14,10 +14,10 @@ pnpm install
 cp .env.example .env.local
 ```
 
-3. Run local db with docker
+3. Launch local db with docker daemon
 
 ```sh
-docker-compose up
+docker-compose up -d
 ```
 
 4. Run migrations
@@ -57,4 +57,12 @@ stripe login
 
 ```sh
 pnpm run stripe:webhook
+```
+
+## Update i18n
+
+Set the base URL of Translo in the `TRANSLO_I18N_BASE_URL` environment
+
+```sh
+pnpm run i18n
 ```

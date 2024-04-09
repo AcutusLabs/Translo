@@ -2,6 +2,7 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -15,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
 
 const ChangePasswordDialog = () => {
   const [oldPassword, setOldPassword] = useState("")
@@ -51,8 +53,8 @@ const ChangePasswordDialog = () => {
     )
 
     return toast({
-      title: "Password changed",
-      description: "The password has been updated successfully.",
+      title: i18n.t("Password changed"),
+      description: i18n.t("The password has been updated successfully"),
     })
   }, [newPassword, oldPassword, reset])
 
@@ -63,35 +65,21 @@ const ChangePasswordDialog = () => {
           type="button"
           className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            className="lucide lucide-lock"
-          >
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
-          Change password
+          <Icons.password />
+          {i18n.t("Change password")}
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Change password</DialogTitle>
+          <DialogTitle>{i18n.t("Change password")}</DialogTitle>
           <DialogDescription>
-            Enter the old and the new password
+            {i18n.t("Enter the old and the new password")}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Old
+              {i18n.t("Old")}
             </Label>
             <Input
               id="old-password"
@@ -105,7 +93,7 @@ const ChangePasswordDialog = () => {
           </div>
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-              New
+              {i18n.t("New")}
             </Label>
             <Input
               id="new-password"
@@ -121,7 +109,7 @@ const ChangePasswordDialog = () => {
         <DialogFooter>
           <DialogClose asChild>
             <Button onClick={onSubmit} disabled={!oldPassword || !newPassword}>
-              Save
+              {i18n.t("Save")}
             </Button>
           </DialogClose>
         </DialogFooter>

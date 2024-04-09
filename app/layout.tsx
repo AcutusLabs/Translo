@@ -10,7 +10,7 @@ import { Analytics } from "@/components/analytics"
 import { TailwindIndicator } from "@/components/tailwind-indicator"
 import { ThemeProvider } from "@/components/theme-provider"
 
-import ClientProviders from "./client-providers"
+import ClientProvider from "./client-providers"
 
 const fontSans = FontSans({
   subsets: ["latin"],
@@ -34,19 +34,23 @@ export const metadata = {
   },
   description: siteConfig.description,
   keywords: [
-    "Next.js",
-    "React",
-    "Tailwind CSS",
-    "Server Components",
-    "Radix UI",
+    "localization management",
+    "Localization software",
+    "Localization tool",
+    "Self-hosted localization",
+    "Localization platform",
+    "Localization solution",
+    "Multilingual content management",
+    "Cloud-based localization solution",
+    "Translation software",
   ],
   authors: [
     {
-      name: "shadcn",
-      url: "https://shadcn.com",
+      name: "Giacomo e Davide",
+      url: "https://github.com/Matergi/Translo",
     },
   ],
-  creator: "shadcn",
+  creator: "Giacomo e Davide",
   themeColor: [
     { media: "(prefers-color-scheme: light)", color: "white" },
     { media: "(prefers-color-scheme: dark)", color: "black" },
@@ -64,7 +68,6 @@ export const metadata = {
     title: siteConfig.name,
     description: siteConfig.description,
     images: [`${siteConfig.url}/og.jpg`],
-    creator: "@shadcn",
   },
   icons: {
     icon: "/favicon.ico",
@@ -85,12 +88,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
           fontHeading.variable
         )}
       >
-        <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-          <ClientProviders>{children}</ClientProviders>
-          <Analytics />
-          <Toaster />
-          <TailwindIndicator />
-        </ThemeProvider>
+        <ClientProvider>
+          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+            {children}
+            <Analytics />
+            <Toaster />
+            <TailwindIndicator />
+          </ThemeProvider>
+        </ClientProvider>
       </body>
       <PrelineScript />
     </html>

@@ -3,11 +3,8 @@ import { z } from "zod"
 
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import {
-  ErrorResponse,
-  GenericErrorResponse,
-  SuccessResponse,
-} from "@/lib/response"
+import { handleCatchApi } from "@/lib/exceptions"
+import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import { hashPassword } from "@/lib/utils"
 
 const changePasswordSchema = z.object({
@@ -43,15 +40,13 @@ export async function POST(req: Request) {
     })
 
     if (!result.count) {
-      return ErrorResponse("The password does not match. Please try again.")
+      return ErrorResponse({
+        error: "The password does not match. Please try again.",
+      })
     }
 
     return SuccessResponse()
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse()
+    return handleCatchApi(error)
   }
 }

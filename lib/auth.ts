@@ -1,7 +1,9 @@
 import { PrismaAdapter } from "@next-auth/prisma-adapter"
 import { NextAuthOptions } from "next-auth"
 import CredentialsProvider from "next-auth/providers/credentials"
+import GitHubProvider from "next-auth/providers/github"
 
+import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
 
 import { hashPassword } from "./utils"
@@ -18,6 +20,10 @@ export const authOptions: NextAuthOptions = {
     signIn: "/login",
   },
   providers: [
+    GitHubProvider({
+      clientId: env.GITHUB_CLIENT_ID,
+      clientSecret: env.GITHUB_CLIENT_SECRET,
+    }),
     CredentialsProvider({
       name: "Credentials",
       credentials: {
@@ -75,10 +81,10 @@ export const authOptions: NextAuthOptions = {
 
       return session
     },
-    async jwt({ token, user }) {
+    async jwt({ token, user, trigger }) {
       const dbUser = await db.user.findFirst({
         where: {
-          id: token.id || undefined,
+          id: trigger === "signIn" ? token.sub : token.id,
         },
       })
 

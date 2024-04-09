@@ -1,7 +1,52 @@
+import { I18nLang, ProjectSettings } from "@/store/useI18nState"
 import OpenAI from "openai"
 import { ChatCompletion } from "openai/resources/index.mjs"
 
 import { env } from "@/env.mjs"
+
+export type GeneratePromptTranslationParams = {
+  translationEn: string
+  context: string
+  languagesPropt: string
+  settings: ProjectSettings
+  agePrompt: string
+  languages: I18nLang[]
+}
+
+export const generatePromptTranslation = ({
+  translationEn,
+  context,
+  languagesPropt,
+  settings,
+  agePrompt,
+  languages,
+}: GeneratePromptTranslationParams) => `
+I'm working on internationalizing my application. I'd like to translate the text "${translationEn}"${
+  context ? `, used in this context: "${context}"` : ""
+}. Could you write the translations in [${languagesPropt}]?
+      Translations should be ${settings.formality}
+      ${
+        settings.description
+          ? `The project description is: ${settings.description}. `
+          : ""
+      }
+      ${
+        settings.audience.length
+          ? `The target audience is: ${settings.audience.join(", ")}.`
+          : ""
+      }
+      ${agePrompt ? agePrompt : ""}
+
+      Be aware that in some languages there are articles where English does not have them.
+
+respond using an unique JSON object without any comments or any other descriptions, like so:
+{
+  ${languages.map((lang) => `"${lang.short}": ""`).join(", ")}
+}
+
+where:
+${languages.map((lang) => `language-id for ${lang.lang} = ${lang.short}`)}
+`
 
 export class OpenAIHelper {
   private openai: OpenAI
@@ -30,7 +75,7 @@ export class OpenAIHelper {
     maxTokens?: number
   }) =>
     this.openai.chat.completions.create({
-      model: "gpt-3.5-turbo",
+      model: "gpt-4-vision-preview",
       max_tokens: maxTokens,
       messages: [
         {
@@ -59,7 +104,7 @@ export class OpenAIHelper {
     maxTokens?: number
   }) =>
     this.openai.chat.completions.create({
-      model: "gpt-4-vision-preview",
+      model: "gpt-3.5-turbo",
       max_tokens: maxTokens,
       messages: [
         {
@@ -92,6 +137,7 @@ export class OpenAIHelper {
         const parsed = JSON.parse(content)
         return parsed
       } catch (e) {
+        // eslint-disable-next-line no-console
         console.error("Failing parsing Chat GPT response:", e)
       }
     }

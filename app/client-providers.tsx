@@ -1,18 +1,49 @@
 "use client"
 
-import { useState } from "react"
-import { ChakraProvider } from "@chakra-ui/react"
+import { createContext, useState } from "react"
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query"
 import { SessionProvider } from "next-auth/react"
-import { QueryClient, QueryClientProvider } from "react-query"
+import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
 
-export default function RootLayout(props: { children: React.ReactNode }) {
-  const [queryClient] = useState(() => new QueryClient())
+import { AlertType, ShowAlertType } from "@/types/api"
+import i18n from "@/lib/i18n"
+import { TooltipProvider } from "@/components/ui/tooltip"
+import KeywordsSubscriptionNeededAlert from "@/components/app/globalAlert/keywordsSubscriptionNeededAlert"
+import ProjectSubscriptionNeededAlert from "@/components/app/globalAlert/projectSubscriptionNeededAlert"
+import TokensRechargeNeeded from "@/components/app/globalAlert/tokensRechargeNeededAlert"
+
+const queryClient = new QueryClient()
+
+export const AlertContext = createContext<{
+  alert?: AlertType
+  showAlert: ShowAlertType
+}>({
+  showAlert: () => {},
+})
+
+export default function ClientProvider(props: { children: React.ReactNode }) {
+  i18n.changeLanguage("en")
+
+  const [alert, showAlert] = useState<AlertType | undefined>()
 
   return (
-    <SessionProvider>
+    <TooltipProvider delayDuration={100}>
       <QueryClientProvider client={queryClient}>
-        <ChakraProvider>{props.children}</ChakraProvider>
+        <SessionProvider>
+          <AlertContext.Provider value={{ alert, showAlert }}>
+            <ProjectSubscriptionNeededAlert />
+            <KeywordsSubscriptionNeededAlert />
+            <TokensRechargeNeeded />
+            {props.children}
+          </AlertContext.Provider>
+          <ProgressBar
+            height="2px"
+            color="#44403c"
+            options={{ showSpinner: false }}
+            shallowRouting
+          />
+        </SessionProvider>
       </QueryClientProvider>
-    </SessionProvider>
+    </TooltipProvider>
   )
 }

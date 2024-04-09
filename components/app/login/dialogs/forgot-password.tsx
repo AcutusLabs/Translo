@@ -1,6 +1,7 @@
 import { ChangeEvent, useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -32,17 +33,18 @@ const ForgotPasswordDialog = () => {
       await forgotPassword(email)
     } catch (e) {
       return toast({
-        title: "Something went wrong.",
-        description: "Please try again.",
+        title: i18n.t("Something went wrong"),
+        description: i18n.t("Please try again"),
         variant: "destructive",
       })
     }
 
     reset()
     return toast({
-      title: "Check your email",
-      description:
-        "We sent you a reset password link. Be sure to check your spam too.",
+      title: i18n.t("Check your email"),
+      description: i18n.t(
+        "We sent you a reset password link. Be sure to check your spam too"
+      ),
     })
   }, [email, reset])
 
@@ -50,21 +52,22 @@ const ForgotPasswordDialog = () => {
     <Dialog>
       <DialogTrigger asChild>
         <p className="hover:cursor-pointer hover:text-brand underline underline-offset-4 text-sm text-muted-foreground">
-          Forgot password
+          {i18n.t("Forgot password")}
         </p>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Forgot password</DialogTitle>
+          <DialogTitle>{i18n.t("Forgot password")}</DialogTitle>
           <DialogDescription>
-            Enter your email here, and we will send you a link where you can
-            reset your password
+            {i18n.t(
+              "Enter your email here, and we will send you a link where you can reset your password"
+            )}
           </DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="name" className="text-right">
-              Email
+              {i18n.t("Email")}
             </Label>
             <Input
               id="email"
@@ -80,7 +83,7 @@ const ForgotPasswordDialog = () => {
         <DialogFooter>
           <DialogClose asChild>
             <Button onClick={onSubmit} disabled={!email}>
-              Send
+              {i18n.t("Send")}
             </Button>
           </DialogClose>
         </DialogFooter>

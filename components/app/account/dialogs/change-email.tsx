@@ -1,6 +1,7 @@
 import { ChangeEvent, Fragment, useCallback, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import i18n from "@/lib/i18n"
 import { isEmail } from "@/lib/regex"
 import { Button } from "@/components/ui/button"
 import {
@@ -15,6 +16,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
 import { changeEmail } from "@/app/api/users/utils"
 
 type ChangeEmailDialogProps = {
@@ -38,7 +40,7 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
   const onSubmit = useCallback(async () => {
     if (!props.oldEmail) {
       return toast({
-        title: "Something went wrong.",
+        title: i18n.t("Something went wrong"),
         variant: "destructive",
       })
     }
@@ -48,16 +50,17 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
       await changeEmail(props.oldEmail, newEmail)
     } catch (e) {
       return toast({
-        title: "Something went wrong.",
-        description: "Changing password failed. Please try again.",
+        title: i18n.t("Something went wrong"),
+        description: i18n.t("Changing password failed. Please try again"),
         variant: "destructive",
       })
     }
 
     return toast({
-      title: "Check your email",
-      description:
-        "We sent you a change email link. Be sure to check your spam too.",
+      title: i18n.t("Check your email"),
+      description: i18n.t(
+        "We sent you a change email link. Be sure to check your spam too"
+      ),
     })
   }, [newEmail, props.oldEmail, reset])
 
@@ -72,21 +75,7 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
           type="button"
           className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            width="24"
-            height="24"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            stroke-width="2"
-            stroke-linecap="round"
-            stroke-linejoin="round"
-            className="lucide lucide-lock"
-          >
-            <rect width="18" height="11" x="3" y="11" rx="2" ry="2" />
-            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-          </svg>
+          <Icons.email />
           Change email
         </button>
       </DialogTrigger>

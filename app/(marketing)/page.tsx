@@ -1,11 +1,13 @@
 import { redirect } from "next/navigation"
 
+import i18n from "@/lib/i18n"
 import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import Faq from "@/components/app/homepage/faq"
 import Features from "@/components/app/homepage/features"
 import GetStarterd from "@/components/app/homepage/get-started"
+import { Icons } from "@/components/icons"
 
 export default async function IndexPage() {
   const user = await getCurrentUser()
@@ -18,15 +20,18 @@ export default async function IndexPage() {
     <>
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
-          <h1 className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl">
-            Get your app speaking{" "}
-            <span className="text-blue-600">every language</span> with our
-            localization
-          </h1>
+          <h1
+            className="font-heading text-3xl sm:text-5xl md:text-6xl lg:text-7xl"
+            dangerouslySetInnerHTML={{
+              __html: i18n
+                .t("Get your app speaking every language with our localization")
+                .replace(/(< *script)/gi, "illegalscript"),
+            }}
+          ></h1>
           <p className="max-w-[42rem] leading-normal text-muted-foreground sm:text-xl sm:leading-8">
-            With Translo, centralize your app&apos;s translation and help
-            yourself using AI to ensure that your app easily reaches a global
-            audience
+            {i18n.t(
+              "With Translo, centralize your app's translation and help yourself using AI to ensure that your app easily reaches a global audience"
+            )}
           </p>
           <div className="space-x-4">
             <GetStarterd />
@@ -39,18 +44,20 @@ export default async function IndexPage() {
       <section>
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8">
           <div className="max-w-3xl text-center mx-auto">
-            <h1 className="block font-heading text-4xl sm:text-5xl md:text-6xl lg:text-5xl">
-              Do you need any specific features?
-            </h1>
+            <h2 className="block font-heading text-4xl sm:text-5xl md:text-6xl lg:text-5xl">
+              {i18n.t("Do you need any specific features?")}
+            </h2>
           </div>
           <div className="mt-5 max-w-3xl text-center mx-auto">
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              Contribute to the GitHub project; once we approve it, all clients
-              will have it available.
+              {i18n.t(
+                "Contribute to the GitHub project; once we approve it, all clients will have it available."
+              )}
             </p>
             <p className="text-lg text-gray-600 dark:text-gray-400">
-              We strongly believe in open-source contributions and aim to
-              deliver the best service for our customers.
+              {i18n.t(
+                "We strongly believe in open-source contributions and aim to deliver the best service for our customers."
+              )}
             </p>
           </div>
           <div className="text-center">
@@ -59,17 +66,8 @@ export default async function IndexPage() {
               href="https://github.com/Matergi/Translo"
               className={cn(buttonVariants())}
             >
-              <svg
-                className="shrink-0 size-3.5 mr-2"
-                xmlns="http://www.w3.org/2000/svg"
-                width="16"
-                height="16"
-                fill="currentColor"
-                viewBox="0 0 16 16"
-              >
-                <path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.012 8.012 0 0 0 16 8c0-4.42-3.58-8-8-8z" />
-              </svg>
-              Open github
+              <Icons.gitHub />
+              {i18n.t("Open github")}
             </a>
           </div>
         </div>
@@ -80,10 +78,16 @@ export default async function IndexPage() {
       <section>
         <div className="mx-auto px-4 sm:px-6 lg:px-8 py-24 space-y-8">
           <div className="max-w-3xl text-center mx-auto">
-            <h1 className="block font-heading text-4xl sm:text-5xl md:text-6xl lg:text-5xl">
-              Unlock a global audience, unleashing your business growth.{" "}
-              <span className="text-blue-600">Translo is your key</span>
-            </h1>
+            <h2
+              className="block font-heading text-4xl sm:text-5xl md:text-6xl lg:text-5xl"
+              dangerouslySetInnerHTML={{
+                __html: i18n
+                  .t(
+                    "Unlock a global audience, unleashing your business growth. Translo is your key"
+                  )
+                  .replace(/(< *script)/gi, "illegalscript"),
+              }}
+            ></h2>
           </div>
 
           <GetStarterd />

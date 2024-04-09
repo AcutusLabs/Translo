@@ -1,11 +1,9 @@
 import { z } from "zod"
 
 import { db } from "@/lib/db"
-import {
-  ErrorResponse,
-  GenericErrorResponse,
-  SuccessResponse,
-} from "@/lib/response"
+import { handleCatchApi } from "@/lib/exceptions"
+import i18n from "@/lib/i18n"
+import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import { hashPassword } from "@/lib/utils"
 
 const resetPasswordSchema = z.object({
@@ -41,15 +39,13 @@ export async function POST(req: Request) {
     })
 
     if (!result.count) {
-      return ErrorResponse("The token does not match. Please try again.")
+      return ErrorResponse({
+        error: i18n.t("The token does not match. Please try again."),
+      })
     }
 
     return SuccessResponse()
   } catch (error) {
-    if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
-    }
-
-    return GenericErrorResponse()
+    return handleCatchApi(error)
   }
 }

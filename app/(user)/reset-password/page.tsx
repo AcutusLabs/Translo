@@ -4,6 +4,7 @@ import { ChangeEvent, useCallback, useState } from "react"
 import { useSearchParams } from "next/navigation"
 
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 
@@ -25,8 +26,8 @@ export default function VerifyEmail() {
   const onSubmit = useCallback(async () => {
     if (!email || !token || !newPassword) {
       return toast({
-        title: "Something went wrong.",
-        description: "Missing parameters. Please try again.",
+        title: i18n.t("Something went wrong"),
+        description: i18n.t("Missing parameters. Please try again"),
         variant: "destructive",
       })
     }
@@ -41,8 +42,8 @@ export default function VerifyEmail() {
     )
 
     toast({
-      title: "Password changed",
-      description: "The password has been updated successfully.",
+      title: i18n.t("Password changed"),
+      description: i18n.t("The password has been updated successfully"),
     })
 
     window.location.replace("/login")
