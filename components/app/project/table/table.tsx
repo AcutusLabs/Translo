@@ -13,6 +13,7 @@ import DetailSlideOver from "./detail-slide-over"
 import Row from "./row"
 
 type Props = {
+  tokens: number
   keywords: Keyword[]
   addKeyword: (newKeyword: NewKeyword) => void
   deleteKey: (key: string) => void
@@ -37,6 +38,7 @@ const Table = (props: Props) => {
     project,
     languages,
     addLanguage,
+    tokens,
   } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
@@ -128,6 +130,7 @@ const Table = (props: Props) => {
       </div>
       {keywordSelected && (
         <DetailSlideOver
+          tokens={tokens}
           project={project}
           onClose={closeDetailRow}
           keyword={keywordSelected}

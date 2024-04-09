@@ -25,9 +25,9 @@ export async function DELETE(
     // Validate the route params.
     const { params } = routeContextSchema.parse(context)
 
-    // Check if the user has access to this translation.
-    if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("User wrong"), status: 403 })
+    // Check if the user has access to this project.
+    if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
+      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
     }
 
     // Delete the translation.
@@ -51,11 +51,9 @@ export async function PATCH(
     // Validate route params.
     const { params } = routeContextSchema.parse(context)
 
-    // Check if the user has access to this translation.
-    if (!(await verifyCurrentUserHasAccessTotranslation(params.projectId))) {
-      return ErrorResponse({
-        error: i18n.t("The project does not exist"),
-      })
+    // Check if the user has access to this project.
+    if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
+      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
     }
 
     // Get the request body and validate it.
@@ -104,11 +102,11 @@ export async function PATCH(
   }
 }
 
-async function verifyCurrentUserHasAccessTotranslation(translationId: string) {
+export async function verifyCurrentUserHasAccessToProject(projectId: string) {
   const session = await getServerSession(authOptions)
   const count = await db.project.count({
     where: {
-      id: translationId,
+      id: projectId,
       userId: session?.user.id,
     },
   })
