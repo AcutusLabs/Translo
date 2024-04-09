@@ -1,5 +1,9 @@
 import { headers } from "next/headers"
-import { proPlanTokens, tokensPerCent } from "@/constants/subscriptions"
+import {
+  PaymentType,
+  proPlanTokens,
+  tokensPerCent,
+} from "@/constants/subscriptions"
 import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
@@ -27,42 +31,68 @@ export async function POST(req: Request) {
   const session = event.data.object as Stripe.Checkout.Session
 
   if (event.type === "checkout.session.completed") {
-    // Retrieve the subscription details from Stripe.
-    const subscription = await stripe.subscriptions.retrieve(
-      session.subscription as string
-    )
+    // recharge tokens
+    if (session?.metadata?.type === PaymentType.RechargeTokens) {
+      const user = await db.user.findFirst({
+        where: {
+          id: session?.metadata?.userId,
+        },
+      })
 
-    const user = await db.user.findFirst({
-      where: {
-        id: session?.metadata?.userId,
-      },
-    })
+      if (!user) {
+        return new Response(i18n.t("Stripe payment user not found"), {
+          status: 400,
+        })
+      }
 
-    if (!user) {
-      return new Response(i18n.t("Stripe payment user not found"), {
-        status: 400,
+      await db.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          tokens:
+            Number(user.tokens) +
+            event.data.object["amount_total"] * tokensPerCent,
+        },
+      })
+    } else {
+      // Retrieve the subscription details from Stripe.
+      const subscription = await stripe.subscriptions.retrieve(
+        session.subscription as string
+      )
+
+      const user = await db.user.findFirst({
+        where: {
+          id: session?.metadata?.userId,
+        },
+      })
+
+      if (!user) {
+        return new Response(i18n.t("Stripe payment user not found"), {
+          status: 400,
+        })
+      }
+
+      // Update the user stripe into in our database.
+      // Since this is the initial subscription, we need to update
+      // the subscription id and customer id.
+      await db.user.update({
+        where: {
+          id: session?.metadata?.userId,
+        },
+        data: {
+          stripeSubscriptionId: subscription.id,
+          stripeCustomerId: subscription.customer as string,
+          stripePriceId: subscription.items.data[0].price.id,
+          stripeCurrentPeriodEnd: new Date(
+            subscription.current_period_end * 1000
+          ),
+          tokens: user.stripeSubscriptionId
+            ? user.tokens
+            : Number(user.tokens) + proPlanTokens,
+        },
       })
     }
-
-    // Update the user stripe into in our database.
-    // Since this is the initial subscription, we need to update
-    // the subscription id and customer id.
-    await db.user.update({
-      where: {
-        id: session?.metadata?.userId,
-      },
-      data: {
-        stripeSubscriptionId: subscription.id,
-        stripeCustomerId: subscription.customer as string,
-        stripePriceId: subscription.items.data[0].price.id,
-        stripeCurrentPeriodEnd: new Date(
-          subscription.current_period_end * 1000
-        ),
-        tokens: user.stripeSubscriptionId
-          ? user.tokens
-          : Number(user.tokens) + proPlanTokens,
-      },
-    })
   }
 
   if (event.type === "invoice.payment_succeeded") {
@@ -81,30 +111,6 @@ export async function POST(req: Request) {
         stripeCurrentPeriodEnd: new Date(
           subscription.current_period_end * 1000
         ),
-      },
-    })
-  }
-
-  if (event.type === "charge.succeeded") {
-    const user = await db.user.findFirst({
-      where: {
-        id: session?.metadata?.userId,
-      },
-    })
-
-    if (!user) {
-      return new Response(i18n.t("Stripe payment user not found"), {
-        status: 400,
-      })
-    }
-
-    await db.user.update({
-      where: {
-        id: user.id,
-      },
-      data: {
-        tokens:
-          Number(user.tokens) + event.data.object["amount"] * tokensPerCent,
       },
     })
   }
