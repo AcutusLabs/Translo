@@ -1,6 +1,6 @@
 {
   "name": "translo",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "private": true,
   "author": {
     "name": "Acutus",
@@ -25,7 +25,13 @@
     "prisma:generate": "pnpm dotenv -e .env.local pnpm prisma format && pnpm prisma generate",
     "prisma:migration": "pnpm dotenv -e .env.local pnpm prisma migrate deploy",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
-    "i18n": "pnpm dotenv -e .env.local npx ts-node lib/i18n/import.ts"
+    "i18n": "pnpm dotenv -e .env.local npx ts-node lib/i18n/import.ts",
+    "release": "pnpm install && standard-version",
+    "release-patch": "pnpm install && standard-version --release-as patch",
+    "release-version": "pnpm install && standard-version --release-as",
+    "check-release": "pnpm install && standard-version --dry-run",
+    "check-release-patch": "pnpm install && standard-version --dry-run --release-as patch",
+    "check-release-version": "pnpm install && standard-version --dry-run --release-as"
   },
   "dependencies": {
     "@ariakit/react": "^0.4.4",
@@ -105,6 +111,7 @@
     "react-textarea-autosize": "^8.4.1",
     "sharp": "^0.31.3",
     "shiki": "^0.11.1",
+    "standard-version": "^9.5.0",
     "stripe": "^11.18.0",
     "tailwind-merge": "^1.12.0",
     "tailwindcss-animate": "^1.0.5",
