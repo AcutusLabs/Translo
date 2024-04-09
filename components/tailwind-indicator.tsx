@@ -1,3 +1,4 @@
+/* eslint-disable react/jsx-no-literals */
 export function TailwindIndicator() {
   if (process.env.NODE_ENV === "production") return null
 

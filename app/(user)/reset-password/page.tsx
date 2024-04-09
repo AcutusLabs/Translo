@@ -51,20 +51,22 @@ export default function VerifyEmail() {
 
   return (
     <div
-      className="flex h-screen items-center justify-center flex-col"
+      className="flex h-screen flex-col items-center justify-center"
       style={{
         backgroundImage:
           "linear-gradient(to right top, #f8f9fa, #e5e8ea, #d2d7db, #bfc6cc, #adb5bd)",
       }}
     >
-      <div className="mt-5 p-4 relative z-10 bg-white border rounded-xl sm:mt-10 md:p-10 dark:bg-gray-800 dark:border-gray-700">
-        <h1 className="font-medium text-3xl">Reset your password</h1>
+      <div className="relative z-10 mt-5 rounded-xl border bg-white p-4 dark:border-gray-700 dark:bg-gray-800 sm:mt-10 md:p-10">
+        <h1 className="text-3xl font-medium">
+          {i18n.t("Reset your password")}
+        </h1>
         <div className="my-6">
           <label
             htmlFor="hs-feedback-post-comment-name-1"
-            className="block mb-2 text-sm font-medium dark:text-white"
+            className="mb-2 block text-sm font-medium dark:text-white"
           >
-            New password
+            {i18n.t("New password")}
           </label>
           <input
             type="password"
@@ -75,7 +77,7 @@ export default function VerifyEmail() {
             onChange={handleChangePassword}
           />
           <Button className="mt-6" onClick={onSubmit} disabled={!newPassword}>
-            Change password
+            {i18n.t("Change password")}
           </Button>
         </div>
       </div>
