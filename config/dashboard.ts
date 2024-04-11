@@ -12,13 +12,13 @@ export const dashboardConfig: DashboardConfig = {
     },
     {
       id: "billing",
-      title: "Billing",
+      title: i18n.t("Billing"),
       href: "/dashboard/billing",
       icon: "billing",
     },
     {
       id: "settings",
-      title: "Settings",
+      title: i18n.t("Settings"),
       href: "/dashboard/settings",
       icon: "settings",
     },
