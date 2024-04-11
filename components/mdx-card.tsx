@@ -1,6 +1,7 @@
 import Link from "next/link"
 
 import { cn } from "@/lib/utils"
+import i18n from "@/lib/i18n"
 
 interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
   href?: string
@@ -30,7 +31,7 @@ export function MdxCard({
       </div>
       {href && (
         <Link href={disabled ? "#" : href} className="absolute inset-0">
-          <span className="sr-only">View</span>
+          <span className="sr-only">{i18n.t("View")}</span>
         </Link>
       )}
     </div>

@@ -3,12 +3,13 @@ import * as React from "react"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "./icons"
+import i18n from "@/lib/i18n"
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   return (
     <footer
       className={cn(
-        "w-full max-w-[85rem] py-10 px-4 sm:px-6 lg:px-8 mx-auto",
+        "mx-auto w-full max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8",
         className
       )}
     >
@@ -19,23 +20,24 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             href="#"
             aria-label="Brand"
           >
-            Translo
+            {i18n.t("Translo")}
           </a>
         </div>
 
         <div className="mt-3">
           <p className="text-gray-500">
-            Made with <span className="text-[#E25555]">&#9829;</span> by Giacomo
-            and Davide
+            {i18n.t("Made with ")}
+            <span className="text-[#E25555]">{i18n.t("♥️")}</span>
+            {i18n.t("by Giacomo and Davide")}
           </p>
         </div>
 
         <div className="mt-3 space-x-2">
           <a
-            className="inline-flex justify-center items-center size-10 text-center text-gray-500 hover:bg-gray-100 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white transition dark:text-gray-500 dark:hover:text-gray-200 dark:hover:bg-gray-800"
+            className="inline-flex size-10 items-center justify-center rounded-full text-center text-gray-500 transition hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-blue-600 focus:ring-offset-2 focus:ring-offset-white dark:text-gray-500 dark:hover:bg-gray-800 dark:hover:text-gray-200"
             href="https://github.com/Matergi/Translo"
           >
-            <Icons.gitHub className="shrink-0 size-3.5" />
+            <Icons.gitHub className="size-3.5 shrink-0" />
           </a>
         </div>
       </div>

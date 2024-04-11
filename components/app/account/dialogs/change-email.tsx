@@ -73,21 +73,21 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
       <DialogTrigger asChild>
         <button
           type="button"
-          className="py-2 px-3 inline-flex items-center gap-x-2 text-sm font-medium rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-slate-900 dark:border-gray-700 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
+          className="inline-flex items-center gap-x-2 rounded-lg border border-gray-200 bg-white px-3 py-2 text-sm font-medium text-gray-800 shadow-sm hover:bg-gray-50 disabled:pointer-events-none disabled:opacity-50 dark:border-gray-700 dark:bg-slate-900 dark:text-white dark:hover:bg-gray-800 dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
         >
           <Icons.email />
-          Change email
+          {i18n.t("Change email")}
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
         <DialogHeader>
-          <DialogTitle>Change email</DialogTitle>
-          <DialogDescription>Enter the new email</DialogDescription>
+          <DialogTitle>{i18n.t("Change email")}</DialogTitle>
+          <DialogDescription>{i18n.t("Enter the new email")}</DialogDescription>
         </DialogHeader>
         <div className="grid gap-4 py-4">
           <div className="grid grid-cols-4 items-center gap-4">
             <Label htmlFor="username" className="text-right">
-              New
+              {i18n.t("New")}
             </Label>
             <Input
               id="email"
@@ -106,7 +106,7 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
               onClick={onSubmit}
               disabled={!newEmail || !isEmail(newEmail)}
             >
-              Save
+              {i18n.t("Save")}
             </Button>
           </DialogClose>
         </DialogFooter>

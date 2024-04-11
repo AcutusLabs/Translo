@@ -91,16 +91,17 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
     >
       <Card>
         <CardHeader>
-          <CardTitle>Your Name</CardTitle>
+          <CardTitle>{i18n.t("Your Name")}</CardTitle>
           <CardDescription>
-            Please enter your full name or a display name you are comfortable
-            with.
+            {i18n.t(
+              "Please enter your full name or a display name you are comfortable with."
+            )}
           </CardDescription>
         </CardHeader>
         <CardContent>
           <div className="grid gap-1">
             <Label className="sr-only" htmlFor="name">
-              Name
+              {i18n.t("Name")}
             </Label>
             <Input
               id="name"
@@ -115,14 +116,14 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
         </CardContent>
 
         <CardHeader>
-          <CardTitle>Email</CardTitle>
+          <CardTitle>{i18n.t("Email")}</CardTitle>
         </CardHeader>
         <CardFooter>
           <ChangeEmailDialog oldEmail={user.email} />
         </CardFooter>
 
         <CardHeader>
-          <CardTitle>Password</CardTitle>
+          <CardTitle>{i18n.t("Password")}</CardTitle>
         </CardHeader>
         <CardFooter>
           <ChangePasswordDialog />
@@ -137,7 +138,7 @@ export function UserForm({ user, className, ...props }: UserFormProps) {
             {isSaving && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}
-            <span>Save</span>
+            <span>{i18n.t("Save")}</span>
           </button>
         </CardFooter>
       </Card>
