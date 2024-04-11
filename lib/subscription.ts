@@ -1,7 +1,12 @@
 import { getServerSession } from "next-auth/next"
 
 import { UserSubscriptionPlan } from "types"
-import { freePlan, proPlanMonthly } from "@/config/subscriptions"
+import {
+  exSubscriber,
+  freePlan,
+  proPlanMonthly,
+  proPlanYearly,
+} from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 
@@ -27,12 +32,23 @@ export async function getUserSubscriptionPlan(
   }
 
   // Check if user is on a pro plan.
-  const isPro =
+  const isValid =
     user.stripePriceId &&
     // @ts-ignore
     user.stripeCurrentPeriodEnd?.getTime() + 86_400_000 > Date.now()
 
-  const plan = isPro ? proPlanMonthly : freePlan
+  let plan = freePlan
+  let isPro = false
+
+  if (!isValid && user.stripePriceId) {
+    plan = exSubscriber
+  } else if (user.stripePriceId === proPlanMonthly.stripePriceId) {
+    plan = proPlanMonthly
+    isPro = true
+  } else if (user.stripePriceId === proPlanYearly.stripePriceId) {
+    plan = proPlanYearly
+    isPro = true
+  }
 
   return {
     ...plan,

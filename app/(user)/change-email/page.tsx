@@ -4,9 +4,11 @@ import { useEffect, useState } from "react"
 import { useSearchParams } from "next/navigation"
 import { useSession } from "next-auth/react"
 
+import { PageAnalytics } from "@/lib/analytics-client"
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
 import i18n from "@/lib/i18n"
 import { toast } from "@/components/ui/use-toast"
+import PageView from "@/components/posthog/page-view"
 
 export default function VerifyEmail() {
   const searchParams = useSearchParams()
@@ -53,17 +55,20 @@ export default function VerifyEmail() {
   }, [])
 
   return (
-    <div
-      className="flex h-screen items-center justify-center flex-col"
-      style={{
-        backgroundImage:
-          "linear-gradient(to right top, #f8f9fa, #e5e8ea, #d2d7db, #bfc6cc, #adb5bd)",
-      }}
-    >
-      <h1 className="font-medium text-3xl">
-        {result ? result : "Please wait ..."}
-      </h1>
-      <div className="mb-4"></div>
-    </div>
+    <>
+      <PageView page={PageAnalytics.changeEmail} />
+      <div
+        className="flex h-screen items-center justify-center flex-col"
+        style={{
+          backgroundImage:
+            "linear-gradient(to right top, #f8f9fa, #e5e8ea, #d2d7db, #bfc6cc, #adb5bd)",
+        }}
+      >
+        <h1 className="font-medium text-3xl">
+          {result ? result : "Please wait ..."}
+        </h1>
+        <div className="mb-4"></div>
+      </div>
+    </>
   )
 }

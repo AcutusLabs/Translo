@@ -1,6 +1,7 @@
 import { redirect } from "next/navigation"
 import { User } from "@prisma/client"
 
+import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { getCurrentUser } from "@/lib/session"
@@ -8,6 +9,7 @@ import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { BillingForm } from "@/components/billing-form"
 import { DashboardHeader } from "@/components/header"
+import PostHogAnalytics from "@/components/posthog"
 import { DashboardShell } from "@/components/shell"
 
 export const metadata = {
@@ -49,21 +51,26 @@ export default async function BillingPage() {
     isCanceled = stripePlan.cancel_at_period_end
   }
 
+  const Analytics = await PostHogAnalytics(PageAnalytics.billing)
+
   return (
-    <DashboardShell>
-      <DashboardHeader
-        heading="Billing"
-        text="Manage billing and your subscription plan."
-      />
-      <div className="grid gap-8">
-        <BillingForm
-          subscriptionPlan={{
-            ...subscriptionPlan,
-            isCanceled,
-          }}
-          tokens={tokens}
+    <>
+      {Analytics}
+      <DashboardShell>
+        <DashboardHeader
+          heading="Billing"
+          text="Manage billing and your subscription plan."
         />
-      </div>
-    </DashboardShell>
+        <div className="grid gap-8">
+          <BillingForm
+            subscriptionPlan={{
+              ...subscriptionPlan,
+              isCanceled,
+            }}
+            tokens={tokens}
+          />
+        </div>
+      </DashboardShell>
+    </>
   )
 }

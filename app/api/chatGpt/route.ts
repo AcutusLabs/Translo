@@ -5,6 +5,11 @@ import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
 import { AlertType } from "@/types/api"
+import {
+  UserDoAction,
+  eventUserDo,
+  sendServerPostHogEvent,
+} from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
@@ -151,6 +156,12 @@ ${languages.map((lang) => `language-id for ${lang.lang} = ${lang.short}`)}
           data: {
             tokens: Number(user.tokens) - cost,
           },
+        })
+
+        sendServerPostHogEvent((client) => {
+          eventUserDo(user.id, client, UserDoAction.generateFromAI, {
+            cost,
+          })
         })
 
         await db.aiTranslationsLog.create({

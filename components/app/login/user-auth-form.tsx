@@ -29,6 +29,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
     register,
     handleSubmit,
     formState: { errors },
+    reset,
   } = useForm<FormData>({
     resolver: zodResolver(userAuthSchema),
   })
@@ -77,6 +78,8 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
           variant: "destructive",
         })
       }
+
+      reset()
 
       return toast({
         title: i18n.t("Check your email"),

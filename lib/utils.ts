@@ -41,3 +41,29 @@ export const isJson = (value: string) => {
   }
   return true
 }
+
+export const getBrowserLanguage = () => {
+  let lang: string | undefined = "en"
+  if (typeof window !== "undefined") {
+    lang = window.navigator.languages
+      ? window.navigator.languages[0]
+      : undefined
+    // @ts-ignore
+    lang = lang || window.navigator.language
+  }
+  let shortLang = lang
+
+  if (shortLang && shortLang.indexOf("-") !== -1) {
+    ;[shortLang] = shortLang.split("-")
+  }
+
+  if (shortLang && shortLang.indexOf("_") !== -1) {
+    ;[shortLang] = shortLang.split("_")
+  }
+
+  if (!shortLang) {
+    shortLang = "en"
+  }
+
+  return shortLang
+}

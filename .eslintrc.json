@@ -11,6 +11,8 @@
     "@next/next/no-html-link-for-pages": "off",
     "tailwindcss/no-custom-classname": "off",
     "tailwindcss/classnames-order": "off",
+    "tailwindcss/enforces-shorthand": "off",
+    "tailwindcss/no-unnecessary-arbitrary-value": "off",
     "import/no-anonymous-default-export": "off",
     "react-hooks/exhaustive-deps": 2,
     "react-hooks/rules-of-hooks": "error",
@@ -18,7 +20,7 @@
     "react/no-array-index-key": "error",
     "react/jsx-key": "error",
     "react/jsx-no-literals": [
-      "warn",
+      "error",
       {
         "noStrings": true,
         "ignoreProps": true,
