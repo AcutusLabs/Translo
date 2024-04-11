@@ -190,6 +190,12 @@ dependencies:
   openai:
     specifier: ^4.28.0
     version: 4.28.0
+  posthog-js:
+    specifier: ^1.120.5
+    version: 1.120.5
+  posthog-node:
+    specifier: ^4.0.0
+    version: 4.0.0
   preline:
     specifier: ^2.0.3
     version: 2.0.3
@@ -5381,6 +5387,13 @@ packages:
       web-streams-polyfill: 3.2.1
     dev: false
 
+  /fflate@0.4.8:
+    resolution:
+      {
+        integrity: sha512-FJqqoDBR00Mdj9ppamLa/Y7vxm+PRmNWA67N846RvsoYVMKB4q3y/de5PA7gUmRMYK/8CMz2GDZQmCRN1wBcWA==,
+      }
+    dev: false
+
   /fflate@0.7.4:
     resolution: {integrity: sha512-5u2V/CDW15QM1XbbgS+0DfPxVB+jUKhWEKuuFuHncbk3tEEqzmoXL+2KyOFuKGqOnmdIy0/davWF1CkuwtibCw==}
     dev: false
@@ -8215,6 +8228,29 @@ packages:
       picocolors: 1.0.0
       source-map-js: 1.0.2
 
+  /posthog-js@1.120.5:
+    resolution:
+      {
+        integrity: sha512-yDWqiB8RUPCwJBh1ItUebBkoVP5MvxZAU/O7b9efN11R+M2mpcWdTV3SX1KEFZkgTKr89SdKv26Altpjg4Cuug==,
+      }
+    dependencies:
+      fflate: 0.4.8
+      preact: 10.20.2
+    dev: false
+
+  /posthog-node@4.0.0:
+    resolution:
+      {
+        integrity: sha512-jEZnNbgb/3FNk+gNwtTcyz3j+62zIN+UTPotONfacVXJnoI70KScSkKdIR+rvP9tA2kjBSoHQxGwJuizs27o9A==,
+      }
+    engines: { node: ">=15.0.0" }
+    dependencies:
+      axios: 1.6.7
+      rusha: 0.8.14
+    transitivePeerDependencies:
+      - debug
+    dev: false
+
   /preact-render-to-string@5.2.6(preact@10.13.2):
     resolution: {integrity: sha512-JyhErpYOvBV1hEPwIxc/fHWXPfnEGdRKxc8gFdAZ7XV4tlzyzG847XAyEZqoDnynP88akM4eaHcSOzNcLWFguw==}
     peerDependencies:
@@ -8226,6 +8262,13 @@ packages:
 
   /preact@10.13.2:
     resolution: {integrity: sha512-q44QFLhOhty2Bd0Y46fnYW0gD/cbVM9dUVtNTDKPcdXSMA7jfY+Jpd6rk3GB0lcQss0z5s/6CmVP0Z/hV+g6pw==}
+    dev: false
+
+  /preact@10.20.2:
+    resolution:
+      {
+        integrity: sha512-S1d1ernz3KQ+Y2awUxKakpfOg2CEmJmwOP+6igPx6dgr6pgDvenqYviyokWso2rhHvGtTlWWnJDa7RaPbQerTg==,
+      }
     dev: false
 
   /prebuild-install@7.1.1:
@@ -8899,6 +8942,13 @@ packages:
     resolution: {integrity: sha512-5l4VyZR86LZ/lDxZTR6jqL8AFE2S0IFLMP26AbjsLVADxHdhB/c0GUsH+y39UfCi3dzz8OlQuPmnaJOMoDHQBA==}
     dependencies:
       queue-microtask: 1.2.3
+
+  /rusha@0.8.14:
+    resolution:
+      {
+        integrity: sha512-cLgakCUf6PedEu15t8kbsjnwIFFR2D4RfL+W3iWFJ4iac7z4B0ZI8fxy4R3J956kAI68HclCFGL8MPoUVC3qVA==,
+      }
+    dev: false
 
   /rxjs@6.6.7:
     resolution: {integrity: sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==}

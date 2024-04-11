@@ -52,6 +52,7 @@ export type DashboardConfig = {
 }
 
 export type SubscriptionPlan = {
+  key: "free" | "pro-monthly" | "pro-yearly" | "ex-subscriber" | "ai-tokens"
   name: string
   description: string
   stripePriceId: string

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 
+import { PageAnalytics } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
@@ -8,6 +9,7 @@ import Faq from "@/components/app/homepage/faq"
 import Features from "@/components/app/homepage/features"
 import GetStarterd from "@/components/app/homepage/get-started"
 import { Icons } from "@/components/icons"
+import PostHogAnalytics from "@/components/posthog"
 
 export default async function IndexPage() {
   const user = await getCurrentUser()
@@ -16,8 +18,11 @@ export default async function IndexPage() {
     redirect("/dashboard")
   }
 
+  const Analytics = await PostHogAnalytics(PageAnalytics.home)
+
   return (
     <>
+      {Analytics}
       <section className="space-y-6 pb-8 pt-6 md:pb-12 md:pt-10 lg:py-32">
         <div className="container flex max-w-[64rem] flex-col items-center gap-4 text-center">
           <h1

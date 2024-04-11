@@ -3,6 +3,11 @@ import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
 import { AlertType } from "@/types/api"
+import {
+  UserDoAction,
+  eventUserDo,
+  sendServerPostHogEvent,
+} from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"
 import { MAX_PROJECTS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
@@ -54,6 +59,10 @@ export async function POST(req: Request) {
 
     const { user } = session
     const subscriptionPlan = await getUserSubscriptionPlan(user.id)
+
+    sendServerPostHogEvent((client) => {
+      eventUserDo(user.id, client, UserDoAction.createProject)
+    })
 
     // If user is on a free plan.
     // Check if user has reached limit of 1 project.
