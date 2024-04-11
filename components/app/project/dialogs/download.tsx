@@ -1,6 +1,7 @@
 import { useState } from "react"
 import Link from "next/link"
 
+import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -56,6 +57,9 @@ export function DownloadKeywordsDropdownMenu(
                 id="airplane-mode"
                 checked={isShared}
                 onCheckedChange={(shared) => {
+                  eventPostHogClient(UserDoClientAction.shareProject, {
+                    shared,
+                  })
                   setShared(shared)
                   publishProject(shared)
                 }}

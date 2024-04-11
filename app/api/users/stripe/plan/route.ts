@@ -4,6 +4,11 @@ import { z } from "zod"
 
 import { SubscriptionPlanType } from "@/types/subscription"
 import { proPlanMonthly, proPlanYearly } from "@/config/subscriptions"
+import {
+  PaymentAction,
+  eventPayments,
+  sendServerPostHogEvent,
+} from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"
 import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
@@ -45,6 +50,10 @@ export async function GET(req: NextRequest) {
       const stripeSession = await stripe.billingPortal.sessions.create({
         customer: subscriptionPlan.stripeCustomerId,
         return_url: billingUrl,
+      })
+
+      sendServerPostHogEvent((client) => {
+        eventPayments(session.user.id, client, PaymentAction.manageSubsctiption)
       })
 
       return new Response(JSON.stringify({ url: stripeSession.url }))

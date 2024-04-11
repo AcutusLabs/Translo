@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 
+import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import i18n from "@/lib/i18n"
@@ -8,6 +9,7 @@ import AddNewProject from "@/components/app/dashboard/dialogs/add-new-project"
 import { ProjectItem } from "@/components/app/dashboard/projects/project-item"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
 import { DashboardHeader } from "@/components/header"
+import PostHogAnalytics from "@/components/posthog"
 import { DashboardShell } from "@/components/shell"
 
 export const metadata = {
@@ -36,34 +38,39 @@ export default async function DashboardPage() {
     },
   })
 
+  const Analytics = await PostHogAnalytics(PageAnalytics.projects)
+
   return (
-    <DashboardShell>
-      <DashboardHeader
-        heading={i18n.t("Projects")}
-        text={i18n.t("Create and manage translation projects.")}
-      >
-        <AddNewProject />
-      </DashboardHeader>
-      <div>
-        {projects?.length ? (
-          <div className="divide-y divide-border rounded-md border">
-            {projects.map((project) => (
-              <ProjectItem key={project.id} project={project} />
-            ))}
-          </div>
-        ) : (
-          <EmptyPlaceholder>
-            <EmptyPlaceholder.Icon name="project" />
-            <EmptyPlaceholder.Title>
-              {i18n.t("No project added")}
-            </EmptyPlaceholder.Title>
-            <EmptyPlaceholder.Description>
-              {i18n.t("dashboard.No project added.description")}
-            </EmptyPlaceholder.Description>
-            <AddNewProject />
-          </EmptyPlaceholder>
-        )}
-      </div>
-    </DashboardShell>
+    <>
+      {Analytics}
+      <DashboardShell>
+        <DashboardHeader
+          heading={i18n.t("Projects")}
+          text={i18n.t("Create and manage translation projects.")}
+        >
+          <AddNewProject />
+        </DashboardHeader>
+        <div>
+          {projects?.length ? (
+            <div className="divide-y divide-border rounded-md border">
+              {projects.map((project) => (
+                <ProjectItem key={project.id} project={project} />
+              ))}
+            </div>
+          ) : (
+            <EmptyPlaceholder>
+              <EmptyPlaceholder.Icon name="project" />
+              <EmptyPlaceholder.Title>
+                {i18n.t("No project added")}
+              </EmptyPlaceholder.Title>
+              <EmptyPlaceholder.Description>
+                {i18n.t("dashboard.No project added.description")}
+              </EmptyPlaceholder.Description>
+              <AddNewProject />
+            </EmptyPlaceholder>
+          )}
+        </div>
+      </DashboardShell>
+    </>
   )
 }

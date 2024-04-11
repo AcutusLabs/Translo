@@ -7,6 +7,11 @@ import {
 import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
+import {
+  PaymentAction,
+  eventPayments,
+  sendServerPostHogEvent,
+} from "@/lib/analytics-server"
 import { db } from "@/lib/db"
 import i18n from "@/lib/i18n"
 import { SuccessResponse } from "@/lib/response"
@@ -45,6 +50,12 @@ export async function POST(req: Request) {
         })
       }
 
+      sendServerPostHogEvent((client) => {
+        eventPayments(user.id, client, PaymentAction.recharged, {
+          amount: event.data.object["amount_total"] / 100,
+        })
+      })
+
       await db.user.update({
         where: {
           id: user.id,
@@ -72,6 +83,10 @@ export async function POST(req: Request) {
           status: 400,
         })
       }
+
+      sendServerPostHogEvent((client) => {
+        eventPayments(user.id, client, PaymentAction.subscriptionCreated)
+      })
 
       // Update the user stripe into in our database.
       // Since this is the initial subscription, we need to update

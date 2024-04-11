@@ -3,6 +3,7 @@ import { languages as allLanguages } from "@/constants/languages"
 import { Language } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
+import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import {
@@ -60,7 +61,14 @@ const AddNewLanguage = (props: Props) => {
 
     const language = allLanguages.find((lang) => lang.code === selectedLanguage)
 
-    if (!language) return
+    if (!language) {
+      return
+    }
+
+    eventPostHogClient(UserDoClientAction.addLanguage, {
+      lang: language.englishName,
+      short: language.code,
+    })
 
     addLanguage({
       lang: language.englishName,
@@ -74,6 +82,11 @@ const AddNewLanguage = (props: Props) => {
       // The keyword '_id' is a reserved keyword for identifying terms
       return
     }
+
+    eventPostHogClient(UserDoClientAction.addLanguage, {
+      lang: languageName,
+      short: shortName,
+    })
 
     addLanguage({
       lang: languageName,
