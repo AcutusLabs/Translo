@@ -24,6 +24,8 @@ export const env = createEnv({
     TRANSLO_I18N_BASE_URL: z.string().optional(),
     NEXT_PUBLIC_POSTHOG_KEY: z.string().min(1),
     NEXT_PUBLIC_POSTHOG_HOST: z.string().min(1),
+    SENTRY_DNS: z.string(),
+    SENTRY_ENVIROMENT: z.string(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -49,5 +51,7 @@ export const env = createEnv({
     TRANSLO_I18N_BASE_URL: process.env.TRANSLO_I18N_BASE_URL,
     NEXT_PUBLIC_POSTHOG_KEY: process.env.NEXT_PUBLIC_POSTHOG_KEY,
     NEXT_PUBLIC_POSTHOG_HOST: process.env.NEXT_PUBLIC_POSTHOG_HOST,
+    SENTRY_DNS: process.env.SENTRY_DNS,
+    SENTRY_ENVIROMENT: process.env.SENTRY_ENVIROMENT,
   },
 })
