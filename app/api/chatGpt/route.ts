@@ -139,15 +139,19 @@ where:
 ${languages.map((lang) => `language-id for ${lang.lang} = ${lang.short}`)}
 `
       const openaiHelper = new OpenAIHelper()
-      const response = await openaiHelper.askChatGPT({
+      const chatGptResponse = await openaiHelper.askChatGPT({
         prompt,
       })
-      const jsonString = openaiHelper.getResponseJSONString(response)
+      // uncomment to debug real usage
+      // console.log("chatGptResponse", chatGptResponse)
+      const jsonString = openaiHelper.getResponseJSONString(chatGptResponse)
       const result = openaiHelper.parseChatGPTJSONString<I18n>(jsonString)
       if (result) {
         const response = JSON.stringify(result)
 
-        const cost = prompt.length + response.length
+        // in case we fail to use the real usage statistics we fallback to the length of the prompt and response
+        const cost =
+          chatGptResponse.usage?.total_tokens || prompt.length + response.length
 
         await db.user.update({
           where: {
