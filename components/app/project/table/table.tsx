@@ -1,45 +1,26 @@
 "use client"
 
-import { useCallback, useMemo, useState } from "react"
-import { Language } from "@/store/useI18nState"
+import { useCallback, useContext, useMemo, useState } from "react"
 
 import i18n from "@/lib/i18n"
+import { useDeleteKeyword } from "@/hooks/api/project/keyword/use-delete-keyword"
+import { AlertContext } from "@/app/client-providers"
 
-import AddNewKeyword, { NewKeyword } from "../dialogs/add-new-keyword"
+import AddNewKeyword from "../dialogs/add-new-keyword"
 import AddNewLanguage from "../dialogs/add-new-languages"
-import { ProjectData } from "../types"
-import { Keyword } from "../useTranslation"
+import { KeywordData, LanguageData, ProjectData } from "../types"
 import DetailSlideOver from "./detail-slide-over"
 import Row from "./row"
 
 type Props = {
   tokens: number
-  keywords: Keyword[]
-  addKeyword: (newKeyword: NewKeyword) => void
-  deleteKey: (key: string) => void
-  editTranslation: (language: string, key: string, value: string) => void
-  editContext: (key: string, context: string) => void
-  editKey: (key: string, newKey: string) => void
-  checkIfKeyAlreadyExists: (key: string) => boolean
-  languages: Language[]
-  addLanguage: (language: Language) => void
+  keywords: KeywordData[]
+  languages: LanguageData[]
   project: ProjectData
 }
 
 const Table = (props: Props) => {
-  const {
-    keywords,
-    addKeyword,
-    deleteKey,
-    editTranslation,
-    editContext,
-    editKey,
-    checkIfKeyAlreadyExists,
-    project,
-    languages,
-    addLanguage,
-    tokens,
-  } = props
+  const { keywords, project, languages, tokens } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
 
@@ -52,9 +33,16 @@ const Table = (props: Props) => {
   }, [])
 
   const keywordSelected = useMemo(
-    () => keywords.find((keyword) => keyword.key === keySelected),
+    () => keywords.find((keyword) => keyword.keyword === keySelected),
     [keySelected, keywords]
   )
+
+  const alertContext = useContext(AlertContext)
+
+  const { mutate: deleteKeyword } = useDeleteKeyword({
+    projectId: project?.id,
+    showAlertType: alertContext.showAlert,
+  })
 
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 rounded-lg border-[1px]">
@@ -88,8 +76,8 @@ const Table = (props: Props) => {
           </div>
         </div>
         <div className="flex w-full shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
-          <AddNewKeyword keywords={keywords} addKeyword={addKeyword} />
-          <AddNewLanguage languages={languages} addLanguage={addLanguage} />
+          <AddNewKeyword projectId={project.id} keywords={keywords} />
+          <AddNewLanguage projectId={project.id} languages={languages} />
         </div>
       </div>
       <div className="px-4 md:space-x-4">
@@ -115,13 +103,14 @@ const Table = (props: Props) => {
           <tbody>
             {keywords.map((keyword) => (
               <Row
-                key={keyword.key}
+                key={keyword.keyword}
                 keyword={keyword}
+                languages={languages}
                 openDetail={() => {
-                  openDetailRow(keyword.key)
+                  openDetailRow(keyword.keyword)
                 }}
                 deleteKeyword={() => {
-                  deleteKey(keyword.key)
+                  deleteKeyword(keyword.id)
                 }}
               />
             ))}
@@ -130,14 +119,12 @@ const Table = (props: Props) => {
       </div>
       {keywordSelected && (
         <DetailSlideOver
+          projectId={project.id}
           tokens={tokens}
           project={project}
+          languages={languages}
           onClose={closeDetailRow}
           keyword={keywordSelected}
-          editTranslation={editTranslation}
-          editContext={editContext}
-          editKey={editKey}
-          checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
         />
       )}
     </div>

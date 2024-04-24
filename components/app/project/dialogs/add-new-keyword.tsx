@@ -1,8 +1,17 @@
-import { ChangeEvent, FormEvent, useCallback, useMemo, useState } from "react"
+import {
+  ChangeEvent,
+  FormEvent,
+  Fragment,
+  useCallback,
+  useContext,
+  useMemo,
+  useState,
+} from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 import { TooltipPortal } from "@radix-ui/react-tooltip"
 
 import i18n from "@/lib/i18n"
+import { useAddKeyword } from "@/hooks/api/project/keyword/use-add-keyword"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -21,8 +30,9 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Icons } from "@/components/icons"
+import { AlertContext } from "@/app/client-providers"
 
-import { Keyword } from "../useTranslation"
+import { KeywordData } from "../types"
 
 export type NewKeyword = {
   key: string
@@ -30,16 +40,18 @@ export type NewKeyword = {
 }
 
 type Props = {
-  keywords: Keyword[]
-  addKeyword: (newKey: NewKeyword) => void
+  projectId: string
+  keywords: KeywordData[]
 }
 
 const AddNewKeyword = (props: Props) => {
-  const { keywords, addKeyword } = props
+  const { projectId, keywords } = props
   const [open, setOpen] = useState(false)
 
-  const [key, setKey] = useState<string | undefined>(undefined)
+  const [key, setKey] = useState<string>("")
   const [context, setContext] = useState<string>("")
+
+  const alertContext = useContext(AlertContext)
 
   const handleChangeKey = useCallback((e: ChangeEvent<HTMLInputElement>) => {
     setKey(e.target.value)
@@ -53,9 +65,22 @@ const AddNewKeyword = (props: Props) => {
   )
 
   const reset = useCallback(() => {
-    setKey(undefined)
+    setKey("")
     setContext("")
   }, [])
+
+  const { isPending, mutate } = useAddKeyword({
+    projectId: projectId,
+    keywordProps: {
+      keyword: key,
+      context,
+    },
+    onSuccess: () => {
+      setOpen(false)
+      reset()
+    },
+    showAlertType: alertContext.showAlert,
+  })
 
   const onSubmit = useCallback(
     (e: FormEvent) => {
@@ -64,18 +89,13 @@ const AddNewKeyword = (props: Props) => {
         return
       }
 
-      addKeyword({
-        key,
-        context,
-      })
-      setOpen(false)
-      reset()
+      mutate()
     },
-    [addKeyword, context, key, reset]
+    [key, mutate]
   )
 
   const isKeywordAlreadyExists = useMemo(
-    () => keywords.find((keyword) => keyword.key === key) !== undefined,
+    () => keywords.find((keyword) => keyword.keyword === key) !== undefined,
     [key, keywords]
   )
 
@@ -155,6 +175,11 @@ const AddNewKeyword = (props: Props) => {
                 onClick={onSubmit}
                 disabled={!key || isKeywordAlreadyExists}
               >
+                {isPending ? (
+                  <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                ) : (
+                  <Fragment />
+                )}
                 {i18n.t("Add keyword")}
               </Button>
             </DialogClose>

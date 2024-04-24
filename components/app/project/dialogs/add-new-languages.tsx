@@ -1,10 +1,10 @@
-import { ChangeEvent, useCallback, useMemo, useState } from "react"
+import { ChangeEvent, useCallback, useContext, useMemo, useState } from "react"
 import { languages as allLanguages } from "@/constants/languages"
-import { Language } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
 import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
+import { useAddLanguage } from "@/hooks/api/project/language/use-add-language"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -18,20 +18,28 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LanguageSelector } from "@/components/app/project/language-selector"
 import { Icons } from "@/components/icons"
+import { AlertContext } from "@/app/client-providers"
+
+import { LanguageData } from "../types"
 
 type Props = {
-  languages: Language[]
-  addLanguage: (language: Language) => void
+  projectId: string
+  languages: LanguageData[]
 }
 
 const AddNewLanguage = (props: Props) => {
-  const { languages, addLanguage } = props
+  const { projectId, languages } = props
   const [selectedLanguage, setSelectedLanguage] = useState<string>()
 
-  const [languageName, setLanguageName] = useState<string | undefined>(
-    undefined
-  )
-  const [shortName, setShortName] = useState<string | undefined>(undefined)
+  const [languageName, setLanguageName] = useState<string>("")
+  const [shortName, setShortName] = useState<string>("")
+
+  const alertContext = useContext(AlertContext)
+
+  const { mutate: addLanguage } = useAddLanguage({
+    projectId: projectId,
+    showAlertType: alertContext.showAlert,
+  })
 
   const handleChangeLanguageName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,8 +56,8 @@ const AddNewLanguage = (props: Props) => {
   )
 
   const reset = useCallback(() => {
-    setLanguageName(undefined)
-    setShortName(undefined)
+    setLanguageName("")
+    setShortName("")
     setSelectedLanguage(undefined)
   }, [])
 
@@ -70,10 +78,7 @@ const AddNewLanguage = (props: Props) => {
       short: language.code,
     })
 
-    addLanguage({
-      lang: language.englishName,
-      short: language.code,
-    })
+    addLanguage({ name: language.englishName, short: language.code })
     reset()
   }, [addLanguage, reset, selectedLanguage])
 
@@ -88,10 +93,7 @@ const AddNewLanguage = (props: Props) => {
       short: shortName,
     })
 
-    addLanguage({
-      lang: languageName,
-      short: shortName,
-    })
+    addLanguage({ name: languageName, short: shortName })
     setSelectedLanguage(undefined)
     reset()
   }, [addLanguage, languageName, reset, shortName])

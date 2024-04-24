@@ -1,6 +1,7 @@
 import { useMemo } from "react"
-import { Formality, Sex, Term } from "@/store/useI18nState"
 import { generatePromptTranslation } from "@/utils/OpenAiUtils"
+
+import { Formality, Sex, Term } from "@/components/app/project/types"
 
 type Props = {
   numberOfLanguages: number

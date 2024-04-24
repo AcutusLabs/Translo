@@ -1,4 +1,3 @@
-import { I18nLang } from "@/store/useI18nState"
 import { z } from "zod"
 
 import { db } from "@/lib/db"
@@ -24,9 +23,12 @@ export async function GET(
         id: params.projectId,
         published: true,
       },
+      include: {
+        languages: true,
+      },
     })
 
-    const language = ((project?.languages as I18nLang[]) || []).find(
+    const language = project?.languages.find(
       (language) => language.short === params.shortLang
     )
 
@@ -37,7 +39,8 @@ export async function GET(
       })
     }
 
-    return new Response(JSON.stringify(language?.keywords || {}, null, 4))
+    return new Response(JSON.stringify({}, null, 4))
+    // return new Response(JSON.stringify(language?.keywords || {}, null, 4))
   } catch (error) {
     return handleCatchApi(error)
   }

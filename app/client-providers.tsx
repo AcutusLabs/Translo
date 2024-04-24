@@ -16,6 +16,7 @@ import TokensRechargeNeeded from "@/components/app/globalAlert/tokensRechargeNee
 
 const queryClient = new QueryClient()
 
+// const alertContext = useContext(AlertContext)
 export const AlertContext = createContext<{
   alert?: AlertType
   showAlert: ShowAlertType

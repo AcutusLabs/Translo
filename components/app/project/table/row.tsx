@@ -6,16 +6,17 @@ import {
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
 
-import { Keyword } from "../useTranslation"
+import { KeywordData, LanguageData } from "../types"
 
 type Props = {
-  keyword: Keyword
+  keyword: KeywordData
+  languages: LanguageData[]
   openDetail: () => void
   deleteKeyword: () => void
 }
 
 const Row = (props: Props) => {
-  const { keyword, openDetail, deleteKeyword } = props
+  const { keyword, languages, openDetail, deleteKeyword } = props
 
   return (
     <tr
@@ -26,15 +27,18 @@ const Row = (props: Props) => {
         scope="row"
         className="whitespace-nowrap px-4 py-3 align-middle font-medium text-gray-900 dark:text-white text-ellipsis overflow-hidden w-[70%]"
       >
-        {keyword.key}
+        {keyword.keyword}
       </td>
       <td className="px-4 py-3 align-middle">
         <div className="flex flex-wrap gap-2">
-          {keyword.languagesAvailable.map((language) => {
-            if (language.available) {
+          {languages.map((language) => {
+            const translation = keyword.translations.find(
+              (translation) => translation.language.id === language.id
+            )
+            if (translation?.value) {
               return (
                 <span
-                  key={language.language}
+                  key={language.short}
                   className="font-medium text-green-600 dark:text-green-500"
                 >
                   {language.short.toUpperCase()}
@@ -44,7 +48,7 @@ const Row = (props: Props) => {
 
             return (
               <span
-                key={language.language}
+                key={language.short}
                 className="font-medium text-red-600 dark:text-red-500"
               >
                 {language.short.toUpperCase()}
@@ -71,10 +75,16 @@ const Row = (props: Props) => {
               </svg>
             </DropdownMenuTrigger>
             <DropdownMenuContent>
-              <DropdownMenuItem onClick={openDetail}>
+              <DropdownMenuItem
+                onClick={openDetail}
+                className={"hover:cursor-pointer"}
+              >
                 {i18n.t("Edit")}
               </DropdownMenuItem>
-              <DropdownMenuItem onClick={deleteKeyword}>
+              <DropdownMenuItem
+                onClick={deleteKeyword}
+                className={"hover:cursor-pointer"}
+              >
                 {i18n.t("Delete")}
               </DropdownMenuItem>
             </DropdownMenuContent>
