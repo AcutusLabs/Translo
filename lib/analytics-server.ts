@@ -2,6 +2,7 @@ import { PostHog } from "posthog-node"
 
 export enum UserDoAction {
   createProject = "create_project",
+  addLanguage = "add_language",
   generateFromAI = "generate_from_ai",
 }
 

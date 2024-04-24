@@ -1,63 +1,76 @@
-import { ChangeEvent, useCallback } from "react"
-import {
-  EditLanguageType,
-  Formality,
-  Language,
-  ProjectSettings,
-  Sex,
-  Term,
-} from "@/store/useI18nState"
+import { ChangeEvent, useCallback, useContext, useState } from "react"
 
 import i18n from "@/lib/i18n"
+import { useEditProject } from "@/hooks/api/project/use-edit-project"
+import { AlertContext } from "@/app/client-providers"
 
 import SlideOver, { SlideOverRow } from "../../slide-over"
 import AddNewLanguage from "./dialogs/add-new-languages"
-import AddNewTerm from "./dialogs/add-new-term"
+import AddNewTerm, { NewTerm } from "./dialogs/add-new-term"
 import EditLanguage from "./dialogs/edit-languages"
 import EditTerm from "./dialogs/edit-term"
+import { Formality, LanguageData, ProjectSettings, Sex } from "./types"
 
 type Props = {
-  languages: Language[]
+  projectId: string
+  languages: LanguageData[]
   settings: ProjectSettings
-  addLanguage: (language: Language) => void
-  editLanguage: (language: EditLanguageType) => void
-  deleteLanguage: (language: Language) => void
   onClose: () => void
-  editSettings: (newSettings: Partial<ProjectSettings>) => void
-  addNewTerm: (newTerm: Term) => void
 }
 
 const ProjectSettingsSlideOver = (props: Props) => {
-  const {
-    languages,
-    settings,
-    addLanguage,
-    editLanguage,
-    deleteLanguage,
-    onClose,
-    editSettings,
-    addNewTerm,
-  } = props
+  const { projectId, languages, settings, onClose } = props
+
+  const alertContext = useContext(AlertContext)
+
+  const [localSettings, setLocalSettings] = useState<ProjectSettings>(settings)
+
+  /* const { mutate: editProject } = */ useEditProject({
+    projectId: projectId,
+    projectProps: {
+      settings: localSettings,
+    },
+    showAlertType: alertContext.showAlert,
+  })
 
   const handleChangeDescription = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
-      editSettings({ description: event.target.value })
+      setLocalSettings((_settings) => ({
+        ..._settings,
+        description: event.target.value,
+      }))
     },
-    [editSettings]
+    []
   )
 
   const handleChangeAgeStart = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      editSettings({ ageStart: event.target.value })
+      setLocalSettings((_settings) => ({
+        ..._settings,
+        ageStart: event.target.value,
+      }))
     },
-    [editSettings]
+    []
   )
 
   const handleChangeAgeEnd = useCallback(
     (event: ChangeEvent<HTMLInputElement>) => {
-      editSettings({ ageEnd: event.target.value })
+      setLocalSettings((_settings) => ({
+        ..._settings,
+        ageEnd: event.target.value,
+      }))
     },
-    [editSettings]
+    []
+  )
+
+  const handleAddTerm = useCallback(
+    (term: NewTerm) => {
+      setLocalSettings((_settings) => ({
+        ..._settings,
+        glossary: [...(settings.glossary || []), term],
+      }))
+    },
+    [settings.glossary]
   )
 
   return (
@@ -67,16 +80,15 @@ const ProjectSettingsSlideOver = (props: Props) => {
           <>
             {languages.map((language) => (
               <EditLanguage
+                projectId={projectId}
                 key={language.short}
                 language={language}
-                editLanguage={editLanguage}
-                deleteLanguage={deleteLanguage}
                 disabled={language.short === "en"}
               />
             ))}
           </>
 
-          <AddNewLanguage languages={languages} addLanguage={addLanguage} />
+          <AddNewLanguage projectId={projectId} languages={languages} />
         </SlideOverRow>
       </div>
       <div className="relative p-4 flex-1 sm:px-6">
@@ -108,9 +120,10 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                   checked={settings.formality === Formality.Formal}
                   onChange={() => {
-                    editSettings({
+                    setLocalSettings((_settings) => ({
+                      ..._settings,
                       formality: Formality.Formal,
-                    })
+                    }))
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
@@ -124,9 +137,10 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                   checked={settings.formality === Formality.Informal}
                   onChange={() => {
-                    editSettings({
+                    setLocalSettings((_settings) => ({
+                      ..._settings,
                       formality: Formality.Informal,
-                    })
+                    }))
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
@@ -140,9 +154,10 @@ const ProjectSettingsSlideOver = (props: Props) => {
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
                   checked={settings.formality === Formality.Neutral}
                   onChange={() => {
-                    editSettings({
+                    setLocalSettings((_settings) => ({
+                      ..._settings,
                       formality: Formality.Neutral,
-                    })
+                    }))
                   }}
                 />
                 <span className="text-sm text-gray-500 ms-3 dark:text-gray-400">
@@ -160,18 +175,20 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="checkbox"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.audience.includes(Sex.Male)}
+                  checked={settings.audience?.includes(Sex.Male)}
                   onChange={(event) => {
                     if (event.target.checked) {
-                      editSettings({
-                        audience: [...settings.audience, Sex.Male],
-                      })
+                      setLocalSettings((_settings) => ({
+                        ..._settings,
+                        audience: [...(settings.audience || []), Sex.Male],
+                      }))
                     } else {
-                      editSettings({
-                        audience: settings.audience.filter(
+                      setLocalSettings((_settings) => ({
+                        ..._settings,
+                        audience: settings.audience?.filter(
                           (gender) => gender !== Sex.Male
                         ),
-                      })
+                      }))
                     }
                   }}
                 />
@@ -184,18 +201,20 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="checkbox"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.audience.includes(Sex.Female)}
+                  checked={settings.audience?.includes(Sex.Female)}
                   onChange={(event) => {
                     if (event.target.checked) {
-                      editSettings({
-                        audience: [...settings.audience, Sex.Female],
-                      })
+                      setLocalSettings((_settings) => ({
+                        ..._settings,
+                        audience: [...(settings.audience || []), Sex.Female],
+                      }))
                     } else {
-                      editSettings({
-                        audience: settings.audience.filter(
+                      setLocalSettings((_settings) => ({
+                        ..._settings,
+                        audience: settings.audience?.filter(
                           (gender) => gender !== Sex.Female
                         ),
-                      })
+                      }))
                     }
                   }}
                 />
@@ -208,18 +227,20 @@ const ProjectSettingsSlideOver = (props: Props) => {
                 <input
                   type="checkbox"
                   className="hover:cursor-pointer shrink-0 mt-0.5 border-gray-300 rounded-full text-blue-600 focus:ring-blue-500 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-800 dark:border-neutral-500 dark:checked:bg-blue-500 dark:checked:border-blue-500 dark:focus:ring-offset-gray-800"
-                  checked={settings.audience.includes(Sex.Other)}
+                  checked={settings.audience?.includes(Sex.Other)}
                   onChange={(event) => {
                     if (event.target.checked) {
-                      editSettings({
-                        audience: [...settings.audience, Sex.Other],
-                      })
+                      setLocalSettings((_settings) => ({
+                        ..._settings,
+                        audience: [...(settings.audience || []), Sex.Other],
+                      }))
                     } else {
-                      editSettings({
-                        audience: settings.audience.filter(
+                      setLocalSettings((_settings) => ({
+                        ..._settings,
+                        audience: settings.audience?.filter(
                           (gender) => gender !== Sex.Other
                         ),
-                      })
+                      }))
                     }
                   }}
                 />
@@ -260,7 +281,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
           )}
         >
           <>
-            {settings.glossary.map((term) => (
+            {settings.glossary?.map((term) => (
               <EditTerm
                 languages={languages.map((language) => language.short)}
                 key={term._id}
@@ -272,7 +293,7 @@ const ProjectSettingsSlideOver = (props: Props) => {
           </>
           <AddNewTerm
             languages={languages.map((language) => language.short)}
-            addTerm={(newWord) => addNewTerm(newWord)}
+            addTerm={(newWord) => handleAddTerm(newWord)}
           />
         </SlideOverRow>
       </div>

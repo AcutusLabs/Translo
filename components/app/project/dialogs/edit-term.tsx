@@ -1,4 +1,3 @@
-import { Term } from "@/store/useI18nState"
 import { DialogClose } from "@radix-ui/react-dialog"
 
 import i18n from "@/lib/i18n"
@@ -13,6 +12,8 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+
+import { Term } from "../types"
 
 type Props = {
   languages: string[]

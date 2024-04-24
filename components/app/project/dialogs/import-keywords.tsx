@@ -1,5 +1,4 @@
 import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
-import { I18nLang } from "@/store/useI18nState"
 
 import i18n from "@/lib/i18n"
 import { cn, isJson } from "@/lib/utils"
@@ -18,7 +17,7 @@ import { Separator } from "@/components/ui/separator"
 import { toast } from "@/components/ui/use-toast"
 
 import SelectLanguage from "../select-language"
-import { Keyword } from "../useTranslation"
+import { KeywordData, LanguageData } from "../types"
 
 export type ImportKeywords = {
   [key: string]: string
@@ -29,8 +28,8 @@ export type KeywordsToOverwrite = {
 }
 
 type ImportKeywordsModalProps = {
-  keywords: Keyword[]
-  languages: I18nLang[]
+  keywords: KeywordData[]
+  languages: LanguageData[]
   importKeys: (keywords: ImportKeywords, languageRef: string) => void
 }
 
@@ -38,7 +37,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
   const { keywords, languages, importKeys } = props
 
   const [textJSON, setTextJSON] = useState("")
-  const [languageSelected, selectLanguage] = useState<I18nLang | undefined>(
+  const [languageSelected, selectLanguage] = useState<LanguageData | undefined>(
     undefined
   )
 
@@ -158,7 +157,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
       const jsonData = JSON.parse(textJSON)
 
       const keywordsAlreadyExists = keywords.filter(
-        (keyword) => jsonData[keyword.key] !== undefined
+        (keyword) => jsonData[keyword.keyword] !== undefined
       )
 
       if (keywordsAlreadyExists.length) {
@@ -166,9 +165,9 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
           keywordsAlreadyExists.reduce(
             (acc, keyword): KeywordsToOverwrite => ({
               ...acc,
-              [keyword.key]: {
-                new: jsonData[keyword.key],
-                old: languageSelected.keywords[keyword.key],
+              [keyword.keyword]: {
+                new: jsonData[keyword.keyword],
+                old: keywords[keyword.keyword],
                 selected: false,
               },
             }),

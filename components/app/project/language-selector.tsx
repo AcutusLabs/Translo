@@ -1,6 +1,5 @@
 import { startTransition, useMemo, useState } from "react"
 import { languages as allLanguages } from "@/constants/languages"
-import { Language } from "@/store/useI18nState"
 import {
   Combobox,
   ComboboxItem,
@@ -11,8 +10,10 @@ import * as RadixSelect from "@radix-ui/react-select"
 import { Check, ChevronDown, Search } from "lucide-react"
 import { matchSorter } from "match-sorter"
 
+import { LanguageData } from "./types"
+
 type Props = {
-  currentLanguages: Language[]
+  currentLanguages: LanguageData[]
   selectedLanguage?: string
   setSelectedLanguage: (language: string) => void
 }

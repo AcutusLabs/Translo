@@ -1,4 +1,3 @@
-import { initialI18nState } from "@/store/useI18nState"
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
@@ -89,12 +88,21 @@ export async function POST(req: Request) {
 
     const project = await db.project.create({
       data: {
-        ...initialI18nState,
         title: body.title,
+        settings: {},
+        published: false,
         userId: session.user.id,
       },
       select: {
         id: true,
+      },
+    })
+
+    await db.projectLanguage.create({
+      data: {
+        short: "en",
+        name: "English",
+        projectId: project.id,
       },
     })
 
