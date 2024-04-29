@@ -1,8 +1,10 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 import { ApiResponseType } from "@/types/api"
 import { handleApiError } from "@/lib/exceptions"
+
+import { getKeywordsQueryKey } from "../use-get-keywords"
 
 export type TranslationsProps = {
   translationId?: string
@@ -41,11 +43,20 @@ export const useAddOrEditTranslations = ({
   onSuccess,
   showAlertType,
 }: AddOrEditTranslationsApi) => {
+  const queryClient = useQueryClient()
   return useMutation({
     mutationKey: ["addOrEditTranslations", projectId, keywordId],
     mutationFn: async () =>
       await addOrEditTranslations(projectId, keywordId, translationsProps),
     onError: (error) => handleApiError(error, showAlertType),
-    onSuccess,
+    onSuccess: (data) => {
+      onSuccess?.(data)
+      queryClient.cancelQueries({
+        queryKey: getKeywordsQueryKey(projectId),
+      })
+      queryClient.refetchQueries({
+        queryKey: getKeywordsQueryKey(projectId),
+      })
+    },
   })
 }

@@ -5,6 +5,7 @@ import _ from "lodash"
 
 import { useGetKeywords } from "@/hooks/api/project/keyword/use-get-keywords"
 import { useGetLanguages } from "@/hooks/api/project/language/use-get-languages"
+import { useGetProject } from "@/hooks/api/project/use-get-project"
 
 import { EditorProps } from "."
 import { LanguageData } from "./types"
@@ -64,8 +65,13 @@ const useTranslation = (props: EditorProps) => {
     initialData: projectFromSSR.languages,
   })
 
+  const { data: projectFromApi } = useGetProject({
+    projectId: projectFromSSR.id,
+    initialData: projectFromSSR,
+  })
+
   const project = {
-    ...projectFromSSR,
+    ...projectFromApi,
     keywords: keywordsFromApi,
     languages: languagesFromApi,
   }

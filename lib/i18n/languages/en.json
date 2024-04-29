@@ -93,6 +93,8 @@
   "Keyword": "Keyword",
   "Keyword already exists": "Keyword already exists",
   "Keyword to translate": "Keyword to translate",
+  "Language is required": "Language is required",
+  "Language not found": "Language not found",
   "Languages": "Languages",
   "Limit of {number} keywords reached.": "Limit of {{number}} keywords reached.",
   "Limit of {number} projects reached.": "Limit of {{number}} projects reached.",
