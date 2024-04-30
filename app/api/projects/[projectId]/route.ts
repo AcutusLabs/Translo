@@ -36,12 +36,13 @@ export async function GET(
       return new Response("Unauthorized", { status: 403 })
     }
 
-    const keyword = await db.keyword.findUnique({
+    const project = await db.project.findUnique({
       where: {
         id: params.projectId,
       },
     })
-    return new Response(JSON.stringify(keyword))
+
+    return new Response(JSON.stringify(project))
   } catch (error) {
     return handleCatchApi(error)
   }

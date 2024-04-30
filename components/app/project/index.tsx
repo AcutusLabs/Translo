@@ -53,11 +53,9 @@ export function Editor(props: EditorProps) {
             download={download}
           />
           <ImportKeywordsModal
+            projectId={project.id}
             keywords={project.keywords}
             languages={project.languages}
-            importKeys={() => {
-              // TODO
-            }}
           />
           <button
             onClick={() => openProjectSettings(true)}

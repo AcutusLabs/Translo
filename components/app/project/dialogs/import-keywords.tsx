@@ -2,6 +2,8 @@ import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
 
 import i18n from "@/lib/i18n"
 import { cn, isJson } from "@/lib/utils"
+import { useAnalyzeKeywordToImports } from "@/hooks/api/project/keyword/use-import-analyze-keywords"
+import { useKeywordsImports } from "@/hooks/api/project/keyword/use-import-keywords"
 import { Button, buttonVariants } from "@/components/ui/button"
 import { Checkbox } from "@/components/ui/checkbox"
 import {
@@ -28,18 +30,65 @@ export type KeywordsToOverwrite = {
 }
 
 type ImportKeywordsModalProps = {
+  projectId: string
   keywords: KeywordData[]
   languages: LanguageData[]
-  importKeys: (keywords: ImportKeywords, languageRef: string) => void
 }
 
 const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
-  const { keywords, languages, importKeys } = props
+  const { keywords, languages, projectId } = props
 
   const [textJSON, setTextJSON] = useState("")
   const [languageSelected, selectLanguage] = useState<LanguageData | undefined>(
     undefined
   )
+
+  const { mutate: importKeywords } = useKeywordsImports({
+    projectId,
+    languageId: languageSelected?.id,
+    onSuccess: () => {
+      reset()
+      setOpen(false)
+    },
+  })
+  const { mutate: analyzeKeywordsApi } = useAnalyzeKeywordToImports({
+    projectId,
+    onSuccess: (keywordsAlreadyExists) => {
+      if (!languageSelected) {
+        return
+      }
+      try {
+        const jsonData = JSON.parse(textJSON)
+
+        if (keywordsAlreadyExists.length) {
+          setKeywordsToOverwrite(
+            keywordsAlreadyExists.reduce(
+              (acc, keyword): KeywordsToOverwrite => ({
+                ...acc,
+                [keyword.keyword]: {
+                  new: jsonData[keyword.keyword],
+                  old: keywords[keyword.keyword],
+                  selected: false,
+                },
+              }),
+              {}
+            )
+          )
+          return
+        }
+
+        importKeywords(jsonData)
+        reset()
+        setOpen(false)
+      } catch (error) {
+        toast({
+          title: i18n.t("Something went wrong"),
+          description: i18n.t("Error parsing JSON"),
+          variant: "destructive",
+        })
+      }
+    },
+  })
 
   const [open, setOpen] = useState(false)
 
@@ -148,38 +197,14 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
     [keywordsToOverwrite]
   )
 
-  const analyzeKeywords = useCallback(() => {
+  const analyzeKeywords = useCallback(async () => {
     if (!languageSelected) {
       return
     }
 
     try {
       const jsonData = JSON.parse(textJSON)
-
-      const keywordsAlreadyExists = keywords.filter(
-        (keyword) => jsonData[keyword.keyword] !== undefined
-      )
-
-      if (keywordsAlreadyExists.length) {
-        setKeywordsToOverwrite(
-          keywordsAlreadyExists.reduce(
-            (acc, keyword): KeywordsToOverwrite => ({
-              ...acc,
-              [keyword.keyword]: {
-                new: jsonData[keyword.keyword],
-                old: keywords[keyword.keyword],
-                selected: false,
-              },
-            }),
-            {}
-          )
-        )
-        return
-      }
-
-      importKeys(jsonData, languageSelected.short)
-      reset()
-      setOpen(false)
+      analyzeKeywordsApi(Object.keys(jsonData))
     } catch (error) {
       toast({
         title: i18n.t("Something went wrong"),
@@ -187,7 +212,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
         variant: "destructive",
       })
     }
-  }, [importKeys, keywords, languageSelected, reset, textJSON])
+  }, [analyzeKeywordsApi, languageSelected, textJSON])
 
   const overwrtieKeywords = useCallback(() => {
     if (!languageSelected) {
@@ -210,9 +235,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
         {}
       )
 
-      importKeys(jsonToSave, languageSelected.short)
-      reset()
-      setOpen(false)
+      importKeywords(jsonToSave)
     } catch (error) {
       toast({
         title: i18n.t("Something went wrong"),
@@ -220,7 +243,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
         variant: "destructive",
       })
     }
-  }, [importKeys, keywordsToOverwrite, languageSelected, reset, textJSON])
+  }, [importKeywords, keywordsToOverwrite, languageSelected, textJSON])
 
   const InputKeywordsView = useMemo(() => {
     return (

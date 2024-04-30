@@ -206,43 +206,41 @@ const DetailSlideOver = (props: Props) => {
     keywordId: keyword.id,
     sentence: english?.value,
     onSuccess: (response) => {
+      const hints: LanguageHint[] = []
       Object.keys(response).forEach((languageShort) => {
-        const hints: LanguageHint[] = []
-        for (let i = 0; i < languages.length; i++) {
-          const language = languages.find(
-            (_lang) => _lang.short === languageShort
-          )
+        const language = languages.find(
+          (_lang) => _lang.short === languageShort
+        )
 
-          if (!language) {
-            return
-          }
-
-          const currentTranslation = translations.find(
-            (translation) => translation.projectLanguageId === language?.id
-          )
-
-          if (currentTranslation && !currentTranslation.value) {
-            setTranslations(
-              translations.map((translation) => {
-                if (translation.projectLanguageId !== language.id) {
-                  return translation
-                }
-
-                return {
-                  ...translation,
-                  value: response[languageShort],
-                }
-              })
-            )
-          } else {
-            hints.push({
-              projectLanguageId: language.id,
-              hint: response[languageShort],
-            })
-          }
+        if (!language) {
+          return
         }
-        setHints(hints)
+
+        const currentTranslation = translations.find(
+          (translation) => translation.projectLanguageId === language?.id
+        )
+
+        if (currentTranslation && !currentTranslation.value) {
+          setTranslations(
+            translations.map((translation) => {
+              if (translation.projectLanguageId !== language.id) {
+                return translation
+              }
+
+              return {
+                ...translation,
+                value: response[languageShort],
+              }
+            })
+          )
+        } else {
+          hints.push({
+            projectLanguageId: language.id,
+            hint: response[languageShort],
+          })
+        }
       })
+      setHints(hints)
     },
     showAlertType: alertContext.showAlert,
   })
@@ -348,9 +346,9 @@ const DetailSlideOver = (props: Props) => {
                       onChange={(e) => handleChangeTranslation(e, lang.id)}
                     ></textarea>
                     {lang.short !== "en" && hint && (
-                      <div className="flex items-center rounded-md border mt-2 justify-between p-2">
+                      <div className="flex items-center rounded-md border mt-2 justify-between p-2 border-green-600">
                         <div className="flex flex-col w-full">
-                          <span className="text-sm">
+                          <span className="text-sm text-green-600">
                             <b>{i18n.t("hint:")}</b>
                           </span>
                           <div className="flex flex-row items-center justify-between w-full">
