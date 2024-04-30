@@ -12,7 +12,7 @@ const languagePatchSchema = z.object({
   name: z.string(),
 })
 
-export const routeContextSchemaProjectLanguage = z.object({
+const routeContextSchemaProjectLanguage = z.object({
   params: z.object({
     projectId: z.string(),
     languageId: z.string(),

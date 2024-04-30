@@ -37,6 +37,7 @@ const getAllTranslationsByKeyword = async (keywordId: string) => {
 }
 
 export async function GET(
+  _req: Request,
   context: z.infer<typeof routeContextSchemaProjectKeyword>
 ) {
   try {

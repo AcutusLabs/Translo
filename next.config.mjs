@@ -1,5 +1,4 @@
 import { withSentryConfig } from "@sentry/nextjs"
-import { withContentlayer } from "next-contentlayer"
 
 import "./env.mjs"
 
@@ -16,7 +15,7 @@ const nextConfig = {
 }
 
 export default withSentryConfig(
-  withContentlayer(nextConfig),
+  nextConfig,
   {
     // For all available options, see:
     // https://github.com/getsentry/sentry-webpack-plugin#options
