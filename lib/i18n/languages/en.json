@@ -57,6 +57,7 @@
   "Edit word: {keyword}": "Edit word: {{keyword}}",
   "Email": "Email",
   "Email already exists": "Email already exists",
+  "This email is already in use": "This email is already in use",
   "Email verified successfully": "Email verified successfully",
   "Email verified successfully. Please relogin": "Email verified successfully. Please relogin",
   "Enter the new email": "Enter the new email",
