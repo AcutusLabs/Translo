@@ -18,29 +18,55 @@ export async function GET(
   try {
     const { params } = routeContextSchema.parse(context)
 
-    const project = await db.project.findFirst({
+    const projectLanguageId = await db.projectLanguage.findFirst({
       where: {
-        id: params.projectId,
-        published: true,
-      },
-      include: {
-        languages: true,
+        short: params.shortLang,
       },
     })
 
-    const language = project?.languages.find(
-      (language) => language.short === params.shortLang
-    )
-
-    if (!language) {
+    if (!projectLanguageId) {
       return ErrorResponse({
         error:
           "The project does not exist or is not published, or the short name has not been entered correctly; it should be the short-name, for example, /en",
       })
     }
 
-    return new Response(JSON.stringify({}, null, 4))
-    // return new Response(JSON.stringify(language?.keywords || {}, null, 4))
+    const project = await db.project.findFirst({
+      where: {
+        id: params.projectId,
+        published: true,
+      },
+      include: {
+        keywords: {
+          include: {
+            translations: {
+              where: {
+                projectLanguageId: projectLanguageId?.id,
+              },
+            },
+          },
+        },
+      },
+    })
+
+    if (!project) {
+      return ErrorResponse({
+        error:
+          "The project does not exist or is not published, or the short name has not been entered correctly; it should be the short-name, for example, /en",
+      })
+    }
+
+    const translation = project.keywords.reduce((acc, keyword) => {
+      if (!keyword.translations.length) {
+        return acc
+      }
+      return {
+        ...acc,
+        [keyword.keyword]: keyword.translations[0].value,
+      }
+    }, {})
+
+    return new Response(JSON.stringify(translation || {}, null, 4))
   } catch (error) {
     return handleCatchApi(error)
   }

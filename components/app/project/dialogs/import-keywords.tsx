@@ -1,4 +1,11 @@
-import { ChangeEvent, useCallback, useEffect, useMemo, useState } from "react"
+import {
+  ChangeEvent,
+  Fragment,
+  useCallback,
+  useEffect,
+  useMemo,
+  useState,
+} from "react"
 
 import i18n from "@/lib/i18n"
 import { cn, isJson } from "@/lib/utils"
@@ -17,6 +24,7 @@ import {
 } from "@/components/ui/dialog"
 import { Separator } from "@/components/ui/separator"
 import { toast } from "@/components/ui/use-toast"
+import { Icons } from "@/components/icons"
 
 import SelectLanguage from "../select-language"
 import { KeywordData, LanguageData } from "../types"
@@ -43,52 +51,54 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
     undefined
   )
 
-  const { mutate: importKeywords } = useKeywordsImports({
-    projectId,
-    languageId: languageSelected?.id,
-    onSuccess: () => {
-      reset()
-      setOpen(false)
-    },
-  })
-  const { mutate: analyzeKeywordsApi } = useAnalyzeKeywordToImports({
-    projectId,
-    onSuccess: (keywordsAlreadyExists) => {
-      if (!languageSelected) {
-        return
-      }
-      try {
-        const jsonData = JSON.parse(textJSON)
-
-        if (keywordsAlreadyExists.length) {
-          setKeywordsToOverwrite(
-            keywordsAlreadyExists.reduce(
-              (acc, keyword): KeywordsToOverwrite => ({
-                ...acc,
-                [keyword.keyword]: {
-                  new: jsonData[keyword.keyword],
-                  old: keywords[keyword.keyword],
-                  selected: false,
-                },
-              }),
-              {}
-            )
-          )
-          return
-        }
-
-        importKeywords(jsonData)
+  const { mutate: importKeywords, isPending: isPendingImportKeywords } =
+    useKeywordsImports({
+      projectId,
+      languageId: languageSelected?.id,
+      onSuccess: () => {
         reset()
         setOpen(false)
-      } catch (error) {
-        toast({
-          title: i18n.t("Something went wrong"),
-          description: i18n.t("Error parsing JSON"),
-          variant: "destructive",
-        })
-      }
-    },
-  })
+      },
+    })
+  const { mutate: analyzeKeywordsApi, isPending: isPendingAnalyze } =
+    useAnalyzeKeywordToImports({
+      projectId,
+      onSuccess: (keywordsAlreadyExists) => {
+        if (!languageSelected) {
+          return
+        }
+        try {
+          const jsonData = JSON.parse(textJSON)
+
+          if (keywordsAlreadyExists.length) {
+            setKeywordsToOverwrite(
+              keywordsAlreadyExists.reduce(
+                (acc, keyword): KeywordsToOverwrite => ({
+                  ...acc,
+                  [keyword.keyword]: {
+                    new: jsonData[keyword.keyword],
+                    old: keywords[keyword.keyword],
+                    selected: false,
+                  },
+                }),
+                {}
+              )
+            )
+            return
+          }
+
+          importKeywords(jsonData)
+          reset()
+          setOpen(false)
+        } catch (error) {
+          toast({
+            title: i18n.t("Something went wrong"),
+            description: i18n.t("Error parsing JSON"),
+            variant: "destructive",
+          })
+        }
+      },
+    })
 
   const [open, setOpen] = useState(false)
 
@@ -308,6 +318,11 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
             onClick={analyzeKeywords}
             disabled={!textJSON || !languageSelected || !isJson(textJSON)}
           >
+            {isPendingAnalyze ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Fragment />
+            )}
             {i18n.t("Continue")}
           </Button>
         </DialogFooter>
@@ -317,6 +332,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
     analyzeKeywords,
     handleChangeTextJSON,
     handleFile,
+    isPendingAnalyze,
     languageSelected,
     languages,
     textJSON,
@@ -375,6 +391,11 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
             onClick={overwrtieKeywords}
             disabled={!textJSON || !languageSelected || !isJson(textJSON)}
           >
+            {isPendingImportKeywords ? (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            ) : (
+              <Fragment />
+            )}
             {numbersOfKeywordsToOverwrite > 0
               ? i18n.t("Import and overwrite {number} keywords", {
                   number: numbersOfKeywordsToOverwrite,
@@ -386,6 +407,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
     )
   }, [
     deselectAllKeywordToOverwrite,
+    isPendingImportKeywords,
     keywordsToOverwrite,
     languageSelected,
     numbersOfKeywordsToOverwrite,

@@ -5,15 +5,12 @@ import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
 
-import { verifyCurrentUserHasAccessToProject } from "./route"
+import {
+  routeContextSchemaProject,
+  verifyCurrentUserHasAccessToProject,
+} from "../route"
 
-export const routeContextSchemaProject = z.object({
-  params: z.object({
-    projectId: z.string(),
-  }),
-})
-
-export const projectShareSchema = z.object({
+const projectShareSchema = z.object({
   published: z.any(),
 })
 

@@ -8,13 +8,13 @@ import { getProjectQueryKey } from "./use-get-project"
 
 const shareProject = async (projectId: string, shared: boolean) => {
   const result = await axios({
-    url: `/api/projects/${projectId}`,
+    url: `/api/projects/${projectId}/share`,
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
     },
     data: {
-      shared,
+      published: shared,
     },
   })
   return result.data
@@ -22,19 +22,18 @@ const shareProject = async (projectId: string, shared: boolean) => {
 
 type ShareProjectApi = ApiResponseType & {
   projectId: string
-  shared: boolean
 }
 
 export const useShareProject = ({
   projectId,
-  shared,
   onSuccess,
   showAlertType,
 }: ShareProjectApi) => {
   const queryClient = useQueryClient()
   return useMutation({
-    mutationKey: ["shareProject", projectId, shared],
-    mutationFn: async () => await shareProject(projectId, shared),
+    mutationKey: ["shareProject", projectId],
+    mutationFn: async (shared: boolean) =>
+      await shareProject(projectId, shared),
     onError: (error) => handleApiError(error, showAlertType),
     onSuccess: (data) => {
       onSuccess?.(data)

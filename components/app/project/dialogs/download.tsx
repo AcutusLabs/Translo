@@ -5,7 +5,6 @@ import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { useShareProject } from "@/hooks/api/project/use-share-project"
-import useDidMountEffect from "@/hooks/useDidMountEffect"
 import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -38,15 +37,10 @@ export function DownloadKeywordsDropdownMenu(
 
   const alertContext = useContext(AlertContext)
 
-  const { mutate } = useShareProject({
+  const { mutate: shareProject } = useShareProject({
     projectId: id,
-    shared: isShared,
     showAlertType: alertContext.showAlert,
   })
-
-  useDidMountEffect(() => {
-    mutate()
-  }, [isShared])
 
   return (
     <DropdownMenu>
@@ -75,6 +69,7 @@ export function DownloadKeywordsDropdownMenu(
                     shared,
                   })
                   setShared(shared)
+                  shareProject(shared)
                 }}
               />
               <Label htmlFor="airplane-mode">
