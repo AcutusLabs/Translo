@@ -72,11 +72,22 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
       setIsLoading(false)
 
       if (!res?.ok) {
-        return toast({
-          title: i18n.t("Something went wrong"),
-          description: i18n.t("Your sign in request failed. Please try again"),
-          variant: "destructive",
-        })
+        try {
+          const error = await res.json()
+          return toast({
+            title: error.error,
+            description: error.description,
+            variant: "destructive",
+          })
+        } catch {
+          return toast({
+            title: i18n.t("Something went wrong"),
+            description: i18n.t(
+              "Your sign in request failed. Please try again"
+            ),
+            variant: "destructive",
+          })
+        }
       }
 
       reset()
