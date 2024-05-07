@@ -1,6 +1,7 @@
 import { useMemo } from "react"
-import { Formality, Sex, Term } from "@/store/useI18nState"
 import { generatePromptTranslation } from "@/utils/OpenAiUtils"
+
+import { Formality, Sex, Term } from "@/components/app/project/types"
 
 type Props = {
   numberOfLanguages: number
@@ -19,7 +20,7 @@ export function useCostEstimation(props: Props) {
     glossary = [],
   } = props
   const costs = useMemo(() => {
-    const lengthOfRequest = generatePromptTranslation({
+    const request = generatePromptTranslation({
       context,
       translationEn: sentence,
       languagesPropt: new Array(numberOfLanguages).fill("en, ").join(""),
@@ -36,7 +37,16 @@ export function useCostEstimation(props: Props) {
         keywords: {},
       }),
     })
-    return Math.round(lengthOfRequest.length + sentence.length * 1.2)
+    const response = `
+    {
+      ${new Array(numberOfLanguages).fill(`en: ${sentence}`).join(", \n")}
+    }`
+
+    // documentation on estimation: https://platform.openai.com/tokenizer
+    // despite documentation says that a token is around ~4 characters, with many languages I've seen that for the prompt it's around 3.5 rounded to 3
+    // and for the response where there are more symbols it's around 1.5 rounded to 1
+    // this is why I'm dividing by 3 and 1
+    return Math.round(request.length / 3 + response.length)
   }, [context, description, glossary, numberOfLanguages, sentence])
 
   return costs

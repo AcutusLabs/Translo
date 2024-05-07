@@ -32,6 +32,7 @@ export async function POST(req: Request) {
     if (userAlreadyExists?.emailVerified) {
       return ErrorResponse({
         error: i18n.t("Email already exists"),
+        description: i18n.t("This email is already in use"),
       })
     }
 

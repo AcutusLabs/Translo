@@ -1,9 +1,10 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
 import Link from "next/link"
 
 import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
+import { useShareProject } from "@/hooks/api/project/use-share-project"
 import { buttonVariants } from "@/components/ui/button"
 import {
   DropdownMenu,
@@ -14,6 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
+import { AlertContext } from "@/app/client-providers"
 
 import { DownloadFormat } from "../useTranslation"
 
@@ -21,18 +23,24 @@ type DownloadKeywordsDropdownMenuProps = {
   id: string
   languages: string[]
   isPublished: boolean
-  publishProject: (isPublished: boolean) => void
   download: (format: DownloadFormat) => void
 }
 
 export function DownloadKeywordsDropdownMenu(
   props: DownloadKeywordsDropdownMenuProps
 ) {
-  const { id, languages, isPublished, publishProject, download } = props
+  const { id, languages, isPublished, download } = props
 
   const [isShared, setShared] = useState(isPublished)
 
   const origin = typeof document !== "undefined" ? document.location.origin : ""
+
+  const alertContext = useContext(AlertContext)
+
+  const { mutate: shareProject } = useShareProject({
+    projectId: id,
+    showAlertType: alertContext.showAlert,
+  })
 
   return (
     <DropdownMenu>
@@ -61,7 +69,7 @@ export function DownloadKeywordsDropdownMenu(
                     shared,
                   })
                   setShared(shared)
-                  publishProject(shared)
+                  shareProject(shared)
                 }}
               />
               <Label htmlFor="airplane-mode">

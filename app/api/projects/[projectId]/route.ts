@@ -1,29 +1,59 @@
 import { getServerSession } from "next-auth"
 import * as z from "zod"
 
-import { AlertType } from "@/types/api"
 import { authOptions } from "@/lib/auth"
-import { MAX_KEYWORDS_STARTER_URSER } from "@/lib/constants"
 import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
-import { isUserPro } from "@/lib/subscription"
-import { projectPatchSchema } from "@/lib/validations/translation"
 
-const routeContextSchema = z.object({
+export const projectPatchSchema = z.object({
+  title: z.string().optional(),
+  settings: z.any().optional(),
+})
+
+export const routeContextSchemaProject = z.object({
   params: z.object({
     projectId: z.string(),
   }),
 })
 
+export async function GET(
+  _req: Request,
+  context: z.infer<typeof routeContextSchemaProject>
+) {
+  try {
+    const { params } = routeContextSchemaProject.parse(context)
+
+    if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
+      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+    }
+
+    const session = await getServerSession(authOptions)
+
+    if (!session) {
+      return new Response("Unauthorized", { status: 403 })
+    }
+
+    const project = await db.project.findUnique({
+      where: {
+        id: params.projectId,
+      },
+    })
+
+    return new Response(JSON.stringify(project))
+  } catch (error) {
+    return handleCatchApi(error)
+  }
+}
+
 export async function DELETE(
   _req: Request,
-  context: z.infer<typeof routeContextSchema>
+  context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
     // Validate the route params.
-    const { params } = routeContextSchema.parse(context)
+    const { params } = routeContextSchemaProject.parse(context)
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
@@ -45,11 +75,11 @@ export async function DELETE(
 
 export async function PATCH(
   req: Request,
-  context: z.infer<typeof routeContextSchema>
+  context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
     // Validate route params.
-    const { params } = routeContextSchema.parse(context)
+    const { params } = routeContextSchemaProject.parse(context)
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
@@ -60,33 +90,13 @@ export async function PATCH(
     const json = await req.json()
     const body = projectPatchSchema.parse(json)
 
-    const isPro = await isUserPro()
+    const newData: typeof body = {}
 
-    if (!isPro && body.languages) {
-      if (
-        Object.keys(body.languages[0].keywords).length >
-        MAX_KEYWORDS_STARTER_URSER
-      ) {
-        return ErrorResponse({
-          error: i18n.t("Limit of {number} keywords reached.", {
-            number: MAX_KEYWORDS_STARTER_URSER,
-          }),
-          description: i18n.t("Please upgrade to the PRO plan."),
-          status: 403,
-          alertType: AlertType.keywordsSubscriptionNeeded,
-        })
-      }
+    if (body.title) {
+      newData.title = body.title
     }
-
-    const newData: typeof body = {
-      title: body.title,
-      languages: body.languages,
-      info: body.info,
-      settings: body.settings,
-    }
-
-    if (body.published !== undefined) {
-      newData.published = body.published
+    if (body.settings) {
+      newData.settings = body.settings
     }
 
     await db.project.update({

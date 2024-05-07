@@ -8,7 +8,7 @@ import { toast } from "@/components/ui/use-toast"
 
 const askToAI = async (
   projectId: string,
-  keyword: string,
+  keywordId: string,
   sentence?: string
 ) => {
   if (!sentence) {
@@ -20,7 +20,7 @@ const askToAI = async (
   }
 
   const result = await axios({
-    url: `/api/chatGpt?projectId=${projectId}&keyword=${keyword}&sentence=${sentence}`,
+    url: `/api/chatGpt?projectId=${projectId}&keywordId=${keywordId}&sentence=${sentence}`,
     method: "GET",
   })
   return result.data
@@ -28,20 +28,20 @@ const askToAI = async (
 
 type AskToAI = ApiResponseType & {
   projectId: string
-  keyword: string
+  keywordId: string
   sentence?: string
 }
 
 export const useAskToAI = ({
   projectId,
-  keyword,
+  keywordId,
   sentence,
   onSuccess,
   showAlertType,
 }: AskToAI) => {
   return useMutation({
-    mutationKey: ["addProject", projectId, keyword],
-    mutationFn: async () => await askToAI(projectId, keyword, sentence),
+    mutationKey: ["useAskToAI", projectId, keywordId],
+    mutationFn: async () => await askToAI(projectId, keywordId, sentence),
     onError: (error) => handleApiError(error, showAlertType),
     onSuccess,
   })

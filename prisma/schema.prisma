@@ -79,8 +79,6 @@ model VerificationToken {
 model Project {
   id        String   @id @default(cuid())
   title     String
-  languages Json?
-  info      Json?
   settings  Json?
   published Boolean  @default(false)
   createdAt DateTime @default(now()) @map(name: "created_at")
@@ -88,7 +86,49 @@ model Project {
   User      User?    @relation(fields: [userId], references: [id])
   userId    String?
 
+  keywords  Keyword[]
+  languages ProjectLanguage[]
+
   @@map(name: "projects")
+}
+
+model Keyword {
+  id        String  @id @default(cuid())
+  keyword   String
+  Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+  context   String
+
+  translations Translation[]
+
+  @@unique([keyword, projectId])
+  @@map(name: "keywords")
+}
+
+model ProjectLanguage {
+  id        String  @id @default(cuid())
+  short     String
+  name      String
+  Project   Project @relation(fields: [projectId], references: [id], onDelete: Cascade)
+  projectId String
+
+  translations Translation[]
+
+  @@unique([short, projectId])
+  @@map(name: "project_language")
+}
+
+model Translation {
+  id                String          @id @default(cuid())
+  Keyword           Keyword         @relation(fields: [keywordId], references: [id], onDelete: Cascade)
+  keywordId         String
+  ProjectLanguage   ProjectLanguage @relation(fields: [projectLanguageId], references: [id], onDelete: Cascade)
+  projectLanguageId String
+  value             String
+  history           Json?
+
+  @@unique([keywordId, projectLanguageId])
+  @@map(name: "traslations")
 }
 
 model AiTranslationsLog {

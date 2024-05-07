@@ -1,8 +1,8 @@
-import { I18nLang, ProjectSettings } from "@/store/useI18nState"
 import OpenAI from "openai"
 import { ChatCompletion } from "openai/resources/index.mjs"
 
 import { env } from "@/env.mjs"
+import { LanguageData, ProjectSettings } from "@/components/app/project/types"
 
 export type GeneratePromptTranslationParams = {
   translationEn: string
@@ -10,7 +10,7 @@ export type GeneratePromptTranslationParams = {
   languagesPropt: string
   settings: ProjectSettings
   agePrompt: string
-  languages: I18nLang[]
+  languages: LanguageData[]
 }
 
 export const generatePromptTranslation = ({
@@ -24,14 +24,18 @@ export const generatePromptTranslation = ({
 I'm working on internationalizing my application. I'd like to translate the text "${translationEn}"${
   context ? `, used in this context: "${context}"` : ""
 }. Could you write the translations in [${languagesPropt}]?
-      Translations should be ${settings.formality}
+      ${
+        settings.formality
+          ? `Translations should be ${settings.formality}. `
+          : ""
+      }
       ${
         settings.description
           ? `The project description is: ${settings.description}. `
           : ""
       }
       ${
-        settings.audience.length
+        settings.audience?.length
           ? `The target audience is: ${settings.audience.join(", ")}.`
           : ""
       }
@@ -45,7 +49,7 @@ respond using an unique JSON object without any comments or any other descriptio
 }
 
 where:
-${languages.map((lang) => `language-id for ${lang.lang} = ${lang.short}`)}
+${languages.map((lang) => `language-id for ${lang.name} = ${lang.short}`)}
 `
 
 export class OpenAIHelper {

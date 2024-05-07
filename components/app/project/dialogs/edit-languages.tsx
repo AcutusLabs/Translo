@@ -1,8 +1,9 @@
-import { ChangeEvent, useCallback, useState } from "react"
-import { EditLanguageType, Language } from "@/store/useI18nState"
+import { ChangeEvent, useCallback, useContext, useState } from "react"
 import { DialogClose } from "@radix-ui/react-dialog"
 
 import i18n from "@/lib/i18n"
+import { useDeleteLanguage } from "@/hooks/api/project/language/use-delete-language"
+import { useEditLanguage } from "@/hooks/api/project/language/use-edit-language"
 import { Button } from "@/components/ui/button"
 import {
   Dialog,
@@ -14,19 +15,38 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
+import { AlertContext } from "@/app/client-providers"
+
+import { LanguageData } from "../types"
 
 type Props = {
+  projectId: string
   disabled: boolean
-  language: Language
-  editLanguage: (language: EditLanguageType) => void
-  deleteLanguage: (language: Language) => void
+  language: LanguageData
 }
 
 const EditLanguage = (props: Props) => {
-  const { language, disabled, editLanguage, deleteLanguage } = props
+  const { projectId, language, disabled } = props
 
-  const [languageName, setLanguageName] = useState(language.lang)
+  const [languageName, setLanguageName] = useState(language.name)
   const [shortName, setShortName] = useState(language.short)
+
+  const alertContext = useContext(AlertContext)
+
+  const { mutate: editLanguage } = useEditLanguage({
+    projectId: projectId,
+    languageId: language.id,
+    languageProps: {
+      short: shortName,
+      name: languageName,
+    },
+    showAlertType: alertContext.showAlert,
+  })
+
+  const { mutate: deleteLanguage } = useDeleteLanguage({
+    projectId: projectId,
+    showAlertType: alertContext.showAlert,
+  })
 
   const handleChangeLanguageName = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -48,13 +68,9 @@ const EditLanguage = (props: Props) => {
   }, [])
 
   const onSubmit = useCallback(() => {
-    editLanguage({
-      exShortName: language.short,
-      lang: languageName,
-      short: shortName,
-    })
+    editLanguage()
     reset()
-  }, [editLanguage, language.short, languageName, reset, shortName])
+  }, [editLanguage, reset])
 
   return (
     <Dialog>
@@ -62,7 +78,7 @@ const EditLanguage = (props: Props) => {
         <button className="t-button" disabled={disabled}>
           {i18n.t("[{short}] {language}", {
             short: language.short,
-            language: language.lang,
+            language: language.name,
           })}
         </button>
       </DialogTrigger>
@@ -70,7 +86,7 @@ const EditLanguage = (props: Props) => {
         <DialogHeader>
           <DialogTitle>
             {i18n.t("Edit language: {language}", {
-              language: language.lang,
+              language: language.name,
             })}
           </DialogTitle>
         </DialogHeader>
@@ -109,7 +125,7 @@ const EditLanguage = (props: Props) => {
               variant="destructive"
               className="mt-4 sm:mt-0"
               onClick={() => {
-                deleteLanguage(language)
+                deleteLanguage(language.id)
               }}
             >
               {i18n.t("Delete")}

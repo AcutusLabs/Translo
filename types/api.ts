@@ -9,6 +9,6 @@ export enum AlertType {
 export type ShowAlertType = Dispatch<SetStateAction<AlertType | undefined>>
 
 export type ApiResponseType = {
-  onSuccess: (data: any) => void
+  onSuccess?: (data: any) => void
   showAlertType?: ShowAlertType
 }

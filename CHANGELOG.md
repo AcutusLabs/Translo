@@ -2,6 +2,40 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.2.0](https://github.com/Matergi/translo/compare/v1.0.1...v1.2.0) (2024-05-07)
+
+### Features
+
+- **general:** add key to db ([d4b2acb](https://github.com/Matergi/translo/commit/d4b2acbccf0109ac556c17995b9cfcd36f4b36db))
+- **general:** added help and support ([4dfc53e](https://github.com/Matergi/translo/commit/4dfc53ec9b3b750fb956e7594624aa135a7215c0))
+- **general:** added sentry ([57f0434](https://github.com/Matergi/translo/commit/57f04349f558c20eb45b51b789cf056d7080570b))
+
+### Bug Fixes
+
+- **ai-translations:** fix change token estimation and calculations ([9889e54](https://github.com/Matergi/translo/commit/9889e54bd0629dd49f0997b6761055052ffe3261))
+- **general:** add loader on project creatioin ([45b2723](https://github.com/Matergi/translo/commit/45b2723e4d04cdf9dcdba52092c2af149b37c981))
+- **general:** fixed settings and imports ([d478c99](https://github.com/Matergi/translo/commit/d478c99f458af7c9f21f1a9087e2638e1b7eb546))
+- **general:** fixed settings and imports ([8ad3707](https://github.com/Matergi/translo/commit/8ad3707106b0548f946de91884eeeb49ed78126d))
+- **project:** fixed edit project and share ([f45c016](https://github.com/Matergi/translo/commit/f45c016b784b21439e255a8945e02daad43e13b6))
+- **user:** fix user registration error ([196c048](https://github.com/Matergi/translo/commit/196c04832f60b1d4bebabf5bce1b84a72ca67bbc))
+
+## [1.1.0](https://github.com/Matergi/translo/compare/v1.0.1...v1.1.0) (2024-05-07)
+
+### Features
+
+- **general:** add key to db ([d4b2acb](https://github.com/Matergi/translo/commit/d4b2acbccf0109ac556c17995b9cfcd36f4b36db))
+- **general:** added help and support ([4dfc53e](https://github.com/Matergi/translo/commit/4dfc53ec9b3b750fb956e7594624aa135a7215c0))
+- **general:** added sentry ([57f0434](https://github.com/Matergi/translo/commit/57f04349f558c20eb45b51b789cf056d7080570b))
+
+### Bug Fixes
+
+- **ai-translations:** fix change token estimation and calculations ([9889e54](https://github.com/Matergi/translo/commit/9889e54bd0629dd49f0997b6761055052ffe3261))
+- **general:** add loader on project creatioin ([45b2723](https://github.com/Matergi/translo/commit/45b2723e4d04cdf9dcdba52092c2af149b37c981))
+- **general:** fixed settings and imports ([d478c99](https://github.com/Matergi/translo/commit/d478c99f458af7c9f21f1a9087e2638e1b7eb546))
+- **general:** fixed settings and imports ([8ad3707](https://github.com/Matergi/translo/commit/8ad3707106b0548f946de91884eeeb49ed78126d))
+- **project:** fixed edit project and share ([f45c016](https://github.com/Matergi/translo/commit/f45c016b784b21439e255a8945e02daad43e13b6))
+- **user:** fix user registration error ([196c048](https://github.com/Matergi/translo/commit/196c04832f60b1d4bebabf5bce1b84a72ca67bbc))
+
 ### [1.0.1](https://github.com/Matergi/translo/compare/v1.0.0...v1.0.1) (2024-04-11)
 
 ### Features

@@ -1,5 +1,4 @@
 import { NextRequest } from "next/server"
-import { I18n, I18nInfo, I18nLang, ProjectSettings } from "@/store/useI18nState"
 import { OpenAIHelper } from "@/utils/OpenAiUtils"
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
@@ -15,12 +14,13 @@ import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
+import { ProjectSettings } from "@/components/app/project/types"
 
 import { verifyCurrentUserHasAccessToProject } from "../projects/[projectId]/route"
 
 const generateTranslationSchema = z.object({
   projectId: z.string(),
-  keyword: z.string(),
+  keywordId: z.string(),
   sentence: z.string(),
 })
 
@@ -56,9 +56,9 @@ export async function GET(req: NextRequest) {
 
     const searchParams = req.nextUrl.searchParams
 
-    const { keyword, projectId, sentence } = generateTranslationSchema.parse({
+    const { keywordId, projectId, sentence } = generateTranslationSchema.parse({
       projectId: searchParams.get("projectId"),
-      keyword: searchParams.get("keyword"),
+      keywordId: searchParams.get("keywordId"),
       sentence: searchParams.get("sentence"),
     })
 
@@ -71,6 +71,15 @@ export async function GET(req: NextRequest) {
       where: {
         id: projectId,
       },
+      include: {
+        languages: true,
+      },
+    })
+
+    const keywordDB = await db.keyword.findFirst({
+      where: {
+        id: keywordId,
+      },
     })
 
     if (!project) {
@@ -79,24 +88,15 @@ export async function GET(req: NextRequest) {
       })
     }
 
-    const languages = project.languages as I18nLang[]
-
-    if (!languages) {
+    if (!keywordDB) {
       return ErrorResponse({
-        error: i18n.t("The project does not have any languages"),
+        error: i18n.t("The keyword does not exist"),
       })
     }
 
-    const languagesPropt = languages
+    const languagesPropt = project.languages
       .map((language) => language.short)
       .join(", ")
-
-    const { context } = (project.info as I18nInfo[])?.find(
-      (ele) => ele.key === keyword
-    ) || {
-      key: keyword,
-      context: "",
-    }
 
     const settings = project.settings as ProjectSettings
 
@@ -113,17 +113,21 @@ export async function GET(req: NextRequest) {
     try {
       const prompt = `
 I'm working on internationalizing my application. I'd like to translate the text "${sentence}"${
-        context ? `, used in this context: "${context}"` : ""
+        keywordDB.context
+          ? `, used in this context: "${keywordDB.context}"`
+          : ""
       }. Could you write the translations in [${languagesPropt}]?
-      Translations should be ${settings.formality}
+      ${
+        settings.formality ? `Translations should be ${settings.formality}` : ""
+      }
       ${
         settings.description
           ? `The project description is: ${settings.description}. `
           : ""
       }
       ${
-        settings.audience.length
-          ? `The target audience is: ${settings.audience.join(", ")}.`
+        settings.audience?.length
+          ? `The target audience is: ${settings.audience?.join(", ")}.`
           : ""
       }
       ${agePrompt ? agePrompt : ""}
@@ -132,22 +136,30 @@ I'm working on internationalizing my application. I'd like to translate the text
 
 respond using an unique JSON object without any comments or any other descriptions, like so:
 {
-  ${languages.map((lang) => `"${lang.short}": ""`).join(", ")}
+  ${project.languages.map((lang) => `"${lang.short}": ""`).join(", ")}
 }
 
 where:
-${languages.map((lang) => `language-id for ${lang.lang} = ${lang.short}`)}
+${project.languages.map(
+  (lang) => `language-id for ${lang.name} = ${lang.short}`
+)}
 `
       const openaiHelper = new OpenAIHelper()
-      const response = await openaiHelper.askChatGPT({
+      const chatGptResponse = await openaiHelper.askChatGPT({
         prompt,
       })
-      const jsonString = openaiHelper.getResponseJSONString(response)
-      const result = openaiHelper.parseChatGPTJSONString<I18n>(jsonString)
+      // uncomment to debug real usage
+      // console.log("chatGptResponse", chatGptResponse)
+      const jsonString = openaiHelper.getResponseJSONString(chatGptResponse)
+      const result = openaiHelper.parseChatGPTJSONString<{
+        [shortLang: string]: string
+      }>(jsonString)
       if (result) {
         const response = JSON.stringify(result)
 
-        const cost = prompt.length + response.length
+        // in case we fail to use the real usage statistics we fallback to the length of the prompt and response
+        const cost =
+          chatGptResponse.usage?.total_tokens || prompt.length + response.length
 
         await db.user.update({
           where: {

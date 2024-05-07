@@ -2,11 +2,10 @@
 
 import { ChangeEvent, useCallback, useContext, useState } from "react"
 import { useRouter } from "next/navigation"
-import { DialogClose } from "@radix-ui/react-dialog"
 
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
-import { useAddProject } from "@/hooks/api/use-add-project"
+import { useAddProject } from "@/hooks/api/project/use-add-project"
 import { Button, buttonVariants } from "@/components/ui/button"
 import {
   Dialog,
@@ -33,12 +32,12 @@ const AddNewProject = () => {
       router.refresh()
       router.push(`/editor/${project.id}`)
       setProjectName("")
+      setOpen(false)
     },
     showAlertType: alertContext.showAlert,
   })
 
   const createProject = useCallback(() => {
-    setOpen(false)
     mutate()
   }, [mutate])
 
@@ -63,38 +62,33 @@ const AddNewProject = () => {
           })}
           disabled={isPending}
         >
-          {isPending ? (
-            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-          ) : (
-            <Icons.add className="mr-2 h-4 w-4" />
-          )}
+          <Icons.add className="mr-2 h-4 w-4" />
           {i18n.t("New project")}
         </button>
       </DialogTrigger>
       <DialogContent className="relative sm:max-w-[425px] max-h-[80vh]">
-        <form onSubmit={createProject}>
-          <DialogHeader>
-            <DialogTitle>
-              <div className="capitalize">{i18n.t("New project")}</div>
-            </DialogTitle>
-          </DialogHeader>
-          <div className="py-2 mt-5">
-            <Input
-              placeholder={i18n.t("Project name")}
-              className="col-span-3"
-              data-1p-ignore
-              value={projectName}
-              onChange={handleProjectName}
-            />
-          </div>
-          <DialogFooter>
-            <DialogClose asChild>
-              <Button onClick={createProject} disabled={!projectName}>
-                {i18n.t("Create")}
-              </Button>
-            </DialogClose>
-          </DialogFooter>
-        </form>
+        <DialogHeader>
+          <DialogTitle>
+            <div className="capitalize">{i18n.t("New project")}</div>
+          </DialogTitle>
+        </DialogHeader>
+        <div className="py-2">
+          <Input
+            placeholder={i18n.t("Project name")}
+            className="col-span-3"
+            data-1p-ignore
+            value={projectName}
+            onChange={handleProjectName}
+          />
+        </div>
+        <DialogFooter>
+          <Button onClick={createProject} disabled={!projectName || isPending}>
+            {isPending && (
+              <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+            )}
+            {i18n.t("Create")}
+          </Button>
+        </DialogFooter>
       </DialogContent>
     </Dialog>
   )

@@ -4,19 +4,22 @@ import * as React from "react"
 import Link from "next/link"
 
 import "@/styles/editor.css"
-import { useMemo, useState } from "react"
+import { useContext, useMemo, useState } from "react"
+import { debounce } from "lodash"
 
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
+import { useEditProject } from "@/hooks/api/project/use-edit-project"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { AlertContext } from "@/app/client-providers"
 
 import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
 import { ProjectData } from "./types"
-import useTranslation, { Status } from "./useTranslation"
+import useTranslation from "./useTranslation"
 
 export interface EditorProps {
   project: ProjectData
@@ -24,60 +27,24 @@ export interface EditorProps {
 }
 
 export function Editor(props: EditorProps) {
-  const { project, tokens } = props
-
-  const {
-    keywords,
-    status,
-    title,
-    languages,
-    settings,
-    addNewKey,
-    deleteKey,
-    editTranslation,
-    setTitle,
-    editContext,
-    editKey,
-    addLanguage,
-    editLanguage,
-    deleteLanguage,
-    editSettings,
-    addNewTerm,
-    checkIfKeyAlreadyExists,
-    importKeys,
-    download,
-    publishProject,
-    isPublished,
-    i18nLanguages,
-  } = useTranslation(props)
+  const { download, isPublished, project, tokens } = useTranslation(props)
 
   const [isProjectSettingsOpened, openProjectSettings] =
     useState<boolean>(false)
 
-  const renderStatus = useMemo(() => {
-    switch (status) {
-      case Status.ToSave:
-        return (
-          <div className="flex items-center space-x-2">
-            <span>{i18n.t("Waiting...")}</span>
-          </div>
-        )
-      case Status.Saving:
-        return (
-          <div className="flex items-center space-x-2">
-            <Icons.spinner className="animate-spin h-4 w-4" />
-            <span>{i18n.t("Saving...")}</span>
-          </div>
-        )
-      case Status.Saved:
-        return (
-          <div className="flex items-center space-x-2 text-green-500">
-            <Icons.check className="h-4 w-4" />
-            <span>{i18n.t("Saved")}</span>
-          </div>
-        )
-    }
-  }, [status])
+  const [title, setTitle] = useState(project.title)
+
+  const alertContext = useContext(AlertContext)
+
+  const { mutate: save } = useEditProject({
+    projectId: project.id,
+    projectProps: {
+      title,
+    },
+    showAlertType: alertContext.showAlert,
+  })
+
+  const debounceSaveData = useMemo(() => debounce(save, 1000), [save])
 
   return (
     <div className="w-full gap-10">
@@ -96,15 +63,14 @@ export function Editor(props: EditorProps) {
         <div>
           <DownloadKeywordsDropdownMenu
             id={project.id}
-            languages={languages.map((language) => language.short)}
+            languages={project.languages.map((language) => language.short)}
             isPublished={isPublished}
-            publishProject={publishProject}
             download={download}
           />
           <ImportKeywordsModal
-            keywords={keywords}
-            languages={i18nLanguages}
-            importKeys={importKeys}
+            projectId={project.id}
+            keywords={project.keywords}
+            languages={project.languages}
           />
           <button
             onClick={() => openProjectSettings(true)}
@@ -120,36 +86,24 @@ export function Editor(props: EditorProps) {
           placeholder={i18n.t("Project name")}
           className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10 mt-5"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value)
+            debounceSaveData()
+          }}
         />
-        {/** icon plus label to say if the object is saved */}
-        <div className="flex items-center justify-left my-1">
-          {renderStatus}
-        </div>
         <Table
           tokens={tokens}
-          keywords={keywords}
-          addKeyword={addNewKey}
-          deleteKey={deleteKey}
-          editTranslation={editTranslation}
-          editContext={editContext}
-          editKey={editKey}
-          checkIfKeyAlreadyExists={checkIfKeyAlreadyExists}
+          keywords={project.keywords}
           project={project}
-          languages={languages}
-          addLanguage={addLanguage}
+          languages={project.languages}
         />
       </div>
       {isProjectSettingsOpened && (
         <ProjectSettingsSlideOver
-          languages={languages}
-          settings={settings}
-          addLanguage={addLanguage}
-          editLanguage={editLanguage}
-          deleteLanguage={deleteLanguage}
+          projectId={project.id}
+          languages={project.languages}
+          settings={project.settings}
           onClose={() => openProjectSettings(false)}
-          editSettings={editSettings}
-          addNewTerm={addNewTerm}
         />
       )}
     </div>
