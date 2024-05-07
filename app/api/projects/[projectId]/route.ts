@@ -10,7 +10,6 @@ import { ErrorResponse, SuccessResponse } from "@/lib/response"
 export const projectPatchSchema = z.object({
   title: z.string().optional(),
   settings: z.any().optional(),
-  published: z.any().optional(),
 })
 
 export const routeContextSchemaProject = z.object({
@@ -91,13 +90,13 @@ export async function PATCH(
     const json = await req.json()
     const body = projectPatchSchema.parse(json)
 
-    const newData: typeof body = {
-      title: body.title,
-      settings: body.settings,
-    }
+    const newData: typeof body = {}
 
-    if (body.published !== undefined) {
-      newData.published = body.published
+    if (body.title) {
+      newData.title = body.title
+    }
+    if (body.settings) {
+      newData.settings = body.settings
     }
 
     await db.project.update({

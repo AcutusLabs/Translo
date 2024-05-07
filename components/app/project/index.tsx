@@ -4,12 +4,15 @@ import * as React from "react"
 import Link from "next/link"
 
 import "@/styles/editor.css"
-import { useState } from "react"
+import { useContext, useMemo, useState } from "react"
+import { debounce } from "lodash"
 
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
+import { useEditProject } from "@/hooks/api/project/use-edit-project"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
+import { AlertContext } from "@/app/client-providers"
 
 import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
@@ -30,6 +33,18 @@ export function Editor(props: EditorProps) {
     useState<boolean>(false)
 
   const [title, setTitle] = useState(project.title)
+
+  const alertContext = useContext(AlertContext)
+
+  const { mutate: save } = useEditProject({
+    projectId: project.id,
+    projectProps: {
+      title,
+    },
+    showAlertType: alertContext.showAlert,
+  })
+
+  const debounceSaveData = useMemo(() => debounce(save, 1000), [save])
 
   return (
     <div className="w-full gap-10">
@@ -71,7 +86,10 @@ export function Editor(props: EditorProps) {
           placeholder={i18n.t("Project name")}
           className="height-[288px] font-bold text-5xl bg-transparent w-full outline-none mb-10 mt-5"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => {
+            setTitle(e.target.value)
+            debounceSaveData()
+          }}
         />
         <Table
           tokens={tokens}
