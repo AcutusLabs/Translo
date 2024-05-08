@@ -128,7 +128,7 @@ model Translation {
   history           Json?
 
   @@unique([keywordId, projectLanguageId])
-  @@map(name: "traslations")
+  @@map(name: "translations")
 }
 
 model AiTranslationsLog {

@@ -1,3 +1,4 @@
+import { Prisma } from "@prisma/client"
 import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
@@ -50,67 +51,141 @@ export async function POST(
       return ErrorResponse({ error: i18n.t("Language not found"), status: 404 })
     }
 
-    const keywordsAlreadyExists = await db.keyword.findMany({
-      where: {
-        keyword: {
-          in: Object.keys(body.keywords),
-        },
-        projectId: params.projectId,
-      },
-      select: {
-        id: true,
-        keyword: true,
-      },
-    })
-
-    const keywordsToUpdate = keywordsAlreadyExists.map((keyword) => ({
-      keyword: keyword.keyword,
-      id: keyword.id,
-      value: body.keywords[keyword.keyword],
-    }))
-    const keywordsToCreate = Object.keys(body.keywords).filter(
-      (keyword) =>
-        !keywordsToUpdate.map((keyword) => keyword.keyword).includes(keyword)
-    )
-
-    for (let i = 0; i < keywordsToUpdate.length; i++) {
-      const keywordToUpdate = keywordsToUpdate[i]
-      const result = await db.translation.updateMany({
-        where: {
-          keywordId: keywordToUpdate.id,
-          projectLanguageId: projectLanguageId.id,
-        },
-        data: {
-          value: keywordToUpdate.value,
-        },
-      })
-
-      if (result.count === 0) {
-        await db.translation.create({
-          data: {
-            value: body.keywords[keywordToUpdate.keyword],
-            projectLanguageId: projectLanguageId.id,
-            keywordId: keywordToUpdate.id,
-          },
-        })
-      }
+    type keywordAlreadyExistsType = {
+      id: string
+      keyword: string
+      translations: {
+        projectLanguageId: string
+      }[]
     }
 
-    for (let i = 0; i < keywordsToCreate.length; i++) {
-      const keywordToCreate = keywordsToCreate[i]
-      await db.keyword.create({
-        data: {
-          keyword: keywordToCreate,
+    const keywordsAlreadyExists: keywordAlreadyExistsType[] =
+      await db.keyword.findMany({
+        where: {
+          keyword: {
+            in: Object.keys(body.keywords),
+          },
           projectId: params.projectId,
-          context: "",
+        },
+        select: {
+          id: true,
+          keyword: true,
           translations: {
-            create: {
-              value: body.keywords[keywordToCreate],
-              projectLanguageId: projectLanguageId.id,
+            select: {
+              projectLanguageId: true,
             },
           },
         },
       })
+
+    const translationExists = (keyword: keywordAlreadyExistsType) =>
+      keyword.translations.find(
+        (translation) => translation.projectLanguageId === projectLanguageId.id
+      )
+
+    const translationToUpdate = keywordsAlreadyExists
+      .filter(translationExists)
+      .map((keyword) => ({
+        keyword: keyword.keyword,
+        id: keyword.id,
+        value: body.keywords[keyword.keyword],
+      }))
+
+    const translationToCreate = keywordsAlreadyExists
+      .filter((key) => !translationExists(key))
+      .map((keyword) => ({
+        keyword: keyword.keyword,
+        id: keyword.id,
+        value: body.keywords[keyword.keyword],
+      }))
+
+    const keywordsToCreate = Object.keys(body.keywords).filter((keyword) => {
+      const translationToUpdateKeywords = translationToUpdate.map(
+        (keyword) => keyword.keyword
+      )
+      const translationToCreateKeywords = translationToCreate.map(
+        (keyword) => keyword.keyword
+      )
+      if (
+        keyword.length > 0 &&
+        !translationToUpdateKeywords.includes(keyword) &&
+        !translationToCreateKeywords.includes(keyword)
+      ) {
+        return true
+      }
+      return false
+    })
+
+    if (translationToUpdate.length) {
+      await db.translation.deleteMany({
+        where: {
+          keywordId: {
+            in: translationToUpdate.map((keyword) => keyword.id),
+          },
+          projectLanguageId: projectLanguageId.id,
+        },
+      })
+
+      await db.$queryRaw`
+      INSERT INTO "translations" ("id", "keywordId", "projectLanguageId", "value")
+      VALUES ${Prisma.join(
+        translationToUpdate.map(
+          (keyword) =>
+            Prisma.sql`(gen_random_uuid(), ${Prisma.join([
+              keyword.id,
+              projectLanguageId.id,
+              body.keywords[keyword.keyword],
+            ])})`
+        )
+      )}`
+    }
+
+    if (translationToCreate.length) {
+      await db.$queryRaw`
+      INSERT INTO "translations" ("id", "keywordId", "projectLanguageId", "value")
+      VALUES ${Prisma.join(
+        translationToCreate.map(
+          (keyword) =>
+            Prisma.sql`(gen_random_uuid(), ${Prisma.join([
+              keyword.id,
+              projectLanguageId.id,
+              body.keywords[keyword.keyword],
+            ])})`
+        )
+      )}`
+    }
+
+    if (keywordsToCreate.length) {
+      const keywordIds: { id: string }[] = await db.$queryRaw`
+      INSERT INTO "keywords" ("id", "keyword", "projectId", "context")
+      VALUES ${Prisma.join(
+        keywordsToCreate.map(
+          (keywordToCreate) =>
+            Prisma.sql`(gen_random_uuid(), ${Prisma.join([
+              keywordToCreate,
+              params.projectId,
+              "",
+            ])})`
+        )
+      )}
+      RETURNING id`
+
+      if (keywordIds.length !== keywordsToCreate.length) {
+        return ErrorResponse({ error: i18n.t("Error creating keywords") })
+      }
+
+      await db.$queryRaw`
+      INSERT INTO "translations" ("id", "keywordId", "projectLanguageId", "value")
+      VALUES ${Prisma.join(
+        keywordsToCreate.map(
+          (keywordToCreate, index) =>
+            Prisma.sql`(gen_random_uuid(), ${Prisma.join([
+              keywordIds[index].id,
+              projectLanguageId.id,
+              body.keywords[keywordToCreate],
+            ])})`
+        )
+      )}`
     }
 
     return SuccessResponse()
