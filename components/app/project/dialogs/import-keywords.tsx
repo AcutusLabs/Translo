@@ -88,8 +88,6 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
           }
 
           importKeywords(jsonData)
-          reset()
-          setOpen(false)
         } catch (error) {
           toast({
             title: i18n.t("Something went wrong"),
@@ -318,7 +316,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
             onClick={analyzeKeywords}
             disabled={!textJSON || !languageSelected || !isJson(textJSON)}
           >
-            {isPendingAnalyze ? (
+            {isPendingAnalyze || isPendingImportKeywords ? (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             ) : (
               <Fragment />
@@ -333,6 +331,7 @@ const ImportKeywordsModal = (props: ImportKeywordsModalProps) => {
     handleChangeTextJSON,
     handleFile,
     isPendingAnalyze,
+    isPendingImportKeywords,
     languageSelected,
     languages,
     textJSON,

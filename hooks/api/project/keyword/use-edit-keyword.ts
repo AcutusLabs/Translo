@@ -4,6 +4,8 @@ import axios from "axios"
 import { ApiResponseType } from "@/types/api"
 import { handleApiError } from "@/lib/exceptions"
 
+import { getLanguagesQueryKey } from "../language/use-get-languages"
+import { getTranslationKey } from "./translation/use-get-all-translations"
 import { getKeywordsQueryKey } from "./use-get-keywords"
 
 const editKeyword = async (
@@ -48,8 +50,20 @@ export const useEditKeyword = ({
       queryClient.cancelQueries({
         queryKey: getKeywordsQueryKey(projectId),
       })
+      queryClient.cancelQueries({
+        queryKey: getTranslationKey(projectId, keywordId),
+      })
+      queryClient.cancelQueries({
+        queryKey: getLanguagesQueryKey(projectId),
+      })
       queryClient.refetchQueries({
         queryKey: getKeywordsQueryKey(projectId),
+      })
+      queryClient.refetchQueries({
+        queryKey: getTranslationKey(projectId, keywordId),
+      })
+      queryClient.refetchQueries({
+        queryKey: getLanguagesQueryKey(projectId),
       })
     },
   })

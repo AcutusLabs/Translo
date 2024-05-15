@@ -30,14 +30,14 @@ CREATE TABLE "project_language" (
 );
 
 -- CreateTable
-CREATE TABLE "traslations" (
+CREATE TABLE "translations" (
     "id" TEXT NOT NULL,
     "keywordId" TEXT NOT NULL,
     "projectLanguageId" TEXT NOT NULL,
     "value" TEXT NOT NULL,
     "history" JSONB,
 
-    CONSTRAINT "traslations_pkey" PRIMARY KEY ("id")
+    CONSTRAINT "translations_pkey" PRIMARY KEY ("id")
 );
 
 -- CreateIndex
@@ -47,7 +47,7 @@ CREATE UNIQUE INDEX "keywords_keyword_projectId_key" ON "keywords"("keyword", "p
 CREATE UNIQUE INDEX "project_language_short_projectId_key" ON "project_language"("short", "projectId");
 
 -- CreateIndex
-CREATE UNIQUE INDEX "traslations_keywordId_projectLanguageId_key" ON "traslations"("keywordId", "projectLanguageId");
+CREATE UNIQUE INDEX "translations_keywordId_projectLanguageId_key" ON "translations"("keywordId", "projectLanguageId");
 
 -- AddForeignKey
 ALTER TABLE "keywords" ADD CONSTRAINT "keywords_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
@@ -56,7 +56,7 @@ ALTER TABLE "keywords" ADD CONSTRAINT "keywords_projectId_fkey" FOREIGN KEY ("pr
 ALTER TABLE "project_language" ADD CONSTRAINT "project_language_projectId_fkey" FOREIGN KEY ("projectId") REFERENCES "projects"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "traslations" ADD CONSTRAINT "traslations_keywordId_fkey" FOREIGN KEY ("keywordId") REFERENCES "keywords"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "translations" ADD CONSTRAINT "translations_keywordId_fkey" FOREIGN KEY ("keywordId") REFERENCES "keywords"("id") ON DELETE CASCADE ON UPDATE CASCADE;
 
 -- AddForeignKey
-ALTER TABLE "traslations" ADD CONSTRAINT "traslations_projectLanguageId_fkey" FOREIGN KEY ("projectLanguageId") REFERENCES "project_language"("id") ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE "translations" ADD CONSTRAINT "translations_projectLanguageId_fkey" FOREIGN KEY ("projectLanguageId") REFERENCES "project_language"("id") ON DELETE CASCADE ON UPDATE CASCADE;

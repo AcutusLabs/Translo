@@ -41,6 +41,13 @@ export async function POST(
         keyword: {
           in: body.keywords,
         },
+        translations: {
+          every: {
+            projectLanguageId: {
+              equals: params.projectId,
+            },
+          },
+        },
       },
     })
 
