@@ -150,7 +150,7 @@ const AddNewKeyword = (props: Props) => {
                       <div
                         dangerouslySetInnerHTML={{
                           __html: i18n.t(
-                            "This context is optional and can be provided alongside the keyword, aiding the AI in its translation process."
+                            "You can provide this context alongside the keyword; it's optional and helps the AI in its translation process"
                           ),
                         }}
                       ></div>

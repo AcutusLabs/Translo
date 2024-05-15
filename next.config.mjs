@@ -43,7 +43,7 @@ export default withSentryConfig(
     // Suppresses source map uploading logs during build
     silent: true,
     org: "translo",
-    project: "javascript-nextjs",
+    project: "translo",
   },
   {
     // For all available options, see:

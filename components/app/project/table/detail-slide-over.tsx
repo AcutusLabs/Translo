@@ -246,7 +246,7 @@ const DetailSlideOver = (props: Props) => {
   })
 
   const cost = useCostEstimation({
-    sentence: english?.value || "undefined",
+    sentences: [english?.value || "undefined"],
     numberOfLanguages: languages.length,
     context: keyword.context,
     description: (project.settings as ProjectSettings).description,

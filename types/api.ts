@@ -10,5 +10,6 @@ export type ShowAlertType = Dispatch<SetStateAction<AlertType | undefined>>
 
 export type ApiResponseType = {
   onSuccess?: (data: any) => void
+  onError?: (error: Error) => void
   showAlertType?: ShowAlertType
 }

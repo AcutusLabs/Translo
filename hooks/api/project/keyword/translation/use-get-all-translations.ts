@@ -32,10 +32,9 @@ type GetTranslationApi = {
   translationProps: TranslationProps
 }
 
-export const getTranslationKey = (projectId: string, keywordId: string) => [
+export const getTranslationKey = (projectId: string) => [
   "getAllTranslation",
   projectId,
-  keywordId,
 ]
 
 export const useGetTranslation = ({
@@ -44,7 +43,7 @@ export const useGetTranslation = ({
   translationProps,
 }: GetTranslationApi) => {
   return useQuery({
-    queryKey: getTranslationKey(projectId, keywordId),
+    queryKey: getTranslationKey(projectId),
     queryFn: async () =>
       await getAllTranslation(projectId, keywordId, translationProps),
   })

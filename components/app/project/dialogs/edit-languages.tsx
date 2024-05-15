@@ -72,14 +72,13 @@ const EditLanguage = (props: Props) => {
     reset()
   }, [editLanguage, reset])
 
+  const languageTitle = `[${language.short}] ${language.name}`
+
   return (
     <Dialog>
       <DialogTrigger asChild>
         <button className="t-button" disabled={disabled}>
-          {i18n.t("[{short}] {language}", {
-            short: language.short,
-            language: language.name,
-          })}
+          {languageTitle}
         </button>
       </DialogTrigger>
       <DialogContent className="sm:max-w-[425px]">
