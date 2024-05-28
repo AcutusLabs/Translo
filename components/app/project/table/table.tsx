@@ -4,6 +4,7 @@ import { useCallback, useContext, useMemo, useState } from "react"
 
 import i18n from "@/lib/i18n"
 import { useDeleteKeyword } from "@/hooks/api/project/keyword/use-delete-keyword"
+import { Icons } from "@/components/icons"
 import { AlertContext } from "@/app/client-providers"
 
 import AddNewKeyword from "../dialogs/add-new-keyword"
@@ -44,6 +45,25 @@ const Table = (props: Props) => {
     showAlertType: alertContext.showAlert,
   })
 
+  const [query, setQuery] = useState("")
+
+  const handleQueryChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      setQuery(event.target.value)
+    },
+    []
+  )
+
+  const filteredKeywords = useMemo(() => {
+    return keywords.filter((keyword) => {
+      return keyword.keyword.toLowerCase().includes(query.toLowerCase())
+    })
+  }, [keywords, query])
+
+  const handleResetQuery = useCallback(() => {
+    setQuery("")
+  }, [])
+
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 rounded-lg border-[1px]">
       <div className="flex flex-col items-center justify-between space-y-3 p-4 md:flex-row md:space-x-4 md:space-y-0">
@@ -70,9 +90,19 @@ const Table = (props: Props) => {
             <input
               type="text"
               id="simple-search"
-              className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 pl-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
+              className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 px-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
               placeholder="Search"
+              onChange={handleQueryChange}
+              value={query}
             />
+            {query && (
+              <div
+                className="absolute inset-y-0 right-0 flex items-center pr-3 cursor-pointer"
+                onClick={handleResetQuery}
+              >
+                <Icons.close size={"18px"} />
+              </div>
+            )}
           </div>
         </div>
         <div className="flex w-full shrink-0 flex-col items-stretch justify-end space-y-2 md:w-auto md:flex-row md:items-center md:space-x-3 md:space-y-0">
@@ -101,7 +131,7 @@ const Table = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {keywords.map((keyword) => (
+            {filteredKeywords.map((keyword) => (
               <Row
                 key={keyword.keyword}
                 keyword={keyword}
