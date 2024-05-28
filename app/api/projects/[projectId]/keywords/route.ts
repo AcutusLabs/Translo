@@ -32,6 +32,9 @@ const getAllKeywordsByProject = async (projectId: string) => {
     where: {
       projectId: projectId,
     },
+    orderBy: {
+      keyword: "asc",
+    },
   })
   return keywords
 }
