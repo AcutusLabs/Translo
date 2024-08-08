@@ -89,12 +89,14 @@ export default function RootLayout({ children }: RootLayoutProps) {
         )}
       >
         <ClientProvider>
-          <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-            {children}
-            <Analytics />
-            <Toaster />
-            <TailwindIndicator />
-          </ThemeProvider>
+          <div>
+            <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
+              {children}
+              <Analytics />
+              <Toaster />
+              <TailwindIndicator />
+            </ThemeProvider>
+          </div>
         </ClientProvider>
       </body>
       <PrelineScript />
