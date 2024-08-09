@@ -29,7 +29,7 @@ export default function ClientProvider(props: { children: React.ReactNode }) {
 
   const [alert, showAlert] = useState<AlertType | undefined>()
 
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && !posthog.__loaded) {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY || "", {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       persistence: "localStorage",
