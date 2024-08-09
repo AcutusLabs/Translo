@@ -13,7 +13,7 @@ import { isUserPro } from "@/lib/subscription"
 import {
   routeContextSchemaProject,
   verifyCurrentUserHasAccessToProject,
-} from "../route"
+} from "../utils"
 
 const keywordCreateSchema = z.object({
   keyword: z.string(),

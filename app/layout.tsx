@@ -2,6 +2,9 @@ import { Inter as FontSans } from "next/font/google"
 import localFont from "next/font/local"
 
 import "@/styles/globals.css"
+import { Suspense } from "react"
+
+import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
 import PrelineScript from "@/lib/preline"
 import { cn } from "@/lib/utils"
@@ -28,6 +31,7 @@ interface RootLayoutProps {
 }
 
 export const metadata = {
+  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
   title: {
     default: siteConfig.name,
     template: `%s | ${siteConfig.name}`,
@@ -51,10 +55,6 @@ export const metadata = {
     },
   ],
   creator: "Giacomo e Davide",
-  themeColor: [
-    { media: "(prefers-color-scheme: light)", color: "white" },
-    { media: "(prefers-color-scheme: dark)", color: "black" },
-  ],
   openGraph: {
     type: "website",
     locale: "en_US",
@@ -91,7 +91,7 @@ export default function RootLayout({ children }: RootLayoutProps) {
         <ClientProvider>
           <div>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
-              {children}
+              <Suspense>{children}</Suspense>
               <Analytics />
               <Toaster />
               <TailwindIndicator />

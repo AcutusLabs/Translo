@@ -7,16 +7,11 @@ import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
 
-export const projectPatchSchema = z.object({
-  title: z.string().optional(),
-  settings: z.any().optional(),
-})
-
-export const routeContextSchemaProject = z.object({
-  params: z.object({
-    projectId: z.string(),
-  }),
-})
+import {
+  projectPatchSchema,
+  routeContextSchemaProject,
+  verifyCurrentUserHasAccessToProject,
+} from "./utils"
 
 export async function GET(
   _req: Request,
@@ -110,16 +105,4 @@ export async function PATCH(
   } catch (error) {
     return handleCatchApi(error)
   }
-}
-
-export async function verifyCurrentUserHasAccessToProject(projectId: string) {
-  const session = await getServerSession(authOptions)
-  const count = await db.project.count({
-    where: {
-      id: projectId,
-      userId: session?.user.id,
-    },
-  })
-
-  return count > 0
 }

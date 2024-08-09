@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 
+import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -12,6 +13,7 @@ import { DashboardShell } from "@/components/shell"
 import { getTokensByUserId } from "@/app/api/users/utils"
 
 export const metadata = {
+  metadataBase: new URL(`${env.NEXT_PUBLIC_APP_URL}/dashboard/billing`),
   title: "Billing",
   description: "Manage billing and your subscription plan.",
 }

@@ -1,5 +1,6 @@
 import { redirect } from "next/navigation"
 
+import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
 import { getCurrentUser } from "@/lib/session"
@@ -9,6 +10,7 @@ import PostHogAnalytics from "@/components/posthog"
 import { DashboardShell } from "@/components/shell"
 
 export const metadata = {
+  metadataBase: new URL(`${env.NEXT_PUBLIC_APP_URL}/dashboard/settings`),
   title: "Settings",
   description: "Manage account and website settings.",
 }

@@ -1,6 +1,7 @@
 import { Metadata } from "next"
 import Link from "next/link"
 
+import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
@@ -10,6 +11,7 @@ import { Icons } from "@/components/icons"
 import PageView from "@/components/posthog/page-view"
 
 export const metadata: Metadata = {
+  metadataBase: new URL(`${env.NEXT_PUBLIC_APP_URL}/login`),
   title: "Login",
   description: "Login to your account",
 }

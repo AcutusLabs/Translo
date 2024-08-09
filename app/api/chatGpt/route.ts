@@ -16,7 +16,7 @@ import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
 import { ProjectSettings } from "@/components/app/project/types"
 
-import { verifyCurrentUserHasAccessToProject } from "../projects/[projectId]/route"
+import { verifyCurrentUserHasAccessToProject } from "../projects/[projectId]/utils"
 
 const generateTranslationSchema = z.object({
   projectId: z.string(),

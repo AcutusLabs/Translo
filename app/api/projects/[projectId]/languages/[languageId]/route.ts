@@ -5,7 +5,7 @@ import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
 
-import { verifyCurrentUserHasAccessToProject } from "../../route"
+import { verifyCurrentUserHasAccessToProject } from "../../utils"
 
 const languagePatchSchema = z.object({
   short: z.string(),
