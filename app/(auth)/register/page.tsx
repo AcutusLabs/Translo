@@ -1,6 +1,7 @@
 /* eslint-disable @next/next/no-img-element */
 import Link from "next/link"
 
+import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
@@ -10,6 +11,7 @@ import { Icons } from "@/components/icons"
 import PageView from "@/components/posthog/page-view"
 
 export const metadata = {
+  metadataBase: new URL(`${env.NEXT_PUBLIC_APP_URL}/register`),
   title: "Create an account",
   description: "Create an account to get started.",
 }

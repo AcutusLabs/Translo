@@ -5,8 +5,8 @@ import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
 
-import { verifyCurrentUserHasAccessToProject } from "../../../route"
-import { routeContextSchemaProjectKeyword } from "../route"
+import { verifyCurrentUserHasAccessToProject } from "../../../utils"
+import { routeContextSchemaProjectKeyword } from "../utils"
 
 const keywordPatchSchema = z.object({
   context: z.string(),

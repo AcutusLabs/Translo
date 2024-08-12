@@ -1,11 +1,12 @@
 import * as React from "react"
 
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "./icons"
-import i18n from "@/lib/i18n"
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
+  const heart = "♥️"
   return (
     <footer
       className={cn(
@@ -27,7 +28,7 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
         <div className="mt-3">
           <p className="text-gray-500">
             {i18n.t("Made with ")}
-            <span className="text-[#E25555]">{i18n.t("♥️")}</span>
+            <span className="text-[#E25555]">{heart}</span>
             {i18n.t("by Giacomo and Davide")}
           </p>
         </div>

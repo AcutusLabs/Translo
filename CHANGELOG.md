@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+## [1.3.0](https://github.com/Matergi/translo/compare/v1.2.0...v1.3.0) (2024-08-12)
+
+### Features
+
+- **ai-translations:** translate all project ([9ba3561](https://github.com/Matergi/translo/commit/9ba35612365efc459b86d0c8c8d3cc994ad1e704))
+- **general:** add filter for keyworkds ([e8fc427](https://github.com/Matergi/translo/commit/e8fc4272e1b7d52532d036ee23600be5762ae0bc))
+- **general:** add keep alive ([f60e2f7](https://github.com/Matergi/translo/commit/f60e2f799771ec8c6040645444b19576e4555dcc))
+
+### Bug Fixes
+
+- **general:** fix build ([c2dcb14](https://github.com/Matergi/translo/commit/c2dcb14b9aed582a5e4a5f4ecd170611ee638258))
+- **general:** fix timeout ([3e2447c](https://github.com/Matergi/translo/commit/3e2447cd85297047d46a80cbabe9ec25f504e8b4))
+- **general:** fixed cors ([e5e4d56](https://github.com/Matergi/translo/commit/e5e4d561642db563f0a5055f83931bdb08364a2b))
+
 ## [1.2.0](https://github.com/Matergi/translo/compare/v1.0.1...v1.2.0) (2024-05-07)
 
 ### Features

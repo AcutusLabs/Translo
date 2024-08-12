@@ -14,7 +14,7 @@ import {
   TranslationData,
 } from "@/components/app/project/types"
 import PostHogAnalytics from "@/components/posthog"
-import { getTokensByUserId } from "@/app/(dashboard)/dashboard/billing/page"
+import { getTokensByUserId } from "@/app/api/users/utils"
 
 async function getProjectForUser(projectId: Project["id"], userId: User["id"]) {
   return await db.project.findFirst({

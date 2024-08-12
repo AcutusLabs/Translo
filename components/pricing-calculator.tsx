@@ -31,7 +31,7 @@ const PricingCalculator = () => {
   )
 
   const cost = useCostEstimation({
-    sentence,
+    sentences: [sentence],
     numberOfLanguages,
   })
 

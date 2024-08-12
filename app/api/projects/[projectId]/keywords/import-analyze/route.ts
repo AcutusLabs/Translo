@@ -10,7 +10,7 @@ import { ErrorResponse } from "@/lib/response"
 import {
   routeContextSchemaProject,
   verifyCurrentUserHasAccessToProject,
-} from "../../route"
+} from "../../utils"
 
 const keywordImportSchema = z.object({
   keywords: z.array(z.string()),

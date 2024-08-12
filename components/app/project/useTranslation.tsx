@@ -6,6 +6,7 @@ import _ from "lodash"
 import { useGetKeywords } from "@/hooks/api/project/keyword/use-get-keywords"
 import { useGetLanguages } from "@/hooks/api/project/language/use-get-languages"
 import { useGetProject } from "@/hooks/api/project/use-get-project"
+import { useGetTokens } from "@/hooks/api/user/use-get-tokens"
 
 import { EditorProps } from "."
 import { LanguageData } from "./types"
@@ -21,7 +22,7 @@ export enum Status {
 }
 
 const useTranslation = (props: EditorProps) => {
-  const { project: projectFromSSR, tokens } = props
+  const { project: projectFromSSR, tokens: tokensFromSSR } = props
 
   const downloadFiles = useCallback(() => {
     const zip = new JSZip()
@@ -70,6 +71,8 @@ const useTranslation = (props: EditorProps) => {
     initialData: projectFromSSR,
   })
 
+  const { data: tokensFromApi } = useGetTokens({ initialData: tokensFromSSR })
+
   const project = {
     ...projectFromApi,
     keywords: keywordsFromApi,
@@ -77,7 +80,7 @@ const useTranslation = (props: EditorProps) => {
   }
 
   return {
-    tokens,
+    tokens: tokensFromApi,
     project,
     isPublished: props.project.published,
     download,

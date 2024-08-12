@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { freePlanTokens, proPlanTokens } from "@/constants/subscriptions"
 
+import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import {
   MAX_KEYWORDS_STARTER_URSER,
@@ -17,6 +18,7 @@ import PostHogAnalytics from "@/components/posthog"
 import PricingCalculator from "@/components/pricing-calculator"
 
 export const metadata = {
+  metadataBase: new URL(`${env.NEXT_PUBLIC_APP_URL}/pricing`),
   title: "Pricing",
 }
 

@@ -8,7 +8,7 @@ import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import {
   routeContextSchemaProject,
   verifyCurrentUserHasAccessToProject,
-} from "../route"
+} from "../utils"
 
 const projectShareSchema = z.object({
   published: z.any(),

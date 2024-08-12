@@ -51,7 +51,7 @@ export const useEditKeyword = ({
         queryKey: getKeywordsQueryKey(projectId),
       })
       queryClient.cancelQueries({
-        queryKey: getTranslationKey(projectId, keywordId),
+        queryKey: getTranslationKey(projectId),
       })
       queryClient.cancelQueries({
         queryKey: getLanguagesQueryKey(projectId),
@@ -60,7 +60,7 @@ export const useEditKeyword = ({
         queryKey: getKeywordsQueryKey(projectId),
       })
       queryClient.refetchQueries({
-        queryKey: getTranslationKey(projectId, keywordId),
+        queryKey: getTranslationKey(projectId),
       })
       queryClient.refetchQueries({
         queryKey: getLanguagesQueryKey(projectId),

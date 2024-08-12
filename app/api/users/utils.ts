@@ -1,5 +1,7 @@
 "use server"
 
+import { User } from "@prisma/client"
+
 import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
 import sendEmail from "@/lib/mail"
@@ -63,4 +65,14 @@ export const changeEmail = async (oldEmail: string, newEmail: string) => {
   } catch (e) {
     throw e
   }
+}
+
+export async function getTokensByUserId(id: User["id"]) {
+  const user = await db.user.findFirst({
+    where: {
+      id: id,
+    },
+  })
+
+  return Number(user?.tokens || -1)
 }

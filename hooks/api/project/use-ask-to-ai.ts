@@ -1,4 +1,4 @@
-import { useMutation } from "@tanstack/react-query"
+import { useMutation, useQueryClient } from "@tanstack/react-query"
 import axios from "axios"
 
 import { ApiResponseType } from "@/types/api"
@@ -6,7 +6,9 @@ import { handleApiError } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { toast } from "@/components/ui/use-toast"
 
-const askToAI = async (
+import { getTokensQueryKey } from "../user/use-get-tokens"
+
+export const askToAI = async (
   projectId: string,
   keywordId: string,
   sentence?: string
@@ -16,7 +18,6 @@ const askToAI = async (
       title: i18n.t("Something went wrong"),
       variant: "destructive",
     })
-    return
   }
 
   const result = await axios({
@@ -39,10 +40,20 @@ export const useAskToAI = ({
   onSuccess,
   showAlertType,
 }: AskToAI) => {
+  const queryClient = useQueryClient()
+
   return useMutation({
     mutationKey: ["useAskToAI", projectId, keywordId],
     mutationFn: async () => await askToAI(projectId, keywordId, sentence),
     onError: (error) => handleApiError(error, showAlertType),
-    onSuccess,
+    onSuccess: (data) => {
+      onSuccess?.(data)
+      queryClient.cancelQueries({
+        queryKey: getTokensQueryKey(),
+      })
+      queryClient.refetchQueries({
+        queryKey: getTokensQueryKey(),
+      })
+    },
   })
 }

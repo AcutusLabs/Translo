@@ -15,7 +15,7 @@ import { ErrorResponse } from "@/lib/response"
 import {
   routeContextSchemaProject,
   verifyCurrentUserHasAccessToProject,
-} from "../route"
+} from "../utils"
 
 const languageCreateSchema = z.object({
   short: z.string().nonempty(),

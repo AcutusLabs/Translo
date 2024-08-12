@@ -6,16 +6,20 @@ import Link from "next/link"
 import "@/styles/editor.css"
 import { useContext, useMemo, useState } from "react"
 import { debounce } from "lodash"
+import { createPortal } from "react-dom"
 
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { useEditProject } from "@/hooks/api/project/use-edit-project"
+import { SemaphoreTranslation } from "@/hooks/api/project/use-translate-project"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import { AlertContext } from "@/app/client-providers"
 
 import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
+import { TranslateAllKeywords } from "./dialogs/translate-all-project"
+import TranslateAllModal from "./modals/translate-all"
 import ProjectSettingsSlideOver from "./settings-slide-over"
 import Table from "./table/table"
 import { ProjectData } from "./types"
@@ -33,6 +37,7 @@ export function Editor(props: EditorProps) {
     useState<boolean>(false)
 
   const [title, setTitle] = useState(project.title)
+  const [progress, setProgress] = useState<number | undefined>(undefined)
 
   const alertContext = useContext(AlertContext)
 
@@ -72,6 +77,13 @@ export function Editor(props: EditorProps) {
             keywords={project.keywords}
             languages={project.languages}
           />
+          <TranslateAllKeywords
+            projectId={project.id}
+            languages={project.languages}
+            keywords={project.keywords}
+            tokens={tokens}
+            setProgress={setProgress}
+          />
           <button
             onClick={() => openProjectSettings(true)}
             className={cn(buttonVariants({ variant: "secondary" }), "mr-4")}
@@ -79,6 +91,17 @@ export function Editor(props: EditorProps) {
             <span>{i18n.t("Settings")}</span>
           </button>
         </div>
+        {progress !== undefined &&
+          createPortal(
+            <TranslateAllModal
+              progress={progress}
+              cancel={() => {
+                SemaphoreTranslation.stopped = true
+                setProgress(undefined)
+              }}
+            />,
+            window.document.body
+          )}
       </div>
       <div className="prose prose-stone mx-auto w-full max-w-[1000px] dark:prose-invert">
         <input

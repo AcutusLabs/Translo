@@ -7,6 +7,7 @@ import { AppProgressBar as ProgressBar } from "next-nprogress-bar"
 import posthog from "posthog-js"
 import { PostHogProvider } from "posthog-js/react"
 
+import { env } from "@/env.mjs"
 import { AlertType, ShowAlertType } from "@/types/api"
 import i18n from "@/lib/i18n"
 import { TooltipProvider } from "@/components/ui/tooltip"
@@ -29,11 +30,11 @@ export default function ClientProvider(props: { children: React.ReactNode }) {
 
   const [alert, showAlert] = useState<AlertType | undefined>()
 
-  if (typeof window !== "undefined") {
+  if (typeof window !== "undefined" && !posthog.__loaded) {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY || "", {
       api_host: process.env.NEXT_PUBLIC_POSTHOG_HOST,
       persistence: "localStorage",
-      debug: true,
+      debug: env.NEXT_PUBLIC_POSTHOG_DEBUG_ENABLED === "true",
       capture_pageview: false,
     })
   }
