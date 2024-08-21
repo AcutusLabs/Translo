@@ -12,7 +12,7 @@ const editContext = async (
   context: string
 ) => {
   const result = await axios({
-    url: `/api/projects/${projectId}/keywords/${keywordId}`,
+    url: `/api/projects/${projectId}/keywords/${keywordId}/context`,
     method: "PATCH",
     headers: {
       "Content-Type": "application/json",
