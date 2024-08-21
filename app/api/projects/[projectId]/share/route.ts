@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
+import { NOT_ALLOWED_STATUS } from "@/app/api/status"
 
 import {
   routeContextSchemaProject,
@@ -24,7 +25,10 @@ export async function PATCH(
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     // Get the request body and validate it.

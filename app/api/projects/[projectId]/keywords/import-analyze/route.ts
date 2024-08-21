@@ -6,6 +6,7 @@ import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
+import { LOGOUT_STATUS, NOT_ALLOWED_STATUS } from "@/app/api/status"
 
 import {
   routeContextSchemaProject,
@@ -24,13 +25,16 @@ export async function POST(
     const { params } = routeContextSchemaProject.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return new Response("Unauthorized", { status: LOGOUT_STATUS })
     }
 
     const json = await req.json()

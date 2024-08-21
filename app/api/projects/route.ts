@@ -15,6 +15,8 @@ import i18n from "@/lib/i18n"
 import { ErrorResponse } from "@/lib/response"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 
+import { LOGOUT_STATUS } from "../status"
+
 const projectCreateSchema = z.object({
   title: z.string(),
   languages: z.string().optional(),
@@ -26,7 +28,7 @@ export async function GET() {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return new Response("Unauthorized", { status: LOGOUT_STATUS })
     }
 
     const { user } = session
@@ -53,7 +55,7 @@ export async function POST(req: Request) {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return new Response("Unauthorized", { status: LOGOUT_STATUS })
     }
 
     const { user } = session

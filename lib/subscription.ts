@@ -9,6 +9,7 @@ import {
 } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
+import { LOGOUT_STATUS } from "@/app/api/status"
 
 import { Unauthorized } from "./exceptions"
 
@@ -64,7 +65,7 @@ export async function isUserPro() {
   const session = await getServerSession(authOptions)
 
   if (!session) {
-    return new Response("Unauthorized", { status: 403 })
+    return new Response("Unauthorized", { status: LOGOUT_STATUS })
   }
 
   const { user } = session

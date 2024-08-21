@@ -4,12 +4,13 @@ import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
+import { NOT_ALLOWED_STATUS, TYPE_ERROR_STATUS } from "@/app/api/status"
 
 import { verifyCurrentUserHasAccessToProject } from "../../utils"
 import { routeContextSchemaProjectKeyword } from "./utils"
 
 const keywordPatchSchema = z.object({
-  context: z.string(),
+  keyword: z.string(),
 })
 
 export async function DELETE(
@@ -20,7 +21,10 @@ export async function DELETE(
     const { params } = routeContextSchemaProjectKeyword.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     await db.keyword.delete({
@@ -43,14 +47,17 @@ export async function PATCH(
     const { params } = routeContextSchemaProjectKeyword.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     const json = await req.json()
     const body = keywordPatchSchema.parse(json)
 
     const newData: typeof body = {
-      context: body.context,
+      keyword: body.keyword,
     }
 
     await db.keyword.update({
@@ -62,6 +69,12 @@ export async function PATCH(
 
     return SuccessResponse()
   } catch (error) {
+    if (error instanceof z.ZodError) {
+      return new Response(JSON.stringify(error.issues), {
+        status: TYPE_ERROR_STATUS,
+      })
+    }
+
     return handleCatchApi(error)
   }
 }

@@ -3,6 +3,7 @@ import { getServerSession } from "next-auth/next"
 import { authOptions } from "@/lib/auth"
 import { handleCatchApi } from "@/lib/exceptions"
 
+import { LOGOUT_STATUS } from "../../status"
 import { getTokensByUserId } from "../utils"
 
 export async function GET() {
@@ -10,7 +11,7 @@ export async function GET() {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return new Response("Unauthorized", { status: LOGOUT_STATUS })
     }
 
     const { user } = session
