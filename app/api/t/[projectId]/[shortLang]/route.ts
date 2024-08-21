@@ -21,6 +21,7 @@ export async function GET(
     const projectLanguageId = await db.projectLanguage.findFirst({
       where: {
         short: params.shortLang,
+        projectId: params.projectId,
       },
     })
 
