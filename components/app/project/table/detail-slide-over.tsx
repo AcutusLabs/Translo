@@ -3,6 +3,7 @@ import {
   Fragment,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react"
@@ -51,6 +52,7 @@ const DetailSlideOver = (props: Props) => {
 
   const alertContext = useContext(AlertContext)
   const [key, setKey] = useState(keyword.keyword)
+
   const [translations, setTranslations] = useState<
     (TranslationsProps & {
       history: string[]
@@ -75,6 +77,29 @@ const DetailSlideOver = (props: Props) => {
       }
     })
   )
+  useEffect(() => {
+    // when translation changed form api
+    setTranslations(
+      languages.map((language) => {
+        const translation = keyword.translations.find(
+          (_translation) => _translation.language.id === language.id
+        )
+        if (translation) {
+          return {
+            translationId: translation.id,
+            projectLanguageId: translation.language.id,
+            value: translation.value,
+            history: translation.history as string[],
+          }
+        }
+        return {
+          projectLanguageId: language.id,
+          value: "",
+          history: [],
+        }
+      })
+    )
+  }, [keyword.translations, languages])
 
   const [hints, setHints] = useState<LanguageHint[]>([])
   const [context, setContext] = useState<string>(keyword.context)
