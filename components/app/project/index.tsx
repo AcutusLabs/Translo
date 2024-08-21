@@ -8,6 +8,7 @@ import { useContext, useMemo, useState } from "react"
 import { debounce } from "lodash"
 import { createPortal } from "react-dom"
 
+import { env } from "@/env.mjs"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { useEditProject } from "@/hooks/api/project/use-edit-project"
@@ -77,13 +78,15 @@ export function Editor(props: EditorProps) {
             keywords={project.keywords}
             languages={project.languages}
           />
-          <TranslateAllKeywords
-            projectId={project.id}
-            languages={project.languages}
-            keywords={project.keywords}
-            tokens={tokens}
-            setProgress={setProgress}
-          />
+          {env.NEXT_PUBLIC_TRANSLATE_ALL_PROJECT_ENABLED === "true" && (
+            <TranslateAllKeywords
+              projectId={project.id}
+              languages={project.languages}
+              keywords={project.keywords}
+              tokens={tokens}
+              setProgress={setProgress}
+            />
+          )}
           <button
             onClick={() => openProjectSettings(true)}
             className={cn(buttonVariants({ variant: "secondary" }), "mr-4")}
