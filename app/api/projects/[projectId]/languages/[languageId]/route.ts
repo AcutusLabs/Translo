@@ -4,6 +4,7 @@ import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
+import { NOT_ALLOWED_STATUS } from "@/app/api/status"
 
 import { verifyCurrentUserHasAccessToProject } from "../../utils"
 
@@ -27,7 +28,10 @@ export async function DELETE(
     const { params } = routeContextSchemaProjectLanguage.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     await db.projectLanguage.delete({
@@ -50,7 +54,10 @@ export async function PATCH(
     const { params } = routeContextSchemaProjectLanguage.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     const json = await req.json()

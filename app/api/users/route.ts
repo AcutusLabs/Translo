@@ -9,6 +9,7 @@ import emailVerification from "@/lib/mail/templates/emailVerification"
 import { ErrorResponse } from "@/lib/response"
 import { generateEmailVerificationToken, hashPassword } from "@/lib/utils"
 
+import { INTERNAL_SERVER_ERROR_STATUS, TYPE_ERROR_STATUS } from "../status"
 import { findUserByEmail } from "./utils"
 
 const userCreateSchema = z.object({
@@ -68,9 +69,11 @@ export async function POST(req: Request) {
     return new Response(JSON.stringify(user))
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return new Response(JSON.stringify(error.issues), {
+        status: TYPE_ERROR_STATUS,
+      })
     }
 
-    return new Response(error.message, { status: 500 })
+    return new Response(error.message, { status: INTERNAL_SERVER_ERROR_STATUS })
   }
 }

@@ -7,6 +7,7 @@ import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
 
+import { LOGOUT_STATUS, NOT_ALLOWED_STATUS } from "../../status"
 import {
   projectPatchSchema,
   routeContextSchemaProject,
@@ -21,13 +22,16 @@ export async function GET(
     const { params } = routeContextSchemaProject.parse(context)
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return new Response("Unauthorized", { status: LOGOUT_STATUS })
     }
 
     const project = await db.project.findUnique({
@@ -52,7 +56,10 @@ export async function DELETE(
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     // Delete the translation.
@@ -78,7 +85,10 @@ export async function PATCH(
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     // Get the request body and validate it.
