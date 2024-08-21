@@ -38,6 +38,8 @@ export function Editor(props: EditorProps) {
     useState<boolean>(false)
 
   const [title, setTitle] = useState(project.title)
+  const [currentKeywordInTranlsateAll, setCurrentKeywordInTranslateAll] =
+    useState("")
   const [progress, setProgress] = useState<number | undefined>(undefined)
 
   const alertContext = useContext(AlertContext)
@@ -85,6 +87,7 @@ export function Editor(props: EditorProps) {
               keywords={project.keywords}
               tokens={tokens}
               setProgress={setProgress}
+              setCurrentKeywordInTranslateAll={setCurrentKeywordInTranslateAll}
             />
           )}
           <button
@@ -102,6 +105,7 @@ export function Editor(props: EditorProps) {
                 SemaphoreTranslation.stopped = true
                 setProgress(undefined)
               }}
+              keywordInTranslation={currentKeywordInTranlsateAll}
             />,
             window.document.body
           )}

@@ -19,7 +19,8 @@ const translateProject = async (
   projectId: string,
   keywords: KeywordData[],
   languages: LanguageData[],
-  onUpdate: (progress: number) => void
+  onUpdate: (progress: number) => void,
+  setCurrentKeywordInTranslateAll: (keyword: string) => void
 ) => {
   for (let i = 0; i < keywords.length; i++) {
     if (SemaphoreTranslation.stopped) {
@@ -36,6 +37,8 @@ const translateProject = async (
       onUpdate(i / (keywords.length - 1))
       continue
     }
+
+    setCurrentKeywordInTranslateAll(keyword.keyword)
 
     const sentenceEN = keyword.translations.find(
       (translation) => translation.language.short === "en"
@@ -56,8 +59,9 @@ const translateProject = async (
         (translation) => translation.language.short === languageShort
       )
 
-      if (!currentTranslation) {
+      if (!currentTranslation?.value) {
         newTranslations.push({
+          translationId: currentTranslation?.id,
           projectLanguageId: language.id,
           value: response[languageShort],
         })
@@ -84,6 +88,7 @@ type TranslateProjectApi = ApiResponseType & {
   projectId: string
   keywords: KeywordData[]
   onUpdate: (progress: number) => void
+  setCurrentKeywordInTranslateAll: (keyword: string) => void
 }
 
 export const translateProjectKey = (projectId: string) => [
@@ -99,13 +104,20 @@ export const useTranslateProject = ({
   onSuccess,
   onError,
   showAlertType,
+  setCurrentKeywordInTranslateAll,
 }: TranslateProjectApi) => {
   const queryClient = useQueryClient()
   return useMutation({
     mutationKey: translateProjectKey(projectId),
     mutationFn: async () => {
       SemaphoreTranslation.stopped = false
-      await translateProject(projectId, keywords, languages, onUpdate)
+      await translateProject(
+        projectId,
+        keywords,
+        languages,
+        onUpdate,
+        setCurrentKeywordInTranslateAll
+      )
     },
     onError: (error) => {
       onError?.(error)

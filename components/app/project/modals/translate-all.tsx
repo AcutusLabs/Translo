@@ -5,11 +5,12 @@ import i18n from "@/lib/i18n"
 type Props = {
   // progress is from 0 to 1
   progress: number | undefined
+  keywordInTranslation: string
   cancel: () => void
 }
 
 const TranslateAllModal = (props: Props) => {
-  const { progress, cancel } = props
+  const { progress, keywordInTranslation, cancel } = props
 
   return (
     <div>
@@ -44,17 +45,31 @@ const TranslateAllModal = (props: Props) => {
                   }
                 }}
               >
-                <p className="pd-h2 pd-bold pd-white">{i18n.t("Cancel")}</p>
+                <p>{i18n.t("Cancel")}</p>
               </div>
             </div>
             <div style={{ marginLeft: "6px", marginTop: "14px" }}>
               <div className="w-full bg-gray-200 rounded-full h-2.5 dark:bg-gray-700">
                 <div
                   className="bg-[#0f172a] h-2.5 rounded-full"
-                  style={{ width: `${progress * 100}%` }}
+                  style={{ width: `${Math.max(progress * 100, 5)}%` }}
                 ></div>
               </div>
             </div>
+            <p className="max-w-[300px] truncate mt-[18px] text-sm">
+              {i18n.t("progress:")}
+              <b>
+                {/* eslint-disable-next-line react/jsx-no-literals */}{" "}
+                {Math.trunc(progress * 100)}
+                {/* eslint-disable-next-line react/jsx-no-literals */}
+                {"%"}
+              </b>
+            </p>
+            <p className="max-w-[300px] truncate mt-[10px] text-sm">
+              {i18n.t("translating:")}
+              {/* eslint-disable-next-line react/jsx-no-literals */}{" "}
+              <b>{keywordInTranslation}</b>
+            </p>
           </div>,
           document.body
         )}

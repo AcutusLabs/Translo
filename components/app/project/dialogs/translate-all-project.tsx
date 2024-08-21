@@ -22,10 +22,18 @@ type TranslateAllKeywordsProps = {
   keywords: KeywordData[]
   tokens: number
   setProgress: (progress: number | undefined) => void
+  setCurrentKeywordInTranslateAll: (keyword: string) => void
 }
 
 export function TranslateAllKeywords(props: TranslateAllKeywordsProps) {
-  const { projectId, languages, keywords, tokens, setProgress } = props
+  const {
+    projectId,
+    languages,
+    keywords,
+    tokens,
+    setProgress,
+    setCurrentKeywordInTranslateAll,
+  } = props
 
   const cost = useCostEstimation({
     sentences: keywords
@@ -57,6 +65,7 @@ export function TranslateAllKeywords(props: TranslateAllKeywordsProps) {
       setProgress(undefined)
     },
     showAlertType: alertContext.showAlert,
+    setCurrentKeywordInTranslateAll,
   })
 
   return (
