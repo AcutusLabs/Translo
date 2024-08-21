@@ -3,6 +3,7 @@ import {
   Fragment,
   useCallback,
   useContext,
+  useEffect,
   useMemo,
   useState,
 } from "react"
@@ -51,6 +52,7 @@ const DetailSlideOver = (props: Props) => {
 
   const alertContext = useContext(AlertContext)
   const [key, setKey] = useState(keyword.keyword)
+
   const [translations, setTranslations] = useState<
     (TranslationsProps & {
       history: string[]
@@ -75,6 +77,30 @@ const DetailSlideOver = (props: Props) => {
       }
     })
   )
+  useEffect(() => {
+    // when translation changed form api
+    setTranslations(
+      languages.map((language) => {
+        const translation = keyword.translations.find(
+          (_translation) => _translation.language.id === language.id
+        )
+        if (translation) {
+          return {
+            translationId: translation.id,
+            projectLanguageId: translation.language.id,
+            value: translation.value,
+            history: translation.history as string[],
+          }
+        }
+        return {
+          projectLanguageId: language.id,
+          value: "",
+          history: [],
+        }
+      })
+    )
+  }, [keyword.translations, languages])
+
   const [hints, setHints] = useState<LanguageHint[]>([])
   const [context, setContext] = useState<string>(keyword.context)
 
@@ -207,6 +233,7 @@ const DetailSlideOver = (props: Props) => {
     sentence: english?.value,
     onSuccess: (response) => {
       const hints: LanguageHint[] = []
+      let newTranslations = translations
       Object.keys(response).forEach((languageShort) => {
         const language = languages.find(
           (_lang) => _lang.short === languageShort
@@ -221,18 +248,16 @@ const DetailSlideOver = (props: Props) => {
         )
 
         if (currentTranslation && !currentTranslation.value) {
-          setTranslations(
-            translations.map((translation) => {
-              if (translation.projectLanguageId !== language.id) {
-                return translation
-              }
+          newTranslations = newTranslations.map((translation) => {
+            if (translation.projectLanguageId !== language.id) {
+              return translation
+            }
 
-              return {
-                ...translation,
-                value: response[languageShort],
-              }
-            })
-          )
+            return {
+              ...translation,
+              value: response[languageShort],
+            }
+          })
         } else {
           hints.push({
             projectLanguageId: language.id,
@@ -240,6 +265,7 @@ const DetailSlideOver = (props: Props) => {
           })
         }
       })
+      setTranslations(newTranslations)
       setHints(hints)
     },
     showAlertType: alertContext.showAlert,
@@ -384,11 +410,16 @@ const DetailSlideOver = (props: Props) => {
                         className="mt-2 max-w-fit"
                         onClick={() => mutate()}
                         variant={"default"}
+                        disabled={shouldSave}
                       >
                         {isPending && (
                           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
                         )}
-                        {i18n.t("From English generate all translations")}
+                        {shouldSave
+                          ? i18n.t(
+                              "Before using the automatic translation, you need to save"
+                            )
+                          : i18n.t("From English generate all translations")}
                       </Button>
                       <span
                         className="mt-2 text-sm"

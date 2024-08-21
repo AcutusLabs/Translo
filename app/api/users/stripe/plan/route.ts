@@ -15,6 +15,11 @@ import { ErrorResponse } from "@/lib/response"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
 import { absoluteUrl } from "@/lib/utils"
+import {
+  INTERNAL_SERVER_ERROR_STATUS,
+  LOGOUT_STATUS,
+  TYPE_ERROR_STATUS,
+} from "@/app/api/status"
 
 const stripeParams = z.object({
   plan: z
@@ -33,7 +38,10 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions)
 
     if (!session?.user || !session?.user.email) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: LOGOUT_STATUS,
+      })
     }
 
     const searchParams = req.nextUrl.searchParams
@@ -85,9 +93,11 @@ export async function GET(req: NextRequest) {
     return new Response(JSON.stringify({ url: stripeSession.url }))
   } catch (error) {
     if (error instanceof z.ZodError) {
-      return new Response(JSON.stringify(error.issues), { status: 422 })
+      return new Response(JSON.stringify(error.issues), {
+        status: TYPE_ERROR_STATUS,
+      })
     }
 
-    return new Response(error.message, { status: 500 })
+    return new Response(error.message, { status: INTERNAL_SERVER_ERROR_STATUS })
   }
 }

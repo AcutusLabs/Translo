@@ -17,6 +17,8 @@ import i18n from "@/lib/i18n"
 import { SuccessResponse } from "@/lib/response"
 import { stripe } from "@/lib/stripe"
 
+import { BAD_REQUEST_STATUS } from "../../status"
+
 export async function POST(req: Request) {
   const body = await req.text()
   const signature = headers().get("Stripe-Signature") as string
@@ -30,7 +32,9 @@ export async function POST(req: Request) {
       env.STRIPE_WEBHOOK_SECRET
     )
   } catch (error) {
-    return new Response(`Webhook Error: ${error.message}`, { status: 400 })
+    return new Response(`Webhook Error: ${error.message}`, {
+      status: BAD_REQUEST_STATUS,
+    })
   }
 
   const session = event.data.object as Stripe.Checkout.Session
@@ -46,7 +50,7 @@ export async function POST(req: Request) {
 
       if (!user) {
         return new Response(i18n.t("Stripe payment user not found"), {
-          status: 400,
+          status: BAD_REQUEST_STATUS,
         })
       }
 
@@ -80,13 +84,9 @@ export async function POST(req: Request) {
 
       if (!user) {
         return new Response(i18n.t("Stripe payment user not found"), {
-          status: 400,
+          status: BAD_REQUEST_STATUS,
         })
       }
-
-      sendServerPostHogEvent((client) => {
-        eventPayments(user.id, client, PaymentAction.subscriptionCreated)
-      })
 
       // Update the user stripe into in our database.
       // Since this is the initial subscription, we need to update
@@ -106,6 +106,10 @@ export async function POST(req: Request) {
             ? user.tokens
             : Number(user.tokens) + proPlanTokens,
         },
+      })
+
+      sendServerPostHogEvent((client) => {
+        eventPayments(user.id, client, PaymentAction.subscriptionCreated)
       })
     }
   }

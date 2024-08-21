@@ -17,6 +17,7 @@ import { ErrorResponse } from "@/lib/response"
 import { ProjectSettings } from "@/components/app/project/types"
 
 import { verifyCurrentUserHasAccessToProject } from "../projects/[projectId]/utils"
+import { LOGOUT_STATUS, NOT_ALLOWED_STATUS } from "../status"
 
 const generateTranslationSchema = z.object({
   projectId: z.string(),
@@ -29,7 +30,7 @@ export async function GET(req: NextRequest) {
     const session = await getServerSession(authOptions)
 
     if (!session) {
-      return new Response("Unauthorized", { status: 403 })
+      return new Response("Unauthorized", { status: LOGOUT_STATUS })
     }
 
     const user = await db.user.findFirst({
@@ -40,7 +41,7 @@ export async function GET(req: NextRequest) {
 
     if (!user) {
       return new Response(i18n.t("User not found"), {
-        status: 400,
+        status: NOT_ALLOWED_STATUS,
       })
     }
 
@@ -64,7 +65,10 @@ export async function GET(req: NextRequest) {
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(projectId))) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: NOT_ALLOWED_STATUS,
+      })
     }
 
     const project = await db.project.findFirst({
@@ -144,6 +148,7 @@ ${project.languages.map(
   (lang) => `language-id for ${lang.name} = ${lang.short}`
 )}
 `
+
       const openaiHelper = new OpenAIHelper()
       const chatGptResponse = await openaiHelper.askChatGPT({
         prompt,

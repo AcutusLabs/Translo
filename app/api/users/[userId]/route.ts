@@ -8,6 +8,8 @@ import i18n from "@/lib/i18n"
 import { ErrorResponse, SuccessResponse } from "@/lib/response"
 import { userNameSchema } from "@/lib/validations/user"
 
+import { LOGOUT_STATUS } from "../../status"
+
 const routeContextSchema = z.object({
   params: z.object({
     userId: z.string(),
@@ -25,7 +27,10 @@ export async function PATCH(
     // Ensure user is authentication and has access to this user.
     const session = await getServerSession(authOptions)
     if (!session?.user || params.userId !== session?.user.id) {
-      return ErrorResponse({ error: i18n.t("Wrong user"), status: 403 })
+      return ErrorResponse({
+        error: i18n.t("Wrong user"),
+        status: LOGOUT_STATUS,
+      })
     }
 
     // Get the request body and validate it.

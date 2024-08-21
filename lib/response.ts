@@ -1,4 +1,8 @@
 import { AlertType } from "@/types/api"
+import {
+  BAD_REQUEST_STATUS,
+  INTERNAL_SERVER_ERROR_STATUS,
+} from "@/app/api/status"
 
 export type ErrorResponseParams = {
   error: string
@@ -15,14 +19,14 @@ export const ErrorResponse = (
       description: params.description,
       alertType: params.alertType,
     }),
-    { status: params.status || 400 }
+    { status: params.status || BAD_REQUEST_STATUS }
   )
 
 export const GenericErrorResponse = (error: any) => {
   // eslint-disable-next-line no-console
   console.error(error)
   return new Response(JSON.stringify({ error: "Generic error" }), {
-    status: 500,
+    status: INTERNAL_SERVER_ERROR_STATUS,
   })
 }
 
