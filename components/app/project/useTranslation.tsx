@@ -80,7 +80,7 @@ const useTranslation = (props: EditorProps) => {
   }
 
   return {
-    tokens: tokensFromApi,
+    tokens: tokensFromApi as number,
     project,
     isPublished: props.project.published,
     download,
