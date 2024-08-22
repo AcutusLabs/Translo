@@ -5,8 +5,8 @@ import { z } from "zod"
 import { SubscriptionPlanType } from "@/types/subscription"
 import { proPlanMonthly, proPlanYearly } from "@/config/subscriptions"
 import {
-  PaymentAction,
   eventPayments,
+  PaymentAction,
   sendServerPostHogEvent,
 } from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"

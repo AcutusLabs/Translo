@@ -3,9 +3,9 @@ import * as z from "zod"
 
 import { AlertType } from "@/types/api"
 import {
-  UserDoAction,
   eventUserDo,
   sendServerPostHogEvent,
+  UserDoAction,
 } from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"
 import { MAX_PROJECTS_STARTER_URSER } from "@/lib/constants"

@@ -2,9 +2,9 @@ import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
 import {
-  UserDoAction,
   eventUserDo,
   sendServerPostHogEvent,
+  UserDoAction,
 } from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"

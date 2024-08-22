@@ -3,9 +3,9 @@
 import * as React from "react"
 import { useTheme } from "next-themes"
 
+import i18n from "@/lib/i18n"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
-import i18n from "@/lib/i18n"
 
 export function ThemeToggle() {
   const { theme, setTheme } = useTheme()
