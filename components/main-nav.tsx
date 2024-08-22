@@ -6,10 +6,10 @@ import { useSelectedLayoutSegment } from "next/navigation"
 
 import { MainNavItem } from "types"
 import { siteConfig } from "@/config/site"
+import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { Icons } from "@/components/icons"
 import { MobileNav } from "@/components/mobile-nav"
-import i18n from "@/lib/i18n"
 
 interface MainNavProps {
   items?: MainNavItem[]

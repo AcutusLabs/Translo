@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import Link from "next/link"
 
-import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
+import { eventPostHogClient, UserDoClientAction } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { useShareProject } from "@/hooks/api/project/use-share-project"

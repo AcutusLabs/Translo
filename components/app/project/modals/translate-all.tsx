@@ -59,16 +59,14 @@ const TranslateAllModal = (props: Props) => {
             <p className="max-w-[300px] truncate mt-[18px] text-sm">
               {i18n.t("progress:")}
               <b>
-                {/* eslint-disable-next-line react/jsx-no-literals */}{" "}
+                {" "}
                 {Math.trunc(progress * 100)}
                 {/* eslint-disable-next-line react/jsx-no-literals */}
                 {"%"}
               </b>
             </p>
             <p className="max-w-[300px] truncate mt-[10px] text-sm">
-              {i18n.t("translating:")}
-              {/* eslint-disable-next-line react/jsx-no-literals */}{" "}
-              <b>{keywordInTranslation}</b>
+              {i18n.t("translating:")} <b>{keywordInTranslation}</b>
             </p>
           </div>,
           document.body

@@ -1,8 +1,8 @@
 import Link from "next/link"
 
+import i18n from "@/lib/i18n"
 import { buttonVariants } from "@/components/ui/button"
 import { EmptyPlaceholder } from "@/components/empty-placeholder"
-import i18n from "@/lib/i18n"
 
 export default function NotFound() {
   return (

@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useContext, useMemo, useState } from "react"
 import { languages as allLanguages } from "@/constants/languages"
 import { DialogClose } from "@radix-ui/react-dialog"
 
-import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
+import { eventPostHogClient, UserDoClientAction } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { useAddLanguage } from "@/hooks/api/project/language/use-add-language"
 import { Button } from "@/components/ui/button"

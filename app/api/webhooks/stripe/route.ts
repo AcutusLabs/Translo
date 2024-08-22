@@ -8,8 +8,8 @@ import Stripe from "stripe"
 
 import { env } from "@/env.mjs"
 import {
-  PaymentAction,
   eventPayments,
+  PaymentAction,
   sendServerPostHogEvent,
 } from "@/lib/analytics-server"
 import { db } from "@/lib/db"
@@ -56,7 +56,7 @@ export async function POST(req: Request) {
 
       sendServerPostHogEvent((client) => {
         eventPayments(user.id, client, PaymentAction.recharged, {
-          amount: event.data.object["amount_total"] / 100,
+          amount: (event.data?.object?.["amount_total"] || 0) / 100,
         })
       })
 
@@ -66,8 +66,8 @@ export async function POST(req: Request) {
         },
         data: {
           tokens:
-            Number(user.tokens) +
-            event.data.object["amount_total"] * tokensPerCent,
+            Number(user.tokens || 0) +
+            (event.data?.object?.["amount_total"] || 0) * tokensPerCent,
         },
       })
     } else {
