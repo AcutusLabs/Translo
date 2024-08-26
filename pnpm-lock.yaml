@@ -10,7 +10,7 @@ dependencies:
     version: 0.4.10(react-dom@18.3.1)(react@18.3.1)
   '@hookform/resolvers':
     specifier: 3.9.0
-    version: 3.9.0(react-hook-form@7.52.2)
+    version: 3.9.0(react-hook-form@7.53.0)
   '@next-auth/prisma-adapter':
     specifier: 1.0.7
     version: 1.0.7(@prisma/client@5.18.0)(next-auth@4.24.7)
@@ -177,8 +177,8 @@ dependencies:
     specifier: 18.3.1
     version: 18.3.1(react@18.3.1)
   react-hook-form:
-    specifier: 7.52.2
-    version: 7.52.2(react@18.3.1)
+    specifier: 7.53.0
+    version: 7.53.0(react@18.3.1)
   standard-version:
     specifier: 9.5.0
     version: 9.5.0
@@ -812,12 +812,12 @@ packages:
     resolution: {integrity: sha512-9TANp6GPoMtYzQdt54kfAyMmz1+osLlXdg2ENroU7zzrtflTLrrC/lgrIfaSe+Wu0b89GKccT7vxXA0MoAIO+Q==}
     dev: false
 
-  /@hookform/resolvers@3.9.0(react-hook-form@7.52.2):
+  /@hookform/resolvers@3.9.0(react-hook-form@7.53.0):
     resolution: {integrity: sha512-bU0Gr4EepJ/EQsH/IwEzYLsT/PEj5C0ynLQ4m+GSHS+xKH4TfSelhluTgOaoc4kA5s7eCsQbM4wvZLzELmWzUg==}
     peerDependencies:
       react-hook-form: ^7.0.0
     dependencies:
-      react-hook-form: 7.52.2(react@18.3.1)
+      react-hook-form: 7.53.0(react@18.3.1)
     dev: false
 
   /@humanwhocodes/module-importer@1.0.1:
@@ -8609,8 +8609,8 @@ packages:
       scheduler: 0.23.2
     dev: false
 
-  /react-hook-form@7.52.2(react@18.3.1):
-    resolution: {integrity: sha512-pqfPEbERnxxiNMPd0bzmt1tuaPcVccywFDpyk2uV5xCIBphHV5T8SVnX9/o3kplPE1zzKt77+YIoq+EMwJp56A==}
+  /react-hook-form@7.53.0(react@18.3.1):
+    resolution: {integrity: sha512-M1n3HhqCww6S2hxLxciEXy2oISPnAzxY7gvwVPrtlczTM/1dDadXgUxDpHMrMTblDOcm/AXtXxHwZ3jpg1mqKQ==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
