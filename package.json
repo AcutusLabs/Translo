@@ -26,12 +26,12 @@
     "prisma:migration": "pnpm dotenv -e .env.local pnpm prisma migrate deploy",
     "stripe:webhook": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
     "i18n": "pnpm dotenv -e .env.local npx ts-node lib/i18n/import.ts",
-    "release": "pnpm install && standard-version",
-    "release-patch": "pnpm install && standard-version --release-as patch",
-    "release-version": "pnpm install && standard-version --release-as",
-    "check-release": "pnpm install && standard-version --dry-run",
-    "check-release-patch": "pnpm install && standard-version --dry-run --release-as patch",
-    "check-release-version": "pnpm install && standard-version --dry-run --release-as"
+    "release": "pnpm install && commit-and-tag-version",
+    "release-patch": "pnpm install && commit-and-tag-version --release-as patch",
+    "release-version": "pnpm install && commit-and-tag-version --release-as",
+    "check-release": "pnpm install && commit-and-tag-version --dry-run",
+    "check-release-patch": "pnpm install && commit-and-tag-version --dry-run --release-as patch",
+    "check-release-version": "pnpm install && commit-and-tag-version --dry-run --release-as"
   },
   "dependencies": {
     "@ariakit/react": "0.4.10",
@@ -92,7 +92,7 @@
     "react": "18.3.1",
     "react-dom": "18.3.1",
     "react-hook-form": "7.53.0",
-    "standard-version": "9.5.0",
+    "commit-and-tag-version": "12.4.2",
     "stripe": "16.8.0",
     "tailwind-merge": "2.5.2",
     "tailwindcss-animate": "1.0.7",
