@@ -87,7 +87,7 @@
     "nodemailer": "6.9.14",
     "openai": "4.56.0",
     "posthog-js": "1.157.2",
-    "posthog-node": "4.1.1",
+    "posthog-node": "4.2.0",
     "preline": "2.4.1",
     "react": "18.3.1",
     "react-dom": "18.3.1",
