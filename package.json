@@ -106,7 +106,7 @@
     "@eslint/js": "9.9.1",
     "@ianvs/prettier-plugin-sort-imports": "4.3.1",
     "@tailwindcss/line-clamp": "0.4.4",
-    "@tailwindcss/typography": "0.5.14",
+    "@tailwindcss/typography": "0.5.15",
     "@types/crypto-js": "4.2.2",
     "@types/lodash": "4.17.7",
     "@types/node": "22.5.0",
