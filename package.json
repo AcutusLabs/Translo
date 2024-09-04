@@ -133,7 +133,7 @@
     "prisma": "5.19.1",
     "rehype": "13.0.1",
     "rehype-autolink-headings": "7.1.0",
-    "rehype-pretty-code": "0.13.2",
+    "rehype-pretty-code": "0.14.0",
     "rehype-slug": "6.0.0",
     "remark": "15.0.1",
     "remark-gfm": "4.0.0",
