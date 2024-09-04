@@ -86,7 +86,7 @@
     "next-themes": "0.3.0",
     "nodemailer": "6.9.14",
     "openai": "4.57.1",
-    "posthog-js": "1.157.2",
+    "posthog-js": "1.160.3",
     "posthog-node": "4.2.0",
     "preline": "2.4.1",
     "react": "18.3.1",
