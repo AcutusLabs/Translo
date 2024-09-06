@@ -7,7 +7,7 @@ import useDidMountEffect from "@/hooks/useDidMountEffect"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import PreventEraseData from "@/components/prevent-erase-data-alert"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import SlideOver, { SlideOverRow } from "../../slide-over"
 import AddNewLanguage from "./dialogs/add-new-languages"

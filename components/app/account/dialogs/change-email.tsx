@@ -17,7 +17,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
 import { Icons } from "@/components/icons"
-import { changeEmail } from "@/app/api/users/utils"
+import { changeEmail } from "@/app/[lang]/api/users/utils"
 
 type ChangeEmailDialogProps = {
   oldEmail?: string

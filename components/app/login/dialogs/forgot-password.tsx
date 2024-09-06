@@ -15,7 +15,7 @@ import {
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { toast } from "@/components/ui/use-toast"
-import { forgotPassword } from "@/app/api/users/utils"
+import { forgotPassword } from "@/app/[lang]/api/users/utils"
 
 const ForgotPasswordDialog = () => {
   const [email, setEmail] = useState("")

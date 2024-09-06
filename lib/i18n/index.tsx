@@ -1,10 +1,13 @@
 import i18next from "i18next"
 
+import translationDE from "./languages/de.json"
 import translationEN from "./languages/en.json"
 import translationES from "./languages/es.json"
+import translationFR from "./languages/fr.json"
 import translationIT from "./languages/it.json"
+import translationPT from "./languages/pt.json"
 
-export const languagesSupported = ["en", "es", "it"]
+export const languagesSupported = ["en", "es", "it", "fr", "pt", "de"]
 
 export const defaultLanguage = "en"
 
@@ -18,6 +21,15 @@ i18next.init({
     },
     it: {
       translation: translationIT,
+    },
+    fr: {
+      translation: translationFR,
+    },
+    pt: {
+      translation: translationPT,
+    },
+    de: {
+      translation: translationDE,
     },
   },
   lng: defaultLanguage,
@@ -33,12 +45,14 @@ i18next.init({
 export type I18nKey = keyof typeof translationEN
 
 export default {
+  instance: i18next,
   changeLanguage: (lang: string) => {
-    if (!languagesSupported.includes(lang)) {
-      throw "Language not found"
-    }
+    // if (!languagesSupported.includes(lang)) {
+    //   throw "Language not found"
+    // }
 
     i18next.changeLanguage(lang)
   },
+  getLanguage: () => i18next.language,
   t: (key: I18nKey, vars: any = undefined) => i18next.t(key, vars).toString(),
 }

@@ -3,7 +3,7 @@ import { z } from "zod"
 
 import { ShowAlertType } from "@/types/api"
 import { toast } from "@/components/ui/use-toast"
-import { LOGOUT_STATUS, TYPE_ERROR_STATUS } from "@/app/api/status"
+import { LOGOUT_STATUS, TYPE_ERROR_STATUS } from "@/app/[lang]/api/status"
 
 import i18n from "./i18n"
 import { ErrorResponseParams, GenericErrorResponse } from "./response"

@@ -2,31 +2,61 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { withAuth } from "next-auth/middleware"
 
+import { languagesSupported } from "./lib/i18n"
+import { isAuthPage, isLandingPage } from "./utils/pages"
+
 export default withAuth(
   async function middleware(req) {
+    const { pathname } = req.nextUrl
+    const browserLanguage = req.headers.get("accept-language")?.split(",")[0]
+    let shortBrowserLanguage = browserLanguage
+
+    if (shortBrowserLanguage && shortBrowserLanguage.indexOf("-") !== -1) {
+      ;[shortBrowserLanguage] = shortBrowserLanguage.split("-")
+    }
+
+    if (shortBrowserLanguage && shortBrowserLanguage.indexOf("_") !== -1) {
+      ;[shortBrowserLanguage] = shortBrowserLanguage.split("_")
+    }
+
+    let shortLanguage: string = shortBrowserLanguage || "en"
+
+    const pathnameHasLocale = languagesSupported.some(
+      (locale) =>
+        pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    )
+
+    if (!pathnameHasLocale) {
+      // Redirect if there is no locale
+      req.nextUrl.pathname = `/${shortLanguage}/${pathname}`
+      // e.g. incoming request is /products
+      // The new URL is now /en-US/products
+      return NextResponse.redirect(req.nextUrl)
+    }
+
     const token = await getToken({ req })
     const isAuth = !!token
-    const isAuthPage =
-      req.nextUrl.pathname.startsWith("/login") ||
-      req.nextUrl.pathname.startsWith("/register")
+    const isLandingPageValue = isLandingPage(req.nextUrl.pathname)
+    const isAuthPageValue = isAuthPage(req.nextUrl.pathname)
 
-    if (isAuthPage) {
+    if (isAuthPageValue) {
       if (isAuth) {
         return NextResponse.redirect(new URL("/dashboard", req.url))
       }
 
-      return null
+      return NextResponse.next()
     }
 
-    if (!isAuth) {
+    if (!isAuth && !isLandingPageValue) {
       let from = req.nextUrl.pathname
       if (req.nextUrl.search) {
         from += req.nextUrl.search
       }
 
-      return NextResponse.redirect(
+      const response = NextResponse.redirect(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
+      return response
     }
 
     const res = NextResponse.next()
@@ -58,5 +88,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/editor/:path*", "/login", "/register"],
+  matcher: ["/((?!_next|images).*)"],
 }

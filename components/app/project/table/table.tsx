@@ -5,7 +5,7 @@ import { useCallback, useContext, useMemo, useState } from "react"
 import i18n from "@/lib/i18n"
 import { useDeleteKeyword } from "@/hooks/api/project/keyword/use-delete-keyword"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import AddNewKeyword from "../dialogs/add-new-keyword"
 import AddNewLanguage from "../dialogs/add-new-languages"
