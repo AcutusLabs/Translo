@@ -11,6 +11,7 @@ const nextConfig = {
   experimental: {
     appDir: true,
     serverComponentsExternalPackages: ["@prisma/client"],
+    instrumentationHook: true,
   },
   async headers() {
     return [
