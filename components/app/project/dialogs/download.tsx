@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { DownloadFormat } from "../useTranslation"
 

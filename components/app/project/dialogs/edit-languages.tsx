@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { LanguageData } from "../types"
 

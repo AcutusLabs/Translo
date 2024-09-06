@@ -3,7 +3,7 @@ import { useRouter } from "next/navigation"
 
 import { AlertType } from "@/types/api"
 import i18n from "@/lib/i18n"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import {
   AlertDialog,

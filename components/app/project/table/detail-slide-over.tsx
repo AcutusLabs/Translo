@@ -24,7 +24,7 @@ import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
 import PreventEraseData from "@/components/prevent-erase-data-alert"
 import SlideOver, { SlideOverRow } from "@/components/slide-over"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import {
   KeywordData,

@@ -16,7 +16,7 @@ import { useEditProject } from "@/hooks/api/project/use-edit-project"
 import { SemaphoreTranslation } from "@/hooks/api/project/use-translate-project"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"

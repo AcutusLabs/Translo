@@ -9,7 +9,7 @@ import {
 } from "@/config/subscriptions"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
-import { LOGOUT_STATUS } from "@/app/api/status"
+import { LOGOUT_STATUS } from "@/app/[lang]/api/status"
 
 import { Unauthorized } from "./exceptions"
 
