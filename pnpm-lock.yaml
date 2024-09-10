@@ -132,8 +132,8 @@ dependencies:
     specifier: 2.0.5
     version: 2.0.5
   i18next:
-    specifier: 23.14.0
-    version: 23.14.0
+    specifier: 23.15.1
+    version: 23.15.1
   jszip:
     specifier: 3.10.1
     version: 3.10.1
@@ -6412,8 +6412,8 @@ packages:
     hasBin: true
     dev: true
 
-  /i18next@23.14.0:
-    resolution: {integrity: sha512-Y5GL4OdA8IU2geRrt2+Uc1iIhsjICdHZzT9tNwQ3TVqdNzgxHToGCKf/TPRP80vTCAP6svg2WbbJL+Gx5MFQVA==}
+  /i18next@23.15.1:
+    resolution: {integrity: sha512-wB4abZ3uK7EWodYisHl/asf8UYEhrI/vj/8aoSsrj/ZDxj4/UXPOa1KvFt1Fq5hkUHquNqwFlDprmjZ8iySgYA==}
     dependencies:
       '@babel/runtime': 7.25.6
     dev: false
