@@ -190,7 +190,7 @@ dependencies:
     version: 2.5.2
   tailwindcss-animate:
     specifier: 1.0.7
-    version: 1.0.7(tailwindcss@3.4.10)
+    version: 1.0.7(tailwindcss@3.4.11)
   zod:
     specifier: 3.23.8
     version: 3.23.8
@@ -216,10 +216,10 @@ devDependencies:
     version: 4.3.1(prettier@3.3.3)
   '@tailwindcss/line-clamp':
     specifier: 0.4.4
-    version: 0.4.4(tailwindcss@3.4.10)
+    version: 0.4.4(tailwindcss@3.4.11)
   '@tailwindcss/typography':
     specifier: 0.5.15
-    version: 0.5.15(tailwindcss@3.4.10)
+    version: 0.5.15(tailwindcss@3.4.11)
   '@types/crypto-js':
     specifier: 4.2.2
     version: 4.2.2
@@ -264,7 +264,7 @@ devDependencies:
     version: 7.35.2(eslint@9.10.0)
   eslint-plugin-tailwindcss:
     specifier: 3.17.4
-    version: 3.17.4(tailwindcss@3.4.10)
+    version: 3.17.4(tailwindcss@3.4.11)
   fs:
     specifier: 0.0.1-security
     version: 0.0.1-security
@@ -308,8 +308,8 @@ devDependencies:
     specifier: 4.0.0
     version: 4.0.0
   tailwindcss:
-    specifier: 3.4.10
-    version: 3.4.10(ts-node@10.9.2)
+    specifier: 3.4.11
+    version: 3.4.11(ts-node@10.9.2)
   ts-node:
     specifier: 10.9.2
     version: 10.9.2(@types/node@22.5.4)(typescript@5.6.2)
@@ -545,16 +545,6 @@ packages:
       conventional-changelog-conventionalcommits: 7.0.2
     dev: true
 
-  /@commitlint/config-validator@19.0.3:
-    resolution: {integrity: sha512-2D3r4PKjoo59zBc2auodrSCaUnCSALCx54yveOFwwP/i2kfEAQrygwOleFWswLqK0UL/F9r07MFi5ev2ohyM4Q==}
-    engines: {node: '>=v18'}
-    requiresBuild: true
-    dependencies:
-      '@commitlint/types': 19.0.3
-      ajv: 8.17.1
-    dev: true
-    optional: true
-
   /@commitlint/config-validator@19.5.0:
     resolution: {integrity: sha512-CHtj92H5rdhKt17RmgALhfQt95VayrUo2tSqY9g2w+laAXyk7K/Ef6uPm9tn5qSIwSmrLjKaXK9eiNuxmQrDBw==}
     engines: {node: '>=v18'}
@@ -574,13 +564,6 @@ packages:
       lodash.startcase: 4.4.0
       lodash.upperfirst: 4.3.1
     dev: true
-
-  /@commitlint/execute-rule@19.0.0:
-    resolution: {integrity: sha512-mtsdpY1qyWgAO/iOK0L6gSGeR7GFcdW7tIjcNFxcWkfLDF5qVbPHKuGATFqRMsxcO8OUKNj0+3WOHB7EHm4Jdw==}
-    engines: {node: '>=v18'}
-    requiresBuild: true
-    dev: true
-    optional: true
 
   /@commitlint/execute-rule@19.5.0:
     resolution: {integrity: sha512-aqyGgytXhl2ejlk+/rfgtwpPexYyri4t8/n4ku6rRJoRhGZpLFMqrZ+YaubeGysCP6oz4mMA34YSTaSOKEeNrg==}
@@ -612,27 +595,6 @@ packages:
       '@commitlint/rules': 19.5.0
       '@commitlint/types': 19.5.0
     dev: true
-
-  /@commitlint/load@19.4.0(@types/node@22.5.4)(typescript@5.6.2):
-    resolution: {integrity: sha512-I4lCWaEZYQJ1y+Y+gdvbGAx9pYPavqZAZ3/7/8BpWh+QjscAn8AjsUpLV2PycBsEx7gupq5gM4BViV9xwTIJuw==}
-    engines: {node: '>=v18'}
-    requiresBuild: true
-    dependencies:
-      '@commitlint/config-validator': 19.0.3
-      '@commitlint/execute-rule': 19.0.0
-      '@commitlint/resolve-extends': 19.1.0
-      '@commitlint/types': 19.0.3
-      chalk: 5.3.0
-      cosmiconfig: 9.0.0(typescript@5.6.2)
-      cosmiconfig-typescript-loader: 5.0.0(@types/node@22.5.4)(cosmiconfig@9.0.0)(typescript@5.6.2)
-      lodash.isplainobject: 4.0.6
-      lodash.merge: 4.6.2
-      lodash.uniq: 4.5.0
-    transitivePeerDependencies:
-      - '@types/node'
-      - typescript
-    dev: true
-    optional: true
 
   /@commitlint/load@19.5.0(@types/node@22.5.4)(typescript@5.6.2):
     resolution: {integrity: sha512-INOUhkL/qaKqwcTUvCE8iIUf5XHsEPCLY9looJ/ipzi7jtGhgmtH7OOFiNvwYgH7mA8osUWOUDV8t4E2HAi4xA==}
@@ -678,20 +640,6 @@ packages:
       tinyexec: 0.3.0
     dev: true
 
-  /@commitlint/resolve-extends@19.1.0:
-    resolution: {integrity: sha512-z2riI+8G3CET5CPgXJPlzftH+RiWYLMYv4C9tSLdLXdr6pBNimSKukYP9MS27ejmscqCTVA4almdLh0ODD2KYg==}
-    engines: {node: '>=v18'}
-    requiresBuild: true
-    dependencies:
-      '@commitlint/config-validator': 19.0.3
-      '@commitlint/types': 19.0.3
-      global-directory: 4.0.1
-      import-meta-resolve: 4.1.0
-      lodash.mergewith: 4.6.2
-      resolve-from: 5.0.0
-    dev: true
-    optional: true
-
   /@commitlint/resolve-extends@19.5.0:
     resolution: {integrity: sha512-CU/GscZhCUsJwcKTJS9Ndh3AKGZTNFIOoQB2n8CmFnizE0VnEuJoum+COW+C1lNABEeqk6ssfc1Kkalm4bDklA==}
     engines: {node: '>=v18'}
@@ -725,16 +673,6 @@ packages:
     dependencies:
       find-up: 7.0.0
     dev: true
-
-  /@commitlint/types@19.0.3:
-    resolution: {integrity: sha512-tpyc+7i6bPG9mvaBbtKUeghfyZSDgWquIDfMgqYtTbmZ9Y9VzEm2je9EYcQ0aoz5o7NvGS+rcDec93yO08MHYA==}
-    engines: {node: '>=v18'}
-    requiresBuild: true
-    dependencies:
-      '@types/conventional-commits-parser': 5.0.0
-      chalk: 5.3.0
-    dev: true
-    optional: true
 
   /@commitlint/types@19.5.0:
     resolution: {integrity: sha512-DSHae2obMSMkAtTBSOulg5X7/z+rGLxcXQIkg3OmWvY6wifojge5uVMydfhUvs7yQj+V7jNmRZ2Xzl8GJyqRgg==}
@@ -3321,15 +3259,15 @@ packages:
       zod: 3.23.8
     dev: false
 
-  /@tailwindcss/line-clamp@0.4.4(tailwindcss@3.4.10):
+  /@tailwindcss/line-clamp@0.4.4(tailwindcss@3.4.11):
     resolution: {integrity: sha512-5U6SY5z8N42VtrCrKlsTAA35gy2VSyYtHWCsg1H87NU1SXnEfekTVlrga9fzUDrrHcGi2Lb5KenUWb4lRQT5/g==}
     peerDependencies:
       tailwindcss: '>=2.0.0 || >=3.0.0 || >=3.0.0-alpha.1'
     dependencies:
-      tailwindcss: 3.4.10(ts-node@10.9.2)
+      tailwindcss: 3.4.11(ts-node@10.9.2)
     dev: true
 
-  /@tailwindcss/typography@0.5.15(tailwindcss@3.4.10):
+  /@tailwindcss/typography@0.5.15(tailwindcss@3.4.11):
     resolution: {integrity: sha512-AqhlCXl+8grUz8uqExv5OTtgpjuVIwFTSXTrh8y9/pw6q2ek7fJ+Y8ZEVw7EB2DCcuCOtEjf9w3+J3rzts01uA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders || >=4.0.0-alpha.20'
@@ -3338,7 +3276,7 @@ packages:
       lodash.isplainobject: 4.0.6
       lodash.merge: 4.6.2
       postcss-selector-parser: 6.0.10
-      tailwindcss: 3.4.10(ts-node@10.9.2)
+      tailwindcss: 3.4.11(ts-node@10.9.2)
     dev: true
 
   /@tanstack/query-core@5.55.4:
@@ -4899,7 +4837,7 @@ packages:
       longest: 2.0.1
       word-wrap: 1.2.5
     optionalDependencies:
-      '@commitlint/load': 19.4.0(@types/node@22.5.4)(typescript@5.6.2)
+      '@commitlint/load': 19.5.0(@types/node@22.5.4)(typescript@5.6.2)
     transitivePeerDependencies:
       - '@types/node'
       - typescript
@@ -5559,7 +5497,7 @@ packages:
       string.prototype.repeat: 1.0.0
     dev: true
 
-  /eslint-plugin-tailwindcss@3.17.4(tailwindcss@3.4.10):
+  /eslint-plugin-tailwindcss@3.17.4(tailwindcss@3.4.11):
     resolution: {integrity: sha512-gJAEHmCq2XFfUP/+vwEfEJ9igrPeZFg+skeMtsxquSQdxba9XRk5bn0Bp9jxG1VV9/wwPKi1g3ZjItu6MIjhNg==}
     engines: {node: '>=18.12.0'}
     peerDependencies:
@@ -5567,7 +5505,7 @@ packages:
     dependencies:
       fast-glob: 3.3.2
       postcss: 8.4.45
-      tailwindcss: 3.4.10(ts-node@10.9.2)
+      tailwindcss: 3.4.11(ts-node@10.9.2)
     dev: true
 
   /eslint-scope@5.1.1:
@@ -9530,16 +9468,16 @@ packages:
     resolution: {integrity: sha512-kjEBm+pvD+6eAwzJL2Bi+02/9LFLal1Gs61+QB7HvTfQQ0aXwC5LGT8PEt1gS0CWKktKe6ysPTAy3cBC5MeiIg==}
     dev: false
 
-  /tailwindcss-animate@1.0.7(tailwindcss@3.4.10):
+  /tailwindcss-animate@1.0.7(tailwindcss@3.4.11):
     resolution: {integrity: sha512-bl6mpH3T7I3UFxuvDEXLxy/VuFxBk5bbzplh7tXI68mwMokNYd1t9qPBHlnyTwfa4JGC4zP516I1hYYtQ/vspA==}
     peerDependencies:
       tailwindcss: '>=3.0.0 || insiders'
     dependencies:
-      tailwindcss: 3.4.10(ts-node@10.9.2)
+      tailwindcss: 3.4.11(ts-node@10.9.2)
     dev: false
 
-  /tailwindcss@3.4.10(ts-node@10.9.2):
-    resolution: {integrity: sha512-KWZkVPm7yJRhdu4SRSl9d4AK2wM3a50UsvgHZO7xY77NQr2V+fIrEuoDGQcbvswWvFGbS2f6e+jC/6WJm1Dl0w==}
+  /tailwindcss@3.4.11(ts-node@10.9.2):
+    resolution: {integrity: sha512-qhEuBcLemjSJk5ajccN9xJFtM/h0AVCPaA6C92jNP+M2J8kX+eMJHI7R2HFKUvvAsMpcfLILMCFYSeDwpMmlUg==}
     engines: {node: '>=14.0.0'}
     hasBin: true
     dependencies:
