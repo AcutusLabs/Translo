@@ -162,8 +162,8 @@ dependencies:
     specifier: 6.9.15
     version: 6.9.15
   openai:
-    specifier: 4.58.2
-    version: 4.58.2(zod@3.23.8)
+    specifier: 4.59.0
+    version: 4.59.0(zod@3.23.8)
   posthog-js:
     specifier: 1.161.3
     version: 1.161.3
@@ -8019,8 +8019,8 @@ packages:
       mimic-fn: 2.1.0
     dev: true
 
-  /openai@4.58.2(zod@3.23.8):
-    resolution: {integrity: sha512-hIalypYELt7/PcryFpz4Gi1z/8ZDzukWyOhr+jKM6L/GVE+t4NseaENXKt+OxnkkIm/1R2EkdGxgnHrZ0kB5bQ==}
+  /openai@4.59.0(zod@3.23.8):
+    resolution: {integrity: sha512-3bn7FypMt2R1ZDuO0+GcXgBEnVFhIzrpUkb47pQRoYvyfdZ2fQXcuP14aOc4C8F9FvCtZ/ElzJmVzVqnP4nHNg==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
