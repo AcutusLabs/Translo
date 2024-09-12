@@ -72,7 +72,7 @@
     "clsx": "2.1.1",
     "cmdk": "1.0.0",
     "commit-and-tag-version": "12.4.3",
-    "concurrently": "8.2.2",
+    "concurrently": "9.0.1",
     "crypto-js": "4.2.0",
     "dotenv-cli": "7.4.2",
     "file-saver": "2.0.5",
