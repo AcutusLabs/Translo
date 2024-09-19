@@ -120,8 +120,8 @@ importers:
         specifier: 1.0.0
         version: 1.0.0(@types/react-dom@18.3.0)(@types/react@18.3.7)(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
       commit-and-tag-version:
-        specifier: 12.4.3
-        version: 12.4.3
+        specifier: 12.4.4
+        version: 12.4.4
       concurrently:
         specifier: 9.0.1
         version: 9.0.1
@@ -2497,8 +2497,8 @@ packages:
     resolution: {integrity: sha512-NOKm8xhkzAjzFx8B2v5OAHT+u5pRQc2UCa2Vq9jYL/31o2wi9mxBA7LIFs3sV5VSC49z6pEhfbMULvShKj26WA==}
     engines: {node: '>= 6'}
 
-  commit-and-tag-version@12.4.3:
-    resolution: {integrity: sha512-q+DaQ4QmvDjU3QBUfZmiH3CCL5Jf3saJ0I9dI1hL9equA4ZosoOkg3eya5q0qAc5T0eow+gF0DfKZskRbm4Shw==}
+  commit-and-tag-version@12.4.4:
+    resolution: {integrity: sha512-sK+69usdfluwRO6DtXs8wpRvyM9OAuV6y8kTgMj+ncRG3KrXeKjNcxFsWnnwH/KZU9k8ErKu5uQ1ptX6/pPk7A==}
     engines: {node: '>=18'}
     hasBin: true
 
@@ -8135,7 +8135,7 @@ snapshots:
 
   commander@4.1.1: {}
 
-  commit-and-tag-version@12.4.3:
+  commit-and-tag-version@12.4.4:
     dependencies:
       chalk: 2.4.2
       conventional-changelog: 4.0.0
