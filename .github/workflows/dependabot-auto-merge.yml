@@ -76,7 +76,7 @@ jobs:
     steps:
       - name: Dependabot metadata
         id: dependabot-metadata
-        uses: dependabot/fetch-metadata@v2.1.0
+        uses: dependabot/fetch-metadata@v2.2.0
 
   check-groups:
     if: needs.metadata.outputs.is-group
