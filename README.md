@@ -1,10 +1,12 @@
-## Translo is a localization management platform, open-source, for building better products
+# Translo
 
-- It manages all the translations you need
-- Import JSON files and translate them
-- Translate via ChatGPT
-- Export to JSON or via URL (if you need other types of export, please open an issue)
-- If the project works, we plan to manage teams (leave a like and we'll understand that you like it)
+[Translo](https://www.translo.app) is a localization management platform, open-source, for building better products 
+
+- [x] It manages all the translations you need
+- [x] Import JSON files and translate them
+- [x] Translate via ChatGPT
+- [x] Export to JSON or via URL (if you need other types of export, please open an issue)
+- [ ] If the project works, we plan to manage teams (leave a like and we'll understand that you like it)
 
 ## Running Locally
 
