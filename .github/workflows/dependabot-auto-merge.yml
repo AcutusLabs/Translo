@@ -1,26 +1,23 @@
-name: Auto Merge Dependabot PRs
+name: Dependabot auto-merge
+on: pull_request
 
-on:
-  pull_request:
-    types:
-      - labeled
-      - opened
-      - synchronize
+permissions:
+  contents: write
+  pull-requests: write
 
 jobs:
-  automerge:
+  dependabot:
     runs-on: ubuntu-latest
-    if: github.actor == 'dependabot[bot]'
+    if: github.event.pull_request.user.login == 'dependabot[bot]' && github.repository == 'owner/my_repo'
     steps:
-      - name: Checkout
-        uses: actions/checkout@v2
-
-      - name: Auto Merge
-        uses: pascalgn/automerge-action@v0.15.3
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+      - name: Dependabot metadata
+        id: metadata
+        uses: dependabot/fetch-metadata@v2
         with:
-          mergeMethod: squash # o 'merge' o 'rebase' se preferisci un altro metodo
-          mergeLabel: automerge # etichetta da aggiungere per triggerare l'auto-merge
-          allowMinor: true # permette l'auto-merge per le minor
-          allowPatch: true # permette l'auto-merge per le patch
+          github-token: "${{ secrets.GITHUB_TOKEN }}"
+      - name: Enable auto-merge for Dependabot PRs
+        if: contains(steps.metadata.outputs.dependency-names, 'my-dependency') && (steps.metadata.outputs.update-type == 'version-update:semver-minor' || steps.metadata.outputs.update-type == 'version-update:semver-patch')
+        run: gh pr merge --auto --merge "$PR_URL"
+        env:
+          PR_URL: ${{github.event.pull_request.html_url}}
+          GH_TOKEN: ${{secrets.GITHUB_TOKEN}}
