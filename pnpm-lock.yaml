@@ -168,8 +168,8 @@ importers:
         specifier: 4.59.0
         version: 4.59.0(zod@3.23.8)
       posthog-js:
-        specifier: 1.161.3
-        version: 1.161.3
+        specifier: 1.161.6
+        version: 1.161.6
       posthog-node:
         specifier: 4.2.0
         version: 4.2.0
@@ -4569,8 +4569,8 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  posthog-js@1.161.3:
-    resolution: {integrity: sha512-TQ77jtLemkUJUyJAPrwGay6tLqcAmXEM1IJgXOx5Tr4UohiTx8JTznzrCuh/SdwPIrbcSM1r2YPwb72XwTC3wg==}
+  posthog-js@1.161.6:
+    resolution: {integrity: sha512-UO0z/YTuan55Kl5Yg9Xs5x1PKUkm2zGKUNPioznb4GLRcxFnLBkWoeKQXNro2YZsYJvK+MY8jlF3cdGa8BZ8/Q==}
 
   posthog-node@4.2.0:
     resolution: {integrity: sha512-hgyCYMyzMvuF3qWMw6JvS8gT55v7Mtp5wKWcnDrw+nu39D0Tk9BXD7I0LOBp0lGlHEPaXCEVYUtviNKrhMALGA==}
@@ -10672,7 +10672,7 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  posthog-js@1.161.3:
+  posthog-js@1.161.6:
     dependencies:
       fflate: 0.4.8
       preact: 10.23.2
