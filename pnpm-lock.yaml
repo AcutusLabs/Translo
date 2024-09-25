@@ -165,8 +165,8 @@ importers:
         specifier: 6.9.15
         version: 6.9.15
       openai:
-        specifier: 4.63.0
-        version: 4.63.0(zod@3.23.8)
+        specifier: 4.64.0
+        version: 4.64.0(zod@3.23.8)
       posthog-js:
         specifier: 1.165.0
         version: 1.165.0
@@ -1922,9 +1922,6 @@ packages:
 
   '@types/node@18.19.50':
     resolution: {integrity: sha512-xonK+NRrMBRtkL1hVCc3G+uXtjh1Al4opBLjqVmipe5ZAaBYWW6cNAiBVZ1BvmkBhep698rP3UM3aRAdSALuhg==}
-
-  '@types/node@22.6.1':
-    resolution: {integrity: sha512-V48tCfcKb/e6cVUigLAaJDAILdMP0fUW6BidkPK4GpGjXcfbnoHasCZDwz3N3yVt5we2RHm4XTQCpv0KJz9zqw==}
 
   '@types/node@22.7.2':
     resolution: {integrity: sha512-866lXSrpGpgyHBZUa2m9YNWqHDjjM0aBTJlNtYaGEw4rqY/dcD7deRVTbBBAJelfA7oaGDbNftXF/TL/A6RgoA==}
@@ -4276,8 +4273,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openai@4.63.0:
-    resolution: {integrity: sha512-Y9V4KODbmrOpqiOmCDVnPfMxMqKLOx8Hwcdn/r8mePq4yv7FSXGnxCs8/jZKO7zCB/IVPWihpJXwJNAIOEiZ2g==}
+  openai@4.64.0:
+    resolution: {integrity: sha512-+o4vDKn2xzNMeR71rFMCPLr2penpwoALgRoJyIboIBOlkKjw+SoRiBOlO9ss1diXM4Elv01L/iliyr2oqY/l+A==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -7435,10 +7432,6 @@ snapshots:
     dependencies:
       undici-types: 5.26.5
 
-  '@types/node@22.6.1':
-    dependencies:
-      undici-types: 6.19.8
-
   '@types/node@22.7.2':
     dependencies:
       undici-types: 6.19.8
@@ -9511,7 +9504,7 @@ snapshots:
 
   jest-worker@27.5.1:
     dependencies:
-      '@types/node': 22.6.1
+      '@types/node': 22.7.2
       merge-stream: 2.0.0
       supports-color: 8.1.1
 
@@ -10303,7 +10296,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openai@4.63.0(zod@3.23.8):
+  openai@4.64.0(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.50
       '@types/node-fetch': 2.6.11
