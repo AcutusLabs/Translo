@@ -186,8 +186,8 @@ importers:
         specifier: 7.53.0
         version: 7.53.0(react@18.3.1)
       stripe:
-        specifier: 17.0.0
-        version: 17.0.0
+        specifier: 17.1.0
+        version: 17.1.0
       tailwind-merge:
         specifier: 2.5.2
         version: 2.5.2
@@ -5159,8 +5159,8 @@ packages:
     resolution: {integrity: sha512-6fPc+R4ihwqP6N/aIv2f1gMH8lOVtWQHoqC4yK6oSDVVocumAsfCqjkXnqiYMhmMwS/mEHLp7Vehlt3ql6lEig==}
     engines: {node: '>=8'}
 
-  stripe@17.0.0:
-    resolution: {integrity: sha512-URKpnjH2O+OWxhvXLIaEIaAkp2fQvqITm/3zJS0a3nGCREjH3qJYxmGowngA46Qu1x2MumNL3Y/OdY6uzIhpCQ==}
+  stripe@17.1.0:
+    resolution: {integrity: sha512-sNRsJx7LPP2Gg6cBJoHJqhr+UoBVZZRes2BDqbrg+1FDBxJc4Yn+LkrpJ/VnL3XQ3+6I5GrOUnSSFfE/joDFjw==}
     engines: {node: '>=12.*'}
 
   styled-jsx@5.1.1:
@@ -11280,7 +11280,7 @@ snapshots:
 
   strip-json-comments@3.1.1: {}
 
-  stripe@17.0.0:
+  stripe@17.1.0:
     dependencies:
       '@types/node': 22.7.4
       qs: 6.13.0
