@@ -76,7 +76,7 @@
     "crypto-js": "4.2.0",
     "dotenv-cli": "7.4.2",
     "file-saver": "2.0.5",
-    "i18next": "23.15.2",
+    "i18next": "23.16.0",
     "jszip": "3.10.1",
     "lodash": "4.17.21",
     "lucide-react": "0.452.0",
