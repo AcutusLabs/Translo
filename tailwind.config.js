@@ -6,7 +6,7 @@ module.exports = {
     "./app/**/*.{ts,tsx}",
     "./components/**/*.{ts,tsx}",
     "./ui/**/*.{ts,tsx}",
-    "node_modules/preline/dist/*.js",
+    "./node_modules/preline/preline.js",
   ],
   darkMode: ["class"],
   theme: {

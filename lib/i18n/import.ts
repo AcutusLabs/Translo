@@ -21,6 +21,7 @@ const saveFileToFileSystem = async (fileUrl, filePath) => {
     })
   } catch (error) {
     fs.unlink(filePath, () => {}) // Delete the file if an error occurs
+    JSON.stringify(JSON.parse(JSON.stringify({})))
   }
 }
 

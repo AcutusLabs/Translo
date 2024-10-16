@@ -1,3 +1,5 @@
+"use client"
+
 import { notFound, redirect } from "next/navigation"
 import { Project, User } from "@prisma/client"
 
@@ -5,6 +7,7 @@ import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
 import i18n from "@/lib/i18n"
+import { withI18n } from "@/lib/i18n/with-i18n"
 import { getCurrentUser } from "@/lib/session"
 import { Editor } from "@/components/app/project"
 import {
@@ -35,7 +38,7 @@ interface EditorPageProps {
   params: { projectId: string }
 }
 
-export default async function EditorPage({ params }: EditorPageProps) {
+export default withI18n(async function EditorPage({ params }: EditorPageProps) {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -98,4 +101,4 @@ export default async function EditorPage({ params }: EditorPageProps) {
       />
     </>
   )
-}
+})

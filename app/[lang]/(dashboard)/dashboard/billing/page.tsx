@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
+import { withI18n } from "@/lib/i18n/with-i18n"
 import { getCurrentUser } from "@/lib/session"
 import { stripe } from "@/lib/stripe"
 import { getUserSubscriptionPlan } from "@/lib/subscription"
@@ -18,7 +19,7 @@ export const metadata = {
   description: "Manage billing and your subscription plan.",
 }
 
-export default async function BillingPage() {
+export default withI18n(async function BillingPage() {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -60,4 +61,4 @@ export default async function BillingPage() {
       </DashboardShell>
     </>
   )
-}
+})

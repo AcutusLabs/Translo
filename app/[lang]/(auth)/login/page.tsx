@@ -4,6 +4,8 @@ import Link from "next/link"
 import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
+import { withI18n } from "@/lib/i18n/with-i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/app/login/user-auth-form"
@@ -16,13 +18,13 @@ export const metadata: Metadata = {
   description: "Login to your account",
 }
 
-export default function LoginPage() {
+export default withI18n(function LoginPage() {
   return (
     <>
       <PageView page={PageAnalytics.login} />
       <div className="container flex h-screen w-screen flex-col items-center justify-center">
         <Link
-          href="/"
+          href={navigate().home()}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "absolute left-4 top-4 md:left-8 md:top-8"
@@ -46,7 +48,7 @@ export default function LoginPage() {
           <UserAuthForm type="login" />
           <p className="px-8 text-center text-sm text-muted-foreground">
             <Link
-              href="/register"
+              href={navigate().register()}
               className="hover:text-brand underline underline-offset-4"
             >
               {i18n.t("Dont have an account? Sign Up")}
@@ -56,4 +58,4 @@ export default function LoginPage() {
       </div>
     </>
   )
-}
+})

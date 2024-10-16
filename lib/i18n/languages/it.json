@@ -169,7 +169,7 @@
   "The content is not available": "Il contenuto non è disponibile",
   "The costs associated with each AI translation impact our expenses, so to simplify management and provide the best pricing service, a recharge will be required": "I costi associati a ciascuna traduzione AI influenzano le nostre spese, quindi per semplificare la gestione e offrire il miglior servizio di tariffazione, sarà necessaria una ricarica",
   "The free plan is limited to {projects} project and {keywords} keywords. Upgrade to the PRO plan for unlimited projects.": "Il piano gratuito è limitato a {{projects}} progetto e {{keywords}} parole chiave. Passa al piano PRO per progetti illimitati.",
-  "The free trial begins upon sign-up, enabling you to explore the app. During the trial, {MAX_PROJECTS_STARTER_URSER} project is available with a limit of {MAX_KEYWORDS_STARTER_URSER} keywords. Upon subscribing to a premium plan, you will have unrestricted access.": "Il periodo di prova gratuito inizia al momento dell'iscrizione, consentendoti di esplorare l'app. Durante il periodo di prova, 1 progetto è disponibile con un limite di {{MAX_KEYWORDS_STARTER_URSER}} parole chiave. Una volta sottoscritto un piano premium, avrai accesso illimitato.",
+  "The free trial begins upon sign-up, enabling you to explore the app. During the trial, {MAX_PROJECTS_STARTER_URSER} project is available with a limit of {MAX_KEYWORDS_STARTER_URSER} keywords. Upon subscribing to a premium plan, you will have unrestricted access.": "Il periodo di prova gratuito inizia al momento dell'iscrizione, consentendoti di esplorare l'app. Durante il periodo di prova, 1 progetto è disponibile con un limite di {{MAX_KEYWORDS_STARTER_USER}} parole chiave. Una volta sottoscritto un piano premium, avrai accesso illimitato.",
   "The keyword does not exist": "La parola chiave non esiste",
   "The password does not match. Please try again.": "La password non corrisponde. Per favore riprova.",
   "The password has been updated successfully": "La password è stata aggiornata con successo",
@@ -256,5 +256,7 @@
   "translating:": "traduzione:",
   "Before using the automatic translation, you need to save": "Prima di usare la traduzione automatica, devi salvare",
   "Actions": "gggg",
-  "Add custom language": "Aggiungi lingua personalizzata"
+  "Add custom language": "Aggiungi lingua personalizzata",
+  "Features": "Funzionalità",
+  "Pricing": "Prezzi"
 }

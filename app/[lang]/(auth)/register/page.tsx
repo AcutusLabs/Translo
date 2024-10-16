@@ -3,6 +3,8 @@ import Link from "next/link"
 import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
+import { withI18n } from "@/lib/i18n/with-i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { UserAuthForm } from "@/components/app/login/user-auth-form"
@@ -15,13 +17,13 @@ export const metadata = {
   description: "Create an account to get started.",
 }
 
-export default function RegisterPage() {
+export default withI18n(function RegisterPage() {
   return (
     <>
       <PageView page={PageAnalytics.register} />
       <div className="container grid h-screen w-screen flex-col items-center justify-center lg:max-w-none lg:grid-cols-2 lg:px-0">
         <Link
-          href="/login"
+          href={navigate().login()}
           className={cn(
             buttonVariants({ variant: "ghost" }),
             "absolute right-4 top-4 md:right-8 md:top-8"
@@ -71,4 +73,4 @@ export default function RegisterPage() {
       </div>
     </>
   )
-}
+})

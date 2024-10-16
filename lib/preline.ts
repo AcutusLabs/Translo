@@ -14,13 +14,13 @@ export default function PrelineScript() {
   const path = usePathname()
 
   useEffect(() => {
-    import("preline/preline")
-  }, [])
+    const loadPreline = async () => {
+      await import("preline/preline")
 
-  useEffect(() => {
-    setTimeout(() => {
-      window.HSStaticMethods?.autoInit()
-    }, 100)
+      window.HSStaticMethods.autoInit()
+    }
+
+    loadPreline()
   }, [path])
 
   return null

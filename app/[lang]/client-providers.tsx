@@ -9,6 +9,7 @@ import { PostHogProvider } from "posthog-js/react"
 
 import { env } from "@/env.mjs"
 import { AlertType, ShowAlertType } from "@/types/api"
+import i18n from "@/lib/i18n"
 import { TooltipProvider } from "@/components/ui/tooltip"
 import KeywordsSubscriptionNeededAlert from "@/components/app/globalAlert/keywordsSubscriptionNeededAlert"
 import ProjectSubscriptionNeededAlert from "@/components/app/globalAlert/projectSubscriptionNeededAlert"
@@ -24,8 +25,13 @@ export const AlertContext = createContext<{
   showAlert: () => {},
 })
 
-export default function ClientProvider(props: { children: React.ReactNode }) {
+export default function ClientProvider(props: {
+  children: React.ReactNode
+  lang: string
+}) {
   const [alert, showAlert] = useState<AlertType | undefined>()
+
+  i18n.changeLanguage(props.lang)
 
   if (typeof window !== "undefined" && !posthog.__loaded) {
     posthog.init(process.env.NEXT_PUBLIC_POSTHOG_KEY || "", {

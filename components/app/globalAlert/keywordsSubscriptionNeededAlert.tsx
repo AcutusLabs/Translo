@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation"
 
 import { AlertType } from "@/types/api"
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import { AlertContext } from "@/app/[lang]/client-providers"
 
 import {
@@ -46,7 +47,7 @@ const KeywordsSubscriptionNeededAlert = () => {
           </AlertDialogCancel>
           <AlertDialogAction
             onClick={() => {
-              router.push("/dashboard/billing")
+              router.push(navigate().billing())
               alertContext.showAlert(undefined)
             }}
           >

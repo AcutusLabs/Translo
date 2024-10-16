@@ -4,6 +4,7 @@ import { ChangeEvent, useCallback, useContext, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { useAddProject } from "@/hooks/api/project/use-add-project"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -30,7 +31,7 @@ const AddNewProject = () => {
     projectName,
     onSuccess: (project) => {
       router.refresh()
-      router.push(`/editor/${project.id}`)
+      router.push(navigate().project(project.id))
       setProjectName("")
       setOpen(false)
     },

@@ -10,7 +10,7 @@ const LanguageSwitch = () => {
   const router = useRouter()
   const pathname = usePathname() || "/en/"
 
-  const [, currentLanguage] = pathname.match(/^\/([^\/]+)\/?.*/i) || ["en"]
+  const [, currentLanguage] = pathname.match(/^\/([^\/]+)\/?.*/i) || [, "en"]
 
   return (
     <div className="hs-dropdown [--placement:top-left] relative inline-flex">
@@ -36,12 +36,12 @@ const LanguageSwitch = () => {
           strokeLinecap="round"
           strokeLinejoin="round"
         >
-          <path d="m18 15-6-6-6 6" />
+          <path d="m18 15-6-6-6 6"></path>
         </svg>
       </button>
 
       <div
-        className="hs-dropdown-menu w-40 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 hidden z-10 bg-white shadow-md rounded-lg p-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700"
+        className="hs-dropdown-menu w-40 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 z-10 bg-white shadow-md rounded-lg p-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 hidden"
         role="menu"
         aria-orientation="vertical"
         aria-labelledby="hs-footer-language-dropdown"
@@ -49,11 +49,11 @@ const LanguageSwitch = () => {
         {languagesSupported
           .filter((language) => language !== currentLanguage)
           .map((language) => (
-            <a
+            <div
               key={language}
               className="flex items-center gap-x-2 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300 hover:cursor-pointer"
               onClick={() => {
-                router.push(
+                router.replace(
                   pathname.replace(
                     /^\/([^\/]+)(\/?.*)/i,
                     (_match, _exLang, other) => {
@@ -65,7 +65,7 @@ const LanguageSwitch = () => {
             >
               <div>{getLanguageFlag(language).flag}</div>
               <div>{getLanguageFlag(language).name}</div>
-            </a>
+            </div>
           ))}
       </div>
     </div>

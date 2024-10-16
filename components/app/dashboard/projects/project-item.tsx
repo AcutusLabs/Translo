@@ -1,6 +1,7 @@
 import Link from "next/link"
 import { Project } from "@prisma/client"
 
+import { navigate } from "@/lib/link"
 import { formatDate } from "@/lib/utils"
 import { Skeleton } from "@/components/ui/skeleton"
 import { ProjectOperations } from "@/components/app/dashboard/projects/project-operations"
@@ -12,7 +13,7 @@ interface ProjectItemProps {
 export function ProjectItem({ project }: ProjectItemProps) {
   return (
     <Link
-      href={`/editor/${project.id}`}
+      href={navigate().project(project.id)}
       className="font-semibold hover:underline"
     >
       <div className="flex items-center justify-between p-4">

@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
+import { withI18n } from "@/lib/i18n/with-i18n"
 import { getCurrentUser } from "@/lib/session"
 import { UserForm } from "@/components/app/account/user-form"
 import { DashboardHeader } from "@/components/header"
@@ -15,7 +16,7 @@ export const metadata = {
   description: "Manage account and website settings.",
 }
 
-export default async function SettingsPage() {
+export default withI18n(async function SettingsPage() {
   const user = await getCurrentUser()
 
   if (!user) {
@@ -44,4 +45,4 @@ export default async function SettingsPage() {
       </DashboardShell>
     </>
   )
-}
+})
