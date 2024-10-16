@@ -6,6 +6,7 @@ import { useRouter } from "next/navigation"
 import { Project } from "@prisma/client"
 
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import {
   AlertDialog,
   AlertDialogAction,
@@ -60,7 +61,7 @@ export function ProjectOperations({ project }: ProjectOperationsProps) {
         </DropdownMenuTrigger>
         <DropdownMenuContent align="end">
           <DropdownMenuItem>
-            <Link href={`/editor/${project.id}`} className="flex w-full">
+            <Link href={navigate().project(project.id)} className="flex w-full">
               {i18n.t("Edit")}
             </Link>
           </DropdownMenuItem>

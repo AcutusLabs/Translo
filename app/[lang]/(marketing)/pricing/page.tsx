@@ -10,6 +10,8 @@ import {
   PRO_PLAN_PRICING_YEARLY,
 } from "@/lib/constants"
 import i18n from "@/lib/i18n"
+import { withI18n } from "@/lib/i18n/with-i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
 import { Separator } from "@/components/ui/separator"
@@ -22,7 +24,7 @@ export const metadata = {
   title: "Pricing",
 }
 
-export default async function PricingPage() {
+export default withI18n(async function PricingPage() {
   const Analytics = await PostHogAnalytics(PageAnalytics.pricing)
   return (
     <>
@@ -69,7 +71,7 @@ export default async function PricingPage() {
                 </p>
               </div>
               <Link
-                href="/login"
+                href={navigate().login()}
                 className={cn(buttonVariants({ size: "lg" }))}
               >
                 {i18n.t("Get started")}
@@ -85,7 +87,7 @@ export default async function PricingPage() {
                 </p>
               </div>
               <Link
-                href="/login"
+                href={navigate().login()}
                 className={cn(buttonVariants({ size: "lg" }))}
               >
                 {i18n.t("Get started")}
@@ -158,7 +160,10 @@ export default async function PricingPage() {
             <div>
               <h4 className="text-5xl font-bold mb-2">{i18n.t("Free")}</h4>
             </div>
-            <Link href="/login" className={cn(buttonVariants({ size: "lg" }))}>
+            <Link
+              href={navigate().login()}
+              className={cn(buttonVariants({ size: "lg" }))}
+            >
               {i18n.t("Get started")}
             </Link>
           </div>
@@ -166,4 +171,4 @@ export default async function PricingPage() {
       </section>
     </>
   )
-}
+})

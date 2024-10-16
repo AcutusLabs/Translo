@@ -1,11 +1,12 @@
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 
 const GetStarterd = () => {
   return (
     <div className="text-center">
       <a
         className="py-3 px-4 inline-flex justify-center items-center gap-x-2 text-sm font-semibold rounded-lg border border-transparent bg-blue-600 text-white hover:bg-blue-700 disabled:opacity-50 disabled:pointer-events-none dark:focus:outline-none dark:focus:ring-1 dark:focus:ring-gray-600"
-        href="/register"
+        href={navigate().register()}
       >
         {i18n.t("Get started")}
         <svg

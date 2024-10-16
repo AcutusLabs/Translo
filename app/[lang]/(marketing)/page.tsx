@@ -2,6 +2,7 @@ import { redirect } from "next/navigation"
 
 import { PageAnalytics } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
+import { withI18n } from "@/lib/i18n/with-i18n"
 import { getCurrentUser } from "@/lib/session"
 import { cn } from "@/lib/utils"
 import { buttonVariants } from "@/components/ui/button"
@@ -11,7 +12,7 @@ import GetStarterd from "@/components/app/homepage/get-started"
 import { Icons } from "@/components/icons"
 import PostHogAnalytics from "@/components/posthog"
 
-export default async function IndexPage() {
+export default withI18n(async function IndexPage() {
   const user = await getCurrentUser()
 
   if (user) {
@@ -100,4 +101,4 @@ export default async function IndexPage() {
       </section>
     </>
   )
-}
+})

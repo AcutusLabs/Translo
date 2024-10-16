@@ -89,9 +89,9 @@ export default async function RootLayout({
   params: { lang },
 }: RootLayoutProps) {
   i18n.changeLanguage(lang)
-
   return (
     <html lang={lang} suppressHydrationWarning>
+      <PrelineScript />
       <head />
       <body
         className={cn(
@@ -100,7 +100,7 @@ export default async function RootLayout({
           fontHeading.variable
         )}
       >
-        <ClientProvider>
+        <ClientProvider lang={lang}>
           <div>
             <ThemeProvider attribute="class" defaultTheme="system" enableSystem>
               <Suspense>{children}</Suspense>
@@ -111,7 +111,6 @@ export default async function RootLayout({
           </div>
         </ClientProvider>
       </body>
-      <PrelineScript />
     </html>
   )
 }

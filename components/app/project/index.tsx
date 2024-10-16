@@ -11,6 +11,7 @@ import { createPortal } from "react-dom"
 
 import { env } from "@/env.mjs"
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { useEditProject } from "@/hooks/api/project/use-edit-project"
 import { SemaphoreTranslation } from "@/hooks/api/project/use-translate-project"
@@ -60,7 +61,7 @@ export function Editor(props: EditorProps) {
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-10">
           <Link
-            href="/dashboard"
+            href={navigate().dashboard()}
             className={cn(buttonVariants({ variant: "ghost" }))}
           >
             <>
