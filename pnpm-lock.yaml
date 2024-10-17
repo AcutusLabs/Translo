@@ -168,8 +168,8 @@ importers:
         specifier: 4.67.3
         version: 4.67.3(zod@3.23.8)
       posthog-js:
-        specifier: 1.170.1
-        version: 1.170.1
+        specifier: 1.174.0
+        version: 1.174.0
       posthog-node:
         specifier: 4.2.1
         version: 4.2.1
@@ -2713,6 +2713,9 @@ packages:
     resolution: {integrity: sha512-YZ3GUyn/o8gfKJlnlX7g7xq4gyO6OSuhGPKaaGssGB2qgDUS0gPgtTvoyZLTt9Ab6dC4hfc9dV5arkvc/OCmrw==}
     engines: {node: '>= 0.6'}
 
+  core-js@3.38.1:
+    resolution: {integrity: sha512-OP35aUorbU3Zvlx7pjsFdu1rGNnD4pgw/CWoYzRY3t2EzoVT7shKHY1dlAy3f41cGIO7ZDPQimhGFTlEYkG/Hw==}
+
   core-util-is@1.0.3:
     resolution: {integrity: sha512-ZQBvi1DcpJ4GDqanjucZ2Hj3wEO5pZDS89BWbkcrvdxksJorwUDDZamX9ldFkp9aw2lmBDLgkObEA4DWNJ9FYQ==}
 
@@ -4035,6 +4038,7 @@ packages:
 
   match-sorter@6.4.0:
     resolution: {integrity: sha512-d4664ahzdL1QTTvmK1iI0JsrxWeJ6gn33qkYtnPg3mcn+naBLtXSgSPOe+X2vUgtgGwaAk3eiaj7gwKjjMAq+Q==}
+    deprecated: This was arguably a breaking change. Not in API, but more results can be returned. Upgrade to the next major when you are ready for that
 
   mdast-util-find-and-replace@3.0.1:
     resolution: {integrity: sha512-SG21kZHGC3XRTSUhtofZkBzZTJNM5ecCi0SK2IMKmSXR8vO3peL+kb1O0z7Zl83jKtutG4k5Wv/W7V3/YHvzPA==}
@@ -4654,8 +4658,8 @@ packages:
     resolution: {integrity: sha512-9ZhXKM/rw350N1ovuWHbGxnGh/SNJ4cnxHiM0rxE4VN41wsg8P8zWn9hv/buK00RP4WvlOyr/RBDiptyxVbkZQ==}
     engines: {node: '>=0.10.0'}
 
-  posthog-js@1.170.1:
-    resolution: {integrity: sha512-LReG76Sb2c0PlJZT5DSyM8GBU40d1fW/gqukwhjWYD3P8+98GJI8+e2qjVic4MI1PCZUkVPYxbP/bXkZQWhskg==}
+  posthog-js@1.174.0:
+    resolution: {integrity: sha512-60qCn8bloCxVc3oBQ/JP77J40J7UD+cRGUfYXJdsqjUH82s2wmCx4MicuNrcn9Hd2dHM25nXmOAMLO5iwSq9gg==}
 
   posthog-node@4.2.1:
     resolution: {integrity: sha512-l+fsjYEkTik3m/G0pE7gMr4qBJP84LhK779oQm6MBzhBGpd4By4qieTW+4FUAlNCyzQTynn3Nhsa50c0IELSxQ==}
@@ -8537,6 +8541,8 @@ snapshots:
 
   cookie@0.5.0: {}
 
+  core-js@3.38.1: {}
+
   core-util-is@1.0.3: {}
 
   cosmiconfig-typescript-loader@5.0.0(@types/node@22.7.6)(cosmiconfig@9.0.0(typescript@5.6.3))(typescript@5.6.3):
@@ -10852,8 +10858,9 @@ snapshots:
     dependencies:
       xtend: 4.0.2
 
-  posthog-js@1.170.1:
+  posthog-js@1.174.0:
     dependencies:
+      core-js: 3.38.1
       fflate: 0.4.8
       preact: 10.23.2
       web-vitals: 4.2.3
