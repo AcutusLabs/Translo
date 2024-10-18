@@ -81,7 +81,7 @@ const EditLanguage = (props: Props) => {
           {languageTitle}
         </button>
       </DialogTrigger>
-      <DialogContent className="sm:max-w-[425px]">
+      <DialogContent className="sm:max-w-[425px]" aria-describedby={undefined}>
         <DialogHeader>
           <DialogTitle>
             {i18n.t("Edit language: {language}", {
