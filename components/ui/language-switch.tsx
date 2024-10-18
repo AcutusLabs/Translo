@@ -25,7 +25,7 @@ const LanguageSwitch = () => {
         <div>{getLanguageFlag(currentLanguage).flag}</div>
         <div>{getLanguageFlag(currentLanguage).name}</div>
         <svg
-          className="hs-dropdown-open:rotate-180 shrink-0 size-4 text-gray-500 dark:text-neutral-500"
+          className="rotate-180 hs-dropdown-open:rotate-0 shrink-0 size-4 text-gray-500 dark:text-neutral-500"
           xmlns="http://www.w3.org/2000/svg"
           width="24"
           height="24"

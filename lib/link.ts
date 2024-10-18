@@ -1,7 +1,7 @@
 import i18n from "./i18n"
 
-export const navigate = () => {
-  const lang = i18n.getLanguage()
+export const navigate = (overrideLang?: string) => {
+  const lang = overrideLang || i18n.getLanguage()
   const base = `/${lang}`
   return {
     home: () => `${base}`,

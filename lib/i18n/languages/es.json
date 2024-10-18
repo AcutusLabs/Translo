@@ -98,7 +98,6 @@
   "Limit of {number} projects reached.": "Límite de {{number}} proyectos alcanzado.",
   "Loading...": "Cargando...",
   "Login": "Iniciar sesión",
-  "Made with ": "Hecho con",
   "Male": "Hombre",
   "Manage Subscription": "Gestionar Suscripción",
   "Menu": "Menú",
@@ -148,6 +147,7 @@
   "Search": "Buscar",
   "Select all": "Seleccionar todo",
   "Select plan": "Seleccionar plan",
+  "Made with ": "Hecho con",
   "Select the keywords you want to replace": "Selecciona las palabras clave que deseas reemplazar",
   "Select the language": "Seleccionar el idioma",
   "Send": "Enviar",
@@ -242,7 +242,6 @@
   "Your email verification failed. Please try again": "La verificación de correo electrónico falló. Por favor, inténtelo de nuevo",
   "Your Name": "Tu nombre",
   "Your name has been updated": "Tu nombre ha sido actualizado",
-  "Your name was not updated. Please try again": "Tu nombre no fue actualizado. Por favor, inténtalo de nuevo",
   "Your plan renews on {date}": "Tu plan se renueva el {{date}}",
   "Your plan will be canceled on {date}": "Tu plan será cancelado el {{fecha}}",
   "Your project was not deleted. Please try again": "Tu proyecto no fue eliminado. Por favor, inténtalo de nuevo",
@@ -258,5 +257,8 @@
   "Actions": "hhh",
   "Add custom language": "Agregar idioma personalizado",
   "Features": "Funcionalidades",
-  "Pricing": "Precios"
+  "Pricing": "Precios",
+  "Language": "Idioma",
+  "Your name was not updated. Please try again": "Tu nombre no fue actualizado. Por favor, inténtalo de nuevo",
+  "Manage billing and your subscription plan.": "Gestiona la facturación y tu plan de suscripción."
 }

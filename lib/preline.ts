@@ -18,6 +18,18 @@ export default function PrelineScript() {
       await import("preline/preline")
 
       window.HSStaticMethods.autoInit()
+
+      function mutationCallback() {
+        window.HSStaticMethods.autoInit()
+      }
+
+      const config = {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      }
+      const observer = new MutationObserver(mutationCallback)
+      observer.observe(document.body, config)
     }
 
     loadPreline()

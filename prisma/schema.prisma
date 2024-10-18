@@ -23,6 +23,7 @@ model Account {
   scope             String?
   id_token          String?  @db.Text
   session_state     String?
+  lang              String   @default("en")
   createdAt         DateTime @default(now()) @map(name: "created_at")
   updatedAt         DateTime @default(now()) @map(name: "updated_at")
 
@@ -51,6 +52,7 @@ model User {
   password               String?   @map(name: "password")
   image                  String?
   tokens                 BigInt
+  lang                   String    @default("en")
   createdAt              DateTime  @default(now()) @map(name: "created_at")
   updatedAt              DateTime  @default(now()) @map(name: "updated_at")
 

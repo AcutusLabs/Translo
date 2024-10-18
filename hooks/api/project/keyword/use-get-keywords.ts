@@ -47,6 +47,7 @@ const getKeywords = async (
       translations,
     }
   })
+
   return keywords
 }
 

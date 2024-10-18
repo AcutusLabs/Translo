@@ -98,7 +98,6 @@
   "Limit of {number} projects reached.": "Limit of {{number}} projects reached.",
   "Loading...": "Loading...",
   "Login": "Login",
-  "Made with ": "Made with ",
   "Male": "Male",
   "Manage Subscription": "Manage Subscription",
   "Menu": "Menu",
@@ -148,6 +147,7 @@
   "Search": "Search",
   "Select all": "Select all",
   "Select plan": "Select plan",
+  "Made with ": "Made with ",
   "Select the keywords you want to replace": "Select the keywords you want to replace",
   "Select the language": "Select the language",
   "Send": "Send",
@@ -242,7 +242,6 @@
   "Your email verification failed. Please try again": "Your email verification failed. Please try again",
   "Your Name": "Your Name",
   "Your name has been updated": "Your name has been updated",
-  "Your name was not updated. Please try again": "Your name was not updated. Please try again",
   "Your plan renews on {date}": "Your plan renews on {{date}}",
   "Your plan will be canceled on {date}": "Your plan will be canceled on {{date}}",
   "Your project was not deleted. Please try again": "Your project was not deleted. Please try again",
@@ -258,5 +257,8 @@
   "Actions": "Actions",
   "Add custom language": "Add custom language",
   "Features": "Features",
-  "Pricing": "Pricing"
+  "Pricing": "Pricing",
+  "Language": "Language",
+  "Your name was not updated. Please try again": "Your name was not updated. Please try again",
+  "Manage billing and your subscription plan.": "Manage billing and your subscription plan."
 }

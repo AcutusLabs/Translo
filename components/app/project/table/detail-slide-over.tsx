@@ -3,7 +3,6 @@ import {
   Fragment,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react"
@@ -77,7 +76,8 @@ const DetailSlideOver = (props: Props) => {
       }
     })
   )
-  useEffect(() => {
+
+  useDidMountEffect(() => {
     // when translation changed form api
     setTranslations(
       languages.map((language) => {

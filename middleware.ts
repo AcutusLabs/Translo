@@ -5,8 +5,20 @@ import { withAuth } from "next-auth/middleware"
 import { languagesSupported } from "./lib/i18n"
 import { isAuthPage, isLandingPage } from "./utils/pages"
 
+const PUBLIC_FILE = /\.(.*)$/
+
 export default withAuth(
   async function middleware(req) {
+    if (
+      req.nextUrl.pathname.startsWith("/_next") ||
+      req.nextUrl.pathname.startsWith("/global-error") ||
+      req.nextUrl.pathname.startsWith("/robots") ||
+      req.nextUrl.pathname.startsWith("/api/") ||
+      PUBLIC_FILE.test(req.nextUrl.pathname)
+    ) {
+      return NextResponse.next()
+    }
+
     const { pathname } = req.nextUrl
     const browserLanguage = req.headers.get("accept-language")?.split(",")[0]
     let shortBrowserLanguage = browserLanguage
@@ -19,7 +31,8 @@ export default withAuth(
       ;[shortBrowserLanguage] = shortBrowserLanguage.split("_")
     }
 
-    let shortLanguage: string = shortBrowserLanguage || "en"
+    const token = await getToken({ req })
+    let shortLanguage: string = token?.lang || shortBrowserLanguage || "en"
 
     const pathnameHasLocale = languagesSupported.some(
       (locale) =>
@@ -27,14 +40,20 @@ export default withAuth(
     )
 
     if (!pathnameHasLocale) {
-      // Redirect if there is no locale
       req.nextUrl.pathname = `/${shortLanguage}/${pathname}`
-      // e.g. incoming request is /products
-      // The new URL is now /en-US/products
       return NextResponse.redirect(req.nextUrl)
     }
 
-    const token = await getToken({ req })
+    const pathnameHasDifferentLocale = token?.lang
+      ? !pathname.startsWith(`/${token.lang}`)
+      : false
+
+    if (pathnameHasDifferentLocale && token) {
+      const newPath = `${pathname}`
+      req.nextUrl.pathname = `/${shortLanguage}/${newPath.replace(/^\/\w+\//, "")}`
+      return NextResponse.redirect(req.nextUrl)
+    }
+
     const isAuth = !!token
     const isLandingPageValue = isLandingPage(req.nextUrl.pathname)
     const isAuthPageValue = isAuthPage(req.nextUrl.pathname)
