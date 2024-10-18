@@ -98,7 +98,6 @@
   "Limit of {number} projects reached.": "Limite de {{number}} projetos atingido.",
   "Loading...": "Carregando...",
   "Login": "Entrar",
-  "Made with ": "Feito com",
   "Male": "Masculino",
   "Manage Subscription": "Gerenciar Assinatura",
   "Menu": "Menu",
@@ -148,6 +147,7 @@
   "Search": "Pesquisar",
   "Select all": "Selecionar todos",
   "Select plan": "Selecionar plano",
+  "Made with ": "Feito com",
   "Select the keywords you want to replace": "Selecione as palavras-chave que deseja substituir",
   "Select the language": "Selecione o idioma",
   "Send": "Enviar",
@@ -242,7 +242,6 @@
   "Your email verification failed. Please try again": "A verificação do seu e-mail falhou. Por favor, tente novamente",
   "Your Name": "Seu Nome",
   "Your name has been updated": "Seu nome foi atualizado",
-  "Your name was not updated. Please try again": "Seu nome não foi atualizado. Por favor, tente novamente",
   "Your plan renews on {date}": "O seu plano renova em {{date}}",
   "Your plan will be canceled on {date}": "Seu plano será cancelado em {{date}}",
   "Your project was not deleted. Please try again": "Seu projeto não foi excluído. Por favor, tente novamente",
@@ -258,5 +257,8 @@
   "Actions": "Ações",
   "Add custom language": "Adicionar idioma personalizado",
   "Features": "Funcionalidades",
-  "Pricing": "Preços"
+  "Pricing": "Preços",
+  "Language": "Idioma",
+  "Your name was not updated. Please try again": "Seu nome não foi atualizado. Por favor, tente novamente",
+  "Manage billing and your subscription plan.": "Gerencie a faturação e seu plano de assinatura."
 }

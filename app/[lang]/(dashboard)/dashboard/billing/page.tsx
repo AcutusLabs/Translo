@@ -3,6 +3,7 @@ import { redirect } from "next/navigation"
 import { env } from "@/env.mjs"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { authOptions } from "@/lib/auth"
+import i18n from "@/lib/i18n"
 import { withI18n } from "@/lib/i18n/with-i18n"
 import { getCurrentUser } from "@/lib/session"
 import { stripe } from "@/lib/stripe"
@@ -11,7 +12,7 @@ import { BillingForm } from "@/components/billing-form"
 import { DashboardHeader } from "@/components/header"
 import PostHogAnalytics from "@/components/posthog"
 import { DashboardShell } from "@/components/shell"
-import { getTokensByUserId } from "@/app/[lang]/api/users/utils"
+import { getTokensByUserId } from "@/app/api/users/utils"
 
 export const metadata = {
   metadataBase: new URL(`${env.NEXT_PUBLIC_APP_URL}/dashboard/billing`),
@@ -46,8 +47,8 @@ export default withI18n(async function BillingPage() {
       {Analytics}
       <DashboardShell>
         <DashboardHeader
-          heading="Billing"
-          text="Manage billing and your subscription plan."
+          heading={i18n.t("Billing")}
+          text={i18n.t("Manage billing and your subscription plan.")}
         />
         <div className="grid gap-8">
           <BillingForm

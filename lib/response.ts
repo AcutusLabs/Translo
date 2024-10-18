@@ -2,7 +2,7 @@ import { AlertType } from "@/types/api"
 import {
   BAD_REQUEST_STATUS,
   INTERNAL_SERVER_ERROR_STATUS,
-} from "@/app/[lang]/api/status"
+} from "@/app/api/status"
 
 export type ErrorResponseParams = {
   error: string

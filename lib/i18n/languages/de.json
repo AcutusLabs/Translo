@@ -98,7 +98,6 @@
   "Limit of {number} projects reached.": "Grenze von {{number}} Projekten erreicht.",
   "Loading...": "Laden...",
   "Login": "Anmelden",
-  "Made with ": "Hergestellt mit",
   "Male": "Männlich",
   "Manage Subscription": "Abo Verwalten",
   "Menu": "Speisekarte",
@@ -148,6 +147,7 @@
   "Search": "Suche",
   "Select all": "Alle auswählen",
   "Select plan": "Plan auswählen",
+  "Made with ": "Hergestellt mit",
   "Select the keywords you want to replace": "Wählen Sie die Schlüsselwörter aus, die Sie ersetzen möchten",
   "Select the language": "Sprache auswählen",
   "Send": "Senden",
@@ -242,7 +242,6 @@
   "Your email verification failed. Please try again": "Die E-Mail-Verifizierung ist fehlgeschlagen. Bitte versuchen Sie es erneut",
   "Your Name": "Dein Name",
   "Your name has been updated": "Ihr Name wurde aktualisiert",
-  "Your name was not updated. Please try again": "Ihr Name wurde nicht aktualisiert. Bitte versuchen Sie es erneut",
   "Your plan renews on {date}": "Ihr Plan erneuert sich am {{date}}",
   "Your plan will be canceled on {date}": "Ihr Plan wird am {{date}} storniert",
   "Your project was not deleted. Please try again": "Ihr Projekt wurde nicht gelöscht. Bitte versuchen Sie es erneut",
@@ -258,5 +257,8 @@
   "Actions": "Aktionen",
   "Add custom language": "Benutzerdefinierte Sprache hinzufügen",
   "Features": "Funktionen",
-  "Pricing": "Preisgestaltung"
+  "Pricing": "Preisgestaltung",
+  "Language": "Sprache",
+  "Your name was not updated. Please try again": "Ihr Name wurde nicht aktualisiert. Bitte versuchen Sie es erneut",
+  "Manage billing and your subscription plan.": "Verwalten Sie die Abrechnung und Ihren Abonnementplan."
 }
