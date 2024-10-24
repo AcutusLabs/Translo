@@ -21,7 +21,7 @@ const compat = new FlatCompat({
 export default [
   ...compat.extends("prettier", "plugin:tailwindcss/recommended"),
   {
-    ignores: [".next"],
+    ignores: [".next", "playwright-report", "test-results"],
   },
   {
     plugins: {
