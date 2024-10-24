@@ -111,6 +111,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="email"
+              data-testid="email"
               placeholder="name@example.com"
               type="email"
               autoCapitalize="none"
@@ -131,6 +132,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
             </Label>
             <Input
               id="password"
+              data-testid="password"
               placeholder="password"
               type="password"
               autoCapitalize="none"
@@ -144,7 +146,11 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
               </p>
             )}
           </div>
-          <button className={cn(buttonVariants())} disabled={isLoading}>
+          <button
+            data-testid={type === "login" ? "login-button" : "register-button"}
+            className={cn(buttonVariants())}
+            disabled={isLoading}
+          >
             {isLoading && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}

@@ -1,15 +1,29 @@
-volumes:
-  db:
-    driver: local
-
 services:
   postgres:
     image: postgres:16.4
+    container_name: postgres
     ports:
       - 5555:5432
     volumes:
-      - db:/var/lib/postgresql/data
+      - translo:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=translo
       - POSTGRES_USER=usr
       - POSTGRES_PASSWORD=pwd
+
+  nextjs:
+    build:
+      context: .
+      dockerfile: Dockerfile.nextjs
+    ports:
+      - "3000:3000"
+    volumes:
+      - type: bind
+        source: .
+        target: /code
+    working_dir: /code
+    depends_on:
+      - postgres
+
+volumes:
+  translo:

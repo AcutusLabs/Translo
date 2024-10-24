@@ -1,7 +1,9 @@
 import { freePlanTokens } from "@/constants/subscriptions"
+import sha256 from "crypto-js/sha256"
 import { z } from "zod"
 
 import { env } from "@/env.mjs"
+import { proPlanMonthly } from "@/config/subscriptions"
 import { db } from "@/lib/db"
 import i18n from "@/lib/i18n"
 import sendEmail from "@/lib/mail"
@@ -15,6 +17,8 @@ import { findUserByEmail } from "./utils"
 const userCreateSchema = z.object({
   email: z.string(),
   password: z.string(),
+  skip_activation: z.boolean().optional(),
+  add_fake_subscription: z.boolean().optional(),
 })
 
 // @ts-ignore
@@ -48,6 +52,18 @@ export async function POST(req: Request) {
         password: hashPassword(body.password),
         emailVerificationToken: token,
         tokens: BigInt(freePlanTokens),
+        emailVerified:
+          env.TEST_MODE_ENABLED === "true" && body.skip_activation
+            ? new Date()
+            : null,
+        ...(body.add_fake_subscription && env.TEST_MODE_ENABLED === "true"
+          ? {
+              stripeCustomerId: sha256(body.email).toString(),
+              stripeSubscriptionId: sha256(body.email).toString(),
+              stripePriceId: proPlanMonthly.stripePriceId,
+              stripeCurrentPeriodEnd: new Date(Date.now() + 86_400_000),
+            }
+          : {}),
       },
       update: {
         email: body.email,
@@ -57,14 +73,18 @@ export async function POST(req: Request) {
       },
     })
 
-    await sendEmail({
-      to: body.email,
-      email: emailVerification({
-        url: `${
-          env.NEXT_PUBLIC_APP_URL
-        }/email-verify?email=${encodeURIComponent(body.email)}&token=${token}`,
-      }),
-    })
+    if (env.TEST_MODE_ENABLED === "true" && body.skip_activation) {
+      // skip email verification
+    } else {
+      await sendEmail({
+        to: body.email,
+        email: emailVerification({
+          url: `${
+            env.NEXT_PUBLIC_APP_URL
+          }/email-verify?email=${encodeURIComponent(body.email)}&token=${token}`,
+        }),
+      })
+    }
 
     return new Response(JSON.stringify(user))
   } catch (error) {
