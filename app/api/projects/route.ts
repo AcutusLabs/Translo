@@ -19,8 +19,6 @@ import { LOGOUT_STATUS } from "../status"
 
 const projectCreateSchema = z.object({
   title: z.string(),
-  languages: z.string().optional(),
-  info: z.string().optional(),
 })
 
 export async function GET() {

@@ -33,6 +33,7 @@ const scopesValues = [
   "i18n",
   "ai-translations",
   "analytics",
+  "test",
 ].sort((prev, next) => {
   if (prev > next) {
     return 1
