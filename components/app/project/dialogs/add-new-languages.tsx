@@ -106,7 +106,10 @@ const AddNewLanguage = (props: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="t-button">
+        <button
+          className="t-button"
+          data-testid="add-new-language-modal-trigger"
+        >
           <Icons.add className="h-3.5 w-3.5" />
           {i18n.t("Add language")}
         </button>
@@ -123,7 +126,11 @@ const AddNewLanguage = (props: Props) => {
           />
           <DialogFooter>
             <DialogClose asChild>
-              <Button onClick={onAddLanguage} disabled={!selectedLanguage}>
+              <Button
+                onClick={onAddLanguage}
+                disabled={!selectedLanguage}
+                data-testid="add-new-language-button"
+              >
                 {i18n.t("Add language")}
               </Button>
             </DialogClose>

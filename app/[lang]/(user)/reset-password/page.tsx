@@ -77,7 +77,7 @@ export default withI18n(function VerifyEmail() {
               type="password"
               id="hs-feedback-post-comment-name-1"
               className="t-textarea"
-              placeholder="password"
+              placeholder={i18n.t("Password")}
               value={newPassword}
               onChange={handleChangePassword}
             />

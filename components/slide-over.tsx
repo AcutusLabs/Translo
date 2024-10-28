@@ -22,6 +22,7 @@ const SlideOver = (props: Props) => {
             <div className="pointer-events-auto relative w-screen max-w-md">
               <div className="absolute left-0 top-0 -ml-8 flex pr-2 pt-4 sm:-ml-10 sm:pr-4">
                 <button
+                  data-testid="slide-over-close-button"
                   type="button"
                   className="relative rounded-md text-gray-300 hover:text-white focus:outline-none focus:ring-2 ring-transparent "
                   onClick={onClose}
@@ -47,6 +48,7 @@ const SlideOver = (props: Props) => {
               <div
                 className="flex h-full flex-col overflow-y-scroll bg-white py-6 shadow-xl"
                 onClick={(e) => e.stopPropagation()}
+                data-testid="slide-over"
               >
                 <div className="px-4 sm:px-6 flex justify-between items-center">
                   <h2

@@ -5,7 +5,7 @@ services:
     ports:
       - 5555:5432
     volumes:
-      - translo_db:/var/lib/postgresql/data
+      - translo_postgres:/var/lib/postgresql/data
     environment:
       - POSTGRES_DB=translo
       - POSTGRES_USER=usr
@@ -24,4 +24,4 @@ services:
       - postgres
 
 volumes:
-  translo_db:
+  translo_postgres:

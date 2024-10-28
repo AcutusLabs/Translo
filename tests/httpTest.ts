@@ -21,31 +21,36 @@ export const httpCall = async (params: {
   }
 
   let response
-  switch (method) {
-    case "GET":
-      response = await axios.get(`${baseURL}/api${url}`, {
-        headers,
-        data,
-      })
-      break
-    case "PUT":
-      response = await axios.put(`${baseURL}/api${url}`, data, {
-        headers,
-      })
-      break
-    case "POST":
-      response = await axios.post(`${baseURL}/api${url}`, data, {
-        headers,
-      })
-      break
-    case "DELETE":
-      response = await axios.delete(`${baseURL}/api${url}`, {
-        headers,
-        data,
-      })
-      break
-    default:
-      throw "method not found: " + method + url
+  try {
+    switch (method) {
+      case "GET":
+        response = await axios.get(`${baseURL}/api${url}`, {
+          headers,
+          data,
+        })
+        break
+      case "PUT":
+        response = await axios.put(`${baseURL}/api${url}`, data, {
+          headers,
+        })
+        break
+      case "POST":
+        response = await axios.post(`${baseURL}/api${url}`, data, {
+          headers,
+        })
+        break
+      case "DELETE":
+        response = await axios.delete(`${baseURL}/api${url}`, {
+          headers,
+          data,
+        })
+        break
+      default:
+        throw "method not found: " + method + url
+    }
+  } catch (error) {
+    // eslint-disable-next-line no-console
+    console.log(error)
   }
 
   if (page) {

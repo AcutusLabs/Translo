@@ -10,9 +10,11 @@ export const projectPatchSchema = z.object({
 })
 
 export const routeContextSchemaProject = z.object({
-  params: z.object({
-    projectId: z.string(),
-  }),
+  params: z.promise(
+    z.object({
+      projectId: z.string(),
+    })
+  ),
 })
 
 export async function verifyCurrentUserHasAccessToProject(projectId: string) {

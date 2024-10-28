@@ -255,10 +255,14 @@
   "translating:": "traduzindo:",
   "Before using the automatic translation, you need to save": "Antes de usar a tradução automática, você precisa salvar",
   "Actions": "Ações",
-  "Add custom language": "Adicionar idioma personalizado",
   "Features": "Funcionalidades",
   "Pricing": "Preços",
   "Language": "Idioma",
   "Your name was not updated. Please try again": "Seu nome não foi atualizado. Por favor, tente novamente",
-  "Manage billing and your subscription plan.": "Gerencie a faturação e seu plano de assinatura."
+  "Leave the keyword context here...": "Deixe o contexto da palavra-chave aqui...",
+  "Manage billing and your subscription plan.": "Gerencie a faturação e seu plano de assinatura.",
+  "Add custom language": "Adicionar idioma personalizado",
+  "New email": "Novo email",
+  "Old password": "Senha antiga",
+  "A detailed summary will better explain your products to the AI.": "Um resumo detalhado explicará melhor seus produtos para a IA."
 }

@@ -129,7 +129,9 @@ const ProjectSettingsSlideOver = (props: Props) => {
               id="af-submit-app-description"
               className="t-textarea"
               rows={6}
-              placeholder="A detailed summary will better explain your products to the AI."
+              placeholder={i18n.t(
+                "A detailed summary will better explain your products to the AI."
+              )}
               value={localSettings.description}
               onChange={handleChangeDescription}
             ></textarea>

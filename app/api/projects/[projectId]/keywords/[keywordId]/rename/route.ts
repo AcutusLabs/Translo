@@ -18,7 +18,7 @@ export async function PATCH(
   context: z.infer<typeof routeContextSchemaProjectKeyword>
 ) {
   try {
-    const { params } = routeContextSchemaProjectKeyword.parse(context)
+    const params = await routeContextSchemaProjectKeyword.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({
