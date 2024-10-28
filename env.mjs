@@ -27,6 +27,7 @@ export const env = createEnv({
     NEXT_PUBLIC_POSTHOG_DEBUG_ENABLED: z.string().optional(),
     SENTRY_DNS: z.string(),
     SENTRY_ENVIROMENT: z.string(),
+    TEST_MODE_ENABLED: z.string().optional(),
   },
   client: {
     NEXT_PUBLIC_APP_URL: z.string().min(1),
@@ -59,5 +60,6 @@ export const env = createEnv({
     SENTRY_ENVIROMENT: process.env.SENTRY_ENVIROMENT,
     NEXT_PUBLIC_TRANSLATE_ALL_PROJECT_ENABLED:
       process.env.NEXT_PUBLIC_TRANSLATE_ALL_PROJECT_ENABLED,
+    TEST_MODE_ENABLED: process.env.TEST_MODE_ENABLED,
   },
 })
