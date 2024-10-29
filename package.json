@@ -113,7 +113,7 @@
     "@eslint/eslintrc": "3.1.0",
     "@eslint/js": "9.13.0",
     "@ianvs/prettier-plugin-sort-imports": "4.3.1",
-    "@playwright/test": "1.48.1",
+    "@playwright/test": "1.48.2",
     "@tailwindcss/line-clamp": "0.4.4",
     "@tailwindcss/typography": "0.5.15",
     "@types/crypto-js": "4.2.2",
