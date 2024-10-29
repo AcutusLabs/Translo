@@ -92,7 +92,7 @@
     "next-auth": "4.24.10",
     "next-nprogress-bar": "2.3.14",
     "next-themes": "0.3.0",
-    "nodemailer": "6.9.15",
+    "nodemailer": "6.9.16",
     "openai": "4.68.4",
     "posthog-js": "1.176.0",
     "posthog-node": "4.2.1",
