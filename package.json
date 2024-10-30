@@ -93,7 +93,7 @@
     "next-nprogress-bar": "2.3.14",
     "next-themes": "0.3.0",
     "nodemailer": "6.9.16",
-    "openai": "4.68.4",
+    "openai": "4.69.0",
     "posthog-js": "1.177.0",
     "posthog-node": "4.2.1",
     "preline": "2.5.1",
