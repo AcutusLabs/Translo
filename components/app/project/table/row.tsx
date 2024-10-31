@@ -24,10 +24,18 @@ const Row = (props: Props) => {
       onClick={openDetail}
     >
       <td
+        data-testid={`keyword-cell-${keyword.keyword}`}
         scope="row"
         className="whitespace-nowrap px-4 py-3 align-middle font-medium text-gray-900 dark:text-white text-ellipsis overflow-hidden w-[70%]"
       >
-        {keyword.keyword}
+        <div className="flex flex-col">
+          <h4 className="m-0 mb-2  whitespace-pre-wrap break-words">
+            {keyword.keyword}
+          </h4>
+          <span className="text-xs text-gray-500 whitespace-pre-wrap break-words">
+            {keyword.defaultTranslation}
+          </span>
+        </div>
       </td>
       <td className="px-4 py-3 align-middle">
         <div className="flex flex-wrap gap-2">
@@ -58,6 +66,7 @@ const Row = (props: Props) => {
         </div>
       </td>
       <td
+        data-testid={`delete-keyword-trigger-${keyword.keyword}`}
         className="px-4 py-3 align-middle"
         onClick={(e) => e.stopPropagation()}
       >
@@ -76,12 +85,14 @@ const Row = (props: Props) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem
+                data-testid="edit-keyword-button"
                 onClick={openDetail}
                 className={"hover:cursor-pointer"}
               >
                 {i18n.t("Edit")}
               </DropdownMenuItem>
               <DropdownMenuItem
+                data-testid="delete-keyword-button"
                 onClick={deleteKeyword}
                 className={"hover:cursor-pointer"}
               >

@@ -3,7 +3,8 @@ import { useRouter } from "next/navigation"
 
 import { AlertType } from "@/types/api"
 import i18n from "@/lib/i18n"
-import { AlertContext } from "@/app/client-providers"
+import { navigate } from "@/lib/link"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import {
   AlertDialog,
@@ -47,7 +48,7 @@ const TokensRechargeNeeded = () => {
           <AlertDialogAction
             onClick={() => {
               alertContext.showAlert(undefined)
-              router.push("/dashboard/billing")
+              router.push(navigate().billing())
             }}
           >
             {i18n.t("Continue")}

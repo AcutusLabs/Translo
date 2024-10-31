@@ -60,9 +60,8 @@ const BuyAITokens = () => {
         type="number"
         placeholder="3"
         onChange={handleChangeAmount}
-        value={amount}
+        value={amount || ""}
       />
-
       {amount === undefined || amount < 3 ? (
         <h6 className="w-full text-red-500 text-xs mt-2">
           {i18n.t(
@@ -82,7 +81,6 @@ const BuyAITokens = () => {
           }}
         ></p>
       )}
-
       <button
         onClick={onRecharge}
         className={cn(buttonVariants(), "w-max mt-5")}

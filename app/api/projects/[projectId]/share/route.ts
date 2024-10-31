@@ -20,8 +20,7 @@ export async function PATCH(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    // Validate route params.
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {

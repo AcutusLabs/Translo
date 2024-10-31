@@ -2,9 +2,9 @@ import { getServerSession } from "next-auth/next"
 import * as z from "zod"
 
 import {
-  UserDoAction,
   eventUserDo,
   sendServerPostHogEvent,
+  UserDoAction,
 } from "@/lib/analytics-server"
 import { authOptions } from "@/lib/auth"
 import { db } from "@/lib/db"
@@ -43,7 +43,7 @@ export async function GET(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({
@@ -70,7 +70,7 @@ export async function POST(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({

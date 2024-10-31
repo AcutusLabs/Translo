@@ -8,18 +8,18 @@ module.exports = {
   },
   rules: [
     {
-      message: 'You’ve got leftover conflict markers',
+      message: "You’ve got leftover conflict markers",
       regex: /^[<>|=]{4,}/m,
     },
     {
       nonBlocking: true,
-      message: 'You have unfinished devs',
+      message: "You have unfinished devs",
       regex: /(?:FIXME|TODO)/g,
     },
     {
       nonBlocking: true,
-      message: 'You’ve got leftover `console.log`',
+      message: "You’ve got leftover `console.log`",
       regex: /console?\.log/g,
     },
   ],
-};
+}

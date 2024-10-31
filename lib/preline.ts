@@ -14,13 +14,25 @@ export default function PrelineScript() {
   const path = usePathname()
 
   useEffect(() => {
-    import("preline/preline")
-  }, [])
+    const loadPreline = async () => {
+      await import("preline/preline")
 
-  useEffect(() => {
-    setTimeout(() => {
-      window.HSStaticMethods?.autoInit()
-    }, 100)
+      window.HSStaticMethods.autoInit()
+
+      function mutationCallback() {
+        window.HSStaticMethods.autoInit()
+      }
+
+      const config = {
+        attributes: true,
+        childList: true,
+        subtree: true,
+      }
+      const observer = new MutationObserver(mutationCallback)
+      observer.observe(document.body, config)
+    }
+
+    loadPreline()
   }, [path])
 
   return null

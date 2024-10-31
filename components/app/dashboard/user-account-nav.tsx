@@ -5,6 +5,7 @@ import { User } from "next-auth"
 import { signOut } from "next-auth/react"
 
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -15,7 +16,7 @@ import {
 import { UserAvatar } from "@/components/user-avatar"
 
 interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
-  user: Pick<User, "name" | "image" | "email">
+  user: Pick<User, "name" | "image" | "email"> & { lang: string }
 }
 
 export function UserAccountNav({ user }: UserAccountNavProps) {
@@ -40,13 +41,13 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </div>
         <DropdownMenuSeparator />
         <DropdownMenuItem asChild className="hover:cursor-pointer">
-          <Link href="/dashboard">{i18n.t("Dashboard")}</Link>
+          <Link href={navigate().dashboard()}>{i18n.t("Dashboard")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="hover:cursor-pointer">
-          <Link href="/dashboard/billing">{i18n.t("Billing")}</Link>
+          <Link href={navigate().billing()}>{i18n.t("Billing")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="hover:cursor-pointer">
-          <Link href="/dashboard/settings">{i18n.t("Settings")}</Link>
+          <Link href={navigate().billing()}>{i18n.t("Settings")}</Link>
         </DropdownMenuItem>
         <DropdownMenuItem asChild className="hover:cursor-pointer">
           <Link href="mailto:translo.help@gmail.com">
@@ -59,7 +60,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
           onSelect={(event) => {
             event.preventDefault()
             signOut({
-              callbackUrl: `${window.location.origin}/login`,
+              callbackUrl: `${window.location.origin}/${user.lang}/login`,
             })
           }}
         >

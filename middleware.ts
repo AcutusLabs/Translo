@@ -2,31 +2,81 @@ import { NextResponse } from "next/server"
 import { getToken } from "next-auth/jwt"
 import { withAuth } from "next-auth/middleware"
 
+import { languagesSupported } from "./lib/i18n"
+import { isAuthPage, isLandingPage } from "./utils/pages"
+
+const PUBLIC_FILE = /\.(.*)$/
+
 export default withAuth(
   async function middleware(req) {
-    const token = await getToken({ req })
-    const isAuth = !!token
-    const isAuthPage =
-      req.nextUrl.pathname.startsWith("/login") ||
-      req.nextUrl.pathname.startsWith("/register")
+    if (
+      req.nextUrl.pathname.startsWith("/_next") ||
+      req.nextUrl.pathname.startsWith("/global-error") ||
+      req.nextUrl.pathname.startsWith("/robots") ||
+      req.nextUrl.pathname.startsWith("/api/") ||
+      req.nextUrl.pathname.startsWith("/sitemap") ||
+      PUBLIC_FILE.test(req.nextUrl.pathname)
+    ) {
+      return NextResponse.next()
+    }
 
-    if (isAuthPage) {
+    const { pathname } = req.nextUrl
+    const browserLanguage = req.headers.get("accept-language")?.split(",")[0]
+    let shortBrowserLanguage = browserLanguage
+
+    if (shortBrowserLanguage && shortBrowserLanguage.indexOf("-") !== -1) {
+      ;[shortBrowserLanguage] = shortBrowserLanguage.split("-")
+    }
+
+    if (shortBrowserLanguage && shortBrowserLanguage.indexOf("_") !== -1) {
+      ;[shortBrowserLanguage] = shortBrowserLanguage.split("_")
+    }
+
+    const token = await getToken({ req })
+    let shortLanguage: string = token?.lang || shortBrowserLanguage || "en"
+
+    const pathnameHasLocale = languagesSupported.some(
+      (locale) =>
+        pathname.startsWith(`/${locale}/`) || pathname === `/${locale}`
+    )
+
+    if (!pathnameHasLocale) {
+      req.nextUrl.pathname = `/${shortLanguage}/${pathname}`
+      return NextResponse.redirect(req.nextUrl)
+    }
+
+    const pathnameHasDifferentLocale = token?.lang
+      ? !pathname.startsWith(`/${token.lang}`)
+      : false
+
+    if (pathnameHasDifferentLocale && token) {
+      const newPath = `${pathname}`
+      req.nextUrl.pathname = `/${shortLanguage}/${newPath.replace(/^\/\w+\//, "")}`
+      return NextResponse.redirect(req.nextUrl)
+    }
+
+    const isAuth = !!token
+    const isLandingPageValue = isLandingPage(req.nextUrl.pathname)
+    const isAuthPageValue = isAuthPage(req.nextUrl.pathname)
+
+    if (isAuthPageValue) {
       if (isAuth) {
         return NextResponse.redirect(new URL("/dashboard", req.url))
       }
 
-      return null
+      return NextResponse.next()
     }
 
-    if (!isAuth) {
+    if (!isAuth && !isLandingPageValue) {
       let from = req.nextUrl.pathname
       if (req.nextUrl.search) {
         from += req.nextUrl.search
       }
 
-      return NextResponse.redirect(
+      const response = NextResponse.redirect(
         new URL(`/login?from=${encodeURIComponent(from)}`, req.url)
       )
+      return response
     }
 
     const res = NextResponse.next()
@@ -58,5 +108,5 @@ export default withAuth(
 )
 
 export const config = {
-  matcher: ["/dashboard/:path*", "/editor/:path*", "/login", "/register"],
+  matcher: ["/((?!_next|images).*)"],
 }

@@ -53,17 +53,17 @@ const useTranslation = (props: EditorProps) => {
     [downloadFiles]
   )
 
-  const { data: keywordsFromApi } = useGetKeywords({
-    projectId: projectFromSSR.id,
-    initialData: {
-      keywords: projectFromSSR.keywords,
-      languages: projectFromSSR.languages,
-    },
-  })
-
   const { data: languagesFromApi } = useGetLanguages({
     projectId: projectFromSSR.id,
     initialData: projectFromSSR.languages,
+  })
+
+  const keywordsFromApi = useGetKeywords({
+    projectId: projectFromSSR.id,
+    initialData: {
+      keywords: projectFromSSR.keywords,
+      languages: languagesFromApi,
+    },
   })
 
   const { data: projectFromApi } = useGetProject({
@@ -80,7 +80,7 @@ const useTranslation = (props: EditorProps) => {
   }
 
   return {
-    tokens: tokensFromApi,
+    tokens: tokensFromApi as number,
     project,
     isPublished: props.project.published,
     download,

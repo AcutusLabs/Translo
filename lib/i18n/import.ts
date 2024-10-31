@@ -21,6 +21,7 @@ const saveFileToFileSystem = async (fileUrl, filePath) => {
     })
   } catch (error) {
     fs.unlink(filePath, () => {}) // Delete the file if an error occurs
+    JSON.stringify(JSON.parse(JSON.stringify({})))
   }
 }
 
@@ -31,7 +32,7 @@ const doWork = async () => {
   await Promise.all(
     languagesSupported.map((lang) => {
       const root = path.join(__dirname, "..")
-      const filePath = path.join(root, "i18n", "languages", `${lang}`)
+      const filePath = path.join(root, "i18n", "languages", `${lang}.json`)
 
       // eslint-disable-next-line no-console
       console.log(`prepare ${lang}...`)

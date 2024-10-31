@@ -1,6 +1,70 @@
 # Changelog
 
-All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
+All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
+
+## [1.4.0](https://github.com/Matergi/translo/compare/v1.3.0...v1.4.0) (2024-10-31)
+
+### Features
+
+- **custom:** added dependabot ([408ba6a](https://github.com/Matergi/translo/commit/408ba6ae7b223d47302a81373205a0ff678216ad))
+- **general:** added sitemap ([9aeb945](https://github.com/Matergi/translo/commit/9aeb945c8714ec367410fc6598f47dfd05a7e5fc))
+- **general:** changed og image ([eac9149](https://github.com/Matergi/translo/commit/eac91490224e29203d01f27a6f3251c919c1eea6))
+- **i18n:** change language ([a3769c7](https://github.com/Matergi/translo/commit/a3769c7e5de6dd4de01d7b1c1a880dbbb1ea7e4c))
+- **landing:** landing page multilanguage ([9fdd5cb](https://github.com/Matergi/translo/commit/9fdd5cb05f79b335f244435d60c673d0ff08a687))
+- **project:** make the translation of the keyword visible in the main language ([cea1b62](https://github.com/Matergi/translo/commit/cea1b6261a3e71d8b4b21f32891284b730098339))
+- **project:** moved translate all projects under toggle ([f515e3a](https://github.com/Matergi/translo/commit/f515e3ac0c71b19bd0031d61cc23f67dcf01b8e3))
+- **user:** create a stripe account during registration confirmation ([cdca128](https://github.com/Matergi/translo/commit/cdca128156045ff19d1049efd65234e1cbb4fac5))
+
+### Bug Fixes
+
+- **deps:** replace dependency standard-version with commit-and-tag-version 9.5.0 ([2791b65](https://github.com/Matergi/translo/commit/2791b65e95de483886cddc5bd62dde160f6d82df))
+- **deps:** update dependency @ariakit/react to v0.4.11 ([7511b89](https://github.com/Matergi/translo/commit/7511b892ab52f5935340c10354539c082db2d167))
+- **deps:** update dependency @sentry/nextjs to v8.28.0 ([67acea3](https://github.com/Matergi/translo/commit/67acea30e69c2e5f12b455ffb6718e088f18558f))
+- **deps:** update dependency @sentry/nextjs to v8.29.0 ([cdfec09](https://github.com/Matergi/translo/commit/cdfec091246d32a704491304ed9bb652854a01ca))
+- **deps:** update dependency @sentry/nextjs to v8.30.0 ([22b01cc](https://github.com/Matergi/translo/commit/22b01ccfe90cfa76704962988397201c56dcc7c7))
+- **deps:** update dependency @t3-oss/env-nextjs to v0.11.1 ([fe1eac8](https://github.com/Matergi/translo/commit/fe1eac8c33417f6750b12ebcf831377e0e873a79))
+- **deps:** update dependency @tanstack/react-query to v5.52.1 ([e5e9d63](https://github.com/Matergi/translo/commit/e5e9d63a000eed9f3b651620a6d06d507e6040d0))
+- **deps:** update dependency @tanstack/react-query to v5.54.1 ([a560b95](https://github.com/Matergi/translo/commit/a560b95721596437fddce07a415ca7eea163ea0d))
+- **deps:** update dependency @tanstack/react-query to v5.55.0 ([7c5264d](https://github.com/Matergi/translo/commit/7c5264d1cf2216180ef7596cdf2fe536297b2d2b))
+- **deps:** update dependency @tanstack/react-query to v5.55.2 ([bba9682](https://github.com/Matergi/translo/commit/bba968228ad3a918d1645ef2ab6489f8f96af3ae))
+- **deps:** update dependency @tanstack/react-query to v5.55.4 ([b915da0](https://github.com/Matergi/translo/commit/b915da0f2a10e21e4db998e73b06aa5074e689ce))
+- **deps:** update dependency axios to v1.7.5 ([9a1e07d](https://github.com/Matergi/translo/commit/9a1e07d4ebbdf547ab11911ad5271853826f10ad))
+- **deps:** update dependency axios to v1.7.7 ([96fa4d4](https://github.com/Matergi/translo/commit/96fa4d433ab7c8e31afe4e5780d9937365e353e6))
+- **deps:** update dependency commit-and-tag-version to v12.4.3 ([94efbea](https://github.com/Matergi/translo/commit/94efbeae7d1c3ffd46816b8d6cc9cc69faead79f))
+- **deps:** update dependency concurrently to v9 ([0eb0261](https://github.com/Matergi/translo/commit/0eb026114601562929503b59bc381f9962b9c675))
+- **deps:** update dependency i18next to v23.15.1 ([b7ccf44](https://github.com/Matergi/translo/commit/b7ccf44d724d762bee41ec1994ff147f1fc341b1))
+- **deps:** update dependency lucide-react to v0.436.0 ([f69f55f](https://github.com/Matergi/translo/commit/f69f55f9cb54a7f4cbd17b6d631b9f9c893e3650))
+- **deps:** update dependency lucide-react to v0.438.0 ([9617c21](https://github.com/Matergi/translo/commit/9617c2105a78ede0acf8fcdf9fe7422b6e038248))
+- **deps:** update dependency lucide-react to v0.439.0 ([5a28d79](https://github.com/Matergi/translo/commit/5a28d797d7b01b3ef068192f9a278ebd46824548))
+- **deps:** update dependency lucide-react to v0.440.0 ([99c9649](https://github.com/Matergi/translo/commit/99c9649824f402f063c2388e2d5460efb68b7c20))
+- **deps:** update dependency nodemailer to v6.9.15 ([26c9f81](https://github.com/Matergi/translo/commit/26c9f8123ead5c88d01cf0ffb9540ba3f5a8e8fc))
+- **deps:** update dependency openai to v4.57.1 ([d8342c1](https://github.com/Matergi/translo/commit/d8342c1d2901782e9a61484d7299a4a784f4e878))
+- **deps:** update dependency openai to v4.57.3 ([c513173](https://github.com/Matergi/translo/commit/c513173b14279d140cec86a5c03c17e2e2f36eb4))
+- **deps:** update dependency openai to v4.58.0 ([e4c4d33](https://github.com/Matergi/translo/commit/e4c4d33eacc142f05f8631d01381c2822763475a))
+- **deps:** update dependency openai to v4.58.1 ([286f903](https://github.com/Matergi/translo/commit/286f903c321a8476d3d4ed26d779b374e3f0eaa9))
+- **deps:** update dependency openai to v4.58.2 ([7545d5a](https://github.com/Matergi/translo/commit/7545d5a2c8fdae58f04c6f14f4bd06853b9a6bbd))
+- **deps:** update dependency openai to v4.59.0 ([d3da237](https://github.com/Matergi/translo/commit/d3da2375a0de2737b5539702106aa5cd837e90a0))
+- **deps:** update dependency posthog-js to v1.160.3 ([eb6323c](https://github.com/Matergi/translo/commit/eb6323c5cd6bda77d076d524cb56730b5583a8d7))
+- **deps:** update dependency posthog-js to v1.161.0 ([f6d2b27](https://github.com/Matergi/translo/commit/f6d2b27dc0519201c19a6fc7bc61535ce09004f0))
+- **deps:** update dependency posthog-js to v1.161.2 ([321f363](https://github.com/Matergi/translo/commit/321f3638a25680434bb67f4f73ab3598e99a678a))
+- **deps:** update dependency posthog-js to v1.161.3 ([fc49229](https://github.com/Matergi/translo/commit/fc492294a7c899e0f7fc091b39e1a8ecb729b5ab))
+- **deps:** update dependency posthog-node to v4.2.0 ([7725eae](https://github.com/Matergi/translo/commit/7725eae29c12775f33dd62f1e61a023aea5c967d))
+- **deps:** update dependency react-hook-form to v7.53.0 ([3e02ed7](https://github.com/Matergi/translo/commit/3e02ed769ff0747b124e1ad17350c66ab7e4e7b8))
+- **deps:** update dependency stripe to v16.10.0 ([521b66d](https://github.com/Matergi/translo/commit/521b66da03719ff7a25fe598f1230acb31fe2f1b))
+- **deps:** update prisma monorepo to v5.19.1 ([ffbc01d](https://github.com/Matergi/translo/commit/ffbc01ded9fbb193950f5649a1cfd83e46b45fc9))
+- eslint ([1f4d141](https://github.com/Matergi/translo/commit/1f4d1419d555fe438cc1f09d8a53773b1c279b4c))
+- **general:** commit-lint dependabot ([f2d9f92](https://github.com/Matergi/translo/commit/f2d9f92916d88b356f1bfd990056c27ef1f2a716))
+- **i18n:** fixed language ([4952308](https://github.com/Matergi/translo/commit/49523081bbe48880bc07e79c1e1b6cd9ec204923))
+- **project:** fixed export lang and save keyword ([4740197](https://github.com/Matergi/translo/commit/4740197c46098eaff085632d3cd5ce69593e59ef))
+- **project:** fixed keywords imports ([4747997](https://github.com/Matergi/translo/commit/4747997188c72b50f67bc6d4d5966cc38ae371e4))
+- **project:** fixed translate all project ([c323222](https://github.com/Matergi/translo/commit/c323222617feb1f4c10ef4addddf849eed13b1b2))
+- **project:** fixed when there are 3 languages it doesnt translate one the first time ([3ce0908](https://github.com/Matergi/translo/commit/3ce0908b3191df42623bfb47a9649115f8463cb8))
+- update dependabot-auto-merge.yml ([fc657ee](https://github.com/Matergi/translo/commit/fc657ee9dafcd4408259672346f0f20684e18b32))
+- update dependabot-auto-merge.yml ([559298d](https://github.com/Matergi/translo/commit/559298dc4f6ff628dcf52fdf5cb6dfe91d067e9f))
+- update dependabot-auto-merge.yml ([e28cdb4](https://github.com/Matergi/translo/commit/e28cdb4a5f1d4f4b96d99bff434f27e128a5365d))
+- update dependabot-auto-merge.yml ([ef2a475](https://github.com/Matergi/translo/commit/ef2a47575a312bdb1e6e9bcb211965e65e5b3b9b))
+- update dependabot.yml ([fb03a2a](https://github.com/Matergi/translo/commit/fb03a2aedc6d6601e46714b0c7931749bd65db06))
+- update dependabot.yml ([18b11b1](https://github.com/Matergi/translo/commit/18b11b1b630e7f6cb18e4b6a2a74a5749e7a607c))
 
 ## [1.3.0](https://github.com/Matergi/translo/compare/v1.2.0...v1.3.0) (2024-08-12)
 

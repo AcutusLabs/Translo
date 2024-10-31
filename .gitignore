@@ -39,3 +39,6 @@ next-env.d.ts
 .vscode
 # Sentry Config File
 .sentryclirc
+
+/playwright-report
+/test-results

@@ -1,6 +1,5 @@
 import i18n from "@/lib/i18n"
 
-/* eslint-disable @next/next/no-img-element */
 const Features = () => {
   return (
     <div className="max-w-[85rem] px-4 py-10 sm:px-6 lg:px-8 lg:py-14 mx-auto">

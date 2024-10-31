@@ -5,7 +5,7 @@ import { useCallback, useContext, useMemo, useState } from "react"
 import i18n from "@/lib/i18n"
 import { useDeleteKeyword } from "@/hooks/api/project/keyword/use-delete-keyword"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import AddNewKeyword from "../dialogs/add-new-keyword"
 import AddNewLanguage from "../dialogs/add-new-languages"
@@ -56,7 +56,12 @@ const Table = (props: Props) => {
 
   const filteredKeywords = useMemo(() => {
     return keywords.filter((keyword) => {
-      return keyword.keyword.toLowerCase().includes(query.toLowerCase())
+      return (
+        keyword.keyword.toLowerCase().includes(query.toLowerCase()) ||
+        keyword.defaultTranslation
+          .toLocaleLowerCase()
+          .includes(query.toLowerCase())
+      )
     })
   }, [keywords, query])
 
@@ -91,7 +96,7 @@ const Table = (props: Props) => {
               type="text"
               id="simple-search"
               className="focus:ring-primary-500 focus:border-primary-500 dark:focus:ring-primary-500 dark:focus:border-primary-500 block w-full rounded-lg border border-gray-300 bg-gray-50 p-2 px-10 text-sm text-gray-900 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400"
-              placeholder="Search"
+              placeholder={i18n.t("Search")}
               onChange={handleQueryChange}
               value={query}
             />

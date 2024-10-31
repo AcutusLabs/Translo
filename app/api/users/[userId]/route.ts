@@ -11,9 +11,11 @@ import { userNameSchema } from "@/lib/validations/user"
 import { LOGOUT_STATUS } from "../../status"
 
 const routeContextSchema = z.object({
-  params: z.object({
-    userId: z.string(),
-  }),
+  params: z.promise(
+    z.object({
+      userId: z.string(),
+    })
+  ),
 })
 
 export async function PATCH(
@@ -21,8 +23,7 @@ export async function PATCH(
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
-    // Validate the route context.
-    const { params } = routeContextSchema.parse(context)
+    const params = await routeContextSchema.parse(context).params
 
     // Ensure user is authentication and has access to this user.
     const session = await getServerSession(authOptions)
@@ -44,6 +45,7 @@ export async function PATCH(
       },
       data: {
         name: payload.name,
+        lang: payload.lang,
       },
     })
 

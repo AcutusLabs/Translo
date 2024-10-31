@@ -1,53 +1,36 @@
+import { useMemo } from "react"
 import { ProjectLanguage } from "@prisma/client"
+import { JsonValue } from "@prisma/client/runtime/library"
 import { useQuery } from "@tanstack/react-query"
 import axios from "axios"
 
-import i18n from "@/lib/i18n"
-import {
-  KeywordData,
-  LanguageData,
-  TranslationData,
-} from "@/components/app/project/types"
+import { KeywordData, LanguageData } from "@/components/app/project/types"
 
 export type LanguageProps = Pick<ProjectLanguage, "short" | "name">
 
+type GetKeywordsResponseType = {
+  keyword: string
+  id: string
+  projectId: string
+  context: string
+  translations: {
+    id: string
+    keywordId: string
+    projectLanguageId: string
+    value: string
+    history: JsonValue | null
+  }[]
+}[]
+
 const getKeywords = async (
-  projectId: string,
-  languages: LanguageData[]
-): Promise<KeywordData[]> => {
+  projectId: string
+): Promise<GetKeywordsResponseType> => {
   const result = await axios({
     url: `/api/projects/${projectId}/keywords`,
     method: "GET",
   })
 
-  const keywords: KeywordData[] = result.data.map((keyword) => {
-    const translations: TranslationData[] = keyword.translations.map(
-      (translation) => {
-        const language = languages.find(
-          (lang) => lang.id === translation.projectLanguageId
-        )
-
-        if (!language) {
-          throw i18n.t(
-            "There has been an issue with retrieving some translations. Please write to support at translo.help@gmail.com with these details: {details}",
-            {
-              details: `keyword: ${keyword.keyword}, projectLanguageId: ${translation.projectLanguageId}, keywordId: ${keyword.id}`,
-            }
-          )
-        }
-
-        return {
-          ...translation,
-          language,
-        }
-      }
-    )
-    return {
-      ...keyword,
-      translations,
-    }
-  })
-  return keywords
+  return result.data
 }
 
 type GetKeywordsApi = {
@@ -64,9 +47,52 @@ export const getKeywordsQueryKey = (projectId: string) => [
 ]
 
 export const useGetKeywords = ({ projectId, initialData }: GetKeywordsApi) => {
-  return useQuery<KeywordData[]>({
+  const result = useQuery<GetKeywordsResponseType>({
     queryKey: getKeywordsQueryKey(projectId),
-    queryFn: async () => await getKeywords(projectId, initialData.languages),
-    initialData: initialData.keywords,
+    queryFn: async () => await getKeywords(projectId),
   })
+
+  const keywordsFromApi = result.data
+  const languagesFromApi = initialData.languages
+
+  const keywordsFromApiWithTranslation = useMemo((): KeywordData[] => {
+    if (!keywordsFromApi) {
+      return initialData.keywords
+    }
+    return keywordsFromApi.map((keyword): KeywordData => {
+      const translations = keyword.translations
+        .filter((translation) =>
+          languagesFromApi.find(
+            (lang) => lang.id === translation.projectLanguageId
+          )
+        )
+        .map((translation) => {
+          const language = languagesFromApi.find(
+            (lang) => lang.id === translation.projectLanguageId
+          )
+
+          if (!language) {
+            throw new Error(
+              `Language not found for projectLanguageId: ${translation.projectLanguageId}`
+            )
+          }
+
+          return {
+            ...translation,
+            language,
+          }
+        })
+      return {
+        ...keyword,
+        translations,
+        defaultTranslation:
+          translations.find((translation) => translation.language?.id === "en")
+            ?.value ||
+          translations[0]?.value ||
+          "",
+      }
+    })
+  }, [initialData.keywords, keywordsFromApi, languagesFromApi])
+
+  return keywordsFromApiWithTranslation
 }

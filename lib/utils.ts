@@ -1,6 +1,8 @@
 import { randomBytes } from "crypto"
+import { languages } from "@/constants/languages"
 import { ClassValue, clsx } from "clsx"
 import sha256 from "crypto-js/sha256"
+import { signOut } from "next-auth/react"
 import { twMerge } from "tailwind-merge"
 
 import { env } from "@/env.mjs"
@@ -72,3 +74,25 @@ export const CAN_USE_DOM: boolean =
   typeof window !== "undefined" &&
   typeof window.document !== "undefined" &&
   typeof window.document.createElement !== "undefined"
+
+export const getLanguageFlag = (
+  code: string
+): { name: string; flag: string } => {
+  const language = languages.find((language) => language.code === code)
+  return {
+    name: language?.name || "not-found",
+    flag: language?.flag || "🌎",
+  }
+}
+
+export const isPlaywrightTest = () => {
+  if (typeof window === "undefined") {
+    return
+  }
+  return window.localStorage.getItem("isPlaywrightTest")
+}
+
+export async function logoutServerAction() {
+  // Esegui il logout
+  await signOut({ redirect: false })
+}

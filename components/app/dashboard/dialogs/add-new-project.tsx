@@ -4,6 +4,7 @@ import { ChangeEvent, useCallback, useContext, useState } from "react"
 import { useRouter } from "next/navigation"
 
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { useAddProject } from "@/hooks/api/project/use-add-project"
 import { Button, buttonVariants } from "@/components/ui/button"
@@ -17,7 +18,7 @@ import {
 } from "@/components/ui/dialog"
 import { Input } from "@/components/ui/input"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 const AddNewProject = () => {
   const [projectName, setProjectName] = useState<string>("")
@@ -30,7 +31,7 @@ const AddNewProject = () => {
     projectName,
     onSuccess: (project) => {
       router.refresh()
-      router.push(`/editor/${project.id}`)
+      router.push(navigate().project(project.id))
       setProjectName("")
       setOpen(false)
     },
@@ -57,6 +58,7 @@ const AddNewProject = () => {
     <Dialog open={open} onOpenChange={onOpenChange}>
       <DialogTrigger asChild>
         <button
+          data-testid="add-new-project-button"
           className={cn(buttonVariants(), {
             "cursor-not-allowed opacity-60": isPending,
           })}
@@ -74,6 +76,7 @@ const AddNewProject = () => {
         </DialogHeader>
         <div className="py-2">
           <Input
+            data-testid="add-new-project-input"
             placeholder={i18n.t("Project name")}
             className="col-span-3"
             data-1p-ignore
@@ -82,7 +85,11 @@ const AddNewProject = () => {
           />
         </div>
         <DialogFooter>
-          <Button onClick={createProject} disabled={!projectName || isPending}>
+          <Button
+            data-testid="add-new-project-create-button"
+            onClick={createProject}
+            disabled={!projectName || isPending}
+          >
             {isPending && (
               <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
             )}

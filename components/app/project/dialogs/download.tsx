@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import Link from "next/link"
 
-import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
+import { eventPostHogClient, UserDoClientAction } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 import { useShareProject } from "@/hooks/api/project/use-share-project"
@@ -15,7 +15,7 @@ import {
 } from "@/components/ui/dropdown-menu"
 import { Label } from "@/components/ui/label"
 import { Switch } from "@/components/ui/switch"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { DownloadFormat } from "../useTranslation"
 

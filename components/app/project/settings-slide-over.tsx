@@ -7,7 +7,7 @@ import useDidMountEffect from "@/hooks/useDidMountEffect"
 import { Button } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
 import PreventEraseData from "@/components/prevent-erase-data-alert"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import SlideOver, { SlideOverRow } from "../../slide-over"
 import AddNewLanguage from "./dialogs/add-new-languages"
@@ -129,7 +129,9 @@ const ProjectSettingsSlideOver = (props: Props) => {
               id="af-submit-app-description"
               className="t-textarea"
               rows={6}
-              placeholder="A detailed summary will better explain your products to the AI."
+              placeholder={i18n.t(
+                "A detailed summary will better explain your products to the AI."
+              )}
               value={localSettings.description}
               onChange={handleChangeDescription}
             ></textarea>

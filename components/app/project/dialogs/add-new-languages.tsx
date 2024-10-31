@@ -2,7 +2,7 @@ import { ChangeEvent, useCallback, useContext, useMemo, useState } from "react"
 import { languages as allLanguages } from "@/constants/languages"
 import { DialogClose } from "@radix-ui/react-dialog"
 
-import { UserDoClientAction, eventPostHogClient } from "@/lib/analytics-client"
+import { eventPostHogClient, UserDoClientAction } from "@/lib/analytics-client"
 import i18n from "@/lib/i18n"
 import { useAddLanguage } from "@/hooks/api/project/language/use-add-language"
 import { Button } from "@/components/ui/button"
@@ -18,7 +18,7 @@ import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
 import { LanguageSelector } from "@/components/app/project/language-selector"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { LanguageData } from "../types"
 
@@ -106,7 +106,10 @@ const AddNewLanguage = (props: Props) => {
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <button className="t-button">
+        <button
+          className="t-button"
+          data-testid="add-new-language-modal-trigger"
+        >
           <Icons.add className="h-3.5 w-3.5" />
           {i18n.t("Add language")}
         </button>
@@ -123,7 +126,11 @@ const AddNewLanguage = (props: Props) => {
           />
           <DialogFooter>
             <DialogClose asChild>
-              <Button onClick={onAddLanguage} disabled={!selectedLanguage}>
+              <Button
+                onClick={onAddLanguage}
+                disabled={!selectedLanguage}
+                data-testid="add-new-language-button"
+              >
                 {i18n.t("Add language")}
               </Button>
             </DialogClose>

@@ -4,18 +4,20 @@ import * as React from "react"
 import Link from "next/link"
 
 import "@/styles/editor.css"
+
 import { useContext, useMemo, useState } from "react"
 import { debounce } from "lodash"
 import { createPortal } from "react-dom"
 
 import { env } from "@/env.mjs"
 import i18n from "@/lib/i18n"
+import { navigate } from "@/lib/link"
 import { cn } from "@/lib/utils"
 import { useEditProject } from "@/hooks/api/project/use-edit-project"
 import { SemaphoreTranslation } from "@/hooks/api/project/use-translate-project"
 import { buttonVariants } from "@/components/ui/button"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { DownloadKeywordsDropdownMenu } from "./dialogs/download"
 import ImportKeywordsModal from "./dialogs/import-keywords"
@@ -59,7 +61,7 @@ export function Editor(props: EditorProps) {
       <div className="flex w-full items-center justify-between">
         <div className="flex items-center space-x-10">
           <Link
-            href="/dashboard"
+            href={navigate().dashboard()}
             className={cn(buttonVariants({ variant: "ghost" }))}
           >
             <>
@@ -91,6 +93,7 @@ export function Editor(props: EditorProps) {
             />
           )}
           <button
+            data-testid="settings-button"
             onClick={() => openProjectSettings(true)}
             className={cn(buttonVariants({ variant: "secondary" }), "mr-4")}
           >

@@ -9,5 +9,7 @@ jobs:
   commitlint:
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - uses: wagoid/commitlint-github-action@v5
+      - uses: actions/checkout@v4
+      - if: (github.actor != 'dependabot[bot]') && (contains(github.head_ref, 'dependabot/') == false)
+        name: commitlint
+        uses: wagoid/commitlint-github-action@v6

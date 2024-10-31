@@ -76,6 +76,7 @@ export const authOptions: NextAuthOptions = {
         session.user.id = token.id
         session.user.name = token.name
         session.user.email = token.email
+        session.user.lang = token.lang
         session.user.image = token.picture
       }
 
@@ -91,6 +92,8 @@ export const authOptions: NextAuthOptions = {
       if (!dbUser) {
         if (user) {
           token.id = user?.id
+          // @ts-ignore
+          token.lang = user?.lang
         }
         return token
       }
@@ -99,6 +102,7 @@ export const authOptions: NextAuthOptions = {
         id: dbUser.id,
         name: dbUser.name,
         email: dbUser.email,
+        lang: dbUser.lang,
         picture: dbUser.image,
       }
     },

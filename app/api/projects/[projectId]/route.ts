@@ -19,7 +19,7 @@ export async function GET(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({
@@ -51,8 +51,7 @@ export async function DELETE(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    // Validate the route params.
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
@@ -80,8 +79,7 @@ export async function PATCH(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    // Validate route params.
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     // Check if the user has access to this project.
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {

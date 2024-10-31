@@ -3,7 +3,6 @@ import {
   Fragment,
   useCallback,
   useContext,
-  useEffect,
   useMemo,
   useState,
 } from "react"
@@ -24,7 +23,7 @@ import { Separator } from "@/components/ui/separator"
 import { Icons } from "@/components/icons"
 import PreventEraseData from "@/components/prevent-erase-data-alert"
 import SlideOver, { SlideOverRow } from "@/components/slide-over"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import {
   KeywordData,
@@ -77,7 +76,8 @@ const DetailSlideOver = (props: Props) => {
       }
     })
   )
-  useEffect(() => {
+
+  useDidMountEffect(() => {
     // when translation changed form api
     setTranslations(
       languages.map((language) => {
@@ -105,10 +105,6 @@ const DetailSlideOver = (props: Props) => {
   const [context, setContext] = useState<string>(keyword.context)
 
   const [shouldSave, setShouldSave] = useState(false)
-
-  useDidMountEffect(() => {
-    setShouldSave(true)
-  }, [translations, hints, context])
 
   const { preventEraseDataVisible, onCloseFromModal, onCloseSecure } =
     usePreventEraseData({
@@ -188,6 +184,7 @@ const DetailSlideOver = (props: Props) => {
 
   const handleChangeTranslation = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>, language: string) => {
+      setShouldSave(true)
       setTranslations(
         translations.map((translation) => {
           if (translation.projectLanguageId !== language) {
@@ -206,6 +203,7 @@ const DetailSlideOver = (props: Props) => {
 
   const handleChangeContext = useCallback(
     (event: ChangeEvent<HTMLTextAreaElement>) => {
+      setShouldSave(true)
       setContext(event.target.value)
     },
     [setContext]
@@ -335,7 +333,7 @@ const DetailSlideOver = (props: Props) => {
               <textarea
                 rows={3}
                 className="t-textarea"
-                placeholder="Leave the keyword context here..."
+                placeholder={i18n.t("Leave the keyword context here...")}
                 value={context}
                 onChange={handleChangeContext}
               ></textarea>
@@ -365,6 +363,7 @@ const DetailSlideOver = (props: Props) => {
                   </label>
                   <div className="mt-1">
                     <textarea
+                      data-testid={`context-textarea-${lang.name}`}
                       rows={3}
                       className="t-textarea"
                       placeholder={`Leave ${lang.name} translation here...`}
@@ -411,6 +410,7 @@ const DetailSlideOver = (props: Props) => {
                         onClick={() => mutate()}
                         variant={"default"}
                         disabled={shouldSave}
+                        data-testid="auto-translate-button"
                       >
                         {isPending && (
                           <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
@@ -452,6 +452,7 @@ const DetailSlideOver = (props: Props) => {
         <div className="h-[50px]" />
         <div className="absolute bottom-0 left-0 right-0 pt-1 pb-3 px-3 !border-t-0 !border-b-0 bg-white">
           <Button
+            data-testid="save-translations-button"
             className="mt-2 w-full"
             onClick={() => save()}
             variant={shouldSave ? "default" : "success"}

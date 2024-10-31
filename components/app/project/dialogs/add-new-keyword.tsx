@@ -30,7 +30,7 @@ import {
   TooltipTrigger,
 } from "@/components/ui/tooltip"
 import { Icons } from "@/components/icons"
-import { AlertContext } from "@/app/client-providers"
+import { AlertContext } from "@/app/[lang]/client-providers"
 
 import { KeywordData } from "../types"
 
@@ -102,7 +102,7 @@ const AddNewKeyword = (props: Props) => {
   return (
     <Dialog open={open} onOpenChange={setOpen}>
       <DialogTrigger asChild>
-        <Button>
+        <Button data-testid="add-new-keyword-modal-trigger">
           <Icons.add className="mr-2 h-3.5 w-3.5" />
           {i18n.t("Add keyword")}
         </Button>
@@ -121,6 +121,7 @@ const AddNewKeyword = (props: Props) => {
                 {i18n.t("Keyword")}
               </Label>
               <Input
+                data-testid="add-new-keyword-input"
                 id="keyword"
                 placeholder={i18n.t("Keyword to translate")}
                 className="col-span-3"
@@ -174,6 +175,7 @@ const AddNewKeyword = (props: Props) => {
               <Button
                 onClick={onSubmit}
                 disabled={!key || isKeywordAlreadyExists}
+                data-testid="add-new-keyword-button"
               >
                 {isPending ? (
                   <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />

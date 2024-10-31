@@ -10,6 +10,8 @@ import * as RadixSelect from "@radix-ui/react-select"
 import { Check, ChevronDown, Search } from "lucide-react"
 import { matchSorter } from "match-sorter"
 
+import i18n from "@/lib/i18n"
+
 import { LanguageData } from "./types"
 
 type Props = {
@@ -66,8 +68,9 @@ export const LanguageSelector = (props: Props) => {
         <RadixSelect.Trigger
           aria-label="Language"
           className="inline-flex h-10 items-center justify-between gap-1 rounded bg-white text-black shadow px-4"
+          data-testid="language-selector-trigger"
         >
-          <RadixSelect.Value placeholder="Select a language" />
+          <RadixSelect.Value placeholder={i18n.t("Select the language")} />
           <RadixSelect.Icon>
             <ChevronDown size={20} />
           </RadixSelect.Icon>
@@ -84,7 +87,7 @@ export const LanguageSelector = (props: Props) => {
             </div>
             <Combobox
               autoSelect
-              placeholder="Search languages"
+              placeholder={i18n.t("Select the language")}
               className="appearance-none rounded bg-[hsl(204_4%_0%_/_0.05)] text-black outline-none outline-offset-2 h-9 text-[15px] pl-7 pr-2 w-full"
               // Ariakit's Combobox manually triggers a blur event on virtually
               // blurred items, making them work as if they had actual DOM
