@@ -66,6 +66,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         body: JSON.stringify({
           email: data.email.toLowerCase(),
           password: data.password.toLowerCase(),
+          lang: i18n.getLanguage(),
         }),
       })
 

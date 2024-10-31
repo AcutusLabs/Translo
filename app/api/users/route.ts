@@ -17,6 +17,7 @@ import { findUserByEmail } from "./utils"
 const userCreateSchema = z.object({
   email: z.string(),
   password: z.string(),
+  lang: z.string().optional(),
   skip_activation: z.boolean().optional(),
   add_fake_subscription: z.boolean().optional(),
 })
@@ -52,6 +53,7 @@ export async function POST(req: Request) {
         password: hashPassword(body.password),
         emailVerificationToken: token,
         tokens: BigInt(freePlanTokens),
+        lang: body.lang || "en",
         emailVerified:
           env.TEST_MODE_ENABLED === "true" && body.skip_activation
             ? new Date()

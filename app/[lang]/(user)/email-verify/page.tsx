@@ -6,11 +6,10 @@ import { useSearchParams } from "next/navigation"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
 import i18n from "@/lib/i18n"
-import { withI18n } from "@/lib/i18n/with-i18n"
 import { toast } from "@/components/ui/use-toast"
 import PageView from "@/components/posthog/page-view"
 
-export default withI18n(function VerifyEmail() {
+export default function VerifyEmail() {
   const searchParams = useSearchParams()
 
   const [result, setResult] = useState<string | undefined>()
@@ -66,4 +65,4 @@ export default withI18n(function VerifyEmail() {
       </div>
     </>
   )
-})
+}
