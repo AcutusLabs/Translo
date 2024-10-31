@@ -60,7 +60,7 @@ const BuyAITokens = () => {
         type="number"
         placeholder="3"
         onChange={handleChangeAmount}
-        value={amount}
+        value={amount || ""}
       />
       {amount === undefined || amount < 3 ? (
         <h6 className="w-full text-red-500 text-xs mt-2">
