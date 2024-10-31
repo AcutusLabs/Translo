@@ -93,6 +93,7 @@ export function Editor(props: EditorProps) {
             />
           )}
           <button
+            data-testid="settings-button"
             onClick={() => openProjectSettings(true)}
             className={cn(buttonVariants({ variant: "secondary" }), "mr-4")}
           >

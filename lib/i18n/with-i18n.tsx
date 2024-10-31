@@ -1,8 +1,10 @@
 import i18n from "."
 
 export const withI18n = (Component: any) => {
-  return (props) => {
-    i18n.changeLanguage(props.params.lang)
-    return <Component {...props} />
+  return async (props: { params: Promise<any> }) => {
+    const params = await props.params
+    i18n.changeLanguage(params.lang)
+    const newProps = { ...props, params }
+    return <Component {...newProps} />
   }
 }

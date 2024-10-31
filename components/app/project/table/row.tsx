@@ -24,6 +24,7 @@ const Row = (props: Props) => {
       onClick={openDetail}
     >
       <td
+        data-testid={`keyword-cell-${keyword.keyword}`}
         scope="row"
         className="whitespace-nowrap px-4 py-3 align-middle font-medium text-gray-900 dark:text-white text-ellipsis overflow-hidden w-[70%]"
       >
@@ -58,6 +59,7 @@ const Row = (props: Props) => {
         </div>
       </td>
       <td
+        data-testid={`delete-keyword-trigger-${keyword.keyword}`}
         className="px-4 py-3 align-middle"
         onClick={(e) => e.stopPropagation()}
       >
@@ -76,12 +78,14 @@ const Row = (props: Props) => {
             </DropdownMenuTrigger>
             <DropdownMenuContent>
               <DropdownMenuItem
+                data-testid="edit-keyword-button"
                 onClick={openDetail}
                 className={"hover:cursor-pointer"}
               >
                 {i18n.t("Edit")}
               </DropdownMenuItem>
               <DropdownMenuItem
+                data-testid="delete-keyword-button"
                 onClick={deleteKeyword}
                 className={"hover:cursor-pointer"}
               >

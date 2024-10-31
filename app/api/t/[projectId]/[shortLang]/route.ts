@@ -5,10 +5,12 @@ import { handleCatchApi } from "@/lib/exceptions"
 import { ErrorResponse } from "@/lib/response"
 
 const routeContextSchema = z.object({
-  params: z.object({
-    projectId: z.string(),
-    shortLang: z.string(),
-  }),
+  params: z.promise(
+    z.object({
+      projectId: z.string(),
+      shortLang: z.string(),
+    })
+  ),
 })
 
 export async function GET(
@@ -16,7 +18,7 @@ export async function GET(
   context: z.infer<typeof routeContextSchema>
 ) {
   try {
-    const { params } = routeContextSchema.parse(context)
+    const params = await routeContextSchema.parse(context).params
 
     const projectLanguageId = await db.projectLanguage.findFirst({
       where: {

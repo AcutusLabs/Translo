@@ -83,7 +83,7 @@ const ChangePasswordDialog = () => {
             </Label>
             <Input
               id="old-password"
-              placeholder="old password"
+              placeholder={i18n.t("Old password")}
               className="col-span-3"
               type="password"
               data-1p-ignore
@@ -97,7 +97,7 @@ const ChangePasswordDialog = () => {
             </Label>
             <Input
               id="new-password"
-              placeholder="new password"
+              placeholder={i18n.t("New password")}
               className="col-span-3"
               type="password"
               data-1p-ignore

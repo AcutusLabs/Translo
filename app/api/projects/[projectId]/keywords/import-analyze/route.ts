@@ -22,7 +22,7 @@ export async function POST(
   context: z.infer<typeof routeContextSchemaProject>
 ) {
   try {
-    const { params } = routeContextSchemaProject.parse(context)
+    const params = await routeContextSchemaProject.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({

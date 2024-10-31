@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm prisma:generate && concurrently \"next dev\"",
+    "dev": "pnpm prisma:generate && concurrently \"next dev --turbopack\"",
     "build": "next build",
     "turbo": "next dev --turbo",
     "start": "next start",
@@ -34,10 +34,13 @@
     "check-release-patch": "pnpm install && commit-and-tag-version --dry-run --release-as patch",
     "check-release-version": "pnpm install && commit-and-tag-version --dry-run --release-as",
     "test": "npx playwright test --ui",
-    "test:e2e": "playwright test",
+    "test:e2e": "pnpm dotenv -e .env.docker pnpm prisma migrate dev --create-only && pnpm dotenv -e .env.docker pnpm prisma:generate && pnpm dotenv -e .env.docker pnpm playwright test",
     "test:e2e:run": "playwright test -g",
-    "record:test": "npx playwright codegen 0.0.0.0:3000",
-    "test:e2e:ci:run": "pnpm dotenv -e .env.github pnpm prisma migrate dev --create-only && pnpm dotenv -e .env.github pnpm prisma:generate && pnpm dotenv -e .env.github pnpm test:e2e"
+    "test:e2e:record": "npx playwright codegen 0.0.0.0:3000",
+    "test:e2e:ci": "pnpm dotenv -e .env.github pnpm prisma migrate dev --create-only && pnpm dotenv -e .env.github pnpm prisma:generate && pnpm dotenv -e .env.github pnpm test:e2e",
+    "test:e2e:docker:setup": "docker-compose up postgres",
+    "test:e2e:docker:migrate": "pnpm dotenv -e .env.docker pnpm prisma migrate dev --create-only && pnpm dotenv -e .env.docker pnpm prisma:generate",
+    "test:e2e:docker:run": "pnpm dotenv -e .env.docker pnpm prisma migrate dev --create-only && pnpm dotenv -e .env.docker pnpm prisma:generate && pnpm dotenv -e .env.docker pnpm test:e2e"
   },
   "dependencies": {
     "@ariakit/react": "0.4.13",
@@ -88,7 +91,7 @@
     "lodash": "4.17.21",
     "lucide-react": "0.454.0",
     "match-sorter": "7.0.0",
-    "next": "14.2.15",
+    "next": "15.0.1",
     "next-auth": "4.24.10",
     "next-nprogress-bar": "2.3.14",
     "next-themes": "0.3.0",
@@ -97,8 +100,8 @@
     "posthog-js": "1.178.0",
     "posthog-node": "4.2.1",
     "preline": "2.5.1",
-    "react": "18.3.1",
-    "react-dom": "18.3.1",
+    "react": "19.0.0-rc-69d4b800-20241021",
+    "react-dom": "19.0.0-rc-69d4b800-20241021",
     "react-hook-form": "7.53.1",
     "stripe": "17.3.0",
     "tailwind-merge": "2.5.4",
@@ -120,8 +123,8 @@
     "@types/lodash": "4.17.13",
     "@types/node": "22.8.4",
     "@types/nodemailer": "6.4.16",
-    "@types/react": "18.3.12",
-    "@types/react-dom": "18.3.1",
+    "@types/react": "npm:types-react@19.0.0-rc.1",
+    "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1",
     "@typescript-eslint/experimental-utils": "5.62.0",
     "autoprefixer": "10.4.20",
     "commitizen": "4.3.1",
@@ -151,8 +154,7 @@
     "ts-node": "10.9.2",
     "typescript": "5.6.3",
     "typescript-eslint": "8.12.2",
-    "unist-util-visit": "5.0.0",
-    "wait-on": "8.0.1"
+    "unist-util-visit": "5.0.0"
   },
   "config": {
     "commitizen": {
@@ -160,6 +162,12 @@
     },
     "cz-customizable": {
       "config": "commitizen.config.js"
+    }
+  },
+  "pnpm": {
+    "overrides": {
+      "@types/react": "npm:types-react@19.0.0-rc.1",
+      "@types/react-dom": "npm:types-react-dom@19.0.0-rc.1"
     }
   }
 }

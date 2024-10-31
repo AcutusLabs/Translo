@@ -91,7 +91,7 @@ const ChangeEmailDialog = (props: ChangeEmailDialogProps) => {
             </Label>
             <Input
               id="email"
-              placeholder="new email"
+              placeholder={i18n.t("New email")}
               className="col-span-3"
               type="email"
               data-1p-ignore

@@ -1,13 +1,11 @@
 import { test } from "../fixtures"
+import Dashboard from "../screens/dashboard"
 
 test("should open dashboard", async ({ page, baseURL }) => {
   if (!baseURL) {
     throw "baseURL is undefined"
   }
 
-  await page.goto(`${baseURL}/en`)
-  await page.waitForURL(`${baseURL}/en/dashboard`, {
-    timeout: 5000,
-    waitUntil: "networkidle",
-  })
+  const dashboard = new Dashboard(page)
+  await dashboard.open()
 })

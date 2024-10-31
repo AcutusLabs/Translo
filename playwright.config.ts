@@ -7,18 +7,15 @@ const PORT = 3000
 // Set webServer.url and use.baseURL with the location of the WebServer respecting the correct set port
 export const baseURL = `http://localhost:${PORT}`
 
-const timeout = 180 * 1000
-
 // Reference: https://playwright.dev/docs/test-configuration
 const config: PlaywrightTestConfig = {
   // Timeout per test
-  timeout,
   globalTimeout: 60 * 60 * 1000,
 
   testDir: path.join(__dirname, "tests/e2e"),
   snapshotPathTemplate: "{testDir}/__screenshots__/{testFilePath}/{arg}{ext}",
 
-  workers: 4,
+  workers: 2,
   retries: 1,
 
   outputDir: "test-results/",
@@ -28,12 +25,7 @@ const config: PlaywrightTestConfig = {
   webServer: {
     command: "pnpm dev",
     url: baseURL,
-    timeout,
     reuseExistingServer: false,
-  },
-
-  expect: {
-    timeout,
   },
 
   reporter: [["html", { outputFolder: "playwright-report" }]],

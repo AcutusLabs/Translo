@@ -32,9 +32,9 @@ const fontHeading = localFont({
 
 interface RootLayoutProps {
   children: React.ReactNode
-  params: {
+  params: Promise<{
     lang: string
-  }
+  }>
 }
 
 export const metadata = {
@@ -84,10 +84,13 @@ export const metadata = {
   manifest: `${siteConfig.url}/site.webmanifest`,
 }
 
-export default async function RootLayout({
-  children,
-  params: { lang },
-}: RootLayoutProps) {
+export default async function RootLayout(props: RootLayoutProps) {
+  const params = await props.params
+
+  const { lang } = params
+
+  const { children } = props
+
   i18n.changeLanguage(lang)
   return (
     <html lang={lang} suppressHydrationWarning>

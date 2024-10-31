@@ -1,6 +1,6 @@
 # Translo
 
-[Translo](https://www.translo.app) is a localization management platform, open-source, for building better products 
+[Translo](https://www.translo.app) is a localization management platform, open-source, for building better products
 
 - [x] It manages all the translations you need
 - [x] Import JSON files and translate them
@@ -73,4 +73,21 @@ Set the base URL of Translo in the `TRANSLO_I18N_BASE_URL` environment
 
 ```sh
 pnpm run i18n
+```
+
+## Test
+
+1. Run the tests with UI:
+
+```sh
+pnpm test:e2e:docker:setup
+pnpm test:e2e:docker:migrate
+pnpm test
+```
+
+2. Run the tests in headless mode:
+
+```sh
+pnpm test:e2e:docker:setup
+pnpm test:e2e:ci
 ```

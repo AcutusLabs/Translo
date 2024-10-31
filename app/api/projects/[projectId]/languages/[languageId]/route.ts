@@ -14,10 +14,12 @@ const languagePatchSchema = z.object({
 })
 
 const routeContextSchemaProjectLanguage = z.object({
-  params: z.object({
-    projectId: z.string(),
-    languageId: z.string(),
-  }),
+  params: z.promise(
+    z.object({
+      projectId: z.string(),
+      languageId: z.string(),
+    })
+  ),
 })
 
 export async function DELETE(
@@ -25,7 +27,7 @@ export async function DELETE(
   context: z.infer<typeof routeContextSchemaProjectLanguage>
 ) {
   try {
-    const { params } = routeContextSchemaProjectLanguage.parse(context)
+    const params = await routeContextSchemaProjectLanguage.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({
@@ -51,7 +53,7 @@ export async function PATCH(
   context: z.infer<typeof routeContextSchemaProjectLanguage>
 ) {
   try {
-    const { params } = routeContextSchemaProjectLanguage.parse(context)
+    const params = await routeContextSchemaProjectLanguage.parse(context).params
 
     if (!(await verifyCurrentUserHasAccessToProject(params.projectId))) {
       return ErrorResponse({

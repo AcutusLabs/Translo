@@ -39,7 +39,6 @@ const LanguageSwitch = () => {
           <path d="m18 15-6-6-6 6"></path>
         </svg>
       </button>
-
       <div
         className="hs-dropdown-menu w-40 transition-[opacity,margin] duration hs-dropdown-open:opacity-100 opacity-0 z-10 bg-white shadow-md rounded-lg p-2 dark:bg-neutral-800 dark:border dark:border-neutral-700 dark:divide-neutral-700 hidden"
         role="menu"
