@@ -14,6 +14,7 @@ export default withAuth(
       req.nextUrl.pathname.startsWith("/global-error") ||
       req.nextUrl.pathname.startsWith("/robots") ||
       req.nextUrl.pathname.startsWith("/api/") ||
+      req.nextUrl.pathname.startsWith("/sitemap") ||
       PUBLIC_FILE.test(req.nextUrl.pathname)
     ) {
       return NextResponse.next()
