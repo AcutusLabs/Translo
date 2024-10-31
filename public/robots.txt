@@ -1,0 +1,9 @@
+# *
+User-agent: *
+Allow: /
+
+# Host
+Host: https://translo.app
+
+# Sitemaps
+Sitemap: https://translo.app/sitemap.xml

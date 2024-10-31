@@ -7,6 +7,7 @@ import translationFR from "./languages/fr.json"
 import translationIT from "./languages/it.json"
 import translationPT from "./languages/pt.json"
 
+// remember to add the new languages to the next-sitemap.config.js file
 export const languagesSupported = ["en", "es", "it", "fr", "pt", "de"]
 
 export const defaultLanguage = "en"
