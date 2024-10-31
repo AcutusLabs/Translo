@@ -14,6 +14,7 @@ const LanguageSelector = (props: Props) => {
   return (
     <div className="hs-dropdown [--placement:top-left] relative inline-flex">
       <button
+        data-testid="language-selector"
         id="hs-footer-language-dropdown"
         type="button"
         className="hs-dropdown-toggle py-2 px-3 inline-flex items-center gap-x-2 text-sm rounded-lg border border-gray-200 bg-white text-gray-800 shadow-sm hover:bg-gray-50 focus:outline-none focus:bg-gray-50 disabled:opacity-50 disabled:pointer-events-none dark:bg-neutral-900 dark:border-neutral-700 dark:text-white dark:hover:bg-neutral-800 dark:focus:bg-neutral-800"
@@ -49,6 +50,7 @@ const LanguageSelector = (props: Props) => {
           .filter((language) => language !== props.languageSelected)
           .map((language) => (
             <div
+              data-testid={`language-selector-${language}`}
               key={language}
               className="flex items-center gap-x-2 py-2 px-3 rounded-lg text-sm text-gray-800 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 dark:text-neutral-400 dark:hover:bg-neutral-700 dark:hover:text-neutral-300 dark:focus:bg-neutral-700 dark:focus:text-neutral-300 hover:cursor-pointer"
               onClick={() => {

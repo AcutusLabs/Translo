@@ -56,7 +56,12 @@ const Table = (props: Props) => {
 
   const filteredKeywords = useMemo(() => {
     return keywords.filter((keyword) => {
-      return keyword.keyword.toLowerCase().includes(query.toLowerCase())
+      return (
+        keyword.keyword.toLowerCase().includes(query.toLowerCase()) ||
+        keyword.defaultTranslation
+          .toLocaleLowerCase()
+          .includes(query.toLowerCase())
+      )
     })
   }, [keywords, query])
 

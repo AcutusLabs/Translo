@@ -10,6 +10,13 @@ export default class Project {
     this.page = page
   }
 
+  async checkIsInProjectPage() {
+    await this.page.waitForURL(`${baseURL}/en/projects/**`, {
+      timeout: 5000,
+      waitUntil: "networkidle",
+    })
+  }
+
   async closeDetailSlideOver() {
     await this.page.getByTestId("slide-over-close-button").click()
   }
@@ -35,10 +42,7 @@ export default class Project {
     await this.page.getByTestId("add-new-project-button").first().click()
     await this.page.getByTestId("add-new-project-input").fill(name)
     await this.page.getByTestId("add-new-project-create-button").click()
-    await this.page.waitForURL(`${baseURL}/en/projects/**`, {
-      timeout: 5000,
-      waitUntil: "networkidle",
-    })
+    await this.checkIsInProjectPage()
   }
 
   async addNewLanguage() {
