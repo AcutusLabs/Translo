@@ -80,6 +80,11 @@ export default withI18n(async function EditorPage({ params }: EditorPageProps) {
     return {
       ...keyword,
       translations,
+      defaultTranslation:
+        translations.find((translation) => translation.language.id === "en")
+          ?.value ||
+        translations[0]?.value ||
+        "",
     }
   })
 

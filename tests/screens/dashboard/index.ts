@@ -9,11 +9,15 @@ export default class Dashboard {
     this.page = page
   }
 
-  async open() {
-    await this.page.goto(`${baseURL}/en`)
+  async checkIsInDashboard() {
     await this.page.waitForURL(`${baseURL}/en/dashboard`, {
       timeout: 5000,
       waitUntil: "networkidle",
     })
+  }
+
+  async open() {
+    await this.page.goto(`${baseURL}/en`)
+    await this.checkIsInDashboard()
   }
 }

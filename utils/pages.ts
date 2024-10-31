@@ -1,5 +1,5 @@
 const pageRegex = {
-  landing: /^\/.*\/?$/i,
+  landing: /^\/[^/]+\/?$/i,
   pricing: /^\/.*\/pricing/i,
   login: /^\/.*\/login/i,
   register: /^\/.*\/register/i,

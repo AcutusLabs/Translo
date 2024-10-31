@@ -43,4 +43,5 @@ export type TranslationData = Pick<Translation, "id" | "value" | "history"> & {
 
 export type KeywordData = Keyword & {
   translations: TranslationData[]
+  defaultTranslation: string
 }

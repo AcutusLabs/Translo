@@ -55,11 +55,11 @@ export const useGetKeywords = ({ projectId, initialData }: GetKeywordsApi) => {
   const keywordsFromApi = result.data
   const languagesFromApi = initialData.languages
 
-  const keywordsFromApiWithTranslation = useMemo(() => {
+  const keywordsFromApiWithTranslation = useMemo((): KeywordData[] => {
     if (!keywordsFromApi) {
       return initialData.keywords
     }
-    return keywordsFromApi.map((keyword) => {
+    return keywordsFromApi.map((keyword): KeywordData => {
       const translations = keyword.translations
         .filter((translation) =>
           languagesFromApi.find(
@@ -71,6 +71,12 @@ export const useGetKeywords = ({ projectId, initialData }: GetKeywordsApi) => {
             (lang) => lang.id === translation.projectLanguageId
           )
 
+          if (!language) {
+            throw new Error(
+              `Language not found for projectLanguageId: ${translation.projectLanguageId}`
+            )
+          }
+
           return {
             ...translation,
             language,
@@ -79,6 +85,11 @@ export const useGetKeywords = ({ projectId, initialData }: GetKeywordsApi) => {
       return {
         ...keyword,
         translations,
+        defaultTranslation:
+          translations.find((translation) => translation.language?.id === "en")
+            ?.value ||
+          translations[0]?.value ||
+          "",
       }
     })
   }, [initialData.keywords, keywordsFromApi, languagesFromApi])
