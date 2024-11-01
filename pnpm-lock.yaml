@@ -175,8 +175,8 @@ importers:
         specifier: 6.9.16
         version: 6.9.16
       openai:
-        specifier: 4.69.0
-        version: 4.69.0(zod@3.23.8)
+        specifier: 4.70.2
+        version: 4.70.2(zod@3.23.8)
       posthog-js:
         specifier: 1.180.1
         version: 1.180.1
@@ -559,10 +559,6 @@ packages:
 
   '@eslint/eslintrc@3.1.0':
     resolution: {integrity: sha512-4Bfj15dVJdoy3RfZmmo86RK1Fwzn6SstsvK9JS+BaVKqC6QQQQyXekNaC+g+LKNgkQ+2VhGAzm6hO40AhMR3zQ==}
-    engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
-
-  '@eslint/js@9.13.0':
-    resolution: {integrity: sha512-IFLyoY4d72Z5y/6o/BazFBezupzI/taV8sGumxTAVw3lXG9A6md1Dc34T9s1FoD/an9pJH8RHbAxsaEbBed9lA==}
     engines: {node: ^18.18.0 || ^20.9.0 || >=21.1.0}
 
   '@eslint/js@9.14.0':
@@ -4422,8 +4418,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openai@4.69.0:
-    resolution: {integrity: sha512-S3hOHSkk609KqwgH+7dwFrSvO3Gm3Nk0YWGyPHNscoMH/Y2tH1qunMi7gtZnLbUv4/N1elqCp6bDior2401kCQ==}
+  openai@4.70.2:
+    resolution: {integrity: sha512-Q2ymi/KPUYv+LJ9rFxeYxpkVAhcrZFTVvnJbdF1pUHg9eMC6lY8PU4TO1XOK5UZzOZuuVicouRwVMi1iDrT4qw==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -6075,8 +6071,6 @@ snapshots:
       strip-json-comments: 3.1.1
     transitivePeerDependencies:
       - supports-color
-
-  '@eslint/js@9.13.0': {}
 
   '@eslint/js@9.14.0': {}
 
@@ -10619,7 +10613,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openai@4.69.0(zod@3.23.8):
+  openai@4.70.2(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.50
       '@types/node-fetch': 2.6.11
