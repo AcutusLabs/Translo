@@ -4,12 +4,17 @@ import { devices, PlaywrightTestConfig } from "@playwright/test"
 // Use process.env.PORT by default and fallback to port 8080
 const PORT = 3000
 
+export const waitingTime = 10000
+
+const timeout = 180 * 1000
+
 // Set webServer.url and use.baseURL with the location of the WebServer respecting the correct set port
 export const baseURL = `http://localhost:${PORT}`
 
 // Reference: https://playwright.dev/docs/test-configuration
 const config: PlaywrightTestConfig = {
   // Timeout per test
+  timeout,
   globalTimeout: 60 * 60 * 1000,
 
   testDir: path.join(__dirname, "tests/e2e"),
@@ -26,6 +31,11 @@ const config: PlaywrightTestConfig = {
     command: "pnpm dev",
     url: baseURL,
     reuseExistingServer: false,
+    timeout,
+  },
+
+  expect: {
+    timeout,
   },
 
   reporter: [["html", { outputFolder: "playwright-report" }]],
@@ -39,7 +49,7 @@ const config: PlaywrightTestConfig = {
 
     // Retry a test if its failing with enabled tracing. This allows you to analyse the DOM, console logs, network traffic etc.
     // More information: https://playwright.dev/docs/trace-viewer
-    trace: "retry-with-trace",
+    trace: "retain-on-failure",
 
     // All available context options: https://playwright.dev/docs/api/class-browser#browser-new-context
     contextOptions: {
@@ -55,7 +65,7 @@ const config: PlaywrightTestConfig = {
     video: "retain-on-failure",
 
     launchOptions: {
-      slowMo: 0, // 500 for debug
+      slowMo: 500, // 500 for debug
     },
   },
 

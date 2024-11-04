@@ -6,18 +6,17 @@ import { useSearchParams } from "next/navigation"
 import { PageAnalytics } from "@/lib/analytics-client"
 import { HTTP_POST, HTTP_POST_PATH } from "@/lib/api"
 import i18n from "@/lib/i18n"
-import { withI18n } from "@/lib/i18n/with-i18n"
 import { Button } from "@/components/ui/button"
 import { toast } from "@/components/ui/use-toast"
 import PageView from "@/components/posthog/page-view"
 
-export default withI18n(function VerifyEmail() {
+export default function VerifyEmail() {
   const searchParams = useSearchParams()
 
   const email = searchParams?.get("email")
   const token = searchParams?.get("token")
 
-  const [newPassword, setNewPassword] = useState<string | undefined>(undefined)
+  const [newPassword, setNewPassword] = useState<string>("")
 
   const handleChangePassword = useCallback(
     (e: ChangeEvent<HTMLInputElement>) => {
@@ -47,6 +46,7 @@ export default withI18n(function VerifyEmail() {
     toast({
       title: i18n.t("Password changed"),
       description: i18n.t("The password has been updated successfully"),
+      testId: "change-password-toast-success",
     })
 
     window.location.replace("/login")
@@ -74,6 +74,7 @@ export default withI18n(function VerifyEmail() {
               {i18n.t("New password")}
             </label>
             <input
+              data-testid="new-password"
               type="password"
               id="hs-feedback-post-comment-name-1"
               className="t-textarea"
@@ -81,7 +82,12 @@ export default withI18n(function VerifyEmail() {
               value={newPassword}
               onChange={handleChangePassword}
             />
-            <Button className="mt-6" onClick={onSubmit} disabled={!newPassword}>
+            <Button
+              className="mt-6"
+              onClick={onSubmit}
+              disabled={!newPassword}
+              data-testid="change-password-button"
+            >
               {i18n.t("Change password")}
             </Button>
           </div>
@@ -89,4 +95,4 @@ export default withI18n(function VerifyEmail() {
       </div>
     </>
   )
-})
+}

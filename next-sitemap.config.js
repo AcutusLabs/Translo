@@ -2,11 +2,11 @@ const languagesSupported = ["en", "es", "it", "fr", "pt", "de"]
 
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://translo.app",
+  siteUrl: "https://translo.app/en",
   changefreq: "daily",
   priority: 0.7,
   sitemapSize: 5000,
-  generateRobotsTxt: true,
+  generateIndexSitemap: false,
   exclude: ["/api"],
   alternateRefs: languagesSupported.map((language) => ({
     href: `https://translo.app/${language}`,

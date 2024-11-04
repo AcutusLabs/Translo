@@ -42,7 +42,10 @@ export async function POST(req: Request) {
       })
     }
 
-    const token = generateEmailVerificationToken()
+    const token =
+      env.TEST_MODE_ENABLED === "true"
+        ? "test-token"
+        : generateEmailVerificationToken()
 
     const user = await db.user.upsert({
       where: {
@@ -75,7 +78,7 @@ export async function POST(req: Request) {
       },
     })
 
-    if (env.TEST_MODE_ENABLED === "true" && body.skip_activation) {
+    if (env.TEST_MODE_ENABLED === "true") {
       // skip email verification
     } else {
       await sendEmail({

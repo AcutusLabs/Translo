@@ -45,12 +45,13 @@ const ForgotPasswordDialog = () => {
       description: i18n.t(
         "We sent you a reset password link. Be sure to check your spam too"
       ),
+      testId: "forgot-password-toast-success",
     })
   }, [email, reset])
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
+      <DialogTrigger asChild data-testid="forgot-password-trigger">
         <p className="hover:cursor-pointer hover:text-brand underline underline-offset-4 text-sm text-muted-foreground">
           {i18n.t("Forgot password")}
         </p>
@@ -70,6 +71,7 @@ const ForgotPasswordDialog = () => {
               {i18n.t("Email")}
             </Label>
             <Input
+              data-testid="email-forgot-password"
               id="email"
               placeholder="example@gmail.com"
               className="col-span-3"
@@ -82,7 +84,11 @@ const ForgotPasswordDialog = () => {
         </div>
         <DialogFooter>
           <DialogClose asChild>
-            <Button onClick={onSubmit} disabled={!email}>
+            <Button
+              onClick={onSubmit}
+              disabled={!email}
+              data-testid="reset-password-button"
+            >
               {i18n.t("Send")}
             </Button>
           </DialogClose>

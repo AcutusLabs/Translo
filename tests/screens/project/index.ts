@@ -1,6 +1,7 @@
 import { expect, Page } from "@playwright/test"
 
-import { baseURL } from "../../../playwright.config"
+import { baseURL, waitingTime } from "../../../playwright.config"
+import { checkPage } from "../../utils"
 import Dashboard from "../dashboard"
 
 export default class Project {
@@ -11,10 +12,7 @@ export default class Project {
   }
 
   async checkIsInProjectPage() {
-    await this.page.waitForURL(`${baseURL}/en/projects/**`, {
-      timeout: 5000,
-      waitUntil: "networkidle",
-    })
+    await checkPage(this.page, new RegExp(`${baseURL}/en/projects/[^/]+`))
   }
 
   async closeDetailSlideOver() {
@@ -68,7 +66,9 @@ export default class Project {
     await this.page.getByTestId("add-new-keyword-modal-trigger").click()
     await this.page.getByTestId("add-new-keyword-input").fill(key)
     await this.page.getByTestId("add-new-keyword-button").click()
-    await expect(this.page.getByTestId(`keyword-cell-${key}`)).toBeVisible()
+    await expect(this.page.getByTestId(`keyword-cell-${key}`)).toBeVisible({
+      timeout: waitingTime,
+    })
   }
 
   async deleteKeyword(key: string) {
@@ -77,6 +77,7 @@ export default class Project {
     await this.page.getByTestId("delete-keyword-button").click()
     await expect(this.page.getByTestId(`keyword-cell-${key}`)).toBeVisible({
       visible: false,
+      timeout: waitingTime,
     })
   }
 
