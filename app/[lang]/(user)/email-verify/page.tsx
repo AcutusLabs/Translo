@@ -40,6 +40,7 @@ export default function VerifyEmail() {
       toast({
         title: i18n.t("Good news"),
         description: i18n.t("Email verified successfully. Please relogin"),
+        testId: "email-verify-toast-success",
       })
       window.location.replace("/login")
     }

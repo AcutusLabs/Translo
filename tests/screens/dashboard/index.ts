@@ -1,6 +1,7 @@
 import { Page } from "@playwright/test"
 
 import { baseURL } from "../../../playwright.config"
+import { checkPage, openPage } from "../../utils"
 
 export default class Dashboard {
   page: Page
@@ -10,14 +11,21 @@ export default class Dashboard {
   }
 
   async checkIsInDashboard() {
-    await this.page.waitForURL(`${baseURL}/en/dashboard`, {
-      timeout: 5000,
-      waitUntil: "networkidle",
-    })
+    await checkPage(this.page, `${baseURL}/en/dashboard`)
+  }
+
+  async checkIsInLoginPage() {
+    await checkPage(this.page, `${baseURL}/en/login`)
   }
 
   async open() {
-    await this.page.goto(`${baseURL}/en`)
+    await openPage(this.page, `${baseURL}/en`)
     await this.checkIsInDashboard()
+  }
+
+  async logout() {
+    await this.page.getByTestId("user-account-nav-trigger").click()
+    await this.page.getByTestId("logout-button").click()
+    await this.checkIsInLoginPage()
   }
 }

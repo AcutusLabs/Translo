@@ -22,7 +22,7 @@ interface UserAccountNavProps extends React.HTMLAttributes<HTMLDivElement> {
 export function UserAccountNav({ user }: UserAccountNavProps) {
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger>
+      <DropdownMenuTrigger data-testid="user-account-nav-trigger">
         <UserAvatar
           user={{ name: user.name || null, image: user.image || null }}
           className="h-8 w-8"
@@ -56,6 +56,7 @@ export function UserAccountNav({ user }: UserAccountNavProps) {
         </DropdownMenuItem>
         <DropdownMenuSeparator />
         <DropdownMenuItem
+          data-testid="logout-button"
           className="cursor-pointer"
           onSelect={(event) => {
             event.preventDefault()

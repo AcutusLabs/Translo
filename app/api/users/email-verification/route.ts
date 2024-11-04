@@ -1,5 +1,7 @@
+import sha256 from "crypto-js/sha256"
 import { z } from "zod"
 
+import { env } from "@/env.mjs"
 import { db } from "@/lib/db"
 import { handleCatchApi } from "@/lib/exceptions"
 import i18n from "@/lib/i18n"
@@ -26,9 +28,12 @@ export async function POST(req: Request) {
 
     if (users.length) {
       const user = users[0]
-      const stripeId = await stripe.customers.create({
-        email: user.email,
-      })
+      const stripeId =
+        env.TEST_MODE_ENABLED === "true"
+          ? { id: sha256(body.email).toString() }
+          : await stripe.customers.create({
+              email: user.email,
+            })
 
       const result = await db.user.updateMany({
         where: {
