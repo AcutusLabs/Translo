@@ -7,8 +7,21 @@ import {
   TestType,
 } from "@playwright/test"
 
+import { waitingTime } from "../playwright.config"
+
 export const sleep = (ms: number) => {
   return new Promise((resolve) => setTimeout(resolve, ms))
+}
+
+export const checkPage = async (page: Page, url: string | RegExp) => {
+  await Promise.race([page.waitForLoadState("networkidle"), sleep(5000)])
+  await page.waitForURL(url, {
+    timeout: waitingTime,
+  })
+}
+
+export const openPage = async (page: Page, url: string) => {
+  await page.goto(url, { waitUntil: "domcontentloaded" })
 }
 
 type SetupTestParams = {

@@ -98,6 +98,7 @@ export function UserAuthForm({ className, type, ...props }: UserAuthFormProps) {
         description: i18n.t(
           "We sent you a login link. Be sure to check your spam too"
         ),
+        testId: "register-toast-success",
       })
     }
   }

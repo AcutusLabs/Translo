@@ -89,5 +89,5 @@ pnpm test
 
 ```sh
 pnpm test:e2e:docker:setup
-pnpm test:e2e:ci
+pnpm test:e2e:docker:run
 ```

@@ -18,7 +18,10 @@ export const findUserByEmail = async (email: string) => {
 }
 
 export const forgotPassword = async (email: string) => {
-  const token = generateEmailVerificationToken()
+  const token =
+    env.TEST_MODE_ENABLED === "true"
+      ? "test-token"
+      : generateEmailVerificationToken()
 
   const result = await db.user.updateMany({
     where: { email },
@@ -29,6 +32,11 @@ export const forgotPassword = async (email: string) => {
 
   if (!result.count) {
     throw "error during creating token"
+  }
+
+  if (env.TEST_MODE_ENABLED === "true") {
+    // skip email verification
+    return
   }
 
   await sendEmail({

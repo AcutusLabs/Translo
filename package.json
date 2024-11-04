@@ -8,7 +8,7 @@
   },
   "license": "MIT",
   "scripts": {
-    "dev": "pnpm prisma:generate && concurrently \"next dev --turbopack\"",
+    "dev": "pnpm prisma:generate && concurrently \"next dev\"",
     "build": "next build",
     "turbo": "next dev --turbo",
     "start": "next start",
