@@ -154,8 +154,8 @@ importers:
         specifier: 0.454.0
         version: 0.454.0(react@19.0.0-rc-69d4b800-20241021)
       match-sorter:
-        specifier: 7.0.0
-        version: 7.0.0
+        specifier: 8.0.0
+        version: 8.0.0
       next:
         specifier: 15.0.1
         version: 15.0.1(@babel/core@7.25.2)(@opentelemetry/api@1.9.0)(@playwright/test@1.48.2)(react-dom@19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021)
@@ -4028,8 +4028,8 @@ packages:
   markdown-table@3.0.3:
     resolution: {integrity: sha512-Z1NL3Tb1M9wH4XESsCDEksWoKTdlUafKc4pt0GRwjUyXaCFZ+dc3g2erqB6zm3szA2IUSi7VnPI+o/9jnxh9hw==}
 
-  match-sorter@7.0.0:
-    resolution: {integrity: sha512-J1370vFVhvn81QrUYv54y3IZbsaG1X4otKSwtGZbyfZxgWgjVxdRkASY+uaT2IlQUGeWFBEPbGFVKv1DNnHYKA==}
+  match-sorter@8.0.0:
+    resolution: {integrity: sha512-bGJ6Zb+OhzXe+ptP5d80OLVx7AkqfRbtGEh30vNSfjNwllu+hHI+tcbMIT/fbkx/FKN1PmKuDb65+Oofg+XUxw==}
 
   mdast-util-find-and-replace@3.0.1:
     resolution: {integrity: sha512-SG21kZHGC3XRTSUhtofZkBzZTJNM5ecCi0SK2IMKmSXR8vO3peL+kb1O0z7Zl83jKtutG4k5Wv/W7V3/YHvzPA==}
@@ -10054,7 +10054,7 @@ snapshots:
 
   markdown-table@3.0.3: {}
 
-  match-sorter@7.0.0:
+  match-sorter@8.0.0:
     dependencies:
       '@babel/runtime': 7.25.6
       remove-accents: 0.5.0
