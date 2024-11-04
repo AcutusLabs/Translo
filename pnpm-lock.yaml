@@ -175,8 +175,8 @@ importers:
         specifier: 6.9.16
         version: 6.9.16
       openai:
-        specifier: 4.70.2
-        version: 4.70.2(zod@3.23.8)
+        specifier: 4.71.0
+        version: 4.71.0(zod@3.23.8)
       posthog-js:
         specifier: 1.180.1
         version: 1.180.1
@@ -4424,8 +4424,8 @@ packages:
     resolution: {integrity: sha512-kbpaSSGJTWdAY5KPVeMOKXSrPtr8C8C7wodJbcsd51jRnmD+GZu8Y0VoU6Dm5Z4vWr0Ig/1NKuWRKf7j5aaYSg==}
     engines: {node: '>=6'}
 
-  openai@4.70.2:
-    resolution: {integrity: sha512-Q2ymi/KPUYv+LJ9rFxeYxpkVAhcrZFTVvnJbdF1pUHg9eMC6lY8PU4TO1XOK5UZzOZuuVicouRwVMi1iDrT4qw==}
+  openai@4.71.0:
+    resolution: {integrity: sha512-jeJ7+6cZvj+ZbIsbX/Ag8+pug2+vjKbrD/v3Hwp6uv3KZyWjSkZa5MdUshzpNC3jsFzakfbUhEEFQXsKWNgm/g==}
     hasBin: true
     peerDependencies:
       zod: ^3.23.8
@@ -10635,7 +10635,7 @@ snapshots:
     dependencies:
       mimic-fn: 2.1.0
 
-  openai@4.70.2(zod@3.23.8):
+  openai@4.71.0(zod@3.23.8):
     dependencies:
       '@types/node': 18.19.50
       '@types/node-fetch': 2.6.11
