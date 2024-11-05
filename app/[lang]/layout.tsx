@@ -5,7 +5,7 @@ import "@/styles/globals.css"
 
 import { ParsedUrlQuery } from "querystring"
 import { Suspense } from "react"
-import { NextPageContext } from "next"
+import { Metadata, NextPageContext } from "next"
 
 import { env } from "@/env.mjs"
 import { siteConfig } from "@/config/site"
@@ -37,51 +37,53 @@ interface RootLayoutProps {
   }>
 }
 
-export const metadata = {
-  metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
-  title: {
-    default: siteConfig.name,
-    template: `%s | ${siteConfig.name}`,
-  },
-  description: siteConfig.description,
-  keywords: [
-    "localization management",
-    "Localization software",
-    "Localization tool",
-    "Self-hosted localization",
-    "Localization platform",
-    "Localization solution",
-    "Multilingual content management",
-    "Cloud-based localization solution",
-    "Translation software",
-  ],
-  authors: [
-    {
-      name: "Giacomo e Davide",
-      url: "https://github.com/Matergi/Translo",
+export async function generateMetadata({
+  params,
+}: RootLayoutProps): Promise<Metadata> {
+  const lang = (await params).lang
+  i18n.changeLanguage(lang)
+  return {
+    metadataBase: new URL(env.NEXT_PUBLIC_APP_URL),
+    title: {
+      default: siteConfig.name,
+      template: `%s | ${siteConfig.name}`,
     },
-  ],
-  creator: "Giacomo e Davide",
-  openGraph: {
-    type: "website",
-    locale: "en_US",
-    url: siteConfig.url,
-    title: siteConfig.name,
-    description: siteConfig.description,
-    siteName: siteConfig.name,
-  },
-  twitter: {
-    card: "summary_large_image",
-    title: siteConfig.name,
-    description: siteConfig.description,
-    images: [`${siteConfig.url}/og.jpg`],
-  },
-  icons: {
-    icon: "/favicon.ico",
-    shortcut: "/favicon-16x16.png",
-    apple: "/apple-touch-icon.png",
-  },
-  manifest: `${siteConfig.url}/site.webmanifest`,
+    description: i18n.t(
+      "Translo provides open-source localization management that you can self-host."
+    ),
+    keywords: i18n.t("metadata.keywords"),
+    authors: [
+      {
+        name: "Giacomo e Davide",
+        url: "https://github.com/Matergi/Translo",
+      },
+    ],
+    creator: "Giacomo e Davide",
+    openGraph: {
+      type: "website",
+      locale: lang,
+      url: siteConfig.url,
+      title: siteConfig.name,
+      description: i18n.t(
+        "Translo provides open-source localization management that you can self-host."
+      ),
+      siteName: siteConfig.name,
+    },
+    twitter: {
+      card: "summary_large_image",
+      title: siteConfig.name,
+      description: i18n.t(
+        "Translo provides open-source localization management that you can self-host."
+      ),
+      images: [`${siteConfig.url}/og.jpg`],
+    },
+    icons: {
+      icon: "/favicon.ico",
+      shortcut: "/favicon-16x16.png",
+      apple: "/apple-touch-icon.png",
+    },
+    manifest: `${siteConfig.url}/site.webmanifest`,
+  }
 }
 
 export default async function RootLayout(props: RootLayoutProps) {

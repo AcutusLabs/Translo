@@ -15,7 +15,12 @@ export default () => (
   <div className="flex h-20 items-center justify-between py-6">
     <MainNav items={marketingConfig().mainNav} />
     <div className="flex space-x-2">
-      <LanguageSwitch />
+      <div
+        data-testid="language-selector-trigger-desktop"
+        className="hidden md:block"
+      >
+        <LanguageSwitch />
+      </div>
       <ThemeToggle />
       <nav>
         <Link

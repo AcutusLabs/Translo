@@ -16,7 +16,14 @@ const saveFileToFileSystem = async (fileUrl, filePath) => {
     }
 
     const json = await response.text()
-    await pWriteFile(filePath, JSON.stringify(JSON.parse(json), null, 4), {
+    const parsedJson = JSON.parse(json)
+    const sortedJson = Object.keys(parsedJson)
+      .sort((a, b) => a.toLowerCase().localeCompare(b.toLowerCase()))
+      .reduce((obj, key) => {
+        obj[key] = parsedJson[key]
+        return obj
+      }, {})
+    await pWriteFile(filePath, JSON.stringify(sortedJson, null, 4), {
       encoding: "utf-8",
     })
   } catch (error) {

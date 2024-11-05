@@ -160,7 +160,15 @@ ${project.languages.map(
         [shortLang: string]: string
       }>(jsonString)
       if (result) {
-        const response = JSON.stringify(result)
+        const response = JSON.stringify(
+          Object.keys(result).reduce((acc, key) => {
+            acc[key] =
+              typeof result[key] === "object"
+                ? JSON.stringify(result[key])
+                : result[key]
+            return acc
+          }, {})
+        )
 
         // in case we fail to use the real usage statistics we fallback to the length of the prompt and response
         const cost =

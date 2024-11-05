@@ -4,6 +4,7 @@ import i18n from "@/lib/i18n"
 import { cn } from "@/lib/utils"
 
 import { Icons } from "./icons"
+import LanguageSwitch from "./ui/language-switch"
 
 export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
   const heart = "♥️"
@@ -31,6 +32,13 @@ export function SiteFooter({ className }: React.HTMLAttributes<HTMLElement>) {
             <span className="text-[#E25555]">{heart}</span>
             {i18n.t("by Giacomo and Davide")}
           </p>
+        </div>
+
+        <div
+          data-testid="language-selector-trigger-mobile"
+          className="mt-4 md:hidden sm:block"
+        >
+          <LanguageSwitch />
         </div>
 
         <div className="mt-3 space-x-2">
