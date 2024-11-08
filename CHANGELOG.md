@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.4.1](https://github.com/Matergi/translo/compare/v1.4.0...v1.4.1) (2024-11-08)
+
+### Bug Fixes
+
+- **general:** fixed metadata zip download translation and default translation ([111305b](https://github.com/Matergi/translo/commit/111305b1234062954c71c37354f25a6b81138244))
+- **general:** fixed reset password and test ([8a4766f](https://github.com/Matergi/translo/commit/8a4766fcccf604e27e0e50211e02afed01698443))
+- **user:** fixed reset password ([f4aa04a](https://github.com/Matergi/translo/commit/f4aa04ad5481643e0ddb2eab7abe82fd2e5457c8))
+
 ## [1.4.0](https://github.com/Matergi/translo/compare/v1.3.0...v1.4.0) (2024-10-31)
 
 ### Features
