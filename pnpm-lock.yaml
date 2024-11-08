@@ -17,7 +17,7 @@ importers:
         version: 0.4.13(react-dom@19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021)
       '@hookform/resolvers':
         specifier: 3.9.1
-        version: 3.9.1(react-hook-form@7.53.1(react@19.0.0-rc-69d4b800-20241021))
+        version: 3.9.1(react-hook-form@7.53.2(react@19.0.0-rc-69d4b800-20241021))
       '@next-auth/prisma-adapter':
         specifier: 1.0.7
         version: 1.0.7(@prisma/client@5.22.0(prisma@5.22.0))(next-auth@4.24.10(next@15.0.1(@babel/core@7.25.2)(@opentelemetry/api@1.9.0)(@playwright/test@1.48.2)(react-dom@19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021))(nodemailer@6.9.16)(react-dom@19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021))(react@19.0.0-rc-69d4b800-20241021))
@@ -193,8 +193,8 @@ importers:
         specifier: 19.0.0-rc-69d4b800-20241021
         version: 19.0.0-rc-69d4b800-20241021(react@19.0.0-rc-69d4b800-20241021)
       react-hook-form:
-        specifier: 7.53.1
-        version: 7.53.1(react@19.0.0-rc-69d4b800-20241021)
+        specifier: 7.53.2
+        version: 7.53.2(react@19.0.0-rc-69d4b800-20241021)
       stripe:
         specifier: 17.3.1
         version: 17.3.1
@@ -4752,8 +4752,8 @@ packages:
     peerDependencies:
       react: 19.0.0-rc-69d4b800-20241021
 
-  react-hook-form@7.53.1:
-    resolution: {integrity: sha512-6aiQeBda4zjcuaugWvim9WsGqisoUk+etmFEsSUMm451/Ic8L/UAb7sRtMj3V+Hdzm6mMjU1VhiSzYUZeBm0Vg==}
+  react-hook-form@7.53.2:
+    resolution: {integrity: sha512-YVel6fW5sOeedd1524pltpHX+jgU2u3DSDtXEaBORNdqiNrsX/nUI/iGXONegttg0mJVnfrIkiV0cmTU6Oo2xw==}
     engines: {node: '>=18.0.0'}
     peerDependencies:
       react: ^16.8.0 || ^17 || ^18 || ^19
@@ -6046,9 +6046,9 @@ snapshots:
 
   '@floating-ui/utils@0.2.7': {}
 
-  '@hookform/resolvers@3.9.1(react-hook-form@7.53.1(react@19.0.0-rc-69d4b800-20241021))':
+  '@hookform/resolvers@3.9.1(react-hook-form@7.53.2(react@19.0.0-rc-69d4b800-20241021))':
     dependencies:
-      react-hook-form: 7.53.1(react@19.0.0-rc-69d4b800-20241021)
+      react-hook-form: 7.53.2(react@19.0.0-rc-69d4b800-20241021)
 
   '@humanfs/core@0.19.1': {}
 
@@ -10804,7 +10804,7 @@ snapshots:
       react: 19.0.0-rc-69d4b800-20241021
       scheduler: 0.25.0-rc-69d4b800-20241021
 
-  react-hook-form@7.53.1(react@19.0.0-rc-69d4b800-20241021):
+  react-hook-form@7.53.2(react@19.0.0-rc-69d4b800-20241021):
     dependencies:
       react: 19.0.0-rc-69d4b800-20241021
 
