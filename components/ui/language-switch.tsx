@@ -62,6 +62,7 @@ const LanguageSwitch = () => {
                     }
                   )
                 )
+                router.refresh()
               }}
             >
               <div>{getLanguageFlag(language).flag}</div>

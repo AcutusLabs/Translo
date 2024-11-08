@@ -107,7 +107,7 @@ export async function POST(
               history: exTranslationDb
                 ? [
                     exTranslationDb.value,
-                    ...(exTranslationDb.history as string[]),
+                    ...((exTranslationDb.history as string[]) ?? []),
                   ].slice(0, 10)
                 : [],
             },
