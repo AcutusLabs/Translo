@@ -1,5 +1,11 @@
 name: Lint Commit Messages
-on: [pull_request]
+on:
+  pull_request:
+    branches:
+      - "*" # matches every branch that doesn't contain a '/'
+      - "*/*" # matches every branch containing a single '/'
+      - "**" # matches every branch
+      - "!master" # exclude master branch
 
 permissions:
   contents: read
