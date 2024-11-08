@@ -51,7 +51,10 @@ export default withAuth(
 
     if (pathnameHasDifferentLocale && token) {
       const newPath = `${pathname}`
-      req.nextUrl.pathname = `/${shortLanguage}/${newPath.replace(/^\/\w+\//, "")}`
+      req.nextUrl.pathname = `/${shortLanguage}/${newPath.replace(
+        /^\/\w+\/?/,
+        ""
+      )}`
       return NextResponse.redirect(req.nextUrl)
     }
 

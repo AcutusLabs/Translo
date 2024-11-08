@@ -265,6 +265,7 @@ const DetailSlideOver = (props: Props) => {
       })
       setTranslations(newTranslations)
       setHints(hints)
+      setShouldSave(true)
     },
     showAlertType: alertContext.showAlert,
   })
@@ -341,112 +342,119 @@ const DetailSlideOver = (props: Props) => {
           </SlideOverRow>
         </div>
         <div className="relative p-4 flex-1 sm:px-6">
-          {languages.map((lang, index) => {
-            const keywordTranslation = keyword.translations.find(
-              (translation) => translation.language.id === lang.id
-            )
+          {languages
+            .sort((a, b) => {
+              if (a.short === "en") return -1
+              if (b.short === "en") return 1
+              return a.short.localeCompare(b.short)
+            })
+            .map((lang, index) => {
+              const keywordTranslation = keyword.translations.find(
+                (translation) => translation.language.id === lang.id
+              )
 
-            const translation = translations.find(
-              (_translation) => _translation.projectLanguageId === lang.id
-            )
+              const translation = translations.find(
+                (_translation) => _translation.projectLanguageId === lang.id
+              )
 
-            const hint = hints.find(
-              (_hint) => _hint.projectLanguageId === lang.id
-            )?.hint
+              const hint = hints.find(
+                (_hint) => _hint.projectLanguageId === lang.id
+              )?.hint
 
-            return (
-              <div key={lang.id}>
-                {index > 0 && <Separator className="my-7" />}
-                <div className="mt-2">
-                  <label className="block mb-2 text-m font-medium dark:text-white">
-                    {lang.name}
-                  </label>
-                  <div className="mt-1">
-                    <textarea
-                      data-testid={`context-textarea-${lang.name}`}
-                      rows={3}
-                      className="t-textarea"
-                      placeholder={`Leave ${lang.name} translation here...`}
-                      value={translation?.value}
-                      onChange={(e) => handleChangeTranslation(e, lang.id)}
-                    ></textarea>
-                    {lang.short !== "en" && hint && (
-                      <div className="flex items-center rounded-md border mt-2 justify-between p-2 border-green-600">
-                        <div className="flex flex-col w-full">
-                          <span className="text-sm text-green-600">
-                            <b>{i18n.t("hint:")}</b>
-                          </span>
-                          <div className="flex flex-row items-center justify-between w-full">
-                            <p className="text-sm text-muted-foreground m-0">
-                              {hint}
-                            </p>
-                            <Button
-                              className=""
-                              onClick={() => {
-                                updateLocalTranslation(
-                                  hint || keywordTranslation?.value || "",
-                                  lang.id
-                                )
-                                setHints(
-                                  hints.filter(
-                                    (_hint) =>
-                                      _hint.projectLanguageId !== lang.id
+              return (
+                <div key={lang.id}>
+                  {index > 0 && <Separator className="my-7" />}
+                  <div className="mt-2">
+                    <label className="block mb-2 text-m font-medium dark:text-white">
+                      {lang.name}
+                    </label>
+                    <div className="mt-1">
+                      <textarea
+                        data-testid={`context-textarea-${lang.name}`}
+                        rows={3}
+                        className="t-textarea"
+                        placeholder={`Leave ${lang.name} translation here...`}
+                        value={translation?.value}
+                        onChange={(e) => handleChangeTranslation(e, lang.id)}
+                      ></textarea>
+                      {lang.short !== "en" && hint && (
+                        <div className="flex items-center rounded-md border mt-2 justify-between p-2 border-green-600">
+                          <div className="flex flex-col w-full">
+                            <span className="text-sm text-green-600">
+                              <b>{i18n.t("hint:")}</b>
+                            </span>
+                            <div className="flex flex-row items-center justify-between w-full">
+                              <p className="text-sm text-muted-foreground m-0">
+                                {hint}
+                              </p>
+                              <Button
+                                className=""
+                                onClick={() => {
+                                  updateLocalTranslation(
+                                    hint || keywordTranslation?.value || "",
+                                    lang.id
                                   )
-                                )
-                              }}
-                              variant={"link"}
-                            >
-                              {i18n.t("use this")}
-                            </Button>
+                                  setHints(
+                                    hints.filter(
+                                      (_hint) =>
+                                        _hint.projectLanguageId !== lang.id
+                                    )
+                                  )
+                                  setShouldSave(true)
+                                }}
+                                variant={"link"}
+                              >
+                                {i18n.t("use this")}
+                              </Button>
+                            </div>
                           </div>
                         </div>
+                      )}
+                    </div>
+                    {lang.short === "en" && languages.length > 1 && (
+                      <div className="flex flex-col">
+                        <Button
+                          className="mt-2 max-w-fit"
+                          onClick={() => mutate()}
+                          variant={"default"}
+                          disabled={shouldSave}
+                          data-testid="auto-translate-button"
+                        >
+                          {isPending && (
+                            <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
+                          )}
+                          {shouldSave
+                            ? i18n.t(
+                                "Before using the automatic translation, you need to save"
+                              )
+                            : i18n.t("From English generate all translations")}
+                        </Button>
+                        <span
+                          className="mt-2 text-sm"
+                          dangerouslySetInnerHTML={{
+                            __html: i18n.t(
+                              "To translate it, it will cost you: ~{number} tokens",
+                              { number: cost }
+                            ),
+                          }}
+                        ></span>
+                        <span
+                          className="mt-2 text-sm"
+                          dangerouslySetInnerHTML={{
+                            __html: i18n.t(
+                              "You still have {number} tokens, refresh the page to update it, make sure that the translations are saved",
+                              {
+                                number: tokens,
+                              }
+                            ),
+                          }}
+                        ></span>
                       </div>
                     )}
                   </div>
-                  {lang.short === "en" && languages.length > 1 && (
-                    <div className="flex flex-col">
-                      <Button
-                        className="mt-2 max-w-fit"
-                        onClick={() => mutate()}
-                        variant={"default"}
-                        disabled={shouldSave}
-                        data-testid="auto-translate-button"
-                      >
-                        {isPending && (
-                          <Icons.spinner className="mr-2 h-4 w-4 animate-spin" />
-                        )}
-                        {shouldSave
-                          ? i18n.t(
-                              "Before using the automatic translation, you need to save"
-                            )
-                          : i18n.t("From English generate all translations")}
-                      </Button>
-                      <span
-                        className="mt-2 text-sm"
-                        dangerouslySetInnerHTML={{
-                          __html: i18n.t(
-                            "To translate it, it will cost you: ~{number} tokens",
-                            { number: cost }
-                          ),
-                        }}
-                      ></span>
-                      <span
-                        className="mt-2 text-sm"
-                        dangerouslySetInnerHTML={{
-                          __html: i18n.t(
-                            "You still have {number} tokens, refresh the page to update it, make sure that the translations are saved",
-                            {
-                              number: tokens,
-                            }
-                          ),
-                        }}
-                      ></span>
-                    </div>
-                  )}
                 </div>
-              </div>
-            )
-          })}
+              )
+            })}
         </div>
 
         <div className="h-[50px]" />

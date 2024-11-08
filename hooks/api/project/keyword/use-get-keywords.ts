@@ -35,6 +35,7 @@ const getKeywords = async (
 
 type GetKeywordsApi = {
   projectId: string
+  defaultLanguage: string
   initialData: {
     keywords: KeywordData[]
     languages: LanguageData[]
@@ -46,7 +47,11 @@ export const getKeywordsQueryKey = (projectId: string) => [
   projectId,
 ]
 
-export const useGetKeywords = ({ projectId, initialData }: GetKeywordsApi) => {
+export const useGetKeywords = ({
+  projectId,
+  initialData,
+  defaultLanguage,
+}: GetKeywordsApi) => {
   const result = useQuery<GetKeywordsResponseType>({
     queryKey: getKeywordsQueryKey(projectId),
     queryFn: async () => await getKeywords(projectId),
@@ -82,17 +87,22 @@ export const useGetKeywords = ({ projectId, initialData }: GetKeywordsApi) => {
             language,
           }
         })
+
       return {
         ...keyword,
         translations,
         defaultTranslation:
-          translations.find((translation) => translation.language?.id === "en")
-            ?.value ||
+          translations.find(
+            (translation) => translation.language?.short === defaultLanguage
+          )?.value ||
+          translations.find(
+            (translation) => translation.language?.short === "en"
+          )?.value ||
           translations[0]?.value ||
           "",
       }
     })
-  }, [initialData.keywords, keywordsFromApi, languagesFromApi])
+  }, [defaultLanguage, initialData.keywords, keywordsFromApi, languagesFromApi])
 
   return keywordsFromApiWithTranslation
 }

@@ -28,7 +28,7 @@ const config: PlaywrightTestConfig = {
   // Run your local dev server before starting the tests:
   // https://playwright.dev/docs/test-advanced#launching-a-development-web-server-during-the-tests
   webServer: {
-    command: "pnpm dev",
+    command: "pnpm build && pnpm start", // for fast debug -> pnpm dev
     url: baseURL,
     reuseExistingServer: false,
     timeout,

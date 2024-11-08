@@ -24,9 +24,15 @@ export default class Landing {
   }
 
   async changeLanguage(language: string) {
-    await this.page.waitForTimeout(1000) // wait for the preline setup
-    await this.page.getByTestId("language-selector").click()
-    await this.page.getByTestId(`language-selector-${language}`).click()
+    await Promise.race([
+      this.page.waitForLoadState("networkidle"),
+      this.page.waitForTimeout(5000),
+    ])
+    await this.page.getByTestId("language-selector-trigger-desktop").click()
+    await this.page
+      .getByTestId("language-selector-trigger-desktop")
+      .getByTestId(`language-selector-${language}`)
+      .click()
     await checkPage(this.page, `${baseURL}/${language}`)
   }
 }

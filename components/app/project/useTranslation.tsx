@@ -3,6 +3,7 @@ import FileSaver from "file-saver"
 import JSZip from "jszip"
 import _ from "lodash"
 
+import i18n from "@/lib/i18n"
 import { useGetKeywords } from "@/hooks/api/project/keyword/use-get-keywords"
 import { useGetLanguages } from "@/hooks/api/project/language/use-get-languages"
 import { useGetProject } from "@/hooks/api/project/use-get-project"
@@ -24,35 +25,6 @@ export enum Status {
 const useTranslation = (props: EditorProps) => {
   const { project: projectFromSSR, tokens: tokensFromSSR } = props
 
-  const downloadFiles = useCallback(() => {
-    const zip = new JSZip()
-
-    props.project.languages.forEach((language: LanguageData) => {
-      zip.file(
-        `${language.short}.json`,
-        JSON.stringify(language.short, null, 4)
-      )
-    })
-
-    zip.generateAsync({ type: "blob" }).then(function (content) {
-      FileSaver.saveAs(
-        content,
-        `${props.project.title.replaceAll(" ", "-")}-translations.zip`
-      )
-    })
-  }, [props.project.title, props.project.languages])
-
-  const download = useCallback(
-    (format: DownloadFormat) => {
-      switch (format) {
-        case DownloadFormat.json_files:
-          downloadFiles()
-          break
-      }
-    },
-    [downloadFiles]
-  )
-
   const { data: languagesFromApi } = useGetLanguages({
     projectId: projectFromSSR.id,
     initialData: projectFromSSR.languages,
@@ -60,6 +32,7 @@ const useTranslation = (props: EditorProps) => {
 
   const keywordsFromApi = useGetKeywords({
     projectId: projectFromSSR.id,
+    defaultLanguage: i18n.getLanguage(),
     initialData: {
       keywords: projectFromSSR.keywords,
       languages: languagesFromApi,
@@ -78,6 +51,41 @@ const useTranslation = (props: EditorProps) => {
     keywords: keywordsFromApi,
     languages: languagesFromApi,
   }
+
+  const downloadFiles = useCallback(() => {
+    const zip = new JSZip()
+
+    project.languages.forEach((language: LanguageData) => {
+      const translations = project.keywords.reduce(
+        (acc, keyword) => ({
+          ...acc,
+          [keyword.keyword]: keyword.translations.find(
+            (translation) => translation.language.short === language.short
+          )?.value,
+        }),
+        {}
+      )
+      zip.file(`${language.short}.json`, JSON.stringify(translations, null, 4))
+    })
+
+    zip.generateAsync({ type: "blob" }).then(function (content) {
+      FileSaver.saveAs(
+        content,
+        `${project.title.replaceAll(" ", "-")}-translations.zip`
+      )
+    })
+  }, [project.title, project.languages, project.keywords])
+
+  const download = useCallback(
+    (format: DownloadFormat) => {
+      switch (format) {
+        case DownloadFormat.json_files:
+          downloadFiles()
+          break
+      }
+    },
+    [downloadFiles]
+  )
 
   return {
     tokens: tokensFromApi as number,

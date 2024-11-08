@@ -1,6 +1,6 @@
 "use client"
 
-import { useCallback, useContext, useMemo, useState } from "react"
+import { useCallback, useContext, useEffect, useMemo, useState } from "react"
 
 import i18n from "@/lib/i18n"
 import { useDeleteKeyword } from "@/hooks/api/project/keyword/use-delete-keyword"
@@ -54,16 +54,25 @@ const Table = (props: Props) => {
     []
   )
 
+  const [debouncedQuery, setDebouncedQuery] = useState(query)
+
+  useEffect(() => {
+    const timer = setTimeout(() => {
+      setDebouncedQuery(query)
+    }, 500)
+    return () => clearTimeout(timer)
+  }, [query])
+
   const filteredKeywords = useMemo(() => {
     return keywords.filter((keyword) => {
       return (
-        keyword.keyword.toLowerCase().includes(query.toLowerCase()) ||
+        keyword.keyword.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
         keyword.defaultTranslation
           .toLocaleLowerCase()
-          .includes(query.toLowerCase())
+          .includes(debouncedQuery.toLowerCase())
       )
     })
-  }, [keywords, query])
+  }, [keywords, debouncedQuery])
 
   const handleResetQuery = useCallback(() => {
     setQuery("")
@@ -115,7 +124,7 @@ const Table = (props: Props) => {
           <AddNewLanguage projectId={project.id} languages={languages} />
         </div>
       </div>
-      <div className="px-4 md:space-x-4">
+      <div className="px-4 md:space-x-4 flex justify-between">
         <p className="m-0">
           {i18n.t("Number of keywords: {number}", { number: keywords.length })}
         </p>
@@ -131,7 +140,7 @@ const Table = (props: Props) => {
                 {i18n.t("Languages")}
               </th>
               <th scope="col" className="px-4 py-3">
-                <span className="sr-only">{i18n.t("Actions")}</span>
+                <span className="sr-only"></span>
               </th>
             </tr>
           </thead>
