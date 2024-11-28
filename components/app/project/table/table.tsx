@@ -1,6 +1,7 @@
 "use client"
 
 import { useCallback, useContext, useEffect, useMemo, useState } from "react"
+import _ from "lodash"
 
 import i18n from "@/lib/i18n"
 import { useDeleteKeyword } from "@/hooks/api/project/keyword/use-delete-keyword"
@@ -24,6 +25,10 @@ const Table = (props: Props) => {
   const { keywords, project, languages, tokens } = props
 
   const [keySelected, selectKey] = useState<string | undefined>(undefined)
+  const [keywordsToShow, setKeywordsToShow] = useState<KeywordData[]>(keywords)
+  useEffect(() => {
+    setKeywordsToShow(keywords)
+  }, [keywords])
 
   const openDetailRow = useCallback((key: string) => {
     selectKey(key)
@@ -47,36 +52,31 @@ const Table = (props: Props) => {
 
   const [query, setQuery] = useState("")
 
-  const handleQueryChange = useCallback(
-    (event: React.ChangeEvent<HTMLInputElement>) => {
-      setQuery(event.target.value)
-    },
-    []
+  const debounced = useMemo(
+    () =>
+      _.debounce((value: string) => {
+        setKeywordsToShow(
+          keywords.filter((keyword) =>
+            keyword.keyword.toLowerCase().includes(value.toLowerCase())
+          )
+        )
+      }, 500),
+    [keywords]
   )
 
-  const [debouncedQuery, setDebouncedQuery] = useState(query)
-
-  useEffect(() => {
-    const timer = setTimeout(() => {
-      setDebouncedQuery(query)
-    }, 500)
-    return () => clearTimeout(timer)
-  }, [query])
-
-  const filteredKeywords = useMemo(() => {
-    return keywords.filter((keyword) => {
-      return (
-        keyword.keyword.toLowerCase().includes(debouncedQuery.toLowerCase()) ||
-        keyword.defaultTranslation
-          .toLocaleLowerCase()
-          .includes(debouncedQuery.toLowerCase())
-      )
-    })
-  }, [keywords, debouncedQuery])
+  const handleQueryChange = useCallback(
+    (event: React.ChangeEvent<HTMLInputElement>) => {
+      const value = event.target.value
+      setQuery(value)
+      debounced(value)
+    },
+    [debounced]
+  )
 
   const handleResetQuery = useCallback(() => {
     setQuery("")
-  }, [])
+    debounced("")
+  }, [debounced])
 
   return (
     <div className="relative overflow-hidden bg-white shadow-md dark:bg-gray-800 rounded-lg border-[1px]">
@@ -145,7 +145,7 @@ const Table = (props: Props) => {
             </tr>
           </thead>
           <tbody>
-            {filteredKeywords.map((keyword) => (
+            {keywordsToShow.map((keyword) => (
               <Row
                 key={keyword.keyword}
                 keyword={keyword}
