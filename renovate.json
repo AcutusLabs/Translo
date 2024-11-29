@@ -1,6 +1,6 @@
 {
   "extends": [":dependencyDashboard"],
-  "labels": ["Renovate::Dependencies"],
+  "labels": ["dependencies"],
   "rangeStrategy": "update-lockfile",
   "enabledManagers": ["npm"],
   "minimumReleaseAge": "10 days",
@@ -33,7 +33,8 @@
         "!node",
         "!nodemailer",
         "!react",
-        "!react-dom"
+        "!react-dom",
+        "!next"
       ],
       "depTypeList": ["dependencies"],
       "matchUpdateTypes": ["patch", "minor"],
@@ -49,7 +50,8 @@
         "!node",
         "!nodemailer",
         "!react",
-        "!react-dom"
+        "!react-dom",
+        "!next"
       ],
       "depTypeList": ["dependencies"],
       "matchUpdateTypes": ["major"],
@@ -86,16 +88,14 @@
       "automerge": true
     },
     {
-      "matchPackageNames": ["@types/react", "react"],
-      "groupName": "Dependecies 'react' with types",
-      "groupSlug": "dependencies-react-with-types",
-      "enabled": true,
-      "automerge": false
-    },
-    {
-      "matchPackageNames": ["@types/react-dom", "react-dom"],
-      "groupName": "Dependecies 'react-dom' with types",
-      "groupSlug": "dependencies-react-dom-with-types",
+      "matchPackageNames": [
+        "@types/react-dom",
+        "react-dom",
+        "@types/react",
+        "react"
+      ],
+      "groupName": "Dependecies react",
+      "groupSlug": "dependencies-react",
       "enabled": true,
       "automerge": false
     }
