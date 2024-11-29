@@ -5,7 +5,6 @@
   "enabledManagers": ["npm"],
   "minimumReleaseAge": "10 days",
   "separateMajorMinor": false,
-  "schedule": ["0 9 * * *"],
   "prBodyDefinitions": {
     "Update": "{{#if isPatch}}![patch](https://img.shields.io/badge/%20-patch-brightgreen){{/if}}{{#if isMinor}}![minor](https://img.shields.io/badge/%20-minor-yellow){{/if}}{{#if isMajor}}![major](https://img.shields.io/badge/%20-major-red){{/if}}"
   },
