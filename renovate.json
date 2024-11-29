@@ -1,0 +1,103 @@
+{
+  "extends": [":dependencyDashboard"],
+  "labels": ["Renovate::Dependencies"],
+  "rangeStrategy": "update-lockfile",
+  "enabledManagers": ["npm"],
+  "minimumReleaseAge": "10 days",
+  "separateMajorMinor": false,
+  "schedule": ["0 9 * * *"],
+  "prBodyDefinitions": {
+    "Update": "{{#if isPatch}}![patch](https://img.shields.io/badge/%20-patch-brightgreen){{/if}}{{#if isMinor}}![minor](https://img.shields.io/badge/%20-minor-yellow){{/if}}{{#if isMajor}}![major](https://img.shields.io/badge/%20-major-red){{/if}}"
+  },
+  "prBodyColumns": ["Package", "Update", "Change", "Pending", "Age", "Type"],
+  "packageRules": [
+    {
+      "matchPackageNames": [
+        "!@types/crypto-js",
+        "!@types/lodash",
+        "!@types/node",
+        "!@types/nodemailer",
+        "!@types/react",
+        "!@types/react-dom"
+      ],
+      "depTypeList": ["devDependencies"],
+      "groupName": "Dev Dependencies",
+      "groupSlug": "dev-dependencies",
+      "enabled": true,
+      "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "!crypto-js",
+        "!lodash",
+        "!node",
+        "!nodemailer",
+        "!react",
+        "!react-dom"
+      ],
+      "depTypeList": ["dependencies"],
+      "matchUpdateTypes": ["patch", "minor"],
+      "groupName": "Dependencies (minor)",
+      "groupSlug": "dependencies-minor",
+      "enabled": true,
+      "automerge": true
+    },
+    {
+      "matchPackageNames": [
+        "!crypto-js",
+        "!lodash",
+        "!node",
+        "!nodemailer",
+        "!react",
+        "!react-dom"
+      ],
+      "depTypeList": ["dependencies"],
+      "matchUpdateTypes": ["major"],
+      "groupName": "Dependencies (major)",
+      "groupSlug": "dependencies-major",
+      "enabled": true
+    },
+    {
+      "matchPackageNames": ["@types/crypto-js", "crypto-js"],
+      "groupName": "Dependecies 'crypto-js' with types",
+      "groupSlug": "dependencies-crypto-js-with-types",
+      "enabled": true,
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["@types/lodash", "lodash"],
+      "groupName": "Dependecies 'lodash' with types",
+      "groupSlug": "dependencies-lodash-with-types",
+      "enabled": true,
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["@types/node", "node"],
+      "groupName": "Dependecies 'node' with types",
+      "groupSlug": "dependencies-node-with-types",
+      "enabled": true,
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["@types/nodemailer", "nodemailer"],
+      "groupName": "Dependecies 'nodemailer' with types",
+      "groupSlug": "dependencies-nodemailer-with-types",
+      "enabled": true,
+      "automerge": true
+    },
+    {
+      "matchPackageNames": ["@types/react", "react"],
+      "groupName": "Dependecies 'react' with types",
+      "groupSlug": "dependencies-react-with-types",
+      "enabled": true,
+      "automerge": false
+    },
+    {
+      "matchPackageNames": ["@types/react-dom", "react-dom"],
+      "groupName": "Dependecies 'react-dom' with types",
+      "groupSlug": "dependencies-react-dom-with-types",
+      "enabled": true,
+      "automerge": false
+    }
+  ]
+}
