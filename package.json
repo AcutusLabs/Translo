@@ -143,7 +143,7 @@
     "mdast-util-toc": "7.1.0",
     "postcss": "8.4.49",
     "prettier": "3.3.3",
-    "prettier-plugin-tailwindcss": "0.6.8",
+    "prettier-plugin-tailwindcss": "0.6.9",
     "pretty-quick": "4.0.0",
     "prisma": "5.22.0",
     "rehype": "13.0.2",
